@@ -10,11 +10,12 @@ Return ONLY one JSON object, no markdown:
            "original": dish name copied EXACTLY as printed, character for character,
            "translation": dish name translated into ${l},
            "price": number (0 if none),
-           "category": section heading copied exactly as printed, or ""}]}
+           "category": section heading copied exactly as printed, or "",
+           "lang": ISO 639-1 code of the language "original" is printed in (e.g. "en", "hu")}]}
 Rules:
 - List the dishes in the SAME ORDER they appear on the menu: follow the menu's reading direction (right-to-left for Hebrew/Arabic), section by section, top to bottom; finish one column before starting the next. Never sort, group or reorder.
-- If the menu shows the same dishes in more than one language (separate sections, columns or lines per language), use ONLY the English version: list each dish once, taken from the English part, in the English part's order, and skip the other-language copies and their headings. If there is no English, use the language that is printed. If a price appears only next to another language's copy of the dish, still use that price.
-- "original" must be the printed text itself: same spelling, same words. Do not translate, correct, shorten or transliterate it.
+- If the menu shows the same dishes in more than one language (separate sections, columns or lines per language), list ONLY the English part: each dish once, in the English part's order, and nothing from the other-language copies or their headings. If there is no English, use the language that is printed. If a price appears only next to another language's copy of the dish, still use that price.
+- "original" must be the printed text itself: same spelling, same words. Do not translate, correct, shorten or transliterate it. Read small text carefully letter by letter; never replace a hard-to-read word with a different, more familiar dish.
 - Only the dish name goes in "original", not its description.
 - Do not invent dishes or merge two dishes into one. Include every dish visible on the page.
 If prices show no currency symbol assume ${c}.`,
@@ -65,8 +66,13 @@ module.exports = async (req, res) => {
     const a = text.indexOf('{'), b = text.lastIndexOf('}');
     if (a < 0 || b < a) return res.status(422).json({ error: 'Could not read this image. Try a clearer photo.' });
     const out = JSON.parse(text.slice(a, b + 1));
-    if (mode === 'menu' && Array.isArray(out.items)) // keep printed order even if the model lists items out of order
-      out.items = out.items.map((it, k) => [it, +(it && it.n) || k + 1, k]).sort((x, y) => x[1] - y[1] || x[2] - y[2]).map(x => x[0]);
+    if (mode === 'menu' && Array.isArray(out.items)) {
+      // keep printed order even if the model lists items out of order
+      out.items = out.items.filter(Boolean).map((it, k) => [it, +it.n || k + 1, k]).sort((x, y) => x[1] - y[1] || x[2] - y[2]).map(x => x[0]);
+      // bilingual menus: show only the English part
+      const en = out.items.filter(it => String(it.lang || '').toLowerCase().startsWith('en'));
+      if (en.length && en.length >= out.items.length * 0.3) out.items = en; // not for a local menu with a few English-named dishes
+    }
     return res.status(200).json(out);
   } catch (e) {
     return res.status(500).json({ error: 'Scan failed. Please try again.' });
