@@ -186,7 +186,7 @@ return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-
 <div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${js.length?'':`<button class="btn ghost sm" data-a=mpage>${ico('plus',16)}${t('addPage')}</button>`}</div>
 ${cats.map(c=>`<section>${c?(()=>{const tr=(items.find(i=>(i.cat||'')===c)||{}).catTr;return `<div class=cat dir=auto>${esc(c)}${tr&&norm(tr)!==norm(c)?`<span class=cat-tr dir=auto>${esc(tr)}</span>`:''}</div>`})():''}<div class="card list">${items.filter(i=>(i.cat||'')===c).map(i=>itemV(i,M)).join('')}</div></section>`).join('')}
 ${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?'':`<p class=empty>${t('empty')}</p>`}
-<div class=card><h3>${t('manual')}</h3><div class=pad style="padding:0"><input id=mn placeholder="${t('dishName')}" dir=auto><input id=mt placeholder="${t('trans')}" dir=auto><input id=mp type=number step=any inputmode=decimal placeholder="${t('price')}"><button class="btn sm ghost" data-a=madd>${t('add')}</button></div></div></div>
+</div>
 <div class=sticky><div>${js.length
 ?`<div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t('scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button>`
 :`<div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class="btn acc" data-a=tor>${t('saveScan')}</button>`}</div></div>`}
@@ -236,7 +236,6 @@ retake:()=>{const r=V.retry;V.retry=null;sheet('');const M=S.menus.find(m=>m.id=
 M.items=M.items.filter(i=>i.pg!==r.pg);render();scanMenuPage(M,r.pg)},
 keep:()=>{V.retry=null;sheet('')},
 mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);render()},
-madd:()=>{const n=$('#mn').value.trim();if(!n)return;cm().items.push({id:uid(),orig:n,tr:$('#mt').value.trim(),price:+$('#mp').value||0,cat:'',pg:1e9,qty:0});render()},
 tor:()=>{const M=cm();save();const R=newReceipt(M);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
 nr:()=>{const R=newReceipt(null);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
 rscan:()=>{const R=cr();pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},

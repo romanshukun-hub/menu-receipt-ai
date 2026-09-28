@@ -29,11 +29,18 @@ Return ONLY one JSON object, no markdown:
 If a line shows only a line total for quantity > 1, divide to get unit_price. Do not list tax, service, or total lines as items. If prices show no currency symbol assume ${c}.`
 };
 
-const ask = (key, body) => fetch('https://api.anthropic.com/v1/messages', {
-  method: 'POST',
-  headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-  body: JSON.stringify(body)
-});
+// retries temporary failures (overloaded / rate limited / server errors) a few times before giving up
+async function ask(key, body) {
+  for (let i = 0; ; i++) {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (r.ok || i >= 3 || !(r.status === 429 || r.status >= 500)) return r;
+    await new Promise(ok => setTimeout(ok, 1500 * (i + 1)));
+  }
+}
 
 // Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, then {"done":true} or {"error":"..."}
 async function streamMenu(key, content, res) {
