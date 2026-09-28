@@ -87,7 +87,7 @@ const busy=on=>{$('#bt').textContent=t('reading');$('#busy').classList.toggle('o
 function curList(){try{return Intl.supportedValuesOf('currency')}catch(e){return['USD','EUR','GBP','ILS','JPY','CNY','KRW','INR','CAD','AUD','CHF','BRL','RUB','TRY','THB','AED','SEK','PLN','CZK','HUF','MXN']}}
 function curOpts(sel){let dn;try{dn=new Intl.DisplayNames(['en'],{type:'currency'})}catch(e){}return curList().map(c=>`<option value=${c} ${c===sel?'selected':''}>${c}${dn?' — '+esc(dn.of(c)):''}</option>`).join('')}
 // ---------- scanning ----------
-function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const k=Math.min(1,1700/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.85).split(',')[1])};im.onerror=()=>no(new Error('Unreadable image'));im.src=u})}
+function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const k=Math.min(1,2400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.9).split(',')[1])};im.onerror=()=>no(new Error('Unreadable image'));im.src=u})}
 async function scan(file,mode){busy(true);try{const image=await shrink(file);const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image,mode,language:langName(),currency:S.cur})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||t('fail'));return j}finally{busy(false)}}
 function pick(cb){const fi=$('#fi');fi.onchange=()=>{const x=fi.files[0];fi.value='';if(x)cb(x)};fi.click()}
 const isCur=c=>/^[A-Z]{3}$/.test(c||'');
@@ -116,13 +116,13 @@ function home(){return `<section class=hero style="padding-bottom:8px"><div clas
 <button class="card tile" data-a=nr><span class=e>🧾</span><span><b>${t('scanReceipt')}</b><small class=mut>${t('scanReceiptD')}</small></span></button>
 <button class="card tile" data-a=go data-x=history><span class=e>🗂</span><span><b>${t('hist')}</b><small class=mut>${t('histD')}</small></span></button></div>`}
 function menuV(){const M=cm();if(!M)return home();const cats=[...new Set(M.items.map(i=>i.cat||''))];
-const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0);
+const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto>
-<div class=row><span class=chip>${M.cur}</span><button class="btn ghost sm" data-a=mpage>＋ ${t('addPage')}</button></div>
-${cats.map(c=>(c?`<div class=cat dir=auto>${esc(c)}</div>`:'')+M.items.filter(i=>(i.cat||'')===c).map(i=>`<div class="card item"><div class=info><b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<span class=mut dir=auto>${esc(i.tr)}</span>`:''}<span class=pr>${mv(i.price,M.cur)}</span><a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">🖼️ ${t('findPhoto')}</a></div>${step(i.qty,'mq',i.id)}</div>`).join('')).join('')}
+<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}<button class="btn ghost sm" data-a=mpage>＋ ${t('addPage')}</button></div>
+${cats.map(c=>(c?`<div class=cat dir=auto>${esc(c)}</div>`:'')+M.items.filter(i=>(i.cat||'')===c).map(i=>`<div class="card item"><div class=info><b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<span class=mut dir=auto>${esc(i.tr)}</span>`:''}${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">🖼️ ${t('findPhoto')}</a></div>${step(i.qty,'mq',i.id)}</div>`).join('')).join('')}
 ${M.items.length?'':`<p class=empty>${t('empty')}</p>`}
 <div class=card><h3>${t('manual')}</h3><div class=pad style="padding:0"><input id=mn placeholder="${t('dishName')}" dir=auto><input id=mt placeholder="${t('trans')}" dir=auto><input id=mp type=number step=any inputmode=decimal placeholder="${t('price')}"><button class="btn sm" data-a=madd>${t('add')}</button></div></div></div>
-<div class=sticky><div><small>${n} ${t('order')}</small><br><b class=n>${mv(tot,M.cur)}</b></div><button class=btn data-a=tor>${t('saveScan')}</button></div>`}
+<div class=sticky><div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class=btn data-a=tor>${t('saveScan')}</button></div>`}
 function alerts(R){const o=[],M=S.menus.find(m=>m.id===R.menuId);
 if(M){const ordered=M.items.some(x=>x.qty>0);R.items.forEach(i=>{const a=norm(i.orig);const m=M.items.find(x=>norm(x.orig)===a)||M.items.find(x=>a.length>3&&norm(x.orig).length>3&&(norm(x.orig).includes(a)||a.includes(norm(x.orig))));if(!m)return;
 if(M.cur===R.cur&&m.price>0&&i.unit>m.price+.005)o.push(['bad',f(t('aP'),i.orig,fmt(i.unit,R.cur),fmt(m.price,R.cur))]);
