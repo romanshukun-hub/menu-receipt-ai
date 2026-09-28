@@ -1,66 +1,89 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eef1f5">
-<title>Menu & Receipt Assistant</title>
+<meta name="theme-color" content="#f4f1eb">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Smart Menu Translator & Bill Checker</title>
 <style>
-:root{--bg:#eef1f5;--card:#fff;--ink:#10151f;--mut:#6b7686;--line:#dde3ec;--ac:#3346e8;--ac2:#e4e8ff;--hi:#ffd45c;--bad:#c73a3a;--warn:#a96a00;--ok:#1b7a4f}
-@media(prefers-color-scheme:dark){:root{--bg:#0d1118;--card:#171d28;--ink:#eef2f8;--mut:#93a0b4;--line:#283142;--ac:#7b8bff;--ac2:#242b52}}
+:root{--bg:#f4f1eb;--card:#fffdf9;--ink:#1b1814;--mut:#7b7268;--line:#e5ded2;--ac:#c2410c;--ac2:#f9e7dc;--bad:#b42318;--warn:#b45309;--warnbg:#fdf3e1;--ok:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#131110;--card:#1c1916;--ink:#f3eee7;--mut:#a39a8f;--line:#2f2a25;--ac:#fb7d42;--ac2:#3a2418;--bad:#f87171;--warn:#f5a524;--warnbg:#33260f;--ok:#4ade80}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans Hebrew","Noto Sans Arabic",sans-serif}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Rubik,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Hebrew","Noto Sans Arabic",sans-serif;-webkit-font-smoothing:antialiased}
 #app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom))}
-h1{font-size:32px;line-height:1.1;letter-spacing:-.03em;margin:.2em 0}h2{font-size:17px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}h3{font-size:15px;margin:0 0 10px}
+svg{flex:none;display:block}
+h1{font-size:34px;line-height:1.08;letter-spacing:-.025em;margin:0;font-weight:700}
+h2{font-size:17px;font-weight:600;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+h3{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:0 0 12px}
 p{margin:0}small,.mut{color:var(--mut);font-size:13px}.num,b.n,.pr{font-variant-numeric:tabular-nums}
 .pad{padding:4px 16px;display:grid;gap:12px}
-.hero{padding:calc(48px + env(safe-area-inset-top)) 24px 24px;display:grid;gap:14px}
-.mark{width:60px;height:60px;border-radius:20px;background:var(--ink);color:var(--hi);display:grid;place-items:center;font-size:26px}
+.hero{padding:calc(40px + env(safe-area-inset-top)) 20px 20px;display:grid;gap:16px}
+.mark{width:52px;height:52px;border-radius:14px;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ac)}
 label{display:grid;gap:6px;font-size:13px;color:var(--mut)}
-input,select{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;outline:none;min-width:0}
+input,select{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;min-width:0}
+input:focus,select:focus{border-color:var(--ink)}
 input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ac)}
-.btn{border:0;border-radius:14px;background:var(--ac);color:#fff;font:inherit;font-weight:600;padding:14px 18px;cursor:pointer;transition:transform .12s}
-.btn:active{transform:scale(.97)}.btn.sm{padding:9px 14px;font-size:14px;border-radius:12px}
-.btn.ghost{background:var(--ac2);color:var(--ac)}
-.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px)}
-.ic{width:40px;height:40px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:18px;cursor:pointer}
-.card{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 1px 0 var(--line)}
-.tile{display:flex;gap:14px;align-items:center;width:100%;text-align:start;border:0;font:inherit;color:inherit;cursor:pointer}
-.tile .e{font-size:26px;width:52px;height:52px;border-radius:16px;background:var(--ac2);display:grid;place-items:center;flex:none}
-.tile b{display:block}.tile.main{background:var(--ink);color:var(--bg)}.tile.main .e{background:var(--hi)}.tile.main small{color:inherit;opacity:.7}
-.item{display:flex;gap:12px;justify-content:space-between;align-items:center;border-radius:18px}
-.info{display:grid;gap:3px;min-width:0}.info b{overflow-wrap:anywhere}
-.pr{font-weight:600}.cv{display:block;color:var(--mut);font-weight:400;font-size:12px}
-.photo{font-size:13px;color:var(--ac);text-decoration:none}
-.item.unsure{box-shadow:inset 0 0 0 2px var(--warn)}.unsure-b{font-size:12px;font-weight:600;color:var(--warn)}
-#sheet{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:15}#sheet.on{display:flex}
-#sheet .sh{background:var(--card);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));display:grid;gap:14px}
-#sheet ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-.step{display:flex;align-items:center;gap:2px;background:var(--bg);border-radius:14px;padding:3px;flex:none}
-.step button{width:34px;height:34px;border:0;border-radius:11px;background:var(--card);color:var(--ink);font-size:18px;cursor:pointer}
-.step button:disabled{opacity:.35;cursor:default}.step span{min-width:26px;text-align:center;font-weight:600}
-.cat{margin:10px 4px 0;font-size:13px;color:var(--mut);font-weight:600}
+input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font:inherit;font-weight:600;padding:14px 18px;cursor:pointer;transition:transform .12s,opacity .12s}
+.btn:active{transform:scale(.98)}.btn.sm{padding:9px 14px;font-size:14px;border-radius:10px}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.acc{background:var(--ac);color:#fff}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:6px;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.ic{width:40px;height:40px;border-radius:12px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.ic:hover{background:var(--card)}[dir=rtl] .back svg{transform:scaleX(-1)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.tile{display:flex;gap:14px;align-items:center;width:100%;text-align:start;font:inherit;color:inherit;cursor:pointer;padding:16px}
+.tile .e{width:44px;height:44px;border-radius:12px;background:var(--ac2);color:var(--ac);display:grid;place-items:center;flex:none}
+.tile b{display:block;font-weight:600}.tile>span:nth-child(2){flex:1;min-width:0}.tile .chev{color:var(--mut)}[dir=rtl] .tile .chev{transform:scaleX(-1)}
+.tile.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tile.main .e{background:var(--ac);color:#fff}.tile.main small,.tile.main .chev{color:inherit;opacity:.65}
+.list{padding:0 16px}
+.item{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.list>.item:last-child{border-bottom:0}
+.item.unsure{margin:0 -16px;padding:14px 16px;background:var(--warnbg)}
+.info{display:grid;gap:3px;min-width:0}.info b{overflow-wrap:anywhere;font-weight:600}
+.pr{font-weight:600;color:var(--ink)}.cv{display:block;color:var(--mut);font-weight:400;font-size:12px}
+.photo{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--mut);text-decoration:none;width:max-content}.photo:hover{color:var(--ac)}
+.unsure-b{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--warn)}
+.step{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px;flex:none;background:var(--card)}
+.step.on{border-color:var(--ink)}
+.step button{width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:18px;cursor:pointer}
+.step button:hover:not(:disabled){background:var(--bg)}
+.step button:disabled{opacity:.3;cursor:default}.step span{min-width:22px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.cat-tr{display:block;margin-top:2px;font-size:13px;letter-spacing:0;text-transform:none;color:var(--mut);font-weight:500}
+.cat{margin:18px 2px 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);font-weight:600}
 .row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.chip{display:inline-block;padding:4px 10px;border-radius:99px;background:var(--ac2);color:var(--ac);font-size:13px;font-weight:600}
-.ttl{font-size:20px;font-weight:700;border:0;background:transparent;padding:8px 4px;letter-spacing:-.01em}
-.sticky{position:fixed;inset-inline:0;bottom:0;z-index:6;max-width:520px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-radius:24px 24px 0 0;box-shadow:0 -8px 30px #0002}
-.sticky b{font-size:18px}
-.al{padding:12px 14px;border-radius:14px;font-size:14px;border-inline-start:4px solid}
-.al.bad{background:#c73a3a1a;border-color:var(--bad)}.al.warn{background:#ffb8001f;border-color:var(--warn)}.al.info{background:var(--ac2);border-color:var(--ac)}.al.ok{background:#1b7a4f1a;border-color:var(--ok)}
-.ln{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}.ln:last-child{border:0}
-.tot{font-size:20px;font-weight:700}
+.chip{display:inline-block;padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mut);font-size:12px;font-weight:600;letter-spacing:.04em}
+.ttl{font-size:26px;font-weight:700;letter-spacing:-.02em;border:0;background:transparent;padding:6px 2px;border-radius:8px}
+.ttl:focus{background:var(--card)}
+.sticky{position:fixed;inset-inline:0;bottom:0;z-index:6;max-width:520px;margin:auto;padding:0 12px calc(12px + env(safe-area-inset-bottom))}
+.sticky>div{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--ink);color:var(--bg);border-radius:18px;padding:10px 10px 10px 16px;box-shadow:0 12px 32px -12px #0007}
+[dir=rtl] .sticky>div{padding:10px 16px 10px 10px}
+.sticky small{color:inherit;opacity:.65}.sticky b{font-size:18px}
+.scan-st{display:flex;align-items:center;gap:10px;min-width:0}.scan-st .spin{width:18px;height:18px;border-width:2px}
+.al{padding:12px 14px;border-radius:12px;font-size:14px;border:1px solid}
+.al.bad{background:color-mix(in srgb,var(--bad) 8%,transparent);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}.al.warn{background:var(--warnbg);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}.al.info{background:var(--ac2);border-color:transparent}.al.ok{background:color-mix(in srgb,var(--ok) 8%,transparent);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.ln{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.ln:last-child{border:0}
+.tot{font-size:22px;font-weight:700;letter-spacing:-.01em}
 .chips{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}.tab{flex:none;min-width:64px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:8px 10px;font:inherit;font-weight:600;cursor:pointer;display:grid}.tab small{font-weight:400}.tab.on{background:var(--ac);color:#fff;border-color:var(--ac)}.tab.on small{color:#fffb}
-.bar{height:10px;border-radius:9px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--hi);transition:width .3s}
-.sp{padding:12px 0;border-bottom:1px dashed var(--line);display:grid;gap:8px}.sp.done .info{opacity:.45}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}.tab{flex:none;min-width:64px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 10px;font:inherit;font-weight:600;font-size:13px;cursor:pointer;display:grid;gap:2px}.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tab.on small{color:inherit;opacity:.7}
+.bar{height:6px;border-radius:9px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.sp{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:8px}.sp.done .info{opacity:.45}
 .sp .r1{display:flex;justify-content:space-between;gap:10px;align-items:center}.acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.panel{background:var(--bg);border-radius:14px;padding:12px;display:grid;gap:10px}.pl{display:flex;gap:14px;flex-wrap:wrap}.chk{display:flex;flex-direction:row;align-items:center;gap:6px;color:var(--ink);font-size:15px}
-.x{border:0;background:none;color:var(--bad);cursor:pointer;font-size:14px}
+.panel{background:var(--bg);border-radius:12px;padding:12px;display:grid;gap:10px}.pl{display:flex;gap:14px;flex-wrap:wrap}.chk{display:flex;flex-direction:row;align-items:center;gap:8px;color:var(--ink);font-size:15px}
+.x{border:0;background:none;color:var(--bad);cursor:pointer;font:inherit;font-size:13px;padding:2px 0}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.empty{text-align:center;color:var(--mut);padding:24px}
-#busy{position:fixed;inset:0;background:#0009;display:none;place-items:center;z-index:20;color:#fff}#busy.on{display:grid}
-#busy div{display:grid;gap:14px;justify-items:center}.spin{width:38px;height:38px;border:4px solid #fff4;border-top-color:var(--hi);border-radius:50%;animation:s 0.8s linear infinite}
+.skel{height:52px;border-radius:10px;margin:12px 0;background:linear-gradient(90deg,var(--line),color-mix(in srgb,var(--line) 40%,transparent),var(--line));background-size:200% 100%;animation:sk 1.2s ease-in-out infinite}
+@keyframes sk{to{background-position:-200% 0}}
+#busy{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(6px);display:none;place-items:center;z-index:20;color:var(--ink)}#busy.on{display:grid}
+#busy>div{display:grid;gap:14px;justify-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 28px;font-weight:600}
+.spin{width:32px;height:32px;border:3px solid color-mix(in srgb,currentColor 20%,transparent);border-top-color:var(--ac);border-radius:50%;animation:s .8s linear infinite}
 @keyframes s{to{transform:rotate(360deg)}}
-#toast{position:fixed;inset-inline:16px;bottom:calc(100px + env(safe-area-inset-bottom));max-width:488px;margin:auto;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:14px;z-index:30;display:none}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:2s!important}}
+#toast{position:fixed;inset-inline:16px;bottom:calc(96px + env(safe-area-inset-bottom));max-width:488px;margin:auto;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:12px;z-index:30;display:none}
+#sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;justify-content:center;z-index:15}#sheet.on{display:flex}
+#sheet .sh{background:var(--card);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom));display:grid;gap:14px}
+#sheet ul{margin:0 0 4px;padding:0;list-style:none;display:grid;gap:12px}#sheet li{display:flex;gap:12px;align-items:flex-start}#sheet li svg{color:var(--ac);margin-top:1px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -68,12 +91,12 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ac)}
 const $=s=>document.querySelector(s),app=$('#app');
 const LANGS=[['he','עברית','ILS'],['en','English (US)','USD'],['en-GB','English (UK)','GBP'],['en-CA','English (CA)','CAD'],['en-AU','English (AU)','AUD'],['ar','العربية','AED'],['de','Deutsch','EUR'],['fr','Français','EUR'],['es','Español','EUR'],['it','Italiano','EUR'],['pt','Português (BR)','BRL'],['ru','Русский','RUB'],['uk','Українська','UAH'],['tr','Türkçe','TRY'],['ja','日本語','JPY'],['ko','한국어','KRW'],['zh','中文','CNY'],['th','ไทย','THB'],['hi','हिन्दी','INR'],['vi','Tiếng Việt','VND'],['id','Bahasa Indonesia','IDR'],['pl','Polski','PLN'],['nl','Nederlands','EUR'],['el','Ελληνικά','EUR'],['sv','Svenska','SEK'],['cs','Čeština','CZK'],['ro','Română','RON'],['hu','Magyar','HUF'],['fa','فارسی','IRR'],['ka','ქართული','GEL']];
 const RTL=['he','ar','fa'];
-const I={en:{title:'Menu & Receipt Assistant',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',menuName:'Restaurant name',addPage:'Scan another page',findPhoto:'Find photo',unsure:'Not fully readable — check against the menu',hintsT:'Tips for a good scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',hintsOff:"Don't show again",hintsGo:'Got it, take a photo',lowRes:'The photo is low resolution, so some names may not have been read correctly. A sharper photo will give a better result.',manyUnsure:'{0} dishes were not read clearly. A sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',manual:'Add a dish',dishName:'Dish name',trans:'Translation',price:'Price',add:'Add',order:'in order',saveScan:'Save order & scan receipt',empty:'Nothing here yet.',rTitle:'Receipt title',scanRec:'Scan receipt page',items:'Bill items',qty:'Qty',addItem:'Add item',tip:'Tip',custom:'Custom amount',split:'Split the bill',payers:'People',equal:'Split equally',assigned:'Assigned',left:'left',share:'Share',saveSplit:'Save split',shared:'Shared',total:'Total',subtotal:'Subtotal',tax:'Tax',svc:'Service charge',fees:'Other fees',taxIn:'Tax is already in the prices',open:'Open',del:'Delete',person:'Person',each:'Each pays',units:'Units to share',need2:'Pick at least 2 people',aP:'{0}: receipt price {1} is higher than the menu price {2}.',aQ:'{0}: charged ×{1}, but the order had ×{2}.',aS:'A service charge or tip ({0}) is already on this bill. Consider tipping 0%.',aT:'Tax on receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on receipt: {0}.',ok:'No discrepancies found.',reading:'Reading image…',menus:'Menus',receipts:'Receipts',fail:'Scan failed',none:'Scan a receipt or add items to begin.',yourTotal:'Your total',remove:'Remove'},
-he:{title:'עוזר תפריט וקבלה',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',menuName:'שם המסעדה',addPage:'סרוק עמוד נוסף',findPhoto:'חפש תמונה',unsure:'לא נקרא בוודאות — כדאי לבדוק מול התפריט',hintsT:'טיפים לסריקה טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',lowRes:'התמונה ברזולוציה נמוכה, ולכן ייתכן שחלק מהשמות לא נקראו נכון. צילום חד יותר ישפר את התוצאה.',manyUnsure:'{0} מנות לא נקראו בבירור. צילום חד יותר ישפר את התוצאה.',retake:'צלם שוב',keepIt:'המשך בכל זאת',manual:'הוספת מנה',dishName:'שם המנה',trans:'תרגום',price:'מחיר',add:'הוסף',order:'בהזמנה',saveScan:'שמור הזמנה וסרוק קבלה',empty:'אין כאן עדיין כלום.',rTitle:'כותרת הקבלה',scanRec:'סרוק עמוד קבלה',items:'פריטי החשבון',qty:'כמות',addItem:'הוסף פריט',tip:'טיפ',custom:'סכום מותאם',split:'חלוקת החשבון',payers:'משתתפים',equal:'חלוקה שווה',assigned:'שויך',left:'נותר',share:'שיתוף',saveSplit:'שמור חלוקה',shared:'משותף',total:'סה״כ',subtotal:'סכום ביניים',tax:'מס',svc:'דמי שירות',fees:'עמלות נוספות',taxIn:'המס כבר כלול במחירים',open:'פתח',del:'מחק',person:'משתתף',each:'כל אחד משלם',units:'יחידות לשיתוף',need2:'בחרו לפחות 2 משתתפים',aP:'{0}: מחיר בקבלה {1} גבוה ממחיר התפריט {2}.',aQ:'{0}: חויב ×{1}, אך בהזמנה היה ×{2}.',aS:'דמי שירות או טיפ ({0}) כבר כלולים בחשבון. שקלו טיפ 0%.',aT:'מס בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'לא נמצאו אי־התאמות.',reading:'קורא את התמונה…',menus:'תפריטים',receipts:'קבלות',fail:'הסריקה נכשלה',none:'סרקו קבלה או הוסיפו פריטים כדי להתחיל.',yourTotal:'הסכום שלך',remove:'הסר'}};
+const I={en:{title:'Smart Menu Translator & Bill Checker',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',menuName:'Restaurant name',addPage:'Scan another page',findPhoto:'Find photo',unsure:'Not fully readable — check against the menu',hintsT:'Tips for a good scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',hintsOff:"Don't show again",hintsGo:'Got it, take a photo',lowRes:'The photo is low resolution, so some names may not have been read correctly. A sharper photo will give a better result.',manyUnsure:'{0} dishes were not read clearly. A sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',manual:'Add a dish',dishName:'Dish name',trans:'Translation',price:'Price',add:'Add',order:'in order',saveScan:'Save order & scan receipt',empty:'Nothing here yet.',rTitle:'Receipt title',scanRec:'Scan receipt page',items:'Bill items',qty:'Qty',addItem:'Add item',tip:'Tip',custom:'Custom amount',split:'Split the bill',payers:'People',equal:'Split equally',assigned:'Assigned',left:'left',share:'Share',saveSplit:'Save split',shared:'Shared',total:'Total',subtotal:'Subtotal',tax:'Tax',svc:'Service charge',fees:'Other fees',taxIn:'Tax is already in the prices',open:'Open',del:'Delete',person:'Person',each:'Each pays',units:'Units to share',need2:'Pick at least 2 people',aP:'{0}: receipt price {1} is higher than the menu price {2}.',aQ:'{0}: charged ×{1}, but the order had ×{2}.',aS:'A service charge or tip ({0}) is already on this bill. Consider tipping 0%.',aT:'Tax on receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on receipt: {0}.',ok:'No discrepancies found.',reading:'Reading image…',menus:'Menus',receipts:'Receipts',fail:'Scan failed',none:'Scan a receipt or add items to begin.',yourTotal:'Your total',remove:'Remove'},
+he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',menuName:'שם המסעדה',addPage:'סרוק עמוד נוסף',findPhoto:'חפש תמונה',unsure:'לא נקרא בוודאות — כדאי לבדוק מול התפריט',hintsT:'טיפים לסריקה טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',lowRes:'התמונה ברזולוציה נמוכה, ולכן ייתכן שחלק מהשמות לא נקראו נכון. צילום חד יותר ישפר את התוצאה.',manyUnsure:'{0} מנות לא נקראו בבירור. צילום חד יותר ישפר את התוצאה.',retake:'צלם שוב',keepIt:'המשך בכל זאת',scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',manual:'הוספת מנה',dishName:'שם המנה',trans:'תרגום',price:'מחיר',add:'הוסף',order:'בהזמנה',saveScan:'שמור הזמנה וסרוק קבלה',empty:'אין כאן עדיין כלום.',rTitle:'כותרת הקבלה',scanRec:'סרוק עמוד קבלה',items:'פריטי החשבון',qty:'כמות',addItem:'הוסף פריט',tip:'טיפ',custom:'סכום מותאם',split:'חלוקת החשבון',payers:'משתתפים',equal:'חלוקה שווה',assigned:'שויך',left:'נותר',share:'שיתוף',saveSplit:'שמור חלוקה',shared:'משותף',total:'סה״כ',subtotal:'סכום ביניים',tax:'מס',svc:'דמי שירות',fees:'עמלות נוספות',taxIn:'המס כבר כלול במחירים',open:'פתח',del:'מחק',person:'משתתף',each:'כל אחד משלם',units:'יחידות לשיתוף',need2:'בחרו לפחות 2 משתתפים',aP:'{0}: מחיר בקבלה {1} גבוה ממחיר התפריט {2}.',aQ:'{0}: חויב ×{1}, אך בהזמנה היה ×{2}.',aS:'דמי שירות או טיפ ({0}) כבר כלולים בחשבון. שקלו טיפ 0%.',aT:'מס בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'לא נמצאו אי־התאמות.',reading:'קורא את התמונה…',menus:'תפריטים',receipts:'קבלות',fail:'הסריקה נכשלה',none:'סרקו קבלה או הוסיפו פריטים כדי להתחיל.',yourTotal:'הסכום שלך',remove:'הסר'}};
 let S=JSON.parse(localStorage.getItem('mrai2')||'null')||{};
 S={lang:null,cur:'USD',menus:[],receipts:[],started:false,...S};
 if(!S.lang){const n=(navigator.language||'en'),l=LANGS.find(x=>x[0]===n)||LANGS.find(x=>x[0]===n.split('-')[0])||LANGS[1];S.lang=l[0];S.cur=l[2]}
-let V={screen:S.started?'home':'setup'};
+let V={screen:S.started?'home':'setup',jobs:[]};
 const save=()=>{try{localStorage.setItem('mrai2',JSON.stringify(S))}catch(e){}};
 const t=k=>(I[S.lang]||I.en)[k]||I.en[k]||k;
 const f=(s,...a)=>s.replace(/\{(\d)\}/g,(_,i)=>a[i]);
@@ -87,23 +110,41 @@ const conv=(n,a,b)=>S.rates&&S.rates[a]&&S.rates[b]?n/S.rates[a]*S.rates[b]:null
 const mv=(n,c)=>{let h=fmt(n,c);if(c!==S.cur){const v=conv(n,c,S.cur);if(v!=null)h+=`<small class=cv>≈ ${fmt(v,S.cur)}</small>`}return h};
 const money=(n,c)=>fmt(n,c)+(c!==S.cur&&conv(n,c,S.cur)!=null?` (≈ ${fmt(conv(n,c,S.cur),S.cur)})`:'');
 const toast=m=>{const e=$('#toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',3800)};
-const busy=on=>{$('#bt').textContent=t('reading');$('#busy').classList.toggle('on',on)};
+const busy=on=>{$('#bt').textContent=t('scanRecNow');$('#busy').classList.toggle('on',on)};
 function curList(){try{return Intl.supportedValuesOf('currency')}catch(e){return['USD','EUR','GBP','ILS','JPY','CNY','KRW','INR','CAD','AUD','CHF','BRL','RUB','TRY','THB','AED','SEK','PLN','CZK','HUF','MXN']}}
 function curOpts(sel){let dn;try{dn=new Intl.DisplayNames(['en'],{type:'currency'})}catch(e){}return curList().map(c=>`<option value=${c} ${c===sel?'selected':''}>${c}${dn?' — '+esc(dn.of(c)):''}</option>`).join('')}
 // ---------- scanning ----------
 function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const m=shrink.last=Math.max(im.width,im.height),k=m<1600?1600/m:Math.min(1,2400/m),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.9).split(',')[1])};im.onerror=()=>no(new Error('Unreadable image'));im.src=u})}
 async function scan(file,mode){busy(true);try{const image=await shrink(file);const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image,mode,language:langName(),currency:S.cur})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||t('fail'));return j}finally{busy(false)}}
+// menu scans stream back one JSON line per event ({meta}, {item}, {done} or {error}), so dishes appear while the page is still being read
+async function scanStream(image,onEvt){const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image,mode:'menu',language:langName(),currency:S.cur})});
+if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||t('fail'))}
+const rd=r.body.getReader(),dec=new TextDecoder();let buf='',done=false;
+for(;;){const x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});let k;
+while((k=buf.indexOf('\n'))>=0){const s=buf.slice(0,k).trim();buf=buf.slice(k+1);if(!s)continue;let o;try{o=JSON.parse(s)}catch(e){continue}if(o.error)throw new Error(o.error);if(o.done)done=true;else onEvt(o)}}
+if(!done)throw new Error(t('fail'))}
 function pick(cb){const fi=$('#fi');fi.onchange=()=>{const x=fi.files[0];fi.value='';if(x)cb(x)};fi.click()}
 const sheet=h=>{const e=$('#sheet');e.innerHTML=h?`<div class=sh role=dialog aria-modal=true>${h}</div>`:'';e.classList.toggle('on',!!h)};
 $('#sheet').onclick=e=>{if(e.target.id==='sheet'){V.go=V.retry=null;sheet('')}};
-function withHints(go){if(S.hintsOff)return go();V.go=go;sheet(`<h3>${t('hintsT')}</h3><ul><li>📷 ${t('hint1')}</li><li>💡 ${t('hint2')}</li><li>📄 ${esc(f(t('hint3'),t('addPage')))}</li></ul><label class=chk><input type=checkbox id=hintsoff>${t('hintsOff')}</label><button class=btn data-a=hintsgo>${t('hintsGo')}</button>`)}
-// scan one menu page into M (or a new menu); warn and offer a retake when the photo is too small or many dishes are unsure
-function scanMenuPage(M){pick(guard(async file=>{const d=await scan(file,'menu'),isNew=!M,menu=M||{id:uid(),title:'',cur:S.cur,items:[],date:Date.now()},before=new Set(menu.items.map(i=>i.id));
-ingestMenu(menu,d);if(isNew)S.menus.unshift(menu);V.screen='menu';V.id=menu.id;render();if(isNew)scrollTo(0,0);
-const added=menu.items.filter(i=>!before.has(i.id)),uns=added.filter(i=>i.unsure).length,low=shrink.last<1200;
-if(low||uns>3){V.retry={id:menu.id,isNew,ids:added.map(i=>i.id)};sheet(`<div class="al warn">${esc(low?t('lowRes'):f(t('manyUnsure'),uns))}</div><button class=btn data-a=retake>${t('retake')}</button><button class="btn ghost" data-a=keep>${t('keepIt')}</button>`)}}))}
+function withHints(go){if(S.hintsOff)return go();V.go=go;sheet(`<h3>${t('hintsT')}</h3><ul><li>${ico('cam')}<span>${t('hint1')}</span></li><li>${ico('sun')}<span>${t('hint2')}</span></li><li>${ico('pages')}<span>${esc(f(t('hint3'),t('addPage')))}</span></li></ul><label class=chk><input type=checkbox id=hintsoff>${t('hintsOff')}</label><button class=btn data-a=hintsgo>${t('hintsGo')}</button>`)}
+// re-render at most every 120ms while dishes stream in, and never while the user is typing
+let rT=0;const soon=()=>{if(rT)return;rT=setTimeout(()=>{rT=0;if(/input|select|textarea/i.test(document.activeElement.tagName))return soon();render()},120)};
+const jobs=id=>V.jobs.filter(j=>j.id===id);
+// scan one page into M (or a new menu) as page pg; several pages can scan at once and still show in page order
+function scanMenuPage(M,pg){pick(file=>runPage(M,pg,file))}
+async function runPage(M,pg,file){const isNew=!M;
+if(isNew){M={id:uid(),title:'',cur:S.cur,items:[],pages:0,date:Date.now()};S.menus.unshift(M);V.screen='menu';V.id=M.id;scrollTo(0,0)}
+if(pg==null)pg=M.pages=Math.max(M.pages||0,...M.items.map(i=>i.pg||0))+1;
+const job={id:M.id,pg,n:0};V.jobs.push(job);render();let uns=0,low=false;
+try{const image=await shrink(file);low=shrink.last<1200;
+await scanStream(image,o=>{if(o.meta){if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant}
+else if(o.item&&o.item.original){const i=o.item;M.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),price:+i.price||0,cat:String(i.category||''),catTr:String(i.category_tr||''),unsure:i.unsure===true,pg,qty:0});job.n++;if(i.unsure)uns++}soon()})}
+catch(e){toast(e.message||t('fail'))}
+finally{V.jobs=V.jobs.filter(j=>j!==job)}
+if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id){V.screen='home';V.id=null}render();return}
+render();
+if(job.n&&(low||uns>3)&&V.screen==='menu'&&V.id===M.id&&!V.retry){V.retry={id:M.id,pg};sheet(`<div class="al warn">${esc(low?t('lowRes'):f(t('manyUnsure'),uns))}</div><button class=btn data-a=retake>${t('retake')}</button><button class="btn ghost" data-a=keep>${t('keepIt')}</button>`)}}
 const isCur=c=>/^[A-Z]{3}$/.test(c||'');
-function ingestMenu(M,d){if(!M.items.length&&isCur(d.currency))M.cur=d.currency;if(!M.title&&d.restaurant)M.title=d.restaurant;(d.items||[]).forEach(i=>i&&i.original&&M.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),price:+i.price||0,cat:String(i.category||''),unsure:i.unsure===true,qty:0}))}
 function ingestReceipt(R,d){const first=!R.items.length;if(first&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.title)R.title=[d.restaurant,d.date].filter(Boolean).join(' · ');(d.items||[]).forEach(i=>i&&i.original&&R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1)}));R.fees.tax+=+d.tax||0;R.fees.service+=+d.service_charge||0;R.fees.other+=+d.other_fees||0;if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(R.fees.service>0&&!R.tipTouched){R.tipMode='pct';R.tipPct=0}}
 const newReceipt=(M)=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],fees:{tax:0,taxIncl:true,service:0,other:0},tipMode:'pct',tipPct:12,tipCustom:0,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);V.screen='receipt';V.id=R.id;render();return R};
 // ---------- math ----------
@@ -115,26 +156,40 @@ const A=(R,id)=>R.assign[id]||(R.assign[id]={ind:{},sh:[]});
 const used=(R,i)=>{const a=R.assign[i.id];return a?Object.values(a.ind).reduce((s,x)=>s+x,0)+a.sh.reduce((s,x)=>s+x.q,0):0};
 const pSub=(R,p)=>R.items.reduce((s,i)=>{const a=R.assign[i.id];return a?s+(a.ind[p]||0)*i.unit+a.sh.filter(x=>x.p.includes(p)).reduce((z,x)=>z+x.q*i.unit/x.p.length,0):s},0);
 const ptot=(R,p)=>{const s=sub(R),ps=pSub(R,p),r=s>0?ps/s:0;return ps+(extras(R)+tipAmt(R))*r};
+// ---------- icons (24px line icons) ----------
+const IC={menu:'<path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v15H7.5A2.5 2.5 0 0 0 5 20.5z"/><path d="M5 20.5A2.5 2.5 0 0 1 7.5 18H19v3H7.5"/><path d="M9 8h6M9 11.5h4"/>',
+receipt:'<path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+pages:'<path d="M8 3h8l4 4v11H8z"/><path d="M16 3v4h4"/><path d="M4 7v14h12"/>',
+warn:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+img:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4L5 21"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
+const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 // ---------- views ----------
-const bar=(title,back)=>`<header class=top><button class=ic data-a=go data-x=${back} aria-label="${t('back')||'Back'}">${rtl()?'→':'←'}</button><h2>${esc(title)}</h2></header>`;
-const step=(q,a,id)=>`<div class=step><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''}>−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1>+</button></div>`;
-function setup(){return `<section class=hero><div class=mark>🧾</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>
+const bar=(title,back)=>`<header class=top><button class="ic back" data-a=go data-x=${back} aria-label="${t('back')||'Back'}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
+const step=(q,a,id)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 aria-label="+1">+</button></div>`;
+function setup(){return `<section class=hero><div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>
 <label>${t('lang')}<select data-c=slang>${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}<option value=x ${S.lang==='x'?'selected':''}>${t('other')}</option></select></label>
 ${S.lang==='x'?`<input data-c=sname placeholder="${t('otherPh')}" value="${esc(S.langName||'')}">`:''}
 <label>${t('cur')}<select data-c=scur>${curOpts(S.cur)}</select></label>
 <button class=btn data-a=start>${t('start')}</button></section>`}
-function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><h1>${t('hello')}</h1><button class=ic data-a=go data-x=setup aria-label="${t('set')}">⚙</button></div></section>
-<div class=pad><button class="card tile main" data-a=nm><span class=e>📖</span><span><b>${t('scanMenu')}</b><small>${t('scanMenuD')}</small></span></button>
-<button class="card tile" data-a=nr><span class=e>🧾</span><span><b>${t('scanReceipt')}</b><small class=mut>${t('scanReceiptD')}</small></span></button>
-<button class="card tile" data-a=go data-x=history><span class=e>🗂</span><span><b>${t('hist')}</b><small class=mut>${t('histD')}</small></span></button></div>`}
-function menuV(){const M=cm();if(!M)return home();const cats=[...new Set(M.items.map(i=>i.cat||''))];
+const tile=(cls,a,x,ic,ti,d)=>`<button class="card tile ${cls}" data-a=${a} ${x?`data-x=${x}`:''}><span class=e>${ico(ic,22)}</span><span><b>${ti}</b><small class=mut>${d}</small></span><span class=chev>${ico('chev',18)}</span></button>`;
+function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><span class=eyebrow>${t('title')}</span><button class=ic data-a=go data-x=setup aria-label="${t('set')}">${ico('gear')}</button></div><h1>${t('hello')}</h1></section>
+<div class=pad>${tile('main','nm','','menu',t('scanMenu'),t('scanMenuD'))}${tile('','nr','','receipt',t('scanReceipt'),t('scanReceiptD'))}${tile('','go','history','clock',t('hist'),t('histD'))}</div>`}
+const itemV=(i,M)=>`<div class="item${i.unsure?' unsure':''}"><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsure')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<span class=mut dir=auto>${esc(i.tr)}</span>`:''}${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">${ico('img',14)}${t('findPhoto')}</a></div>${step(i.qty,'mq',i.id)}</div>`;
+function menuV(){const M=cm();if(!M)return home();const items=[...M.items].sort((a,b)=>(a.pg||0)-(b.pg||0)),cats=[...new Set(items.map(i=>i.cat||''))],js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto>
-<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}<button class="btn ghost sm" data-a=mpage>＋ ${t('addPage')}</button></div>
-${cats.map(c=>(c?`<div class=cat dir=auto>${esc(c)}</div>`:'')+M.items.filter(i=>(i.cat||'')===c).map(i=>`<div class="card item${i.unsure?' unsure':''}"><div class=info>${i.unsure?`<span class=unsure-b>⚠️ ${t('unsure')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<span class=mut dir=auto>${esc(i.tr)}</span>`:''}${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">🖼️ ${t('findPhoto')}</a></div>${step(i.qty,'mq',i.id)}</div>`).join('')).join('')}
-${M.items.length?'':`<p class=empty>${t('empty')}</p>`}
-<div class=card><h3>${t('manual')}</h3><div class=pad style="padding:0"><input id=mn placeholder="${t('dishName')}" dir=auto><input id=mt placeholder="${t('trans')}" dir=auto><input id=mp type=number step=any inputmode=decimal placeholder="${t('price')}"><button class="btn sm" data-a=madd>${t('add')}</button></div></div></div>
-<div class=sticky><div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class=btn data-a=tor>${t('saveScan')}</button></div>`}
+<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${js.length?'':`<button class="btn ghost sm" data-a=mpage>${ico('plus',16)}${t('addPage')}</button>`}</div>
+${cats.map(c=>`<section>${c?(()=>{const tr=(items.find(i=>(i.cat||'')===c)||{}).catTr;return `<div class=cat dir=auto>${esc(c)}${tr&&norm(tr)!==norm(c)?`<span class=cat-tr dir=auto>${esc(tr)}</span>`:''}</div>`})():''}<div class="card list">${items.filter(i=>(i.cat||'')===c).map(i=>itemV(i,M)).join('')}</div></section>`).join('')}
+${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?'':`<p class=empty>${t('empty')}</p>`}
+<div class=card><h3>${t('manual')}</h3><div class=pad style="padding:0"><input id=mn placeholder="${t('dishName')}" dir=auto><input id=mt placeholder="${t('trans')}" dir=auto><input id=mp type=number step=any inputmode=decimal placeholder="${t('price')}"><button class="btn sm ghost" data-a=madd>${t('add')}</button></div></div></div>
+<div class=sticky><div>${js.length
+?`<div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t('scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button>`
+:`<div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class="btn acc" data-a=tor>${t('saveScan')}</button>`}</div></div>`}
 function alerts(R){const o=[],M=S.menus.find(m=>m.id===R.menuId);
 if(M){const ordered=M.items.some(x=>x.qty>0);R.items.forEach(i=>{const a=norm(i.orig);const m=M.items.find(x=>norm(x.orig)===a)||M.items.find(x=>a.length>3&&norm(x.orig).length>3&&(norm(x.orig).includes(a)||a.includes(norm(x.orig))));if(!m)return;
 if(M.cur===R.cur&&m.price>0&&i.unit>m.price+.005)o.push(['bad',f(t('aP'),i.orig,fmt(i.unit,R.cur),fmt(m.price,R.cur))]);
@@ -178,10 +233,10 @@ nm:()=>withHints(()=>scanMenuPage(null)),
 mpage:()=>{const M=cm();withHints(()=>scanMenuPage(M))},
 hintsgo:()=>{if($('#hintsoff').checked){S.hintsOff=true;save()}sheet('');const g=V.go;V.go=null;g&&g()},
 retake:()=>{const r=V.retry;V.retry=null;sheet('');const M=S.menus.find(m=>m.id===r.id);if(!M)return;
-if(r.isNew){S.menus=S.menus.filter(m=>m.id!==r.id);V.screen='home';V.id=null;render();scanMenuPage(null)}else{M.items=M.items.filter(i=>!r.ids.includes(i.id));render();scanMenuPage(M)}},
+M.items=M.items.filter(i=>i.pg!==r.pg);render();scanMenuPage(M,r.pg)},
 keep:()=>{V.retry=null;sheet('')},
 mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);render()},
-madd:()=>{const n=$('#mn').value.trim();if(!n)return;cm().items.push({id:uid(),orig:n,tr:$('#mt').value.trim(),price:+$('#mp').value||0,cat:'',qty:0});render()},
+madd:()=>{const n=$('#mn').value.trim();if(!n)return;cm().items.push({id:uid(),orig:n,tr:$('#mt').value.trim(),price:+$('#mp').value||0,cat:'',pg:1e9,qty:0});render()},
 tor:()=>{const M=cm();save();const R=newReceipt(M);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
 nr:()=>{const R=newReceipt(null);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
 rscan:()=>{const R=cr();pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
