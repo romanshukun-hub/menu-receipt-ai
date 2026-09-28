@@ -11,7 +11,8 @@ Return ONLY one JSON object, no markdown:
            "translation": dish name translated into ${l},
            "price": number (0 if none),
            "category": section heading copied exactly as printed, or "",
-           "lang": ISO 639-1 code of the language "original" is printed in (e.g. "en", "hu")}]}
+           "lang": ISO 639-1 code of the language "original" is printed in (e.g. "en", "hu"),
+           "unsure": true if any word of the name, or the price, was blurry, cut off or hard to read and you had to guess part of it; otherwise false}]}
 Rules:
 - List the dishes in the SAME ORDER they appear on the menu: follow the menu's reading direction (right-to-left for Hebrew/Arabic), section by section, top to bottom; finish one column before starting the next. Never sort, group or reorder.
 - If the menu shows the same dishes in more than one language (separate sections, columns or lines per language), list ONLY the English part: each dish once, in the English part's order, and nothing from the other-language copies or their headings. If there is no English, use the language that is printed. If a price appears only next to another language's copy of the dish, still use that price.
