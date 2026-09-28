@@ -42,42 +42,58 @@ async function ask(key, body) {
   }
 }
 
-// Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, then {"done":true} or {"error":"..."}
+// Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, then {"done":true} or {"error":"..."}.
+// If the AI service fails mid-stream (e.g. overloaded), it starts over and skips the dishes already sent.
 async function streamMenu(key, content, res) {
-  const r = await ask(key, { model: MODEL, max_tokens: 16000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
-  if (!r.ok) { const j = await r.json().catch(() => ({})); return res.status(502).json({ error: j.error?.message || 'AI service error.' }); }
-  res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
   const send = o => res.write(JSON.stringify(o) + '\n');
-  let keep = null, cat = '', catTr = '', text = '', sse = '', n = 0;
-  const line = s => {
-    const a = s.indexOf('{'), b = s.lastIndexOf('}');
-    if (a < 0 || b < a) return;
-    let o; try { o = JSON.parse(s.slice(a, b + 1)); } catch (e) { return; }
-    if ('keep' in o || 'restaurant' in o) { keep = String(o.keep || '').toLowerCase().slice(0, 2) || null; return send({ meta: { restaurant: o.restaurant || null, currency: o.currency || null } }); }
-    if ('category' in o && !('original' in o)) { cat = String(o.category || ''); catTr = String(o.category_translation || ''); return; }
-    if (!o.original) return;
-    if (keep && o.lang && String(o.lang).toLowerCase().slice(0, 2) !== keep) return; // bilingual menus: only the kept language
-    n++; send({ item: { original: o.original, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, unsure: o.unsure === true } });
-  };
-  const reader = r.body.getReader(), dec = new TextDecoder();
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    sse += dec.decode(value, { stream: true });
-    let k;
-    while ((k = sse.indexOf('\n')) >= 0) {
-      const ev = sse.slice(0, k).trim(); sse = sse.slice(k + 1);
-      if (!ev.startsWith('data:')) continue;
-      let d; try { d = JSON.parse(ev.slice(5)); } catch (e) { continue; }
-      if (d.type === 'error') { send({ error: d.error?.message || 'AI service error.' }); return res.end(); }
-      if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
-      text += d.delta.text;
-      let j;
-      while ((j = text.indexOf('\n')) >= 0) { line(text.slice(0, j)); text = text.slice(j + 1); }
+  const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+  const sent = new Set();
+  let keep = null, n = 0, err = '';
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await new Promise(ok => setTimeout(ok, 2000 * attempt));
+    const r = await ask(key, { model: MODEL, max_tokens: 16000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
+    if (!r.ok) {
+      const j = await r.json().catch(() => ({}));
+      if (!res.headersSent) return res.status(502).json({ error: j.error?.message || 'AI service error.' });
+      err = j.error?.message || 'AI service error.'; continue;
     }
+    if (!res.headersSent) res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
+    const before = new Set(sent);
+    let cat = '', catTr = '', text = '', sse = '';
+    err = '';
+    const line = s => {
+      const a = s.indexOf('{'), b = s.lastIndexOf('}');
+      if (a < 0 || b < a) return;
+      let o; try { o = JSON.parse(s.slice(a, b + 1)); } catch (e) { return; }
+      if ('keep' in o || 'restaurant' in o) { keep = String(o.keep || '').toLowerCase().slice(0, 2) || null; if (!attempt) send({ meta: { restaurant: o.restaurant || null, currency: o.currency || null } }); return; }
+      if ('category' in o && !('original' in o)) { cat = String(o.category || ''); catTr = String(o.category_translation || ''); return; }
+      if (!o.original) return;
+      if (keep && o.lang && String(o.lang).toLowerCase().slice(0, 2) !== keep) return; // bilingual menus: only the kept language
+      const id = norm(o.original);
+      if (before.has(id)) return; // already sent before a retry
+      sent.add(id); n++;
+      send({ item: { original: o.original, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, unsure: o.unsure === true } });
+    };
+    const reader = r.body.getReader(), dec = new TextDecoder();
+    read: for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      sse += dec.decode(value, { stream: true });
+      let k;
+      while ((k = sse.indexOf('\n')) >= 0) {
+        const ev = sse.slice(0, k).trim(); sse = sse.slice(k + 1);
+        if (!ev.startsWith('data:')) continue;
+        let d; try { d = JSON.parse(ev.slice(5)); } catch (e) { continue; }
+        if (d.type === 'error') { err = d.error?.message || 'AI service error.'; reader.cancel().catch(() => {}); break read; }
+        if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
+        text += d.delta.text;
+        let j;
+        while ((j = text.indexOf('\n')) >= 0) { line(text.slice(0, j)); text = text.slice(j + 1); }
+      }
+    }
+    if (!err) { line(text); break; }
   }
-  line(text);
-  send(n ? { done: true } : { error: 'Could not read this image. Try a clearer photo.' });
+  send(err ? { error: err } : n ? { done: true } : { error: 'Could not read this image. Try a clearer photo.' });
   res.end();
 }
 
