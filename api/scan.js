@@ -60,6 +60,9 @@ async function ask(key, body) {
   }
 }
 
+// the AI service's own error, with its status, so a failure can be diagnosed (also written to the server log)
+const aiErr = async r => { const t = await r.text().catch(() => ''); let j = {}; try { j = JSON.parse(t); } catch (e) {} const m = `AI ${r.status}: ${j.error?.message || t.slice(0, 200) || 'no details'}`; console.error(m); return m; };
+
 const arr = (a, n = 20) => Array.isArray(a) ? a.slice(0, n) : [];
 
 // Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, {"ingr":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
@@ -73,9 +76,9 @@ async function streamMenu(key, content, res) {
     if (attempt) await new Promise(ok => setTimeout(ok, 2000 * attempt));
     const r = await ask(key, { model: MODEL, max_tokens: 20000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
     if (!r.ok) {
-      const j = await r.json().catch(() => ({}));
-      if (!res.headersSent) return res.status(502).json({ error: j.error?.message || 'AI service error.', code: 'ai' });
-      err = j.error?.message || 'AI service error.'; continue;
+      const m = await aiErr(r);
+      if (!res.headersSent) return res.status(502).json({ error: m, code: 'ai' });
+      err = m; continue;
     }
     if (!res.headersSent) res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
     const before = new Set(sent);
@@ -134,7 +137,7 @@ async function streamMenu(key, content, res) {
 // Streams a receipt as NDJSON: {"meta":{...}}, {"item":{...}} per line on the bill, {"totals":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}
 async function streamReceipt(key, content, res) {
   const r = await ask(key, { model: MODEL, max_tokens: 16000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
-  if (!r.ok) { const j = await r.json().catch(() => ({})); return res.status(502).json({ error: j.error?.message || 'AI service error.', code: 'ai' }); }
+  if (!r.ok) return res.status(502).json({ error: await aiErr(r), code: 'ai' });
   res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
   const send = o => res.write(JSON.stringify(o) + '\n'), num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
   let n = 0, err = '', text = '', sse = '', isReceipt = true; const usage = { input_tokens: 0, output_tokens: 0 };
@@ -187,8 +190,8 @@ Return ONLY one JSON object, no markdown: {"rtl": true if ${lang} is written rig
 Rules: natural, short wording a native speaker would expect in an app; keep every placeholder like {0} or {1} exactly; keep emoji, symbols (×, %, ✕, ·, …), currency codes, "Claude", "Anthropic", "Google", "open.er-api.com" and "AS IS" as they are; use the same term for the same thing everywhere.
 
 ${JSON.stringify(input)}` }] });
+  if (!r.ok) return fail(res, 502, 'ai', await aiErr(r));
   const j = await r.json();
-  if (!r.ok) return fail(res, 502, 'ai', j.error?.message || 'AI service error.');
   const text = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
   let out = {}; try { out = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1)); } catch (e) { return fail(res, 502, 'ai', 'Bad translation.'); }
   const ph = s => (String(s).match(/\{\d\}/g) || []).sort().join();
