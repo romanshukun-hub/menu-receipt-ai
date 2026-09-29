@@ -43,7 +43,8 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .item.unsure{margin:0 -16px;padding:14px 16px;background:var(--warnbg)}
 .info{display:grid;gap:3px;min-width:0}.info b{overflow-wrap:anywhere;font-weight:600}
 .pr{font-weight:600;color:var(--ink)}.cv{display:block;color:var(--mut);font-weight:400;font-size:12px}
-.photo{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--mut);text-decoration:none;width:max-content}.photo:hover{color:var(--ac)}
+.photo{display:inline-flex;align-items:center;gap:6px;margin-top:6px;min-height:34px;padding:0 12px;border-radius:99px;border:1px solid color-mix(in srgb,var(--ac) 45%,transparent);background:var(--ac2);color:var(--ac);font-size:13px;font-weight:600;text-decoration:none;width:max-content;cursor:pointer;transition:background .12s,color .12s}
+.photo:hover,.photo:focus-visible{background:var(--ac);color:#fff}.photo:active{transform:scale(.97)}.photo svg:last-child{opacity:.7}
 .unsure-b{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--warn)}
 .step{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px;flex:none;background:var(--card)}
 .step.on{border-color:var(--ink)}
@@ -129,7 +130,7 @@ const $=s=>document.querySelector(s),app=$('#app');
 const LANGS=[['he','עברית','ILS'],['en','English (US)','USD'],['en-GB','English (UK)','GBP'],['en-CA','English (CA)','CAD'],['en-AU','English (AU)','AUD'],['ar','العربية','AED'],['de','Deutsch','EUR'],['fr','Français','EUR'],['es','Español','EUR'],['it','Italiano','EUR'],['pt','Português (BR)','BRL'],['ru','Русский','RUB'],['uk','Українська','UAH'],['tr','Türkçe','TRY'],['ja','日本語','JPY'],['ko','한국어','KRW'],['zh','中文','CNY'],['th','ไทย','THB'],['hi','हिन्दी','INR'],['vi','Tiếng Việt','VND'],['id','Bahasa Indonesia','IDR'],['pl','Polski','PLN'],['nl','Nederlands','EUR'],['el','Ελληνικά','EUR'],['sv','Svenska','SEK'],['cs','Čeština','CZK'],['ro','Română','RON'],['hu','Magyar','HUF'],['fa','فارسی','IRR'],['ka','ქართული','GEL']];
 const RTL=['he','ar','fa'];
 const I={en:{title:'Smart Menu Translator & Bill Checker',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',saveSet:'Save',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',back:'Back',menuName:'Restaurant name',
-addPage:'Scan another menu page',findPhoto:'Find photo',unsureTag:'May contain an error in the name or price — check it',
+addPage:'Scan another menu page',findPhoto:'See photos of this dish',unsureTag:'May contain an error in the name or price — check it',
 hintsT:'Tips for a good menu scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',
 rHintsT:'Tips for photographing the receipt',rHint1:'Fit the whole receipt in the photo — from the first line down to the total',rHint2:'Shoot straight from above, on a flat surface, without folds',rHint3:'Good lighting, no shadows or glare on the paper',rHint4:'Long receipt? Photograph it in parts and add each part separately',
 hintsOff:"Don't show again",hintsGo:'Got it, take a photo',cancel:'Cancel',
@@ -151,9 +152,9 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
-addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
+addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
 rHintsT:'טיפים לצילום הקבלה',rHint1:'ודאו שכל הקבלה בתמונה — מהשורה הראשונה ועד הסכום הכולל',rHint2:'צלמו ישר מלמעלה, על משטח שטוח ובלי קיפולים',rHint3:'תאורה טובה, בלי צל או השתקפויות על הנייר',rHint4:'קבלה ארוכה? צלמו אותה בכמה חלקים והוסיפו כל חלק בנפרד',
 hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',cancel:'ביטול',
@@ -175,7 +176,7 @@ aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
 const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
@@ -345,6 +346,7 @@ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',check:'<circ
 trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 img:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4L5 21"/>',
 star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
 plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
 const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 // ---------- views ----------
@@ -376,11 +378,11 @@ function itemV(i,M){const av=(i.ing||[]).filter(k=>S.avoid.includes(k)),bad=S.di
 const warn=[];if(av.length)warn.push(f(t('contains'),av.map(k=>ingLabel(M,k)).join(', ')));if(bad.length)warn.push(f(t('notFor'),bad.map(d=>t('n'+d)).join(', ')));
 return `<div class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
 ${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}
-<div class=nm><b dir=auto>${i.addon?'+ ':''}${esc(i.orig)}</b>${star?`<button class=star data-a=star aria-label="${t('starT')}">⭐</button>`:''}</div>
+<div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${star?`<button class=star data-a=star aria-label="${t('starT')}">⭐</button>`:''}</div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
 ${good.length||(i.marks||[]).length?`<div class=tags>${good.map(d=>`<span class="tag ok">${dIco(d)} ${t('y'+d)}</span>`).join('')}${(i.marks||[]).map(m=>`<span class=tag>${MARK[m.c]?MARK[m.c]+' ':''}${esc(m.l)}</span>`).join('')}</div>`:''}
 ${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}
-${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">${ico('img',14)}${t('findPhoto')}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
+${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
 function sectionsV(M){const items=[...M.items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));let out='',g=null,sub='',rows='';
 const flush=()=>{if(g)out+=`<section>${g.cat?`<div class=cat dir=auto>${esc(g.cat)}${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</div>`:''}<div class="card list">${rows}</div></section>`;rows=''};
@@ -441,7 +443,7 @@ return bar(R.title||t('rTitle'),M?'menu:'+M.id:'home')+`<div class=pad><input cl
 <input data-c=rrest placeholder="${t('menuName')}" value="${esc(R.restaurant)}" dir=auto>
 ${al.map(a=>`<div class="al ${a[0]}${a[0]==='bad'?' strong':''}" role=${a[0]==='bad'?'alert':'status'}>${ico(a[0]==='bad'?'warn':a[0]==='ok'?'check':'info',18)}<span>${esc(a[1])}</span></div>`).join('')}
 <div class=card><div class=row style="margin-bottom:4px"><h3 style="margin:0">${t('items')}</h3><span class=chip>${f(t('itemsCount'),nq)} · ${R.cur}</span></div>
-${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&norm(i.tr)!==norm(i.orig)?`<small dir=auto>${esc(i.tr)}</small>`:''}${i.qty>1?`<small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small>`:''}</div><div class=end><b class=n>${fmt(i.unit*i.qty,R.cur)}</b><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></div></div>`).join('')}
+${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span dir=ltr class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&norm(i.tr)!==norm(i.orig)?`<small dir=auto>${esc(i.tr)}</small>`:''}${i.qty>1?`<small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small>`:''}</div><div class=end><b class=n>${fmt(i.unit*i.qty,R.cur)}</b><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></div></div>`).join('')}
 <button class="btn ghost sm wide" style="margin-top:12px" data-a=rscan>${ico('cam',16)}${t('scanRec')}</button></div>
 <div class=card><div class=g2>${num(R.fees.taxIncl?t('taxInc'):t('tax'),R.fees.tax,'ftax')}${num(t('svc'),R.fees.service,'fsvc')}${num(t('fees'),R.fees.other,'foth')}${num(t('billTip'),R.fees.tip,'ftip')}</div></div>
 <div class=card><h3>${t('yourTip')}</h3>${R.fees.service>0||tb>0?`<small class=mut style="display:block;margin:-6px 0 10px">${t('tipNote')}</small>`:''}<div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
@@ -449,8 +451,9 @@ ${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span class="qty${
 ${R.items.length?`<div class=card><label class="chk big"><input type=checkbox data-c=splitq ${R.split?'checked':''}>${t('splitQ')}</label>${R.split?`<div style="margin-top:14px">${splitV(R)}</div>`:''}</div>`:''}
 ${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}
 </div>`}
-function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti||'—')}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
-return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title,`${m.items.length} · ${m.cur} · ${new Date(m.date).toLocaleDateString()}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.title||r.restaurant,`${fmt(grand(r),r.cur)} · ${new Date(r.date).toLocaleDateString()}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
+const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
+function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti)}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
+return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.title||r.restaurant||t('rTitle'),`${fmt(grand(r),r.cur)} · ${day(r.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
 function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)()}
 // ---------- actions ----------
 const confirmDel=(title,desc,yes)=>openSheet(`<h3>${esc(f(t('delT'),title||'—'))}</h3><p class=mut>${desc}</p><button class="btn danger" data-a=sa data-x=yes>${ico('trash',18)}${t('delBtn')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{yes});
@@ -480,7 +483,7 @@ shp:id=>{V.shp=V.shp===id?null:id;V.shq=1;V.shs=[];render()},
 shsave:id=>{const R=cr(),i=R.items.find(i=>i.id===id),rem=i.qty-used(R,i);if((V.shs||[]).length<2)return toast(t('need2'));A(R,id).sh.push({q:Math.min(V.shq||1,rem),p:[...V.shs].sort((a,b)=>a-b)});V.shp=null;render()},
 unsh:(id,x)=>{const R=cr();R.assign[id].sh.splice(+x,1);render()},
 om:id=>{V.screen='menu';V.id=id;render();scrollTo(0,0)},or:id=>{V.screen='receipt';V.id=id;render();scrollTo(0,0)},
-dm:id=>{const m=S.menus.find(x=>x.id===id);confirmDel(m&&m.title,t('delMenu'),()=>{S.menus=S.menus.filter(x=>x.id!==id);render()})},
+dm:id=>{const m=S.menus.find(x=>x.id===id);confirmDel(m&&(m.title||t('untitledMenu')),t('delMenu'),()=>{S.menus=S.menus.filter(x=>x.id!==id);render()})},
 dr:id=>{const r=S.receipts.find(x=>x.id===id);confirmDel(r&&(r.title||r.restaurant),t('delRec'),()=>{S.receipts=S.receipts.filter(x=>x.id!==id);render()})}};
 const CH={
 slang:v=>{S.lang=v;const l=LANGS.find(x=>x[0]===v);if(l)S.cur=l[2];render()},
