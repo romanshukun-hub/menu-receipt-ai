@@ -131,37 +131,6 @@ async function streamMenu(key, content, res) {
   res.end();
 }
 
-// Looks up reviews of the restaurant on the web and returns which of its dishes reviewers praise most.
-async function popular(key, body, res) {
-  const name = String(body.restaurant || '').slice(0, 120).trim();
-  const dishes = arr(body.dishes, 150).map(d => String(d).slice(0, 120));
-  if (!name || !dishes.length) return res.status(200).json({ popular: [] });
-  const hint = [body.currency && `prices in ${String(body.currency).slice(0, 3)}`, body.city && `city: ${String(body.city).slice(0, 60)}`].filter(Boolean).join(', ');
-  const messages = [{ role: 'user', content: `Restaurant: "${name}"${hint ? ` (${hint})` : ''}.
-Its menu has these dishes (exact names):
-${dishes.map(d => '- ' + d).join('\n')}
-
-Search the web for Google reviews and other reviews of this restaurant, and find its signature dishes and the dishes reviewers praise most.
-Return ONLY one JSON object, no markdown: {"found": true if you identified this restaurant, "popular": [up to 5 names copied exactly from the list above]}.
-Only include dishes that reviews or the restaurant itself actually single out. If you can't identify the restaurant or reviews don't name dishes, return an empty list.` }];
-  const usage = { input_tokens: 0, output_tokens: 0, web_searches: 0 }; // returned so the cost of a lookup can be checked
-  for (let turn = 0; turn < 4; turn++) {
-    const r = await ask(key, { model: MODEL, max_tokens: 6000, output_config: { effort: 'low' }, tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3 }], messages });
-    const j = await r.json();
-    if (!r.ok) return res.status(502).json({ error: j.error?.message || 'AI service error.' });
-    const u = j.usage || {};
-    usage.input_tokens += (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0);
-    usage.output_tokens += u.output_tokens || 0; usage.web_searches += u.server_tool_use?.web_search_requests || 0;
-    if (j.stop_reason === 'pause_turn') { messages.push({ role: 'assistant', content: j.content }); continue; }
-    const text = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-    const a = text.lastIndexOf('{"found"') >= 0 ? text.lastIndexOf('{"found"') : text.indexOf('{'), b = text.lastIndexOf('}');
-    let out = {}; try { out = JSON.parse(text.slice(a, b + 1)); } catch (e) {}
-    const set = new Set(dishes);
-    return res.status(200).json({ popular: out.found ? arr(out.popular, 5).filter(d => set.has(d)) : [], usage });
-  }
-  return res.status(200).json({ popular: [] });
-}
-
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const key = process.env.ANTHROPIC_API_KEY;
@@ -177,7 +146,6 @@ module.exports = async (req, res) => {
   const lang = String(language || 'English').replace(/[^\p{L}\p{N} ()\-]/gu, '').slice(0, 40) || 'English';
   const cur = /^[A-Z]{3}$/.test(currency) ? currency : 'USD';
   try {
-    if (mode === 'popular') return await popular(key, req.body, res);
     if (typeof image !== 'string' || image.length < 100 || image.length > 6e6 || !/^[A-Za-z0-9+/=]+$/.test(image))
       return res.status(400).json({ error: 'Invalid image.' });
     if (!P[mode]) return res.status(400).json({ error: 'Invalid mode.' });

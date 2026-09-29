@@ -109,10 +109,9 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .item.dim{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 45%,transparent)}
 .item.dim .nm,.item.dim .desc,.item.dim .pr,.item.dim .tags,.item.dim .photo{opacity:.4;filter:grayscale(1)}
 .avoid-b{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;font-weight:600;color:#fff;background:var(--bad);border-radius:8px;padding:4px 8px;width:max-content;max-width:100%}
-.nm{display:flex;gap:6px;align-items:flex-start}.star{border:0;background:none;padding:0 2px;font-size:17px;line-height:1.2;cursor:pointer;flex:none}
+.nm{display:flex;gap:6px;align-items:flex-start}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:3px 0}.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
 .tag.ok{background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent);font-weight:600}
-.starbox{display:grid;justify-items:center;gap:8px;text-align:center;padding:6px 0 4px;font-size:17px}.starbox .big{font-size:44px;line-height:1}
 .hrow{display:flex;align-items:center;gap:6px;cursor:pointer}.hrow .info{flex:1}.hrow:hover{border-color:var(--mut)}.ic.del{color:var(--bad)}.hrow .chev{color:var(--mut)}[dir=rtl] .hrow .chev{transform:scaleX(-1)}
 .rit{align-items:center}.rit .info{flex:1}.end{display:grid;gap:2px;justify-items:end;text-align:end}
 .rdate{display:block;padding:0 2px}
@@ -146,7 +145,7 @@ dupT:'Heads up: you already uploaded this photo',dupIn:'It was already scanned i
 uns:'Heads up: {0} of the {1} dishes were not recognised with full certainty',unsR:'Heads up: {0} of the {1} items were not recognised with full certainty',unsD:'If you continue, they will be marked so you can check them against the menu.',unsDR:'If you continue, they will be marked so you can check them against the receipt.',lowRes:'The photo is low resolution — a sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',
 emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographed the menu and that the text is sharp and readable.',emptyRecT:'No items found in this photo',emptyRecD:'Make sure you photographed the whole receipt and that the text is sharp and readable.',scanAgain:'Scan again',
 scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
-policy:'Restaurant policy',starT:'Recommended dish',starD:'Especially recommended according to reviews online',starLoading:'Checking reviews of the restaurant…',ok2:'Got it',
+policy:'Restaurant policy',
 ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',notFor:'Heads up: {0}',dietEdit:'Diet preferences',
 dietsT:'Dietary restrictions',dietsD:"We'll mark dishes that suit you and dishes to avoid.",
 dv:'Vegetarian',dvg:'Vegan',dh:'Halal',dk:'Kosher',dp:'Pescatarian',dgf:'Gluten-free',dlf:'Lactose-free',
@@ -170,7 +169,7 @@ dupT:'שים לב: העלית את התמונה הזו כבר קודם',dupIn:'�
 uns:'שים לב: {0} מנות מתוך ה-{1} לא זוהו בוודאות מלאה',unsR:'שים לב: {0} פריטים מתוך ה-{1} לא זוהו בוודאות מלאה',unsD:'אם תמשיכו, הן יסומנו כדי שתוכלו לבדוק אותן מול התפריט.',unsDR:'אם תמשיכו, הם יסומנו כדי שתוכלו לבדוק אותם מול הקבלה.',lowRes:'התמונה ברזולוציה נמוכה — צילום חד יותר ישפר את התוצאה.',retake:'צלם מחדש',keepIt:'המשך בכל זאת',
 emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שצילמתם את התפריט ושהטקסט חד וקריא.',emptyRecT:'לא נמצאו פריטים בתמונה',emptyRecD:'ודאו שצילמתם את הקבלה כולה ושהטקסט חד וקריא.',scanAgain:'סרוק שוב',
 scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
-policy:'מדיניות המסעדה',starT:'מנה מומלצת',starD:'מנה מומלצת במיוחד לפי ביקורות ברשת',starLoading:'בודק ביקורות על המסעדה…',ok2:'הבנתי',
+policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו. המרכיבים מזוהים אוטומטית ועלולים לטעות: באלרגיה, ודאו תמיד מול הצוות.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',notFor:'שים לב: {0}',dietEdit:'העדפות תזונה',
 dietsT:'מגבלות תזונה',dietsD:'נסמן לכם בתפריט מנות מתאימות ומנות שכדאי להימנע מהן.',
 dv:'צמחוני',dvg:'טבעוני',dh:'חלאל',dk:'כשר',dp:'פסקטריאני',dgf:'ללא גלוטן',dlf:'ללא לקטוז',
@@ -190,26 +189,24 @@ const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
 ['מה אנחנו אוספים','האפליקציה לא דורשת הרשמה ולא אוספת שם, טלפון או כתובת דוא״ל. התפריטים, ההזמנות, הקבלות וההגדרות שלכם (שפה, מטבע, מגבלות תזונה ומרכיבים שסימנתם) נשמרים רק בדפדפן שלכם, במכשיר שלכם.'],
 ['תמונות שאתם סורקים','כשאתם סורקים תפריט או קבלה, התמונה נשלחת דרך השרת שלנו לשירות הבינה המלאכותית Claude של חברת Anthropic, כדי לקרוא ולתרגם אותה. השרת שלנו לא שומר את התמונות. Anthropic מעבדת את המידע לפי מדיניות הפרטיות שלה. אל תצלמו פרטים אישיים, כמו פרטי כרטיס אשראי שמודפסים על הקבלה.'],
-['מנות מומלצות','כדי לסמן מנות מומלצות, שם המסעדה ורשימת המנות נשלחים לחיפוש ברשת של ביקורות על המסעדה. לא נשלח שום מידע עליכם.'],
 ['שירותים חיצוניים','האפליקציה טוענת גופנים מ-Google Fonts ושערי מטבע מ-open.er-api.com. הקישורים „חפש תמונה” ו„לכתיבת ביקורת” פותחים את Google. כל שירות כזה עשוי לראות את כתובת ה-IP שלכם, לפי המדיניות שלו.'],
 ['עוגיות ומעקב','אנחנו לא משתמשים בעוגיות מעקב, בפרסומות או בכלי ניתוח התנהגות.'],
 ['מחיקת המידע','אפשר למחוק כל תפריט או קבלה במסך „היסטוריה”. ניקוי נתוני האתר בדפדפן מוחק את כל המידע השמור.']]],
 terms:['תנאי שירות',[
 ['השירות','האפליקציה מתרגמת תפריטים, בונה הזמנה, בודקת חשבוניות ועוזרת לחלק אותן. השימוש בה חינם, והיא ניתנת כמות שהיא (AS IS).'],
-['דיוק','הקריאה, התרגום, זיהוי המרכיבים, סימוני התזונה, המנות המומלצות ובדיקת החשבון נעשים אוטומטית בבינה מלאכותית ועלולים לטעות. בדקו תמיד את המחירים והחשבון מול התפריט והקבלה המקוריים.'],
+['דיוק','הקריאה, התרגום, זיהוי המרכיבים, סימוני התזונה ובדיקת החשבון נעשים אוטומטית בבינה מלאכותית ועלולים לטעות. בדקו תמיד את המחירים והחשבון מול התפריט והקבלה המקוריים.'],
 ['אלרגיות ותזונה','סימוני האלרגנים, המרכיבים וההתאמה לצמחונות, טבעונות, כשרות, חלאל, ללא גלוטן או ללא לקטוז הם הערכה בלבד ואינם תחליף לבירור מול צוות המסעדה. אם יש לכם אלרגיה או מגבלה רפואית, ודאו תמיד מול המסעדה לפני ההזמנה.'],
 ['שימוש הוגן','סרקו רק תמונות שמותר לכם לצלם, ואל תשתמשו בשירות לפעולה בלתי חוקית או להעמסה עליו. אנחנו רשאים להגביל את מספר הסריקות.'],
 ['אחריות','ככל שהדין מתיר, לא נהיה אחראים לנזק שנגרם מהסתמכות על תוצאות האפליקציה. אנחנו רשאים לשנות את השירות ואת התנאים, והנוסח המעודכן יופיע תמיד כאן.']]]},
 en:{privacy:['Privacy policy',[
 ['What we collect',"The app needs no sign-up and doesn't collect your name, phone or email. Your menus, orders, receipts and settings (language, currency, diet and ingredients you marked) are stored only in your browser, on your device."],
 ['Photos you scan',"When you scan a menu or receipt, the photo is sent through our server to Anthropic's Claude AI service to read and translate it. Our server doesn't store the photos. Anthropic processes the data under its own privacy policy. Don't photograph personal details such as card numbers printed on a receipt."],
-['Recommended dishes','To mark recommended dishes, the restaurant name and the list of dishes are sent to a web search for reviews of the restaurant. Nothing about you is sent.'],
 ['Third-party services','The app loads fonts from Google Fonts and exchange rates from open.er-api.com. The "Find photo" and "Write a review" links open Google. Each of these services may see your IP address, under its own policy.'],
 ['Cookies and tracking',"We don't use tracking cookies, ads or behavioural analytics."],
 ['Deleting your data',"You can delete any menu or receipt in History. Clearing this site's data in your browser deletes everything stored."]]],
 terms:['Terms of service',[
 ['The service','The app translates menus, builds an order, checks bills and helps split them. It is free and provided as is.'],
-['Accuracy','Reading, translation, ingredient detection, diet marks, recommended dishes and bill checks are done automatically by AI and can be wrong. Always check prices and the bill against the original menu and receipt.'],
+['Accuracy','Reading, translation, ingredient detection, diet marks and bill checks are done automatically by AI and can be wrong. Always check prices and the bill against the original menu and receipt.'],
 ['Allergies and diets','Allergen, ingredient and vegetarian, vegan, kosher, halal, gluten-free or lactose-free marks are estimates only and no substitute for asking the restaurant staff. If you have an allergy or medical restriction, always confirm with the restaurant before ordering.'],
 ['Fair use',"Only scan photos you're allowed to take, and don't use the service unlawfully or to overload it. We may limit the number of scans."],
 ['Liability',"To the extent the law allows, we aren't liable for damage caused by relying on the app's results. We may change the service and these terms; the current version is always shown here."]]]}};
@@ -308,13 +305,7 @@ render();if(err)toast(err);
 if(uns||unc){const lines=[uns&&f(t('uns'),uns,job.n),unc&&f(t('unclearMarks'),unc)].filter(Boolean);
 openSheet(`<div class="al warn strong">${ico('warn',18)}<div>${lines.map(l=>`<b>${esc(l)}</b>`).join('<br>')}<br><small>${esc((uns?t('unsD'):t('unclearD'))+(low?' '+t('lowRes'):''))}</small></div></div><button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,
 {retake:()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);if(m.unclear)delete m.unclear[pg];render();scanMenuPage(m,pg)}})}
-// one review lookup for pages scanned close together (each lookup is a paid web search)
-clearTimeout(V.starTimer);V.starTimer=setTimeout(()=>{if(!jobs(M.id).length)fetchStars(M)},STARS_DELAY)}
-let STARS_DELAY=15000;
-// asks the server which dishes reviews of this restaurant single out
-async function fetchStars(M){const key=norm(M.title)+':'+M.items.length;if(!M.title||!M.items.length||M.starsKey===key)return;M.starsKey=key;V.starring=M.id;soon();
-try{const j=await api({mode:'popular',restaurant:M.title,dishes:M.items.filter(i=>!i.addon).map(i=>i.orig),currency:M.cur,language:langName()});M.stars=(j.popular||[]).map(norm)}catch(e){M.starsKey=''}
-finally{if(V.starring===M.id)V.starring=null;render()}}
+}
 // ---------- receipts ----------
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],hashes:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
 function ingestReceipt(R,d,rp){if(!R.items.length&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.rdate&&d.date)R.rdate=String(d.date).slice(0,30);
@@ -416,11 +407,11 @@ return (h||`<p class=mut style="padding:12px;margin:0">${t('noIng')}</p>`)+`<but
 function paintIng(){const M=cm(),box=$('.ingbox');if(!M||!box)return;let l=$('#inglist');
 if(V.ingOpen){if(!l){box.insertAdjacentHTML('beforeend','<div class=inglist id=inglist role=listbox></div>');l=$('#inglist')}l.innerHTML=ingList(M)}else if(l)l.remove();
 const q=$('#ingq');if(q)q.setAttribute('aria-expanded',!!V.ingOpen);const c=$('#ingchips');if(c)c.innerHTML=ingChips(M)}
-function itemV(i,M){const av=avoidHits(M,i),bad=S.diet.filter(d=>(i.no||[]).includes(d)),good=bad.length?[]:S.diet.filter(d=>(i.ok||[]).includes(d)),star=(M.stars||[]).includes(norm(i.orig)),dim=av.length||bad.length;
+function itemV(i,M){const av=avoidHits(M,i),bad=S.diet.filter(d=>(i.no||[]).includes(d)),good=bad.length?[]:S.diet.filter(d=>(i.ok||[]).includes(d)),dim=av.length||bad.length;
 const warn=[];if(av.length)warn.push(f(t('contains'),[...new Set(av)].join(', ')));if(bad.length)warn.push(f(t('notFor'),bad.map(d=>t('n'+d)).join(', ')));
 return `<div class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
 ${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}
-<div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${star?`<button class=star data-a=star aria-label="${t('starT')}">⭐</button>`:''}</div>
+<div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b></div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
 ${good.length||(i.marks||[]).length?`<div class=tags>${good.map(d=>`<span class="tag ok">${dIco(d)} ${t('y'+d)}</span>`).join('')}${(i.marks||[]).map(m=>`<span class=tag>${MARK[m.c]?MARK[m.c]+' ':''}${esc(m.l)}</span>`).join('')}</div>`:''}
 ${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}
@@ -436,7 +427,7 @@ function menuV(){const M=cm();if(!M)return home();const js=jobs(M.id),found=js.r
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
-${priced||V.starring===M.id?`<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${V.starring===M.id?`<span class=note><span class=spin></span>${t('starLoading')}</span>`:''}</div>`:''}
+${priced?`<div class=row><span class=chip>${M.cur}</span></div>`:''}
 ${hasIng||S.diet.length?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
 ${hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t('ingD')}</small>`:''}
 <button class=link data-a=editdiet style="justify-self:start">${S.diet.map(dIco).join(' ')} ${t('dietEdit')}</button></div>`
@@ -548,7 +539,6 @@ ing:(id,x)=>{S.avoid=S.avoid.includes(x)?S.avoid.filter(k=>k!==x):[...S.avoid,x]
 ingtxt:(id,x)=>{const w=String(x||'').trim(),a=S.avoidTxt||[];if(!w)return;S.avoidTxt=a.some(v=>norm(v)===norm(w))?a.filter(v=>norm(v)!==norm(w)):[...a,w];render()},
 ingclose:()=>{V.ingOpen=false;paintIng()},
 filt:()=>{S.filtOpen=!S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
-star:()=>openSheet(`<div class=starbox><span class=big>⭐</span><b>${t('starD')}</b></div><button class=btn data-a=sa data-x=no>${t('ok2')}</button>`),
 tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
 nr:()=>withHints(true,()=>scanReceipt(null,null)),
 rscan:()=>{const R=cr();withHints(true,()=>scanReceipt(R.menuId,R))},
@@ -566,7 +556,7 @@ dr:id=>{const r=S.receipts.find(x=>x.id===id);confirmDel(r&&(r.restaurant||r.tit
 const CH={
 slang:v=>{S.lang=v;const l=LANGS.find(x=>x[0]===v);if(l)S.cur=l[2];render()},
 sname:v=>{S.langName=v.trim();save()},scur:v=>{S.cur=v;save()},
-mtitle:v=>{const M=cm();M.title=v.trim();render();if(!jobs(M.id).length)fetchStars(M)},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v.trim();render()},
+mtitle:v=>{cm().title=v.trim();render()},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v.trim();render()},
 ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()},foth:v=>{cr().fees.other=r2(v);render()},ftip:v=>{cr().fees.tip=r2(v);render()},
 tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
 eq:(v,id,e)=>{cr().equal=e.checked;render()},
