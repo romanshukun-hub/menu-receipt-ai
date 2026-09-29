@@ -84,6 +84,43 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 #sheet .sh{background:var(--card);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom));display:grid;gap:14px}
 #sheet ul{margin:0 0 4px;padding:0;list-style:none;display:grid;gap:12px}#sheet li{display:flex;gap:12px;align-items:flex-start}#sheet li svg{color:var(--ac);margin-top:1px}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
+.al{display:flex;gap:10px;align-items:flex-start}.al>svg{margin-top:1px}.al small{opacity:.9}
+.al.bad.strong{background:var(--bad);border-color:var(--bad);color:#fff;font-weight:500}
+.al.warn.strong{border-width:1.5px}.al.pol{background:var(--ac2);border-color:transparent}.al.pol svg{color:var(--ac)}
+.btn.wide{width:100%}.btn.danger{background:var(--bad);color:#fff}.addpg{margin-top:6px}
+.link{border:0;background:none;color:var(--ac);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 0}
+.lbl{font-size:13px;color:var(--mut)}.field{display:grid;gap:8px}
+.note{display:inline-flex;gap:8px;align-items:center;font-size:12px;color:var(--mut)}.note .spin{width:12px;height:12px;border-width:2px}
+.filt{display:grid;gap:10px}.filt .chips{gap:6px}.filt .pill{padding:6px 12px;font-size:13px}
+.pill.av{background:var(--bad);border-color:var(--bad);color:#fff}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--card);color:var(--mut)}
+.search:focus-within{border-color:var(--ink)}.search input{border:0;padding:11px 0;background:transparent}.search input:focus{border:0}
+.subhd{margin:0 -16px;padding:12px 16px 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ac);border-top:1px solid var(--line);background:color-mix(in srgb,var(--ac2) 55%,transparent);display:flex;gap:8px;flex-wrap:wrap}
+.subhd span{text-transform:none;letter-spacing:0;color:var(--mut);font-weight:500}
+.item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--ac2) 55%,transparent)}
+.item.addon{padding:6px 0 10px}.item.addon .nm b{font-weight:500;font-size:14px}
+.item.dim{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 45%,transparent)}
+.item.dim .nm,.item.dim .desc,.item.dim .pr,.item.dim .tags,.item.dim .photo{opacity:.4;filter:grayscale(1)}
+.avoid-b{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;font-weight:600;color:#fff;background:var(--bad);border-radius:8px;padding:4px 8px;width:max-content;max-width:100%}
+.nm{display:flex;gap:6px;align-items:flex-start}.star{border:0;background:none;padding:0 2px;font-size:17px;line-height:1.2;cursor:pointer;flex:none}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:3px 0}.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.tag.ok{background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent);font-weight:600}
+.starbox{display:grid;justify-items:center;gap:8px;text-align:center;padding:6px 0 4px;font-size:17px}.starbox .big{font-size:44px;line-height:1}
+.hrow{display:flex;align-items:center;gap:6px;cursor:pointer}.hrow .info{flex:1}.hrow:hover{border-color:var(--mut)}.ic.del{color:var(--bad)}.hrow .chev{color:var(--mut)}[dir=rtl] .hrow .chev{transform:scaleX(-1)}
+.rit{align-items:center}.rit .info{flex:1}.end{display:grid;gap:2px;justify-items:end;text-align:end}
+.rit.unsure{margin:0 -16px;padding-inline:16px;background:var(--warnbg)}
+.qty{flex:none;min-width:42px;height:34px;padding:0 6px;border-radius:10px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.qty.many{background:var(--ac);border-color:var(--ac);color:#fff;font-size:18px}
+.chk.big{font-size:16px;font-weight:600}
+.sp .info{margin-bottom:8px}.sp .acts{justify-content:flex-start;margin-top:10px}
+.cnts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cnts>div{background:var(--bg);border-radius:10px;padding:8px 6px;display:grid;gap:2px;text-align:center}
+.cnts b{font-size:18px;font-variant-numeric:tabular-nums}.cnts small{font-size:11px}.cnts .hl{color:var(--ac)}
+@media(max-width:400px){.cnts{grid-template-columns:repeat(2,1fr)}}
+.shl{display:block;margin-top:6px}
+.foot{display:flex;gap:10px;justify-content:center;align-items:center;padding:28px 16px 8px;color:var(--mut);font-size:13px}.foot .link{color:var(--mut);font-weight:500}.foot .link:hover{color:var(--ac)}
+.legal{gap:18px;padding-top:12px;padding-bottom:40px}.legal h3{margin-bottom:6px}.legal p{line-height:1.6}
+.review{display:flex;gap:12px;align-items:center;color:inherit;text-decoration:none}.review>span:nth-child(2){flex:1;display:grid}
+.review .e{width:44px;height:44px;border-radius:12px;background:var(--ac2);color:var(--ac);display:grid;place-items:center;flex:none}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -91,18 +128,93 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 const $=s=>document.querySelector(s),app=$('#app');
 const LANGS=[['he','עברית','ILS'],['en','English (US)','USD'],['en-GB','English (UK)','GBP'],['en-CA','English (CA)','CAD'],['en-AU','English (AU)','AUD'],['ar','العربية','AED'],['de','Deutsch','EUR'],['fr','Français','EUR'],['es','Español','EUR'],['it','Italiano','EUR'],['pt','Português (BR)','BRL'],['ru','Русский','RUB'],['uk','Українська','UAH'],['tr','Türkçe','TRY'],['ja','日本語','JPY'],['ko','한국어','KRW'],['zh','中文','CNY'],['th','ไทย','THB'],['hi','हिन्दी','INR'],['vi','Tiếng Việt','VND'],['id','Bahasa Indonesia','IDR'],['pl','Polski','PLN'],['nl','Nederlands','EUR'],['el','Ελληνικά','EUR'],['sv','Svenska','SEK'],['cs','Čeština','CZK'],['ro','Română','RON'],['hu','Magyar','HUF'],['fa','فارسی','IRR'],['ka','ქართული','GEL']];
 const RTL=['he','ar','fa'];
-const I={en:{title:'Smart Menu Translator & Bill Checker',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',menuName:'Restaurant name',addPage:'Scan another page',findPhoto:'Find photo',unsure:'Not fully readable — check against the menu',hintsT:'Tips for a good scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',hintsOff:"Don't show again",hintsGo:'Got it, take a photo',lowRes:'The photo is low resolution, so some names may not have been read correctly. A sharper photo will give a better result.',manyUnsure:'{0} dishes were not read clearly. A sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',manual:'Add a dish',dishName:'Dish name',trans:'Translation',price:'Price',add:'Add',order:'in order',saveScan:'Save order & scan receipt',empty:'Nothing here yet.',rTitle:'Receipt title',scanRec:'Scan receipt page',items:'Bill items',qty:'Qty',addItem:'Add item',tip:'Tip',custom:'Custom amount',split:'Split the bill',payers:'People',equal:'Split equally',assigned:'Assigned',left:'left',share:'Share',saveSplit:'Save split',shared:'Shared',total:'Total',subtotal:'Subtotal',tax:'Tax',svc:'Service charge',fees:'Other fees',taxIn:'Tax is already in the prices',open:'Open',del:'Delete',person:'Person',each:'Each pays',units:'Units to share',need2:'Pick at least 2 people',aP:'{0}: receipt price {1} is higher than the menu price {2}.',aQ:'{0}: charged ×{1}, but the order had ×{2}.',aS:'A service charge or tip ({0}) is already on this bill. Consider tipping 0%.',aT:'Tax on receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on receipt: {0}.',ok:'No discrepancies found.',reading:'Reading image…',menus:'Menus',receipts:'Receipts',fail:'Scan failed',none:'Scan a receipt or add items to begin.',yourTotal:'Your total',remove:'Remove'},
-he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',menuName:'שם המסעדה',addPage:'סרוק עמוד נוסף',findPhoto:'חפש תמונה',unsure:'לא נקרא בוודאות — כדאי לבדוק מול התפריט',hintsT:'טיפים לסריקה טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',lowRes:'התמונה ברזולוציה נמוכה, ולכן ייתכן שחלק מהשמות לא נקראו נכון. צילום חד יותר ישפר את התוצאה.',manyUnsure:'{0} מנות לא נקראו בבירור. צילום חד יותר ישפר את התוצאה.',retake:'צלם שוב',keepIt:'המשך בכל זאת',scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',manual:'הוספת מנה',dishName:'שם המנה',trans:'תרגום',price:'מחיר',add:'הוסף',order:'בהזמנה',saveScan:'שמור הזמנה וסרוק קבלה',empty:'אין כאן עדיין כלום.',rTitle:'כותרת הקבלה',scanRec:'סרוק עמוד קבלה',items:'פריטי החשבון',qty:'כמות',addItem:'הוסף פריט',tip:'טיפ',custom:'סכום מותאם',split:'חלוקת החשבון',payers:'משתתפים',equal:'חלוקה שווה',assigned:'שויך',left:'נותר',share:'שיתוף',saveSplit:'שמור חלוקה',shared:'משותף',total:'סה״כ',subtotal:'סכום ביניים',tax:'מס',svc:'דמי שירות',fees:'עמלות נוספות',taxIn:'המס כבר כלול במחירים',open:'פתח',del:'מחק',person:'משתתף',each:'כל אחד משלם',units:'יחידות לשיתוף',need2:'בחרו לפחות 2 משתתפים',aP:'{0}: מחיר בקבלה {1} גבוה ממחיר התפריט {2}.',aQ:'{0}: חויב ×{1}, אך בהזמנה היה ×{2}.',aS:'דמי שירות או טיפ ({0}) כבר כלולים בחשבון. שקלו טיפ 0%.',aT:'מס בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'לא נמצאו אי־התאמות.',reading:'קורא את התמונה…',menus:'תפריטים',receipts:'קבלות',fail:'הסריקה נכשלה',none:'סרקו קבלה או הוסיפו פריטים כדי להתחיל.',yourTotal:'הסכום שלך',remove:'הסר'}};
+const I={en:{title:'Smart Menu Translator & Bill Checker',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',saveSet:'Save',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',back:'Back',menuName:'Restaurant name',
+addPage:'Scan another menu page',findPhoto:'Find photo',unsureTag:'May contain an error in the name or price — check it',
+hintsT:'Tips for a good menu scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',
+rHintsT:'Tips for photographing the receipt',rHint1:'Fit the whole receipt in the photo — from the first line down to the total',rHint2:'Shoot straight from above, on a flat surface, without folds',rHint3:'Good lighting, no shadows or glare on the paper',rHint4:'Long receipt? Photograph it in parts and add each part separately',
+hintsOff:"Don't show again",hintsGo:'Got it, take a photo',cancel:'Cancel',
+dupT:'Heads up: you already uploaded this photo',dupIn:'It was already scanned in "{0}".',dupOther:'Take or upload a different photo',
+uns:'Heads up: {0} of the {1} dishes were not recognised with full certainty',unsR:'Heads up: {0} of the {1} items were not recognised with full certainty',unsD:'If you continue, they will be marked so you can check them against the menu.',unsDR:'If you continue, they will be marked so you can check them against the receipt.',lowRes:'The photo is low resolution — a sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',
+emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographed the menu and that the text is sharp and readable.',emptyRecT:'No items found in this photo',emptyRecD:'Make sure you photographed the whole receipt and that the text is sharp and readable.',scanAgain:'Scan again',
+scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
+policy:'Restaurant policy',starT:'Recommended dish',starD:'Especially recommended according to reviews on Google and review sites',starLoading:'Checking reviews of the restaurant…',ok2:'Got it',
+ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',notFor:'Heads up: {0}',dietEdit:'Diet preferences',
+dietsT:'Dietary restrictions',dietsD:"We'll mark dishes that suit you and dishes to avoid.",
+dv:'Vegetarian',dvg:'Vegan',dh:'Halal',dk:'Kosher',dp:'Pescatarian',dgf:'Gluten-free',dlf:'Lactose-free',
+yv:'Vegetarian',yvg:'Vegan',yh:'No non-halal ingredients',yk:'No non-kosher ingredients',yp:'Pescatarian',ygf:'Gluten-free',ylf:'Lactose-free',
+nv:'not vegetarian',nvg:'not vegan',nh:'contains non-halal ingredients',nk:'contains non-kosher ingredients',np:'not pescatarian',ngf:'contains gluten',nlf:'contains lactose',
+order:'dishes in order',saveScan:'Save order & scan receipt to compare',empty:'Nothing here yet.',
+rTitle:'Receipt title',scanRec:'Scan another part of the receipt',items:'Bill items',itemsCount:'{0} items',qty:'Qty',perUnit:'each',tip:'Tip',yourTip:'Your tip',tipNote:'The bill already includes a service charge or tip.',custom:'Custom amount',
+split:'Split the bill',splitQ:'I want to split the bill',payers:'People',equal:'Split equally',assigned:'Assigned',left:'Left',unassigned:'Not assigned yet',share:'Split',saveSplit:'Save split',shared:'Split between',total:'Total',subtotal:'Subtotal',tax:'Tax',taxInc:'VAT (included in prices)',svc:'Service charge',fees:'Other fees',billTip:'Tip already on the bill',
+person:'Person',each:'Each pays',units:'How many units to split',need2:'Pick at least 2 people',ordered:'Ordered',remaining:'Left to split',itemTotal:'Dish total',remainingAmt:'Left to pay',takes:'takes',
+aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered but is missing from the bill',aPrice:'"{0}": bill price {1} differs from the menu price {2}',aQty:'"{0}": the bill has ×{1}, but ×{2} were ordered',aTip:'Heads up: the total is {0} higher because a tip was added to the bill',aTipMaybe:'Heads up: the bill total ({0}) is {1} higher than the items and fees — a tip may have been added',aTotal:"The bill total ({0}) doesn't match the items and fees ({1})",aSvcPol:"The service charge on the bill ({0}) doesn't match the menu's policy ({1}%)",
+aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
+review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
+menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',updated:'Last updated:',contact:'Contact'},
+he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
+addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
+hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
+rHintsT:'טיפים לצילום הקבלה',rHint1:'ודאו שכל הקבלה בתמונה — מהשורה הראשונה ועד הסכום הכולל',rHint2:'צלמו ישר מלמעלה, על משטח שטוח ובלי קיפולים',rHint3:'תאורה טובה, בלי צל או השתקפויות על הנייר',rHint4:'קבלה ארוכה? צלמו אותה בכמה חלקים והוסיפו כל חלק בנפרד',
+hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',cancel:'ביטול',
+dupT:'שים לב: העלית את התמונה הזו כבר קודם',dupIn:'היא כבר נסרקה ב„{0}”.',dupOther:'צלם או העלה תמונה אחרת',
+uns:'שים לב: {0} מנות מתוך ה-{1} לא זוהו בוודאות מלאה',unsR:'שים לב: {0} פריטים מתוך ה-{1} לא זוהו בוודאות מלאה',unsD:'אם תמשיכו, הן יסומנו כדי שתוכלו לבדוק אותן מול התפריט.',unsDR:'אם תמשיכו, הם יסומנו כדי שתוכלו לבדוק אותם מול הקבלה.',lowRes:'התמונה ברזולוציה נמוכה — צילום חד יותר ישפר את התוצאה.',retake:'צלם מחדש',keepIt:'המשך בכל זאת',
+emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שצילמתם את התפריט ושהטקסט חד וקריא.',emptyRecT:'לא נמצאו פריטים בתמונה',emptyRecD:'ודאו שצילמתם את הקבלה כולה ושהטקסט חד וקריא.',scanAgain:'סרוק שוב',
+scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
+policy:'מדיניות המסעדה',starT:'מנה מומלצת',starD:'מנה מומלצת במיוחד לפי ביקורות בגוגל ובאתרי ביקורות',starLoading:'בודק ביקורות על המסעדה…',ok2:'הבנתי',
+ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו. המרכיבים מזוהים אוטומטית ועלולים לטעות: באלרגיה, ודאו תמיד מול הצוות.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',notFor:'שים לב: {0}',dietEdit:'העדפות תזונה',
+dietsT:'מגבלות תזונה',dietsD:'נסמן לכם בתפריט מנות מתאימות ומנות שכדאי להימנע מהן.',
+dv:'צמחוני',dvg:'טבעוני',dh:'חלאל',dk:'כשר',dp:'פסקטריאני',dgf:'ללא גלוטן',dlf:'ללא לקטוז',
+yv:'מתאים לצמחונים',yvg:'מתאים לטבעונים',yh:'ללא רכיבים אסורים בחלאל',yk:'ללא רכיבים לא כשרים',yp:'מתאים לפסקטריאנים',ygf:'ללא גלוטן',ylf:'ללא לקטוז',
+nv:'לא צמחוני',nvg:'לא טבעוני',nh:'מכיל רכיבים לא חלאל',nk:'מכיל רכיבים לא כשרים',np:'לא מתאים לפסקטריאנים',ngf:'מכיל גלוטן',nlf:'מכיל לקטוז',
+order:'מנות בהזמנה',saveScan:'שמור הזמנה וסרוק קבלה להשוואה',empty:'אין כאן עדיין כלום.',
+rTitle:'כותרת הקבלה',scanRec:'סרוק חלק נוסף של הקבלה',items:'פריטי החשבון',itemsCount:'{0} פריטים',qty:'כמות',perUnit:'ליחידה',tip:'טיפ',yourTip:'הטיפ שלכם',tipNote:'בחשבון כבר יש דמי שירות או טיפ.',custom:'סכום מותאם',
+split:'חלוקת החשבון',splitQ:'אני רוצה לחלק את החשבון',payers:'משתתפים',equal:'חלוקה שווה',assigned:'שויך',left:'נותר',unassigned:'עוד לא שויך',share:'חלוקה',saveSplit:'שמור חלוקה',shared:'מחולק בין',total:'סה״כ',subtotal:'סכום ביניים',tax:'מע״מ / מס',taxInc:'מע״מ (כלול במחירים)',svc:'דמי שירות',fees:'עמלות נוספות',billTip:'טיפ שכבר נוסף בחשבון',
+person:'משתתף',each:'כל אחד משלם',units:'כמה יחידות לחלק',need2:'בחרו לפחות 2 משתתפים',ordered:'הוזמנו',remaining:'נותרו לחלוקה',itemTotal:'סה״כ למנה',remainingAmt:'נותר לתשלום',takes:'לוקח',
+aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„{0}” הוזמן אבל לא מופיע בחשבון',aPrice:'„{0}”: המחיר בחשבון {1} שונה ממחיר התפריט {2}',aQty:'„{0}”: בחשבון ×{1}, אבל הוזמנו ×{2}',aTip:'שים לב: הסכום הכולל גבוה ב-{0} כיוון שנוסף טיפ לחשבון',aTipMaybe:'שים לב: הסכום הכולל בחשבון ({0}) גבוה ב-{1} מסכום הפריטים והעמלות — ייתכן שנוסף טיפ לחשבון',aTotal:'הסכום הכולל בחשבון ({0}) לא תואם לסכום הפריטים והעמלות ({1})',aSvcPol:'דמי השירות בחשבון ({0}) לא תואמים למדיניות בתפריט ({1}%)',
+aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
+review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
+menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+// privacy policy and terms of service; CONTACT is shown in both when filled in
+const CONTACT='',LEGAL_DATE='29.09.2026';
+const LEGAL={he:{privacy:['מדיניות פרטיות',[
+['מה אנחנו אוספים','האפליקציה לא דורשת הרשמה ולא אוספת שם, טלפון או כתובת דוא״ל. התפריטים, ההזמנות, הקבלות וההגדרות שלכם (שפה, מטבע, מגבלות תזונה ומרכיבים שסימנתם) נשמרים רק בדפדפן שלכם, במכשיר שלכם.'],
+['תמונות שאתם סורקים','כשאתם סורקים תפריט או קבלה, התמונה נשלחת דרך השרת שלנו לשירות הבינה המלאכותית Claude של חברת Anthropic, כדי לקרוא ולתרגם אותה. השרת שלנו לא שומר את התמונות. Anthropic מעבדת את המידע לפי מדיניות הפרטיות שלה. אל תצלמו פרטים אישיים, כמו פרטי כרטיס אשראי שמודפסים על הקבלה.'],
+['מנות מומלצות','כדי לסמן מנות מומלצות, שם המסעדה ורשימת המנות נשלחים לחיפוש ברשת של ביקורות על המסעדה. לא נשלח שום מידע עליכם.'],
+['שירותים חיצוניים','האפליקציה טוענת גופנים מ-Google Fonts ושערי מטבע מ-open.er-api.com. הקישורים „חפש תמונה” ו„לכתיבת ביקורת” פותחים את Google. כל שירות כזה עשוי לראות את כתובת ה-IP שלכם, לפי המדיניות שלו.'],
+['עוגיות ומעקב','אנחנו לא משתמשים בעוגיות מעקב, בפרסומות או בכלי ניתוח התנהגות.'],
+['מחיקת המידע','אפשר למחוק כל תפריט או קבלה במסך „היסטוריה”. ניקוי נתוני האתר בדפדפן מוחק את כל המידע השמור.']]],
+terms:['תנאי שירות',[
+['השירות','האפליקציה מתרגמת תפריטים, בונה הזמנה, בודקת חשבוניות ועוזרת לחלק אותן. השימוש בה חינם, והיא ניתנת כמות שהיא (AS IS).'],
+['דיוק','הקריאה, התרגום, זיהוי המרכיבים, סימוני התזונה, המנות המומלצות ובדיקת החשבון נעשים אוטומטית בבינה מלאכותית ועלולים לטעות. בדקו תמיד את המחירים והחשבון מול התפריט והקבלה המקוריים.'],
+['אלרגיות ותזונה','סימוני האלרגנים, המרכיבים וההתאמה לצמחונות, טבעונות, כשרות, חלאל, ללא גלוטן או ללא לקטוז הם הערכה בלבד ואינם תחליף לבירור מול צוות המסעדה. אם יש לכם אלרגיה או מגבלה רפואית, ודאו תמיד מול המסעדה לפני ההזמנה.'],
+['שימוש הוגן','סרקו רק תמונות שמותר לכם לצלם, ואל תשתמשו בשירות לפעולה בלתי חוקית או להעמסה עליו. אנחנו רשאים להגביל את מספר הסריקות.'],
+['אחריות','ככל שהדין מתיר, לא נהיה אחראים לנזק שנגרם מהסתמכות על תוצאות האפליקציה. אנחנו רשאים לשנות את השירות ואת התנאים, והנוסח המעודכן יופיע תמיד כאן.']]]},
+en:{privacy:['Privacy policy',[
+['What we collect',"The app needs no sign-up and doesn't collect your name, phone or email. Your menus, orders, receipts and settings (language, currency, diet and ingredients you marked) are stored only in your browser, on your device."],
+['Photos you scan',"When you scan a menu or receipt, the photo is sent through our server to Anthropic's Claude AI service to read and translate it. Our server doesn't store the photos. Anthropic processes the data under its own privacy policy. Don't photograph personal details such as card numbers printed on a receipt."],
+['Recommended dishes','To mark recommended dishes, the restaurant name and the list of dishes are sent to a web search for reviews of the restaurant. Nothing about you is sent.'],
+['Third-party services','The app loads fonts from Google Fonts and exchange rates from open.er-api.com. The "Find photo" and "Write a review" links open Google. Each of these services may see your IP address, under its own policy.'],
+['Cookies and tracking',"We don't use tracking cookies, ads or behavioural analytics."],
+['Deleting your data',"You can delete any menu or receipt in History. Clearing this site's data in your browser deletes everything stored."]]],
+terms:['Terms of service',[
+['The service','The app translates menus, builds an order, checks bills and helps split them. It is free and provided as is.'],
+['Accuracy','Reading, translation, ingredient detection, diet marks, recommended dishes and bill checks are done automatically by AI and can be wrong. Always check prices and the bill against the original menu and receipt.'],
+['Allergies and diets','Allergen, ingredient and vegetarian, vegan, kosher, halal, gluten-free or lactose-free marks are estimates only and no substitute for asking the restaurant staff. If you have an allergy or medical restriction, always confirm with the restaurant before ordering.'],
+['Fair use',"Only scan photos you're allowed to take, and don't use the service unlawfully or to overload it. We may limit the number of scans."],
+['Liability',"To the extent the law allows, we aren't liable for damage caused by relying on the app's results. We may change the service and these terms; the current version is always shown here."]]]}};
 let S=JSON.parse(localStorage.getItem('mrai2')||'null')||{};
-S={lang:null,cur:'USD',menus:[],receipts:[],started:false,...S};
+S={lang:null,cur:'USD',menus:[],receipts:[],started:false,diet:[],avoid:[],...S};
 if(!S.lang){const n=(navigator.language||'en'),l=LANGS.find(x=>x[0]===n)||LANGS.find(x=>x[0]===n.split('-')[0])||LANGS[1];S.lang=l[0];S.cur=l[2]}
-let V={screen:S.started?'home':'setup',jobs:[]};
+let V={screen:S.started?'home':'setup',jobs:[],q:[]};
 const save=()=>{try{localStorage.setItem('mrai2',JSON.stringify(S))}catch(e){}};
 const t=k=>(I[S.lang]||I.en)[k]||I.en[k]||k;
 const f=(s,...a)=>s.replace(/\{(\d)\}/g,(_,i)=>a[i]);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
-const norm=s=>String(s||'').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,'');
+const norm=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,''); // ignores case, accents and punctuation
+const r2=n=>Math.round((+n||0)*100)/100;
 const rtl=()=>RTL.includes(S.lang);
 const langName=()=>S.lang==='x'?(S.langName||'English'):(LANGS.find(l=>l[0]===S.lang)||[0,'English'])[1];
 const fmt=(n,c)=>{try{return new Intl.NumberFormat(S.lang==='x'?undefined:S.lang,{style:'currency',currency:c}).format(n||0)}catch(e){return(n||0).toFixed(2)+' '+c}};
@@ -110,52 +222,116 @@ const conv=(n,a,b)=>S.rates&&S.rates[a]&&S.rates[b]?n/S.rates[a]*S.rates[b]:null
 const mv=(n,c)=>{let h=fmt(n,c);if(c!==S.cur){const v=conv(n,c,S.cur);if(v!=null)h+=`<small class=cv>≈ ${fmt(v,S.cur)}</small>`}return h};
 const money=(n,c)=>fmt(n,c)+(c!==S.cur&&conv(n,c,S.cur)!=null?` (≈ ${fmt(conv(n,c,S.cur),S.cur)})`:'');
 const toast=m=>{const e=$('#toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',3800)};
-const busy=on=>{$('#bt').textContent=t('scanRecNow');$('#busy').classList.toggle('on',on)};
+const busy=(on,label)=>{$('#bt').textContent=label||'';$('#busy').classList.toggle('on',on)};
+const isCur=c=>/^[A-Z]{3}$/.test(c||'');
+const DIETS=[['v','🌿'],['vg','🌱'],['h','☪️'],['k','✡️'],['p','🐟'],['gf','🌾'],['lf','🥛']];
+const dIco=c=>(DIETS.find(d=>d[0]===c)||[0,''])[1];
+const MARK={v:'🌿',vg:'🌱',gf:'🌾',lf:'🥛',spicy:'🌶️',nuts:'🥜'};
 function curList(){try{return Intl.supportedValuesOf('currency')}catch(e){return['USD','EUR','GBP','ILS','JPY','CNY','KRW','INR','CAD','AUD','CHF','BRL','RUB','TRY','THB','AED','SEK','PLN','CZK','HUF','MXN']}}
 function curOpts(sel){let dn;try{dn=new Intl.DisplayNames(['en'],{type:'currency'})}catch(e){}return curList().map(c=>`<option value=${c} ${c===sel?'selected':''}>${c}${dn?' — '+esc(dn.of(c)):''}</option>`).join('')}
+// ---------- sheets (one at a time; later ones wait in a queue) ----------
+function openSheet(html,ctx){const e=$('#sheet');if(e.classList.contains('on')){V.q.push([html,ctx]);return}V.ctx=ctx||{};e.innerHTML=`<div class=sh role=dialog aria-modal=true>${html}</div>`;e.classList.add('on');const b=e.querySelector('.btn');b&&b.focus({preventScroll:true})}
+function closeSheet(){const e=$('#sheet');e.classList.remove('on');e.innerHTML='';V.ctx=null;const n=V.q.shift();if(n)openSheet(n[0],n[1])}
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')closeSheet()};
+const alertBox=(cls,title,desc)=>`<div class="al ${cls} strong">${ico('warn',18)}<div><b>${esc(title)}</b>${desc?`<br><small>${esc(desc)}</small>`:''}</div></div>`;
+const failSheet=(title,desc,again)=>openSheet(alertBox('bad',title,desc)+`<button class=btn data-a=sa data-x=again>${ico('cam',18)}${t('scanAgain')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{again});
+const unsSheet=(title,desc,low,retake)=>openSheet(alertBox('warn',title,desc+(low?' '+t('lowRes'):''))+`<button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,{retake});
+function withHints(receipt,go){const k=receipt?'hintsOffR':'hintsOff';if(S[k])return go();
+const list=receipt?[['receipt','rHint1'],['cam','rHint2'],['sun','rHint3'],['pages','rHint4']]:[['cam','hint1'],['sun','hint2'],['pages','hint3']];
+openSheet(`<h3>${t(receipt?'rHintsT':'hintsT')}</h3><ul>${list.map(([i,x])=>`<li>${ico(i)}<span>${esc(f(t(x),t('addPage')))}</span></li>`).join('')}</ul><label class=chk><input type=checkbox id=hintsoff>${t('hintsOff')}</label><button class=btn data-a=sa data-x=go>${ico('cam',18)}${t('hintsGo')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{go:off=>{if(off){S[k]=true;save()}go()}})}
 // ---------- scanning ----------
 function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const m=shrink.last=Math.max(im.width,im.height),k=m<1600?1600/m:Math.min(1,2400/m),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.9).split(',')[1])};im.onerror=()=>no(new Error('Unreadable image'));im.src=u})}
-async function scan(file,mode){busy(true);try{const image=await shrink(file);const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image,mode,language:langName(),currency:S.cur})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||t('fail'));return j}finally{busy(false)}}
-// menu scans stream back one JSON line per event ({meta}, {item}, {done} or {error}), so dishes appear while the page is still being read
+async function api(body){const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||t('fail'));return j}
+// menu scans stream back one JSON line per event ({meta}, {item}, {ingr}, {done}) so dishes appear while the page is still being read
 async function scanStream(image,onEvt){const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image,mode:'menu',language:langName(),currency:S.cur})});
 if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||t('fail'))}
 const rd=r.body.getReader(),dec=new TextDecoder();let buf='',done=false;
 for(;;){const x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});let k;
-while((k=buf.indexOf('\n'))>=0){const s=buf.slice(0,k).trim();buf=buf.slice(k+1);if(!s)continue;let o;try{o=JSON.parse(s)}catch(e){continue}if(o.error)throw new Error(o.error);if(o.done)done=true;else onEvt(o)}}
+while((k=buf.indexOf('\n'))>=0){const s=buf.slice(0,k).trim();buf=buf.slice(k+1);if(!s)continue;let o;try{o=JSON.parse(s)}catch(e){continue}if(o.error)throw new Error(o.error);if(o.done){done=true;if(o.empty)onEvt({empty:true})}else onEvt(o)}}
 if(!done)throw new Error(t('fail'))}
 function pick(cb){const fi=$('#fi');fi.onchange=()=>{const x=fi.files[0];fi.value='';if(x)cb(x)};fi.click()}
-const sheet=h=>{const e=$('#sheet');e.innerHTML=h?`<div class=sh role=dialog aria-modal=true>${h}</div>`:'';e.classList.toggle('on',!!h)};
-$('#sheet').onclick=e=>{if(e.target.id==='sheet'){V.go=V.retry=null;sheet('')}};
-function withHints(go){if(S.hintsOff)return go();V.go=go;sheet(`<h3>${t('hintsT')}</h3><ul><li>${ico('cam')}<span>${t('hint1')}</span></li><li>${ico('sun')}<span>${t('hint2')}</span></li><li>${ico('pages')}<span>${esc(f(t('hint3'),t('addPage')))}</span></li></ul><label class=chk><input type=checkbox id=hintsoff>${t('hintsOff')}</label><button class=btn data-a=hintsgo>${t('hintsGo')}</button>`)}
+// the same photo (byte for byte) scanned again, into any saved menu or receipt
+async function hashFile(file){try{const d=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());return[...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){return''}}
+const seenIn=h=>{if(!h)return null;for(const m of S.menus)if((m.hashes||[]).some(x=>x.h===h))return m.title||t('menuName');for(const r of S.receipts)if((r.hashes||[]).some(x=>x.h===h))return r.title||r.restaurant||t('rTitle');return null};
+async function checkNew(file,again,ok){const h=await hashFile(file),where=seenIn(h);
+if(where!=null)return openSheet(alertBox('bad',t('dupT'),f(t('dupIn'),where))+`<button class=btn data-a=sa data-x=again>${ico('cam',18)}${t('dupOther')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{again});
+ok(h)}
 // re-render at most every 120ms while dishes stream in, and never while the user is typing
 let rT=0;const soon=()=>{if(rT)return;rT=setTimeout(()=>{rT=0;if(/input|select|textarea/i.test(document.activeElement.tagName))return soon();render()},120)};
 const jobs=id=>V.jobs.filter(j=>j.id===id);
-// scan one page into M (or a new menu) as page pg; several pages can scan at once and still show in page order
-function scanMenuPage(M,pg){pick(file=>runPage(M,pg,file))}
-async function runPage(M,pg,file){const isNew=!M;
-if(isNew){M={id:uid(),title:'',cur:S.cur,items:[],pages:0,date:Date.now()};S.menus.unshift(M);V.screen='menu';V.id=M.id;scrollTo(0,0)}
-if(pg==null)pg=M.pages=Math.max(M.pages||0,...M.items.map(i=>i.pg||0))+1;
-const job={id:M.id,pg,n:0};V.jobs.push(job);render();let uns=0,low=false;
+const cleanIngr=o=>{const r={};for(const k in o){const v=o[k];if(Array.isArray(v))r[String(k).toLowerCase().slice(0,30)]=[String(v[0]||k).slice(0,40),String(v[1]||'').slice(0,8)]}return r};
+// a dish already on the menu (same name, same or missing price) is merged instead of listed twice
+function addDish(M,i,pg,seq){const key=norm(i.original),price=+i.price||0;
+const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:String(m.l).slice(0,40)})),ing=(i.ing||[]).map(s=>String(s).toLowerCase().slice(0,30));
+const same=M.items.find(x=>norm(x.orig)===key&&(!x.price||!price||Math.abs(x.price-price)<.005));
+if(same){if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);same.ing=[...new Set([...(same.ing||[]),...ing])];if(!(same.marks||[]).length)same.marks=marks;return null}
+const d={id:uid(),orig:String(i.original),tr:String(i.translation||''),price,cat:String(i.category||''),catTr:String(i.category_tr||''),sub:String(i.sub||''),subTr:String(i.sub_tr||''),unsure:i.unsure===true,addon:i.addon===true,marks,ing,ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
+M.items.push(d);return d}
+function scanMenuPage(M,pg){pick(file=>checkNew(file,()=>scanMenuPage(M,pg),h=>runPage(M,pg,file,h)))}
+// scans one photo into M (or a new menu) as page pg; several pages can scan at once and still show in page order
+async function runPage(M,pg,file,h){const isNew=!M;
+if(isNew){M={id:uid(),title:'',cur:S.cur,items:[],hashes:[],date:Date.now()};S.menus.unshift(M);V.screen='menu';V.id=M.id;scrollTo(0,0)}
+M.hashes=M.hashes||[];
+if(pg==null)pg=Math.max(0,...M.items.map(i=>i.pg||0),...M.hashes.map(x=>x.pg||0))+1;
+M.hashes=M.hashes.filter(x=>x.pg!==pg);if(h)M.hashes.push({h,pg});
+const job={id:M.id,pg,n:0};V.jobs.push(job);render();let uns=0,low=false,err='',seq=0;
 try{const image=await shrink(file);low=shrink.last<1200;
-await scanStream(image,o=>{if(o.meta){if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant}
-else if(o.item&&o.item.original){const i=o.item;M.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),price:+i.price||0,cat:String(i.category||''),catTr:String(i.category_tr||''),unsure:i.unsure===true,pg,qty:0});job.n++;if(i.unsure)uns++}soon()})}
-catch(e){toast(e.message||t('fail'))}
+await scanStream(image,o=>{
+if(o.meta){if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
+else if(o.ingr)M.ingr=Object.assign(M.ingr||{},cleanIngr(o.ingr));
+else if(o.item&&o.item.original){const d=addDish(M,o.item,pg,seq++);if(d){job.n++;if(d.unsure)uns++}}
+soon()})}
+catch(e){err=e.message||t('fail')}
 finally{V.jobs=V.jobs.filter(j=>j!==job)}
-if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id){V.screen='home';V.id=null}render();return}
-render();
-if(job.n&&(low||uns>3)&&V.screen==='menu'&&V.id===M.id&&!V.retry){V.retry={id:M.id,pg};sheet(`<div class="al warn">${esc(low?t('lowRes'):f(t('manyUnsure'),uns))}</div><button class=btn data-a=retake>${t('retake')}</button><button class="btn ghost" data-a=keep>${t('keepIt')}</button>`)}}
-const isCur=c=>/^[A-Z]{3}$/.test(c||'');
-function ingestReceipt(R,d){const first=!R.items.length;if(first&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.title)R.title=[d.restaurant,d.date].filter(Boolean).join(' · ');(d.items||[]).forEach(i=>i&&i.original&&R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1)}));R.fees.tax+=+d.tax||0;R.fees.service+=+d.service_charge||0;R.fees.other+=+d.other_fees||0;if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(R.fees.service>0&&!R.tipTouched){R.tipMode='pct';R.tipPct=0}}
-const newReceipt=(M)=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],fees:{tax:0,taxIncl:true,service:0,other:0},tipMode:'pct',tipPct:12,tipCustom:0,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);V.screen='receipt';V.id=R.id;render();return R};
-// ---------- math ----------
+if(!job.n&&!seq){M.hashes=M.hashes.filter(x=>x.pg!==pg);
+if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id){V.screen='home';V.id=null}}render();
+return failSheet(err?t('fail'):t('emptyMenuT'),err||t('emptyMenuD'),()=>{const m=S.menus.find(x=>x.id===M.id);scanMenuPage(m||null,m?pg:null)})}
+render();if(err)toast(err);
+if(uns)unsSheet(f(t('uns'),uns,job.n),t('unsD'),low,()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);render();scanMenuPage(m,pg)});
+if(!jobs(M.id).length)fetchStars(M)}
+// asks the server which dishes reviews of this restaurant single out
+async function fetchStars(M){const key=norm(M.title)+':'+M.items.length;if(!M.title||!M.items.length||M.starsKey===key)return;M.starsKey=key;V.starring=M.id;soon();
+try{const j=await api({mode:'popular',restaurant:M.title,dishes:M.items.filter(i=>!i.addon).map(i=>i.orig),currency:M.cur,language:langName()});M.stars=(j.popular||[]).map(norm)}catch(e){M.starsKey=''}
+finally{if(V.starring===M.id)V.starring=null;render()}}
+// ---------- receipts ----------
+const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],hashes:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
+function ingestReceipt(R,d,rp){if(!R.items.length&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.title)R.title=[R.restaurant,d.date].filter(Boolean).join(' · ');
+(d.items||[]).forEach(i=>i&&i.original&&R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1),unsure:i.unsure===true,rp}));
+const p={rp,tax:+d.tax||0,service:+d.service_charge||0,other:+d.other_fees||0,tip:+d.tip||0};
+R.fees.tax=r2(R.fees.tax+p.tax);R.fees.service=r2(R.fees.service+p.service);R.fees.other=r2(R.fees.other+p.other);R.fees.tip=r2((+R.fees.tip||0)+p.tip);
+if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(+d.total)R.printedTotal=+d.total;(R.parts=R.parts||[]).push(p);
+if((R.fees.service>0||R.fees.tip>0)&&!R.tipTouched){R.tipMode='pct';R.tipPct=0}}
+function removePart(R,rp){const p=(R.parts||[]).find(x=>x.rp===rp);if(p){R.fees.tax=r2(R.fees.tax-p.tax);R.fees.service=r2(R.fees.service-p.service);R.fees.other=r2(R.fees.other-p.other);R.fees.tip=r2(R.fees.tip-p.tip);R.parts=R.parts.filter(x=>x!==p)}
+R.items.filter(i=>i.rp===rp).forEach(i=>delete R.assign[i.id]);R.items=R.items.filter(i=>i.rp!==rp);R.hashes=(R.hashes||[]).filter(x=>x.pg!==rp)}
+function scanReceipt(menuId,R){pick(file=>checkNew(file,()=>scanReceipt(menuId,R),h=>runReceipt(menuId,R,file,h)))}
+// the receipt screen opens only once a photo was actually scanned
+async function runReceipt(menuId,R,file,h){let d,low=false;busy(true,t('scanRecNow'));
+try{const image=await shrink(file);low=shrink.last<1200;d=await api({image,mode:'receipt',language:langName(),currency:S.cur})}
+catch(e){busy(false);return failSheet(t('fail'),e.message,()=>scanReceipt(menuId,R))}
+busy(false);
+const n=(d.items||[]).filter(i=>i&&i.original).length;
+if(d.is_receipt===false||!n)return failSheet(t('emptyRecT'),t('emptyRecD'),()=>scanReceipt(menuId,R));
+const isNew=!R;if(isNew)R=newReceipt(S.menus.find(m=>m.id===menuId));R.parts=R.parts||[];R.hashes=R.hashes||[];
+const rp=Math.max(0,...R.parts.map(p=>p.rp||0),...R.hashes.map(x=>x.pg||0))+1;if(h)R.hashes.push({h,pg:rp});ingestReceipt(R,d,rp);
+V.screen='receipt';V.id=R.id;render();if(isNew)scrollTo(0,0);
+const uns=R.items.filter(i=>i.rp===rp&&i.unsure).length;
+if(uns)unsSheet(f(t('unsR'),uns,n),t('unsDR'),low,()=>{const r=S.receipts.find(x=>x.id===R.id);if(!r)return;removePart(r,rp);
+if(!r.items.length){S.receipts=S.receipts.filter(x=>x!==r);V.screen=menuId?'menu':'home';V.id=menuId||null;render();scanReceipt(menuId,null)}else{render();scanReceipt(menuId,r)}})}
+// ---------- math (all amounts rounded to cents, so lines always add up) ----------
 const cm=()=>S.menus.find(m=>m.id===V.id),cr=()=>S.receipts.find(r=>r.id===V.id);
-const sub=R=>R.items.reduce((s,i)=>s+i.unit*i.qty,0);
-const extras=R=>(R.fees.taxIncl?0:R.fees.tax)+R.fees.service+R.fees.other;
-const tipAmt=R=>R.tipMode==='custom'?(+R.tipCustom||0):sub(R)*R.tipPct/100;
+const sub=R=>r2(R.items.reduce((s,i)=>s+i.unit*i.qty,0));
+const taxAdd=R=>R.fees.taxIncl?0:r2(R.fees.tax);
+const billFees=R=>r2(taxAdd(R)+(+R.fees.service||0)+(+R.fees.other||0)+(+R.fees.tip||0));
+const tipAmt=R=>r2(R.tipMode==='custom'?(+R.tipCustom||0):sub(R)*R.tipPct/100);
+const grand=R=>r2(sub(R)+billFees(R)+tipAmt(R));
 const A=(R,id)=>R.assign[id]||(R.assign[id]={ind:{},sh:[]});
 const used=(R,i)=>{const a=R.assign[i.id];return a?Object.values(a.ind).reduce((s,x)=>s+x,0)+a.sh.reduce((s,x)=>s+x.q,0):0};
 const pSub=(R,p)=>R.items.reduce((s,i)=>{const a=R.assign[i.id];return a?s+(a.ind[p]||0)*i.unit+a.sh.filter(x=>x.p.includes(p)).reduce((z,x)=>z+x.q*i.unit/x.p.length,0):s},0);
-const ptot=(R,p)=>{const s=sub(R),ps=pSub(R,p),r=s>0?ps/s:0;return ps+(extras(R)+tipAmt(R))*r};
+// each person's items plus their proportional part of fees and tip, rounded so the shares add up exactly
+function shares(R){const n=R.payers,s=sub(R),add=r2(billFees(R)+tipAmt(R)),raw=[...Array(n).keys()].map(p=>{const ps=pSub(R,p);return ps+(s>0?add*ps/s:0)});
+const c=raw.map(x=>Math.floor(x*100+1e-6));let d=Math.round(raw.reduce((a,b)=>a+b,0)*100)-c.reduce((a,b)=>a+b,0);
+raw.map((x,i)=>[x*100-c[i],i]).sort((a,b)=>b[0]-a[0]).forEach(([,i])=>{if(d>0){c[i]++;d--}});return c.map(x=>x/100)}
+const equalShares=(g,n)=>{const c=Math.round(g*100),b=Math.floor(c/n),r=c-b*n;return[...Array(n).keys()].map(i=>(b+(i<r?1:0))/100)};
 // ---------- icons (24px line icons) ----------
 const IC={menu:'<path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v15H7.5A2.5 2.5 0 0 0 5 20.5z"/><path d="M5 20.5A2.5 2.5 0 0 1 7.5 18H19v3H7.5"/><path d="M9 8h6M9 11.5h4"/>',
 receipt:'<path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
@@ -165,81 +341,136 @@ cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
 sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 pages:'<path d="M8 3h8l4 4v11H8z"/><path d="M16 3v4h4"/><path d="M4 7v14h12"/>',
 warn:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 img:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4L5 21"/>',
+star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
 plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
 const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 // ---------- views ----------
-const bar=(title,back)=>`<header class=top><button class="ic back" data-a=go data-x=${back} aria-label="${t('back')||'Back'}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
-const step=(q,a,id)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 aria-label="+1">+</button></div>`;
-function setup(){return `<section class=hero><div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>
+const bar=(title,back)=>`<header class=top><button class="ic back" data-a=go data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
+const step=(q,a,id,dis)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 ${dis?'disabled':''} aria-label="+1">+</button></div>`;
+function setup(){const back=V.prev?V.prev.screen+(V.prev.id?':'+V.prev.id:''):'home';
+return (S.started?bar(t('set'),back):'')+`<section class=hero>${S.started?'':`<div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>`}
 <label>${t('lang')}<select data-c=slang>${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}<option value=x ${S.lang==='x'?'selected':''}>${t('other')}</option></select></label>
 ${S.lang==='x'?`<input data-c=sname placeholder="${t('otherPh')}" value="${esc(S.langName||'')}">`:''}
 <label>${t('cur')}<select data-c=scur>${curOpts(S.cur)}</select></label>
-<button class=btn data-a=start>${t('start')}</button></section>`}
+<div class=field><span class=lbl>${t('dietsT')}</span><div class=chips>${DIETS.map(([c,e])=>`<button class="pill ${S.diet.includes(c)?'on':''}" data-a=diet data-x=${c} aria-pressed=${S.diet.includes(c)}>${e} ${t('d'+c)}</button>`).join('')}</div><small class=mut>${t('dietsD')}</small></div>
+<button class=btn data-a=start>${t(S.started?'saveSet':'start')}</button></section>`}
 const tile=(cls,a,x,ic,ti,d)=>`<button class="card tile ${cls}" data-a=${a} ${x?`data-x=${x}`:''}><span class=e>${ico(ic,22)}</span><span><b>${ti}</b><small class=mut>${d}</small></span><span class=chev>${ico('chev',18)}</span></button>`;
-function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><span class=eyebrow>${t('title')}</span><button class=ic data-a=go data-x=setup aria-label="${t('set')}">${ico('gear')}</button></div><h1>${t('hello')}</h1></section>
-<div class=pad>${tile('main','nm','','menu',t('scanMenu'),t('scanMenuD'))}${tile('','nr','','receipt',t('scanReceipt'),t('scanReceiptD'))}${tile('','go','history','clock',t('hist'),t('histD'))}</div>`}
-const itemV=(i,M)=>`<div class="item${i.unsure?' unsure':''}"><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsure')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<span class=mut dir=auto>${esc(i.tr)}</span>`:''}${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">${ico('img',14)}${t('findPhoto')}</a></div>${step(i.qty,'mq',i.id)}</div>`;
-function menuV(){const M=cm();if(!M)return home();const items=[...M.items].sort((a,b)=>(a.pg||0)-(b.pg||0)),cats=[...new Set(items.map(i=>i.cat||''))],js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0);
+function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><span class=eyebrow>${t('title')}</span><button class=ic data-a=set aria-label="${t('set')}">${ico('gear')}</button></div><h1>${t('hello')}</h1></section>
+<div class=pad>${tile('main','nm','','menu',t('scanMenu'),t('scanMenuD'))}${tile('','nr','','receipt',t('scanReceipt'),t('scanReceiptD'))}${tile('','go','history','clock',t('hist'),t('histD'))}</div>
+<footer class=foot><button class=link data-a=legal data-x=privacy>${t('privacy')}</button><span aria-hidden=true>·</span><button class=link data-a=legal data-x=terms>${t('terms')}</button></footer>`}
+function legalV(){const L=(LEGAL[S.lang]||LEGAL.en)[V.legal]||LEGAL.en.privacy;
+return bar(L[0],'home')+`<article class="pad legal"><small class=mut>${t('updated')} ${LEGAL_DATE}</small>${L[1].map(([h,p])=>`<section><h3>${esc(h)}</h3><p>${esc(p)}</p></section>`).join('')}${CONTACT?`<section><h3>${t('contact')}</h3><p dir=auto>${esc(CONTACT)}</p></section>`:''}</article>`}
+const ingLabel=(M,k)=>(M.ingr&&M.ingr[k]&&M.ingr[k][0])||k;
+const ingEmoji=(M,k)=>(M.ingr&&M.ingr[k]&&M.ingr[k][1])||'•';
+// ingredient chips: selected ones first, then the most common; a search shows every match
+function ingChips(M){const cnt={};M.items.forEach(i=>(i.ing||[]).forEach(k=>cnt[k]=(cnt[k]||0)+1));
+const q=norm(V.ingq);let keys=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+if(q)keys=keys.filter(k=>norm(ingLabel(M,k)).includes(q)||norm(k).includes(q));
+const sel=keys.filter(k=>S.avoid.includes(k)),rest=keys.filter(k=>!S.avoid.includes(k)),lim=q||V.ingAll?rest:rest.slice(0,Math.max(0,12-sel.length)),more=!q&&rest.length>lim.length;
+if(!keys.length)return `<small class=mut>${t('noIng')}</small>`;
+return [...sel,...lim].map(k=>`<button class="pill${S.avoid.includes(k)?' av':''}" data-a=ing data-x="${esc(k)}" aria-pressed=${S.avoid.includes(k)}>${esc(ingEmoji(M,k))} ${esc(ingLabel(M,k))}</button>`).join('')+(more||V.ingAll&&!q?`<button class=link data-a=ingall>${t(V.ingAll?'less':'more')}</button>`:'')}
+function itemV(i,M){const av=(i.ing||[]).filter(k=>S.avoid.includes(k)),bad=S.diet.filter(d=>(i.no||[]).includes(d)),good=bad.length?[]:S.diet.filter(d=>(i.ok||[]).includes(d)),star=(M.stars||[]).includes(norm(i.orig)),dim=av.length||bad.length;
+const warn=[];if(av.length)warn.push(f(t('contains'),av.map(k=>ingLabel(M,k)).join(', ')));if(bad.length)warn.push(f(t('notFor'),bad.map(d=>t('n'+d)).join(', ')));
+return `<div class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
+${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}
+<div class=nm><b dir=auto>${i.addon?'+ ':''}${esc(i.orig)}</b>${star?`<button class=star data-a=star aria-label="${t('starT')}">⭐</button>`:''}</div>
+${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
+${good.length||(i.marks||[]).length?`<div class=tags>${good.map(d=>`<span class="tag ok">${dIco(d)} ${t('y'+d)}</span>`).join('')}${(i.marks||[]).map(m=>`<span class=tag>${MARK[m.c]?MARK[m.c]+' ':''}${esc(m.l)}</span>`).join('')}</div>`:''}
+${i.price>0?`<span class=pr>${mv(i.price,M.cur)}</span>`:''}
+${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(i.orig)}">${ico('img',14)}${t('findPhoto')}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
+// sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
+function sectionsV(M){const items=[...M.items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));let out='',g=null,sub='',rows='';
+const flush=()=>{if(g)out+=`<section>${g.cat?`<div class=cat dir=auto>${esc(g.cat)}${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</div>`:''}<div class="card list">${rows}</div></section>`;rows=''};
+for(const i of items){if(!g||g.cat!==(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr};sub=''}
+if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd dir=auto>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
+rows+=itemV(i,M)}
+flush();return out}
+function menuV(){const M=cm();if(!M)return home();const js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0),hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto>
-<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${js.length?'':`<button class="btn ghost sm" data-a=mpage>${ico('plus',16)}${t('addPage')}</button>`}</div>
-${cats.map(c=>`<section>${c?(()=>{const tr=(items.find(i=>(i.cat||'')===c)||{}).catTr;return `<div class=cat dir=auto>${esc(c)}${tr&&norm(tr)!==norm(c)?`<span class=cat-tr dir=auto>${esc(tr)}</span>`:''}</div>`})():''}<div class="card list">${items.filter(i=>(i.cat||'')===c).map(i=>itemV(i,M)).join('')}</div></section>`).join('')}
-${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?'':`<p class=empty>${t('empty')}</p>`}
+${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
+${priced||V.starring===M.id?`<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${V.starring===M.id?`<span class=note><span class=spin></span>${t('starLoading')}</span>`:''}</div>`:''}
+${hasIng||S.diet.length?`<div class="card filt"><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=editdiet>${S.diet.map(dIco).join(' ')} ${t('dietEdit')}</button></div>
+${hasIng?`<label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off></label><div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t('ingD')}</small>`:''}</div>`:''}
+${sectionsV(M)}
+${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?`<button class="btn ghost wide addpg" data-a=mpage>${ico('cam',18)}${t('addPage')}</button>`:`<p class=empty>${t('empty')}</p>`}
 </div>
 <div class=sticky><div>${js.length
 ?`<div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t('scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button>`
 :`<div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class="btn acc" data-a=tor>${t('saveScan')}</button>`}</div></div>`}
-function alerts(R){const o=[],M=S.menus.find(m=>m.id===R.menuId);
-if(M){const ordered=M.items.some(x=>x.qty>0);R.items.forEach(i=>{const a=norm(i.orig);const m=M.items.find(x=>norm(x.orig)===a)||M.items.find(x=>a.length>3&&norm(x.orig).length>3&&(norm(x.orig).includes(a)||a.includes(norm(x.orig))));if(!m)return;
-if(M.cur===R.cur&&m.price>0&&i.unit>m.price+.005)o.push(['bad',f(t('aP'),i.orig,fmt(i.unit,R.cur),fmt(m.price,R.cur))]);
-if(ordered&&i.qty>m.qty)o.push(['warn',f(t('aQ'),i.orig,i.qty,m.qty)])})}
-if(R.fees.service>0)o.push(['warn',f(t('aS'),fmt(R.fees.service,R.cur))]);
+// ---------- receipt checks ----------
+const words=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2);
+function matchMenu(M,name){const a=norm(name);let m=M.items.find(x=>norm(x.orig)===a);if(m)return m;
+m=M.items.find(x=>{const b=norm(x.orig);return a.length>3&&b.length>3&&(b.includes(a)||a.includes(b))});if(m)return m;
+const wa=words(name);let best=null,bs=0;for(const x of M.items){const wb=words(x.orig);if(!wb.length||!wa.length)continue;const sc=wa.filter(w=>wb.includes(w)).length/Math.max(wa.length,wb.length);if(sc>bs){bs=sc;best=x}}return bs>=.6?best:null}
+// mismatches between the order and the bill are red ('bad'); plain facts about the bill are 'info'
+function alerts(R){const o=[],bad=s=>o.push(['bad',s]),M=S.menus.find(m=>m.id===R.menuId);
+if(M){const ordered=M.items.filter(x=>x.qty>0),hasOrder=ordered.length>0,got=new Map();
+R.items.forEach(i=>{const m=matchMenu(M,i.orig);if(m)got.set(m.id,(got.get(m.id)||0)+i.qty);
+if(hasOrder&&(!m||!m.qty))bad(f(t('aNotOrd'),i.orig));
+if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))bad(f(t('aPrice'),i.orig,fmt(i.unit,R.cur),fmt(m.price,R.cur)))});
+if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)bad(f(t('aMissing'),m.orig));else if(q!==m.qty)bad(f(t('aQty'),m.orig,q,m.qty))});
+const pol=M.policy;if(pol&&pol.service_pct&&R.fees.service>0){const exp=sub(R)*pol.service_pct/100;if(Math.abs(exp-R.fees.service)>Math.max(1,exp*.03))bad(f(t('aSvcPol'),fmt(R.fees.service,R.cur),pol.service_pct))}}
+const T=+R.printedTotal||0,tipB=+R.fees.tip||0,E=r2(sub(R)+billFees(R)),tol=Math.max(1,E*.005);
+if(tipB>0)bad(f(t('aTip'),fmt(tipB,R.cur)));
+if(T&&R.items.length){const d=r2(T-E);if(Math.abs(d)>tol)bad(d>0&&!tipB?f(t('aTipMaybe'),fmt(T,R.cur),fmt(d,R.cur)):f(t('aTotal'),fmt(T,R.cur),fmt(E,R.cur)))}
+if(R.fees.service>0)o.push(['info',f(t('aS'),fmt(R.fees.service,R.cur))]);
 if(R.fees.tax>0)o.push(['info',f(t('aT'),fmt(R.fees.tax,R.cur),R.fees.taxIncl?t('tIn'):t('tOn'))]);
 if(R.fees.other>0)o.push(['info',f(t('aF'),fmt(R.fees.other,R.cur))]);
-if(!o.some(x=>x[0]==='bad'||x[0]==='warn')&&R.items.length)o.push(['ok',t('ok')]);return o}
-function shPanel(R,i,rem){const a=R.assign[i.id],sq=Math.min(V.shq||1,rem);return `<div class=panel><label>${t('units')}<select data-c=shq>${[...Array(rem).keys()].map(k=>`<option ${k+1===sq?'selected':''}>${k+1}</option>`).join('')}</select></label><div class=pl>${[...Array(R.payers).keys()].map(p=>`<label class=chk><input type=checkbox data-c=shp2 data-x=${p} ${(V.shs||[]).includes(p)?'checked':''} ${a&&a.ind[p]?'disabled':''}>${p+1}</label>`).join('')}</div><button class="btn sm" data-a=shsave data-id=${i.id}>${t('saveSplit')}</button></div>`}
-function splitV(R,s,g){const n=R.payers,P=R.cp;
-const head=`<div class=card><h3>${t('split')}</h3><div class=row><span>${t('payers')}</span><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''}>−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''}>+</button></div></div><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
-if(R.equal)return head+`<div class=ln style="margin-top:10px"><span>${t('each')}</span><b class="tot n">${money(g/n,R.cur)}</b></div></div>`;
-const asg=R.items.reduce((z,i)=>z+used(R,i)*i.unit,0),pct=s>0?Math.min(100,asg/s*100):0;
-return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${t('person')} ${p+1}<small class=n>${fmt(ptot(R,p),R.cur)}</small></button>`).join('')}</div>
-<div class=bar><i style="width:${pct}%"></i></div><div class=row style="margin:6px 0"><small>${t('assigned')} ${fmt(asg,R.cur)}</small><small>${t('left')} ${fmt(Math.max(0,s-asg),R.cur)}</small></div>
+if(!o.some(x=>x[0]==='bad')&&R.items.length)o.unshift(['ok',t(M?'ok':'okNoMenu')]);return o}
+function shPanel(R,i,rem){const a=R.assign[i.id],sq=Math.min(V.shq||1,rem);return `<div class=panel><label>${t('units')}<select data-c=shq>${[...Array(rem).keys()].map(k=>`<option ${k+1===sq?'selected':''}>${k+1}</option>`).join('')}</select></label><div class=pl>${[...Array(R.payers).keys()].map(p=>`<label class=chk><input type=checkbox data-c=shp2 data-x=${p} ${(V.shs||[]).includes(p)?'checked':''} ${a&&a.ind[p]?'disabled':''}>${t('person')} ${p+1}</label>`).join('')}</div><button class="btn sm" data-a=shsave data-id=${i.id}>${t('saveSplit')}</button></div>`}
+function splitV(R){const n=R.payers,P=R.cp,g=grand(R);
+const head=`<div class=row><span>${t('payers')}</span><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''} aria-label="-1">−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''} aria-label="+1">+</button></div></div><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
+if(R.equal){const e=equalShares(g,n),same=e.every(x=>x===e[0]);return head+(same?`<div class=ln style="margin-top:10px"><span>${t('each')}</span><b class="tot n">${money(e[0],R.cur)}</b></div>`:`<div style="margin-top:10px">${e.map((x,p)=>`<div class=ln><span>${t('person')} ${p+1}</span><b class=n>${money(x,R.cur)}</b></div>`).join('')}</div>`)}
+const sh=shares(R),asg=r2(sh.reduce((a,b)=>a+b,0)),left=r2(g-asg),pct=g>0?Math.min(100,asg/g*100):0;
+return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${t('person')} ${p+1}<small class=n>${fmt(sh[p],R.cur)}</small></button>`).join('')}</div>
+<div class=bar><i style="width:${pct}%"></i></div><div class=row style="margin:6px 0"><small>${t('assigned')} <b class=n>${fmt(asg,R.cur)}</b></small><small>${t('left')} <b class=n>${fmt(left,R.cur)}</b></small></div>
 ${R.items.map(i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0;
-return `<div class="sp ${done?'done':''}"><div class=r1><div class=info><b dir=auto>${esc(i.orig)}</b><small class=n>${fmt(i.unit,R.cur)} · ${rem}/${i.qty} ${t('left')}</small></div><div class=acts>${inSh?`<span class=chip>${t('shared')}</span>`:`<div class=step><button data-a=iq data-id=${i.id} data-x=-1 ${mine<=0?'disabled':''}>−</button><span>${mine}</span><button data-a=iq data-id=${i.id} data-x=1 ${done?'disabled':''}>+</button></div>`}${done?'':`<button class="btn ghost sm" data-a=shp data-id=${i.id}>⇄ ${t('share')}</button>`}</div></div>
-${a.sh.map((x,k)=>`<small>${t('shared')} ×${x.q} → ${x.p.map(q=>q+1).join(', ')} <button class=x data-a=unsh data-id=${i.id} data-x=${k}>✕</button></small>`).join('')}${V.shp===i.id&&!done?shPanel(R,i,rem):''}</div>`}).join('')}
-<div style="margin-top:8px">${[...Array(n).keys()].map(p=>`<div class=ln><span>${t('person')} ${p+1}</span><b class=n>${money(ptot(R,p),R.cur)}</b></div>`).join('')}</div></div>`}
-function recV(){const R=cr();if(!R)return home();const s=sub(R),ex=extras(R),tp=tipAmt(R),g=s+ex+tp,al=alerts(R);
+return `<div class="sp ${done?'done':''}"><div class=info><b dir=auto>${esc(i.orig)}</b><small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small></div>
+<div class=cnts><div><small>${t('ordered')}</small><b>${i.qty}</b></div><div><small>${t('remaining')}</small><b class="${rem?'hl':''}">${rem}</b></div><div><small>${t('itemTotal')}</small><b>${fmt(i.unit*i.qty,R.cur)}</b></div><div><small>${t('remainingAmt')}</small><b class="${rem?'hl':''}">${fmt(i.unit*rem,R.cur)}</b></div></div>
+<div class=acts><span class=mut>${t('person')} ${P+1} ${t('takes')}</span>${inSh?`<span class=chip>${t('shared')} ${a.sh.filter(x=>x.p.includes(P)).map(x=>x.p.map(q=>q+1).join('+')).join(', ')}</span>`:step(mine,'iq',i.id,done)}${done?'':`<button class="btn ghost sm" data-a=shp data-id=${i.id}>${t('share')}</button>`}</div>
+${a.sh.map((x,k)=>`<small class=shl>${t('shared')} ${x.p.map(q=>t('person')+' '+(q+1)).join(', ')} · ×${x.q} <button class=x data-a=unsh data-id=${i.id} data-x=${k}>${t('remove')}</button></small>`).join('')}${V.shp===i.id&&!done?shPanel(R,i,rem):''}</div>`}).join('')}
+<div style="margin-top:8px">${[...Array(n).keys()].map(p=>`<div class=ln><span>${t('person')} ${p+1}</span><b class=n>${money(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class=ln><b>${t('total')}</b><b class="n tot">${fmt(g,R.cur)}</b></div></div>`}
+function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),al=alerts(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'';
 const num=(k,v,c)=>`<label>${k}<input type=number step=any inputmode=decimal data-c=${c} value="${v||''}" placeholder="0"></label>`;
-return bar(R.title||t('rTitle'),'home')+`<div class=pad><input class=ttl data-c=rtitle placeholder="${t('rTitle')}" value="${esc(R.title)}" dir=auto>
+const ln=(k,v,b)=>`<div class=ln><span>${k}</span><span class=n>${b?`<b>${v}</b>`:v}</span></div>`;
+return bar(R.title||t('rTitle'),M?'menu:'+M.id:'home')+`<div class=pad><input class=ttl data-c=rtitle placeholder="${t('rTitle')}" value="${esc(R.title)}" dir=auto>
 <input data-c=rrest placeholder="${t('menuName')}" value="${esc(R.restaurant)}" dir=auto>
-<div class=row><span class=chip>${R.cur}</span><button class="btn ghost sm" data-a=rscan>＋ ${t('scanRec')}</button></div>
-${al.map(a=>`<div class="al ${a[0]}">${esc(a[1])}</div>`).join('')}
-<div class=card><h3>${t('items')}</h3>${R.items.length?R.items.map(i=>`<div class=ln><div class=info><b dir=auto>${esc(i.orig)}</b>${i.tr&&i.tr!==i.orig?`<small dir=auto>${esc(i.tr)}</small>`:''}<small class=n>${fmt(i.unit,R.cur)} × ${i.qty}</small></div><div style="text-align:end"><b class=n>${fmt(i.unit*i.qty,R.cur)}</b><br><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></div></div>`).join(''):`<p class=empty>${t('none')}</p>`}
-<div class=g2 style="margin-top:12px"><input id=an placeholder="${t('dishName')}" dir=auto style="grid-column:1/-1"><input id=at placeholder="${t('trans')}" dir=auto style="grid-column:1/-1"><input id=ap type=number step=any inputmode=decimal placeholder="${t('price')}"><input id=aq type=number inputmode=numeric placeholder="${t('qty')}" value=1><button class="btn sm" style="grid-column:1/-1" data-a=radd>${t('addItem')}</button></div></div>
-<div class=card><div class=g2>${num(t('tax'),R.fees.tax,'ftax')}${num(t('svc'),R.fees.service,'fsvc')}${num(t('fees'),R.fees.other,'foth')}</div><label class=chk style="margin-top:10px"><input type=checkbox data-c=ftin ${R.fees.taxIncl?'checked':''}>${t('taxIn')}</label></div>
-<div class=card><h3>${t('tip')}</h3><div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
-<div class=card><div class=ln><span>${t('subtotal')}</span><span class=n>${fmt(s,R.cur)}</span></div>${ex?`<div class=ln><span>${t('fees')}</span><span class=n>${fmt(ex,R.cur)}</span></div>`:''}<div class=ln><span>${t('tip')}</span><span class=n>${fmt(tp,R.cur)}</span></div><div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div></div>
-${R.items.length?splitV(R,s,g):''}</div>`}
-function histV(){const row=(a,id,ti,sm)=>`<div class="card row"><div class=info><b dir=auto>${esc(ti||'—')}</b><small>${sm}</small></div><div class=acts><button class="btn ghost sm" data-a=${a} data-id=${id}>${t('open')}</button><button class=x data-a=${a==='om'?'dm':'dr'} data-id=${id}>${t('del')}</button></div></div>`;
-return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om',m.id,m.title,`${m.items.length} · ${m.cur}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or',r.id,r.title||r.restaurant,`${fmt(sub(r)+extras(r)+tipAmt(r),r.cur)} · ${new Date(r.date).toLocaleDateString()}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
-function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV}[V.screen]||home)()}
+${al.map(a=>`<div class="al ${a[0]}${a[0]==='bad'?' strong':''}" role=${a[0]==='bad'?'alert':'status'}>${ico(a[0]==='bad'?'warn':a[0]==='ok'?'check':'info',18)}<span>${esc(a[1])}</span></div>`).join('')}
+<div class=card><div class=row style="margin-bottom:4px"><h3 style="margin:0">${t('items')}</h3><span class=chip>${f(t('itemsCount'),nq)} · ${R.cur}</span></div>
+${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&norm(i.tr)!==norm(i.orig)?`<small dir=auto>${esc(i.tr)}</small>`:''}${i.qty>1?`<small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small>`:''}</div><div class=end><b class=n>${fmt(i.unit*i.qty,R.cur)}</b><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></div></div>`).join('')}
+<button class="btn ghost sm wide" style="margin-top:12px" data-a=rscan>${ico('cam',16)}${t('scanRec')}</button></div>
+<div class=card><div class=g2>${num(R.fees.taxIncl?t('taxInc'):t('tax'),R.fees.tax,'ftax')}${num(t('svc'),R.fees.service,'fsvc')}${num(t('fees'),R.fees.other,'foth')}${num(t('billTip'),R.fees.tip,'ftip')}</div></div>
+<div class=card><h3>${t('yourTip')}</h3>${R.fees.service>0||tb>0?`<small class=mut style="display:block;margin:-6px 0 10px">${t('tipNote')}</small>`:''}<div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
+<div class=card>${ln(t('subtotal'),fmt(s,R.cur))}${taxAdd(R)?ln(t('tax'),fmt(taxAdd(R),R.cur)):''}${R.fees.service?ln(t('svc'),fmt(R.fees.service,R.cur)):''}${R.fees.other?ln(t('fees'),fmt(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),fmt(tb,R.cur)):''}${ln(t('yourTip'),fmt(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxInc')}: ${fmt(R.fees.tax,R.cur)}</small>`:''}</div>
+${R.items.length?`<div class=card><label class="chk big"><input type=checkbox data-c=splitq ${R.split?'checked':''}>${t('splitQ')}</label>${R.split?`<div style="margin-top:14px">${splitV(R)}</div>`:''}</div>`:''}
+${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}
+</div>`}
+function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti||'—')}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
+return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title,`${m.items.length} · ${m.cur} · ${new Date(m.date).toLocaleDateString()}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.title||r.restaurant,`${fmt(grand(r),r.cur)} · ${new Date(r.date).toLocaleDateString()}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
+function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)()}
 // ---------- actions ----------
-const guard=fn=>async(...a)=>{try{await fn(...a)}catch(e){toast(e.message||t('fail'))}};
+const confirmDel=(title,desc,yes)=>openSheet(`<h3>${esc(f(t('delT'),title||'—'))}</h3><p class=mut>${desc}</p><button class="btn danger" data-a=sa data-x=yes>${ico('trash',18)}${t('delBtn')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{yes});
 const ACT={
-go:(id,x)=>{V.screen=x;V.id=null;V.shp=null;render();scrollTo(0,0)},
-start:()=>{S.started=true;V.screen='home';render()},
-nm:()=>withHints(()=>scanMenuPage(null)),
-mpage:()=>{const M=cm();withHints(()=>scanMenuPage(M))},
-hintsgo:()=>{if($('#hintsoff').checked){S.hintsOff=true;save()}sheet('');const g=V.go;V.go=null;g&&g()},
-retake:()=>{const r=V.retry;V.retry=null;sheet('');const M=S.menus.find(m=>m.id===r.id);if(!M)return;
-M.items=M.items.filter(i=>i.pg!==r.pg);render();scanMenuPage(M,r.pg)},
-keep:()=>{V.retry=null;sheet('')},
+legal:(id,x)=>{V.legal=x;V.screen='legal';render();scrollTo(0,0)},
+go:(id,x)=>{const[s,i]=String(x).split(':');V.screen=s;V.id=i||null;V.shp=null;render();scrollTo(0,0)},
+sa:(id,x)=>{const c=V.ctx||{},off=!!($('#hintsoff')&&$('#hintsoff').checked);closeSheet();c[x]&&c[x](off)},
+start:()=>{S.started=true;const p=V.prev;V.prev=null;V.screen=p?p.screen:'home';V.id=p?p.id:null;render();scrollTo(0,0)},
+set:()=>{V.prev=null;V.screen='setup';render()},
+editdiet:()=>{V.prev={screen:'menu',id:V.id};V.screen='setup';render();scrollTo(0,0)},
+diet:(id,x)=>{S.diet=S.diet.includes(x)?S.diet.filter(d=>d!==x):[...S.diet,x];render()},
+nm:()=>withHints(false,()=>scanMenuPage(null)),
+mpage:()=>{const M=cm();withHints(false,()=>scanMenuPage(M))},
 mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);render()},
-tor:()=>{const M=cm();save();const R=newReceipt(M);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
-nr:()=>{const R=newReceipt(null);pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
-rscan:()=>{const R=cr();pick(guard(async f=>{ingestReceipt(R,await scan(f,'receipt'));render()}))},
-radd:()=>{const R=cr(),n=$('#an').value.trim();if(!n)return;R.items.push({id:uid(),orig:n,tr:$('#at').value.trim(),unit:+$('#ap').value||0,qty:Math.max(1,parseInt($('#aq').value)||1)});render()},
+ing:(id,x)=>{S.avoid=S.avoid.includes(x)?S.avoid.filter(k=>k!==x):[...S.avoid,x];render()},
+ingall:()=>{V.ingAll=!V.ingAll;render()},
+star:()=>openSheet(`<div class=starbox><span class=big>⭐</span><b>${t('starD')}</b></div><button class=btn data-a=sa data-x=no>${t('ok2')}</button>`),
+tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
+nr:()=>withHints(true,()=>scanReceipt(null,null)),
+rscan:()=>{const R=cr();withHints(true,()=>scanReceipt(R.menuId,R))},
 ri:id=>{const R=cr();R.items=R.items.filter(i=>i.id!==id);delete R.assign[id];render()},
 tip:(id,x)=>{const R=cr();R.tipTouched=true;if(x==='c')R.tipMode='custom';else{R.tipMode='pct';R.tipPct=+x}render()},
 pc:(id,x)=>{const R=cr(),n=Math.min(12,Math.max(2,R.payers+ +x));R.payers=n;R.cp=Math.min(R.cp,n-1);Object.values(R.assign).forEach(a=>{Object.keys(a.ind).forEach(p=>{if(+p>=n)delete a.ind[p]});a.sh.forEach(s=>s.p=s.p.filter(p=>p<n));a.sh=a.sh.filter(s=>s.p.length>=2)});render()},
@@ -249,17 +480,21 @@ shp:id=>{V.shp=V.shp===id?null:id;V.shq=1;V.shs=[];render()},
 shsave:id=>{const R=cr(),i=R.items.find(i=>i.id===id),rem=i.qty-used(R,i);if((V.shs||[]).length<2)return toast(t('need2'));A(R,id).sh.push({q:Math.min(V.shq||1,rem),p:[...V.shs].sort((a,b)=>a-b)});V.shp=null;render()},
 unsh:(id,x)=>{const R=cr();R.assign[id].sh.splice(+x,1);render()},
 om:id=>{V.screen='menu';V.id=id;render();scrollTo(0,0)},or:id=>{V.screen='receipt';V.id=id;render();scrollTo(0,0)},
-dm:id=>{S.menus=S.menus.filter(m=>m.id!==id);render()},dr:id=>{S.receipts=S.receipts.filter(r=>r.id!==id);render()}};
+dm:id=>{const m=S.menus.find(x=>x.id===id);confirmDel(m&&m.title,t('delMenu'),()=>{S.menus=S.menus.filter(x=>x.id!==id);render()})},
+dr:id=>{const r=S.receipts.find(x=>x.id===id);confirmDel(r&&(r.title||r.restaurant),t('delRec'),()=>{S.receipts=S.receipts.filter(x=>x.id!==id);render()})}};
 const CH={
 slang:v=>{S.lang=v;const l=LANGS.find(x=>x[0]===v);if(l)S.cur=l[2];render()},
 sname:v=>{S.langName=v.trim();save()},scur:v=>{S.cur=v;save()},
-mtitle:v=>{cm().title=v;render()},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v;save()},
-ftax:v=>{cr().fees.tax=+v||0;render()},fsvc:v=>{cr().fees.service=+v||0;render()},foth:v=>{cr().fees.other=+v||0;render()},
-ftin:(v,id,e)=>{cr().fees.taxIncl=e.checked;render()},tipc:v=>{cr().tipCustom=+v||0;render()},
+mtitle:v=>{const M=cm();M.title=v.trim();render();if(!jobs(M.id).length)fetchStars(M)},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v;render()},
+ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()},foth:v=>{cr().fees.other=r2(v);render()},ftip:v=>{cr().fees.tip=r2(v);render()},
+tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
 eq:(v,id,e)=>{cr().equal=e.checked;render()},
 shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.checked&&!s.includes(p))s.push(p);if(!e.checked)V.shs=s.filter(x=>x!==p)}};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
 document.addEventListener('change',e=>{const b=e.target.closest('[data-c]');if(b&&CH[b.dataset.c])CH[b.dataset.c](b.value,b.dataset.id,b)});
+// typing in the ingredient search only refreshes the chips, so the field keeps focus
+document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;const c=$('#ingchips'),M=cm();if(c&&M)c.innerHTML=ingChips(M)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sheet').classList.contains('on'))closeSheet();else if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click()}});
 render();
 (async()=>{try{if(S.rates&&Date.now()-(S.ratesAt||0)<6e4*60*12)return;const d=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();if(d.rates){S.rates=d.rates;S.ratesAt=Date.now();save();if(!/input|select/i.test(document.activeElement.tagName))render()}}catch(e){}})();
 </script></body></html>
