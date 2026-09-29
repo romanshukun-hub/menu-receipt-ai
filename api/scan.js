@@ -45,7 +45,8 @@ Return ONLY one JSON object, no markdown:
  "tax": number (VAT/sales tax amount, 0 if none), "tax_included_in_prices": boolean,
  "service_charge": number (service fee charged, else 0), "service_pct": number|null (its percentage if printed),
  "tip": number (a tip or gratuity line explicitly added to the bill, else 0),
- "other_fees": number (tourism/cover/other mandatory fees, else 0), "total": number|null (the final amount printed)}
+ "other_fees": number (tourism/cover/other mandatory fees, else 0), "subtotal": number|null (the subtotal as printed, even if it looks wrong), "total": number|null (the final amount printed, even if it looks wrong)}
+Copy every printed amount exactly as printed; never correct the receipt's arithmetic.
 If a line shows only a line total for quantity > 1, divide to get unit_price. Do not list tax, service, tip or total lines as items. If prices show no currency symbol assume ${c}.`
 };
 

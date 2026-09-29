@@ -43,8 +43,8 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .item.unsure{margin:0 -16px;padding:14px 16px;background:var(--warnbg)}
 .info{display:grid;gap:3px;min-width:0}.info b{overflow-wrap:anywhere;font-weight:600}
 .pr{font-weight:600;color:var(--ink)}.cv{display:block;color:var(--mut);font-weight:400;font-size:12px}
-.photo{display:inline-flex;align-items:center;gap:6px;margin-top:6px;min-height:34px;padding:0 12px;border-radius:99px;border:1px solid color-mix(in srgb,var(--ac) 45%,transparent);background:var(--ac2);color:var(--ac);font-size:13px;font-weight:600;text-decoration:none;width:max-content;cursor:pointer;transition:background .12s,color .12s}
-.photo:hover,.photo:focus-visible{background:var(--ac);color:#fff}.photo:active{transform:scale(.97)}.photo svg:last-child{opacity:.7}
+.photo{display:inline-flex;align-items:center;gap:6px;margin-top:6px;min-height:34px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--ink);box-shadow:0 1px 0 var(--line);font-size:13px;font-weight:600;text-decoration:none;width:max-content;cursor:pointer;transition:background .12s,color .12s}
+.photo:hover,.photo:focus-visible{background:var(--ink);border-color:var(--ink);color:var(--bg)}.photo:active{transform:scale(.97)}.photo svg:last-child{opacity:.7}
 .unsure-b{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--warn)}
 .step{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px;flex:none;background:var(--card)}
 .step.on{border-color:var(--ink)}
@@ -115,6 +115,7 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .starbox{display:grid;justify-items:center;gap:8px;text-align:center;padding:6px 0 4px;font-size:17px}.starbox .big{font-size:44px;line-height:1}
 .hrow{display:flex;align-items:center;gap:6px;cursor:pointer}.hrow .info{flex:1}.hrow:hover{border-color:var(--mut)}.ic.del{color:var(--bad)}.hrow .chev{color:var(--mut)}[dir=rtl] .hrow .chev{transform:scaleX(-1)}
 .rit{align-items:center}.rit .info{flex:1}.end{display:grid;gap:2px;justify-items:end;text-align:end}
+.badln{color:var(--bad)}.badln b{color:var(--bad)}
 .rit.unsure{margin:0 -16px;padding-inline:16px;background:var(--warnbg)}
 .qty{flex:none;min-width:42px;height:34px;padding:0 6px;border-radius:10px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
 .qty.many{background:var(--ac);border-color:var(--ac);color:#fff;font-size:18px}
@@ -158,7 +159,7 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -182,7 +183,7 @@ aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
 const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
@@ -319,7 +320,7 @@ function ingestReceipt(R,d,rp){if(!R.items.length&&isCur(d.currency))R.cur=d.cur
 (d.items||[]).forEach(i=>i&&i.original&&R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1),unsure:i.unsure===true,rp}));
 const p={rp,tax:+d.tax||0,service:+d.service_charge||0,other:+d.other_fees||0,tip:+d.tip||0};
 R.fees.tax=r2(R.fees.tax+p.tax);R.fees.service=r2(R.fees.service+p.service);R.fees.other=r2(R.fees.other+p.other);R.fees.tip=r2((+R.fees.tip||0)+p.tip);
-if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(+d.total)R.printedTotal=+d.total;(R.parts=R.parts||[]).push(p);
+if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(+d.total)R.printedTotal=+d.total;if(+d.subtotal)R.printedSub=+d.subtotal;if(+d.service_pct)R.svcPct=+d.service_pct;(R.parts=R.parts||[]).push(p);
 if((R.fees.service>0||R.fees.tip>0)&&!R.tipTouched){R.tipMode='pct';R.tipPct=0}}
 function removePart(R,rp){const p=(R.parts||[]).find(x=>x.rp===rp);if(p){R.fees.tax=r2(R.fees.tax-p.tax);R.fees.service=r2(R.fees.service-p.service);R.fees.other=r2(R.fees.other-p.other);R.fees.tip=r2(R.fees.tip-p.tip);R.parts=R.parts.filter(x=>x!==p)}
 R.items.filter(i=>i.rp===rp).forEach(i=>delete R.assign[i.id]);R.items=R.items.filter(i=>i.rp!==rp);R.hashes=(R.hashes||[]).filter(x=>x.pg!==rp)}
@@ -460,9 +461,14 @@ if(hasOrder&&(!m||!m.qty))bad(f(t('aNotOrd'),i.orig));
 if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))bad(f(t('aPrice'),i.orig,fmt(i.unit,R.cur),fmt(m.price,R.cur)))});
 if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)bad(f(t('aMissing'),m.orig));else if(q!==m.qty)bad(f(t('aQty'),m.orig,q,m.qty))});
 const pol=M.policy;if(pol&&pol.service_pct&&R.fees.service>0){const exp=sub(R)*pol.service_pct/100;if(Math.abs(exp-R.fees.service)>Math.max(1,exp*.03))bad(f(t('aSvcPol'),fmt(R.fees.service,R.cur),pol.service_pct))}}
-const T=+R.printedTotal||0,tipB=+R.fees.tip||0,E=r2(sub(R)+billFees(R)),tol=Math.max(1,E*.005);
-if(tipB>0)bad(f(t('aTip'),fmt(tipB,R.cur)));
-if(T&&R.items.length){const d=r2(T-E);if(Math.abs(d)>tol)bad(d>0&&!tipB?f(t('aTipMaybe'),fmt(T,R.cur),fmt(d,R.cur)):f(t('aTotal'),fmt(T,R.cur),fmt(E,R.cur)))}
+// the receipt's own arithmetic: printed subtotal vs its items, service vs its printed %, printed total vs items + fees.
+// Only rounding is tolerated (about 1 unit), so a small overcharge like 50 HUF on 34,000 is still reported.
+const s=sub(R),T=+R.printedTotal||0,PS=+R.printedSub||0,pct=+R.svcPct||0,tipB=+R.fees.tip||0,E=r2(s+billFees(R)),tol=v=>Math.max(1,Math.abs(v)*.0002),c=v=>fmt(v,R.cur);
+const subOff=R.items.length&&PS&&Math.abs(PS-s)>tol(s);
+if(tipB>0)bad(f(t('aTip'),c(tipB)));
+if(subOff)bad(f(t('aSub'),c(PS),c(s),c(Math.abs(r2(PS-s)))));
+if(pct&&R.fees.service>0&&R.items.length){const exp=r2(s*pct/100);if(Math.abs(R.fees.service-exp)>Math.max(1,exp*.001))bad(f(t('aSvcPct'),c(R.fees.service),pct,c(exp)))}
+if(T&&R.items.length){const d=r2(T-E);if(Math.abs(d)>tol(E))bad(subOff?f(t('aTotalSub'),c(T),c(Math.abs(d)),c(E)):d>0&&!tipB?f(t('aTipMaybe'),c(T),c(d)):f(t('aTotal'),c(T),c(E)))}
 if(R.fees.service>0)o.push(['info',f(t('aS'),fmt(R.fees.service,R.cur))]);
 if(R.fees.tax>0)o.push(['info',f(t('aT'),fmt(R.fees.tax,R.cur),R.fees.taxIncl?t('tIn'):t('tOn'))]);
 if(R.fees.other>0)o.push(['info',f(t('aF'),fmt(R.fees.other,R.cur))]);
@@ -491,7 +497,7 @@ ${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span dir=ltr clas
 <button class="btn ghost sm wide" style="margin-top:12px" data-a=rscan>${ico('cam',16)}${t('scanRec')}</button></div>
 <div class=card><div class=g2>${num(R.fees.taxIncl?t('taxInc'):t('tax'),R.fees.tax,'ftax')}${num(t('svc'),R.fees.service,'fsvc')}${num(t('fees'),R.fees.other,'foth')}${num(t('billTip'),R.fees.tip,'ftip')}</div></div>
 <div class=card><h3>${t('yourTip')}</h3>${R.fees.service>0||tb>0?`<small class=mut style="display:block;margin:-6px 0 10px">${t('tipNote')}</small>`:''}<div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
-<div class=card>${ln(t('subtotal'),fmt(s,R.cur))}${taxAdd(R)?ln(t('tax'),fmt(taxAdd(R),R.cur)):''}${R.fees.service?ln(t('svc'),fmt(R.fees.service,R.cur)):''}${R.fees.other?ln(t('fees'),fmt(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),fmt(tb,R.cur)):''}${ln(t('yourTip'),fmt(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxInc')}: ${fmt(R.fees.tax,R.cur)}</small>`:''}</div>
+<div class=card>${ln(t('subtotal'),fmt(s,R.cur))}${taxAdd(R)?ln(t('tax'),fmt(taxAdd(R),R.cur)):''}${R.fees.service?ln(t('svc'),fmt(R.fees.service,R.cur)):''}${R.fees.other?ln(t('fees'),fmt(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),fmt(tb,R.cur)):''}${ln(t('yourTip'),fmt(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.printedTotal&&Math.abs(R.printedTotal-(g-tp))>Math.max(1,(g-tp)*.0002)?`<div class="ln badln"><span>${t('printedTotal')}</span><b class=n>${fmt(R.printedTotal,R.cur)}</b></div>`:''}${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxInc')}: ${fmt(R.fees.tax,R.cur)}</small>`:''}</div>
 ${R.items.length?`<div class=card><label class="chk big"><input type=checkbox data-c=splitq ${R.split?'checked':''}>${t('splitQ')}</label>${R.split?`<div style="margin-top:14px">${splitV(R)}</div>`:''}</div>`:''}
 ${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}
 </div>`}
