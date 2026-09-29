@@ -89,7 +89,7 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .al.bad.strong{background:var(--bad);border-color:var(--bad);color:#fff;font-weight:500}
 .al.warn.strong{border-width:1.5px}.al.pol{background:var(--ac2);border-color:transparent}.al.pol svg{color:var(--ac)}
 .btn.wide{width:100%}.btn.danger{background:var(--bad);color:#fff}
-.ordersum{display:grid}.ordersum h3{margin-bottom:6px}.oq{display:inline-block;min-width:30px;color:var(--ac)}
+.ordersum{display:grid}.ordersum h3{margin-bottom:6px}.oq{display:inline-block;min-width:30px;color:var(--ink);font-weight:700}
 .actions{display:grid;gap:6px;margin-top:6px}.actions small{text-align:center;margin:0 8px 10px}.actions .btn{min-height:52px}
 .link{border:0;background:none;color:var(--ac);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 0}
 .lbl{font-size:13px;color:var(--mut)}.field{display:grid;gap:8px}
@@ -102,9 +102,9 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .irow{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;font-size:15px;color:inherit;text-align:start;cursor:pointer}.irow:hover{background:var(--bg)}
 .irow>span:nth-child(2){flex:1}.irow .ie{width:22px;text-align:center}.irow .ck{width:18px;color:var(--bad)}.irow.on{background:color-mix(in srgb,var(--bad) 9%,transparent);font-weight:600}.irow.free{background:var(--ac2);color:var(--ac);font-weight:600}
 .ingclose{display:block;margin:2px auto}
-.subhd{margin:0 -16px;padding:12px 16px 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ac);border-top:1px solid var(--line);background:color-mix(in srgb,var(--ac2) 55%,transparent);display:flex;gap:8px;flex-wrap:wrap}
+.subhd{margin:0 -16px;padding:12px 16px 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--mut);border-top:1px solid var(--line);background:color-mix(in srgb,var(--line) 35%,transparent);display:flex;gap:8px;flex-wrap:wrap;border-inline-start:3px solid var(--line)}
 .subhd span{text-transform:none;letter-spacing:0;color:var(--mut);font-weight:500}
-.item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--ac2) 55%,transparent)}
+.item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 35%,transparent);border-inline-start:3px solid var(--line)}
 .item.addon{padding:6px 0 10px}.item.addon .nm b{font-weight:500;font-size:14px}
 .item.dim{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 45%,transparent)}
 .item.dim .nm,.item.dim .desc,.item.dim .pr,.item.dim .tags,.item.dim .photo{opacity:.4;filter:grayscale(1)}
@@ -115,10 +115,11 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .starbox{display:grid;justify-items:center;gap:8px;text-align:center;padding:6px 0 4px;font-size:17px}.starbox .big{font-size:44px;line-height:1}
 .hrow{display:flex;align-items:center;gap:6px;cursor:pointer}.hrow .info{flex:1}.hrow:hover{border-color:var(--mut)}.ic.del{color:var(--bad)}.hrow .chev{color:var(--mut)}[dir=rtl] .hrow .chev{transform:scaleX(-1)}
 .rit{align-items:center}.rit .info{flex:1}.end{display:grid;gap:2px;justify-items:end;text-align:end}
+.rdate{display:block;padding:0 2px}
 .badln{color:var(--bad)}.badln b{color:var(--bad)}
 .rit.unsure{margin:0 -16px;padding-inline:16px;background:var(--warnbg)}
 .qty{flex:none;min-width:42px;height:34px;padding:0 6px;border-radius:10px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
-.qty.many{background:var(--ac);border-color:var(--ac);color:#fff;font-size:18px}
+.qty.many{border-color:var(--ink);border-width:1.5px;font-size:18px}
 .chk.big{font-size:16px;font-weight:600}
 .sp .info{margin-bottom:8px}.sp .acts{justify-content:flex-start;margin-top:10px}
 .cnts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cnts>div{background:var(--bg);border-radius:10px;padding:8px 6px;display:grid;gap:2px;text-align:center}
@@ -159,7 +160,7 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -183,7 +184,7 @@ aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',menuHdr:'תפריט',recHdr:'קבלה',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
 const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
@@ -316,7 +317,7 @@ try{const j=await api({mode:'popular',restaurant:M.title,dishes:M.items.filter(i
 finally{if(V.starring===M.id)V.starring=null;render()}}
 // ---------- receipts ----------
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],hashes:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
-function ingestReceipt(R,d,rp){if(!R.items.length&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.title)R.title=[R.restaurant,d.date].filter(Boolean).join(' · ');
+function ingestReceipt(R,d,rp){if(!R.items.length&&isCur(d.currency))R.cur=d.currency;if(!R.restaurant&&d.restaurant)R.restaurant=d.restaurant;if(!R.rdate&&d.date)R.rdate=String(d.date).slice(0,30);
 (d.items||[]).forEach(i=>i&&i.original&&R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1),unsure:i.unsure===true,rp}));
 const p={rp,tax:+d.tax||0,service:+d.service_charge||0,other:+d.other_fees||0,tip:+d.tip||0};
 R.fees.tax=r2(R.fees.tax+p.tax);R.fees.service=r2(R.fees.service+p.service);R.fees.other=r2(R.fees.other+p.other);R.fees.tip=r2((+R.fees.tip||0)+p.tip);
@@ -396,7 +397,9 @@ return ws.some((w,k)=>{const s=ws.slice(k).join('');return s.startsWith(q)||('ו
 const dishHas=(M,i,k)=>(i.ing||[]).includes(k)||textHas(i,ingLabel(M,k));
 const termHas=(M,i,w)=>textHas(i,w)||(i.ing||[]).some(k=>norm(k)===norm(w)||(norm(w).length>=3&&norm(ingLabel(M,k)).includes(norm(w))));
 const avoidHits=(M,i)=>[...S.avoid.filter(k=>dishHas(M,i,k)).map(k=>ingLabel(M,k)),...(S.avoidTxt||[]).filter(w=>termHas(M,i,w))];
-const ingCount=M=>{const keys=new Set([...Object.keys(M.ingr||{}),...M.items.flatMap(i=>i.ing||[])]),c={};keys.forEach(k=>{const n=M.items.filter(i=>dishHas(M,i,k)).length;if(n)c[k]=n});return c};
+// allergen groups the scan adds next to the real ingredient ("nuts" next to "pistachio"); the list shows only real ingredients
+const ING_GROUPS=new Set(['nuts','tree nuts','gluten','milk','dairy','fish','shellfish','seafood','crustacean','crustaceans','mollusc','molluscs','meat','vegetables','vegetable','fruit','herbs','spices','cheese']);
+const ingCount=M=>{const keys=new Set([...Object.keys(M.ingr||{}),...M.items.flatMap(i=>i.ing||[])]),c={};keys.forEach(k=>{if(ING_GROUPS.has(k))return;const n=M.items.filter(i=>dishHas(M,i,k)).length;if(n)c[k]=n});return c};
 const ingPill=(M,k,on)=>`<button class="pill${on?' av':''}" data-a=ing data-x="${esc(k)}" aria-pressed=${on}>${esc(ingEmoji(M,k))} ${esc(ingLabel(M,k))}${on?' ✕':''}</button>`;
 // chips under the search: what is marked (tap ✕ to clear), then quick picks of the most common ingredients
 function ingChips(M){const cnt=ingCount(M),top=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).filter(k=>!S.avoid.includes(k)).slice(0,8);
@@ -431,7 +434,7 @@ rows+=itemV(i,M)}
 flush();return out}
 function menuV(){const M=cm();if(!M)return home();const js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0),hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
-return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto>
+return bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${t('menuName')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
 ${priced||V.starring===M.id?`<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${V.starring===M.id?`<span class=note><span class=spin></span>${t('starLoading')}</span>`:''}</div>`:''}
 ${hasIng||S.diet.length?`<div class="card filt"><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=editdiet>${S.diet.map(dIco).join(' ')} ${t('dietEdit')}</button></div>
@@ -489,8 +492,7 @@ ${a.sh.map((x,k)=>`<small class=shl>${t('shared')} ${x.p.map(q=>t('person')+' '+
 function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),al=alerts(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'';
 const num=(k,v,c)=>`<label>${k}<input type=number step=any inputmode=decimal data-c=${c} value="${v||''}" placeholder="0"></label>`;
 const ln=(k,v,b)=>`<div class=ln><span>${k}</span><span class=n>${b?`<b>${v}</b>`:v}</span></div>`;
-return bar(R.title||t('rTitle'),M?'menu:'+M.id:'home')+`<div class=pad><input class=ttl data-c=rtitle placeholder="${t('rTitle')}" value="${esc(R.title)}" dir=auto>
-<input data-c=rrest placeholder="${t('menuName')}" value="${esc(R.restaurant)}" dir=auto>
+return bar(t('recHdr'),M?'menu:'+M.id:'home')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${t('menuName')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.rdate?`<small class="mut rdate" dir=auto>${esc(R.rdate)}</small>`:''}</div>
 ${al.map(a=>`<div class="al ${a[0]}${a[0]==='bad'?' strong':''}" role=${a[0]==='bad'?'alert':'status'}>${ico(a[0]==='bad'?'warn':a[0]==='ok'?'check':'info',18)}<span>${esc(a[1])}</span></div>`).join('')}
 <div class=card><div class=row style="margin-bottom:4px"><h3 style="margin:0">${t('items')}</h3><span class=chip>${f(t('itemsCount'),nq)} · ${R.cur}</span></div>
 ${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span dir=ltr class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${i.tr&&norm(i.tr)!==norm(i.orig)?`<small dir=auto>${esc(i.tr)}</small>`:''}${i.qty>1?`<small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small>`:''}</div><div class=end><b class=n>${fmt(i.unit*i.qty,R.cur)}</b><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></div></div>`).join('')}
@@ -503,20 +505,23 @@ ${name?`<a class="card review" target=_blank rel=noopener href="https://www.goog
 </div>`}
 const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
 function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti)}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
-return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.title||r.restaurant||t('rTitle'),`${fmt(grand(r),r.cur)} · ${day(r.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
+return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
 function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)();syncHistory()}
 // ---------- phone/browser back button ----------
 // Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
 // While a dialog or the ingredient list is open, Back only closes it.
 const navState=()=>({screen:V.screen,id:V.id||null,legal:V.screen==='legal'?V.legal:null});
 const sameNav=(a,b)=>!!a&&!!b&&a.screen===b.screen&&(a.id||null)===(b.id||null)&&(a.legal||null)===(b.legal||null);
+// the app keeps each screen's scroll position itself: Back returns to where you were, closing a dialog doesn't move the page
+try{history.scrollRestoration='manual'}catch(e){}
 function syncHistory(){const cur=navState();if(!V.hist||!V.hist.length){V.hist=[cur];try{history.replaceState({i:0,...cur},'')}catch(e){}return}
-if(sameNav(cur,V.hist[V.hist.length-1]))return;V.hist.push(cur);try{history.pushState({i:V.hist.length-1,...cur},'')}catch(e){}}
+const top=V.hist[V.hist.length-1];if(sameNav(cur,top))return;top.y=scrollY;V.hist.push(cur);try{history.pushState({i:V.hist.length-1,...cur},'')}catch(e){}}
 window.addEventListener('popstate',e=>{const st=e.state||{i:0,screen:S.started?'home':'setup'},i=st.i||0,mine=V.navBack;V.navBack=false;
-if(!mine&&($('#sheet').classList.contains('on')||V.ingOpen)){if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet()}else{V.ingOpen=false;paintIng()}
-try{history.pushState({i:i+1,...V.hist[i+1]||navState()},'')}catch(err){}return}
+if(!mine&&($('#sheet').classList.contains('on')||V.ingOpen)){const y=scrollY;if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet()}else{V.ingOpen=false;paintIng()}
+try{history.pushState({i:i+1,...V.hist[i+1]||navState()},'')}catch(err){}scrollTo(0,y);return}
+const y=(V.hist&&V.hist[i]&&V.hist[i].y)||0;
 V.hist=(V.hist||[]).slice(0,i);V.hist.push({screen:st.screen,id:st.id||null,legal:st.legal||null});
-V.screen=st.screen;V.id=st.id||null;if(st.legal)V.legal=st.legal;V.shp=null;render();scrollTo(0,0)});
+V.screen=st.screen;V.id=st.id||null;if(st.legal)V.legal=st.legal;V.shp=null;render();scrollTo(0,y)});
 // the ← in the header goes back through history when that is where it leads, so it matches the phone's Back button
 function goTo(target){const[s,i]=String(target).split(':'),tgt={screen:s,id:i||null,legal:null},prev=V.hist&&V.hist[V.hist.length-2];
 if(prev&&sameNav(prev,tgt)){V.navBack=true;history.back();return}V.screen=s;V.id=i||null;V.shp=null;render();scrollTo(0,0)}
@@ -553,11 +558,11 @@ shsave:id=>{const R=cr(),i=R.items.find(i=>i.id===id),rem=i.qty-used(R,i);if((V.
 unsh:(id,x)=>{const R=cr();R.assign[id].sh.splice(+x,1);render()},
 om:id=>{V.screen='menu';V.id=id;render();scrollTo(0,0)},or:id=>{V.screen='receipt';V.id=id;render();scrollTo(0,0)},
 dm:id=>{const m=S.menus.find(x=>x.id===id);confirmDel(m&&(m.title||t('untitledMenu')),t('delMenu'),()=>{S.menus=S.menus.filter(x=>x.id!==id);render()})},
-dr:id=>{const r=S.receipts.find(x=>x.id===id);confirmDel(r&&(r.title||r.restaurant),t('delRec'),()=>{S.receipts=S.receipts.filter(x=>x.id!==id);render()})}};
+dr:id=>{const r=S.receipts.find(x=>x.id===id);confirmDel(r&&(r.restaurant||r.title),t('delRec'),()=>{S.receipts=S.receipts.filter(x=>x.id!==id);render()})}};
 const CH={
 slang:v=>{S.lang=v;const l=LANGS.find(x=>x[0]===v);if(l)S.cur=l[2];render()},
 sname:v=>{S.langName=v.trim();save()},scur:v=>{S.cur=v;save()},
-mtitle:v=>{const M=cm();M.title=v.trim();render();if(!jobs(M.id).length)fetchStars(M)},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v;render()},
+mtitle:v=>{const M=cm();M.title=v.trim();render();if(!jobs(M.id).length)fetchStars(M)},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v.trim();render()},
 ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()},foth:v=>{cr().fees.other=r2(v);render()},ftip:v=>{cr().fees.tip=r2(v);render()},
 tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
 eq:(v,id,e)=>{cr().equal=e.checked;render()},
