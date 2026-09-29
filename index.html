@@ -441,10 +441,11 @@ return (S.started?bar(t('set'),back):'')+`<section class=hero>${S.started?'':`<d
 ${S.lang==='x'?`<input data-c=sname placeholder="${t('otherPh')}" value="${esc(S.langName||'')}">`:''}
 <label>${t('cur')}<select data-c=scur>${curOpts(S.cur)}</select></label>
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}<small class=mut>${t('dietsD')}</small></div>
+<p class=allergy role=note>${ico('warn',16)}<span>${t('allergyNote')}</span></p>
 <button class=btn data-a=start>${t(S.started?'saveSet':'start')}</button></section>`}
 const tile=(cls,a,x,ic,ti,d)=>`<button class="card tile ${cls}" data-a=${a} ${x?`data-x=${x}`:''}><span class=e>${ico(ic,22)}</span><span><b>${ti}</b><small class=mut>${d}</small></span><span class=chev>${ico('chev',18)}</span></button>`;
 function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><span class=eyebrow>${t('title')}</span><button class=ic data-a=set aria-label="${t('set')}">${ico('gear')}</button></div><h1>${t('hello')}</h1></section>
-<div class=pad>${tile('main','nm','','menu',t('scanMenu'),t('scanMenuD'))}${tile('','nr','','receipt',t('scanReceipt'),t('scanReceiptD'))}${tile('','go','history','clock',t('hist'),t('histD'))}<p class=allergy role=note>${ico('warn',16)}<span>${t('allergyNote')}</span></p></div>
+<div class=pad>${tile('main','nm','','menu',t('scanMenu'),t('scanMenuD'))}${tile('','nr','','receipt',t('scanReceipt'),t('scanReceiptD'))}${tile('','go','history','clock',t('hist'),t('histD'))}</div>
 <footer class=foot><button class=link data-a=legal data-x=privacy>${t('privacy')}</button><span aria-hidden=true>·</span><button class=link data-a=legal data-x=terms>${t('terms')}</button></footer>`}
 function legalV(){const L=legalFor(V.legal==='terms'?'terms':'privacy');
 return bar(L[0],'home')+`<article class="pad legal"><small class=mut>${t('updated')} ${LEGAL_DATE}</small>${L[1].map(([h,p])=>`<section><h3>${esc(h)}</h3><p>${esc(p)}</p></section>`).join('')}${CONTACT?`<section><h3>${t('contact')}</h3><p dir=auto>${esc(CONTACT)}</p></section>`:''}</article>`}
