@@ -441,7 +441,7 @@ return (S.started?bar(t('set'),back):'')+`<section class=hero>${S.started?'':`<d
 ${S.lang==='x'?`<input data-c=sname placeholder="${t('otherPh')}" value="${esc(S.langName||'')}">`:''}
 <label>${t('cur')}<select data-c=scur>${curOpts(S.cur)}</select></label>
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}<small class=mut>${t('dietsD')}</small></div>
-<p class=allergy role=note>${ico('warn',16)}<span>${t('allergyNote')}</span></p>
+${allergyNote()}
 <button class=btn data-a=start>${t(S.started?'saveSet':'start')}</button></section>`}
 const tile=(cls,a,x,ic,ti,d)=>`<button class="card tile ${cls}" data-a=${a} ${x?`data-x=${x}`:''}><span class=e>${ico(ic,22)}</span><span><b>${ti}</b><small class=mut>${d}</small></span><span class=chev>${ico('chev',18)}</span></button>`;
 function home(){return `<section class=hero style="padding-bottom:8px"><div class=row><span class=eyebrow>${t('title')}</span><button class=ic data-a=set aria-label="${t('set')}">${ico('gear')}</button></div><h1>${t('hello')}</h1></section>
@@ -514,7 +514,7 @@ return bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle p
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
 ${priced||(M.items.length&&!js.length)?`<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${M.items.length&&!js.length?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
 ${hasIng||S.diet.length?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
-${hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><p class=allergy role=note>${ico("warn",16)}<span>${t("allergyNote")}</span></p><div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t("ingD")}</small>`:''}
+${hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div>${allergyNote()}<div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t("ingD")}</small>`:''}
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}</div></div>`
 // closed: one button; it shows how many filters are on, so it is clear why some dishes are dimmed
 :(()=>{const on=S.avoid.length+(S.avoidTxt||[]).length+S.diet.length;return `<button class="btn ghost wide filt-btn${on?' on':''}" data-a=filt aria-expanded=false>${ico('search',18)}<span>${t('ingT')}</span>${on?`<span class=cnt>${f(t('filtOn'),on)}</span>`:''}</button>`})()):''}
@@ -537,6 +537,8 @@ ${S.receipts.some(r=>r.id===M.receiptId)
 ?`<button class="btn acc wide" data-a=cmpgo ${n?'':'disabled'}>${ico('receipt',18)}${t('cmpGo')}</button><small class=mut>${t('cmpGoD')}</small>`
 :`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>`}
 // the diet choices, the same everywhere they appear (settings and the menu filter)
+// the allergy warning appears only once the user has chosen a diet or marked ingredients to avoid
+const allergyNote=()=>S.diet.length||S.avoid.length||(S.avoidTxt||[]).length?`<p class=allergy role=note>${ico("warn",16)}<span>${t("allergyNote")}</span></p>`:"";
 const dietPills=()=>`<div class=chips>${DIETS.map(([c,e])=>`<button class="pill ${S.diet.includes(c)?'on':''}" data-a=diet data-x=${c} aria-pressed=${S.diet.includes(c)}>${e} ${t('d'+c)}</button>`).join('')}</div>`;
 // ---------- receipt checks ----------
 const words=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2);
