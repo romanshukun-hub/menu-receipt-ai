@@ -16,8 +16,8 @@ If "menu" is false, output only line 1.
 Then, in menu order:
 - when a main section starts: {"category": heading copied exactly as printed, "category_translation": heading translated into ${l}}
 - when a boxed or labelled sub-section starts inside the current section (e.g. a "TABLE SERVICE" or "CHEF'S FAVOURITE" box): {"subsection": its label copied exactly as printed, "subsection_translation": label translated into ${l}}; when the sub-section ends and the main section continues: {"subsection": null}
-- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "unsure": boolean, "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "ok": [...], "no": [...]}
-- then: {"ingredients": {"<ingredient key>": ["<name in ${l}>", "<one emoji>"], ...}} for every key you used in "ing"
+- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "unsure": boolean, "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
+- then: {"ingredients": {"<ingredient key>": ["<name in ${l}>", "<one emoji>"], ...}} for every key you used in "ing" or "may"
 - last line: {"unclear_marks": the number of allergen/diet symbols or markings you saw next to dishes but could not identify or match to the menu's legend (0 if none)}
 
 Dish fields:
@@ -27,7 +27,8 @@ Dish fields:
 - "addon": true for an optional extra printed under a dish (e.g. "+ caviar (10gr) + 9.900") - list it right after that dish, with the add-on text as "original" and its price.
 - "hot": true if the dish is spicy (chili, hot sauce, "piccante", "diavola", a chili mark, or spicy by its nature), else false.
 - "marks": allergen/diet markings printed next to the dish (letters, symbols or icons explained by the menu's legend), each {"c": one of v, vg, gf, lf, spicy, nuts, other, "l": the marking as printed, or the legend's meaning for an icon}. [] if none.
-- "ing": every ingredient named or clearly implied by the name, description or marks, as short lowercase singular English keys. Use the specific ingredient (e.g. "pistachio", "walnut", "hazelnut", "shrimp", "salmon", "parmesan", "mushroom") AND add its allergen group key when it has one: "nuts" (tree nuts), "peanut", "gluten", "milk", "egg", "fish", "shellfish", "sesame", "soy", "celery", "mustard". Include "gluten" for pasta, pizza, bread, breadcrumbs; "milk" for cheese, cream, butter. Use the same key for the same ingredient everywhere.
+- "ing": only ingredients actually written on the menu for this dish (in its name, description or marks), as short lowercase singular English keys - never guess here. Use the specific ingredient (e.g. "pistachio", "walnut", "hazelnut", "shrimp", "salmon", "parmesan", "mushroom") AND add its allergen group key when it has one: "nuts" (tree nuts), "peanut", "gluten", "milk", "egg", "fish", "shellfish", "sesame", "soy", "celery", "mustard". Include "gluten" for pasta, pizza, bread, breadcrumbs; "milk" for cheese, cream, butter. Use the same key for the same ingredient everywhere.
+- "may": allergens and ingredients NOT written on the menu but usually in this kind of dish (e.g. "egg" for fresh pasta, a Caesar dressing or a mayonnaise-based sauce like tonnato; "nuts" for pesto). Same keys as "ing"; never repeat a key that is already in "ing"; [] when nothing is likely.
 - "ok": diet codes (${DIETS}) the dish clearly fits; "no": codes it clearly breaks (e.g. pork or shellfish break k and h; meat breaks v, vg and p; cheese or egg breaks vg; meat with dairy breaks k; pasta breaks gf unless marked gluten-free). Leave out codes you can't judge.
 
 Rules:
@@ -105,7 +106,7 @@ async function streamMenu(key, content, res) {
       if (before.has(id)) return; // already sent before a retry
       sent.add(id); n++;
       send({ item: { original: o.original, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
-        unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
+        unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
     };
     const reader = r.body.getReader(), dec = new TextDecoder();
     read: for (;;) {
