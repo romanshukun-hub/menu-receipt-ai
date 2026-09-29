@@ -124,7 +124,9 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .cnts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cnts>div{background:var(--bg);border-radius:10px;padding:8px 6px;display:grid;gap:2px;text-align:center}
 .cnts b{font-size:18px;font-variant-numeric:tabular-nums}.cnts small{font-size:11px}.cnts .hl{color:var(--ac)}
 @media(max-width:400px){.cnts{grid-template-columns:repeat(2,1fr)}}
-.shl{display:block;margin-top:6px}
+.shchip{display:inline-flex;align-items:center;gap:4px;padding:3px 4px 3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--bg);font-size:13px;font-weight:600}[dir=rtl] .shchip{padding:3px 10px 3px 4px}
+.shx{border:0;background:none;width:28px;height:28px;border-radius:50%;cursor:pointer;color:var(--mut);font-size:13px}.shx:hover{background:var(--line);color:var(--bad)}
+.btn.ghost.on{background:var(--ink);color:var(--bg);box-shadow:none}
 .foot{display:flex;gap:10px;justify-content:center;align-items:center;padding:28px 16px 8px;color:var(--mut);font-size:13px}.foot .link{color:var(--mut);font-weight:500}.foot .link:hover{color:var(--ac)}
 .legal{gap:18px;padding-top:12px;padding-bottom:40px}.legal h3{margin-bottom:6px}.legal p{line-height:1.6}
 .review{display:flex;gap:12px;align-items:center;color:inherit;text-decoration:none}.review>span:nth-child(2){flex:1;display:grid}
@@ -159,7 +161,7 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',filtHide:'Hide',filtOn:'{0} active',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',unshare:'Remove this split',filtHide:'Hide',filtOn:'{0} active',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -183,7 +185,7 @@ aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',filtHide:'הסתר',filtOn:'{0} פעילים',menuHdr:'תפריט',recHdr:'קבלה',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',unshare:'הסר את החלוקה',filtHide:'הסתר',filtOn:'{0} פעילים',menuHdr:'תפריט',recHdr:'קבלה',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
 const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
@@ -480,8 +482,10 @@ return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(
 ${R.items.map(i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0;
 return `<div class="sp ${done?'done':''}"><div class=info><b dir=auto>${esc(i.orig)}</b><small class=n>${fmt(i.unit,R.cur)} ${t('perUnit')}</small></div>
 <div class=cnts><div><small>${t('ordered')}</small><b>${i.qty}</b></div><div><small>${t('remaining')}</small><b class="${rem?'hl':''}">${rem}</b></div><div><small>${t('itemTotal')}</small><b>${fmt(i.unit*i.qty,R.cur)}</b></div><div><small>${t('remainingAmt')}</small><b class="${rem?'hl':''}">${fmt(i.unit*rem,R.cur)}</b></div></div>
-<div class=acts><span class=mut>${t('person')} ${P+1} ${t('takes')}</span>${inSh?`<span class=chip>${t('shared')} ${a.sh.filter(x=>x.p.includes(P)).map(x=>x.p.map(q=>q+1).join('+')).join(', ')}</span>`:step(mine,'iq',i.id,done)}${done?'':`<button class="btn ghost sm" data-a=shp data-id=${i.id}>${t('share')}</button>`}</div>
-${a.sh.map((x,k)=>`<small class=shl>${t('shared')} ${x.p.map(q=>t('person')+' '+(q+1)).join(', ')} · ×${x.q} <button class=x data-a=unsh data-id=${i.id} data-x=${k}>${t('remove')}</button></small>`).join('')}${V.shp===i.id&&!done?shPanel(R,i,rem):''}</div>`}).join('')}
+<div class=acts>${inSh?'':`<span class=mut>${t('person')} ${P+1} ${t('takes')}</span>${step(mine,'iq',i.id,done)}`}
+${a.sh.map((x,k)=>`<span class=shchip>${t('shared')} ${x.p.map(q=>q+1).join('+')}${x.q>1?` · ×${x.q}`:''}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}
+${done?'':`<button class="btn ghost sm${V.shp===i.id?' on':''}" data-a=shp data-id=${i.id} aria-pressed=${V.shp===i.id} aria-expanded=${V.shp===i.id}>${t('share')}</button>`}</div>
+${V.shp===i.id&&!done?shPanel(R,i,rem):''}</div>`}).join('')}
 <div style="margin-top:8px">${[...Array(n).keys()].map(p=>`<div class=ln><span>${t('person')} ${p+1}</span><b class=n>${money(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class=ln><b>${t('total')}</b><b class="n tot">${fmt(g,R.cur)}</b></div></div>`}
 function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),al=alerts(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'';
 const num=(k,v,c)=>`<label>${k}<input type=number step=any inputmode=decimal data-c=${c} value="${v||''}" placeholder="0"></label>`;
@@ -509,10 +513,17 @@ const sameNav=(a,b)=>!!a&&!!b&&a.screen===b.screen&&(a.id||null)===(b.id||null)&
 // the app keeps each screen's scroll position itself: Back returns to where you were, closing a dialog doesn't move the page
 try{history.scrollRestoration='manual'}catch(e){}
 function syncHistory(){const cur=navState();if(!V.hist||!V.hist.length){V.hist=[cur];try{history.replaceState({i:0,...cur},'')}catch(e){}return}
-const top=V.hist[V.hist.length-1];if(sameNav(cur,top))return;top.y=scrollY;V.hist.push(cur);try{history.pushState({i:V.hist.length-1,...cur},'')}catch(e){}}
+const top=V.hist[V.hist.length-1];if(sameNav(cur,top))return;top.y=scrollY;V.filtLayer=false;V.hist.push(cur);try{history.pushState({i:V.hist.length-1,...cur},'')}catch(e){}}
+// Back closes only what is open on top of the screen, one layer per press: a message, the ingredient list,
+// the split panel, the ingredient filter opened on this screen. During a receipt scan it does nothing.
+function closeLayer(){if($('#busy').classList.contains('on'))return true;
+if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet();return true}
+if(V.ingOpen){V.ingOpen=false;paintIng();return true}
+if(V.shp){V.shp=null;render();return true}
+if(V.filtLayer&&S.filtOpen&&V.screen==='menu'){S.filtOpen=false;V.filtLayer=false;render();return true}
+return false}
 window.addEventListener('popstate',e=>{const st=e.state||{i:0,screen:S.started?'home':'setup'},i=st.i||0,mine=V.navBack;V.navBack=false;
-if(!mine&&($('#sheet').classList.contains('on')||V.ingOpen)){const y=scrollY;if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet()}else{V.ingOpen=false;paintIng()}
-try{history.pushState({i:i+1,...V.hist[i+1]||navState()},'')}catch(err){}scrollTo(0,y);return}
+if(!mine){const y=scrollY;if(closeLayer()){const n=V.hist.length-1;try{history.pushState({i:n,...(V.hist[n]||navState())},'')}catch(err){}scrollTo(0,y);return}}
 const y=(V.hist&&V.hist[i]&&V.hist[i].y)||0;
 V.hist=(V.hist||[]).slice(0,i);V.hist.push({screen:st.screen,id:st.id||null,legal:st.legal||null});
 V.screen=st.screen;V.id=st.id||null;if(st.legal)V.legal=st.legal;V.shp=null;render();scrollTo(0,y)});
@@ -538,7 +549,7 @@ mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);re
 ing:(id,x)=>{S.avoid=S.avoid.includes(x)?S.avoid.filter(k=>k!==x):[...S.avoid,x];render()},
 ingtxt:(id,x)=>{const w=String(x||'').trim(),a=S.avoidTxt||[];if(!w)return;S.avoidTxt=a.some(v=>norm(v)===norm(w))?a.filter(v=>norm(v)!==norm(w)):[...a,w];render()},
 ingclose:()=>{V.ingOpen=false;paintIng()},
-filt:()=>{S.filtOpen=!S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
+filt:()=>{S.filtOpen=!S.filtOpen;V.filtLayer=S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
 tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
 nr:()=>withHints(true,()=>scanReceipt(null,null)),
 rscan:()=>{const R=cr();withHints(true,()=>scanReceipt(R.menuId,R))},
