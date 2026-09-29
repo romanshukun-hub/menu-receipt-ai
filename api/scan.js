@@ -17,7 +17,8 @@ Then, in menu order:
 - when a main section starts: {"category": heading copied exactly as printed, "category_translation": heading translated into ${l}}
 - when a boxed or labelled sub-section starts inside the current section (e.g. a "TABLE SERVICE" or "CHEF'S FAVOURITE" box): {"subsection": its label copied exactly as printed, "subsection_translation": label translated into ${l}}; when the sub-section ends and the main section continues: {"subsection": null}
 - for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "unsure": boolean, "addon": boolean, "marks": [...], "ing": [...], "ok": [...], "no": [...]}
-- last line: {"ingredients": {"<ingredient key>": ["<name in ${l}>", "<one emoji>"], ...}} for every key you used in "ing"
+- then: {"ingredients": {"<ingredient key>": ["<name in ${l}>", "<one emoji>"], ...}} for every key you used in "ing"
+- last line: {"unclear_marks": the number of allergen/diet symbols or markings you saw next to dishes but could not identify or match to the menu's legend (0 if none)}
 
 Dish fields:
 - "original": the dish name copied EXACTLY as printed - same language, spelling and words; never translate, correct, shorten or transliterate it. If the name continues on the same line in a smaller or lighter font, include that continuation. Read small text letter by letter; never replace a hard-to-read word with a different, more familiar dish.
@@ -25,7 +26,7 @@ Dish fields:
 - "unsure": true if any word of the name, or the price, was blurry, cut off or hard to read and you had to guess part of it.
 - "addon": true for an optional extra printed under a dish (e.g. "+ caviar (10gr) + 9.900") - list it right after that dish, with the add-on text as "original" and its price.
 - "marks": allergen/diet markings printed next to the dish (letters, symbols or icons explained by the menu's legend), each {"c": one of v, vg, gf, lf, spicy, nuts, other, "l": the marking as printed, or the legend's meaning for an icon}. [] if none.
-- "ing": main ingredients known from the name, description or marks, as short lowercase English keys (e.g. "mushroom", "egg", "pork", "shrimp", "gluten", "milk", "nuts", "fish", "beef"). Include "gluten" for pasta, pizza, bread, breadcrumbs; "milk" for cheese, cream, butter.
+- "ing": every ingredient named or clearly implied by the name, description or marks, as short lowercase singular English keys. Use the specific ingredient (e.g. "pistachio", "walnut", "hazelnut", "shrimp", "salmon", "parmesan", "mushroom") AND add its allergen group key when it has one: "nuts" (tree nuts), "peanut", "gluten", "milk", "egg", "fish", "shellfish", "sesame", "soy", "celery", "mustard". Include "gluten" for pasta, pizza, bread, breadcrumbs; "milk" for cheese, cream, butter. Use the same key for the same ingredient everywhere.
 - "ok": diet codes (${DIETS}) the dish clearly fits; "no": codes it clearly breaks (e.g. pork or shellfish break k and h; meat breaks v, vg and p; cheese or egg breaks vg; meat with dairy breaks k; pasta breaks gf unless marked gluten-free). Leave out codes you can't judge.
 
 Rules:
@@ -94,6 +95,7 @@ async function streamMenu(key, content, res) {
         return;
       }
       if (o.ingredients && typeof o.ingredients === 'object') return send({ ingr: o.ingredients });
+      if ('unclear_marks' in o && !('original' in o)) return send({ unclear: Math.max(0, Math.min(99, parseInt(o.unclear_marks) || 0)) });
       if ('category' in o && !('original' in o)) { cat = String(o.category || ''); catTr = String(o.category_translation || ''); sub = subTr = ''; return; }
       if ('subsection' in o && !('original' in o)) { sub = String(o.subsection || ''); subTr = sub ? String(o.subsection_translation || '') : ''; return; }
       if (!o.original) return;
@@ -141,16 +143,20 @@ ${dishes.map(d => '- ' + d).join('\n')}
 Search the web for Google reviews and other reviews of this restaurant, and find its signature dishes and the dishes reviewers praise most.
 Return ONLY one JSON object, no markdown: {"found": true if you identified this restaurant, "popular": [up to 5 names copied exactly from the list above]}.
 Only include dishes that reviews or the restaurant itself actually single out. If you can't identify the restaurant or reviews don't name dishes, return an empty list.` }];
+  const usage = { input_tokens: 0, output_tokens: 0, web_searches: 0 }; // returned so the cost of a lookup can be checked
   for (let turn = 0; turn < 4; turn++) {
     const r = await ask(key, { model: MODEL, max_tokens: 6000, output_config: { effort: 'low' }, tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3 }], messages });
     const j = await r.json();
     if (!r.ok) return res.status(502).json({ error: j.error?.message || 'AI service error.' });
+    const u = j.usage || {};
+    usage.input_tokens += (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0);
+    usage.output_tokens += u.output_tokens || 0; usage.web_searches += u.server_tool_use?.web_search_requests || 0;
     if (j.stop_reason === 'pause_turn') { messages.push({ role: 'assistant', content: j.content }); continue; }
     const text = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     const a = text.lastIndexOf('{"found"') >= 0 ? text.lastIndexOf('{"found"') : text.indexOf('{'), b = text.lastIndexOf('}');
     let out = {}; try { out = JSON.parse(text.slice(a, b + 1)); } catch (e) {}
     const set = new Set(dishes);
-    return res.status(200).json({ popular: out.found ? arr(out.popular, 5).filter(d => set.has(d)) : [] });
+    return res.status(200).json({ popular: out.found ? arr(out.popular, 5).filter(d => set.has(d)) : [], usage });
   }
   return res.status(200).json({ popular: [] });
 }

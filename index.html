@@ -88,14 +88,20 @@ input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ink)}
 .al{display:flex;gap:10px;align-items:flex-start}.al>svg{margin-top:1px}.al small{opacity:.9}
 .al.bad.strong{background:var(--bad);border-color:var(--bad);color:#fff;font-weight:500}
 .al.warn.strong{border-width:1.5px}.al.pol{background:var(--ac2);border-color:transparent}.al.pol svg{color:var(--ac)}
-.btn.wide{width:100%}.btn.danger{background:var(--bad);color:#fff}.addpg{margin-top:6px}
+.btn.wide{width:100%}.btn.danger{background:var(--bad);color:#fff}
+.ordersum{display:grid}.ordersum h3{margin-bottom:6px}.oq{display:inline-block;min-width:30px;color:var(--ac)}
+.actions{display:grid;gap:6px;margin-top:6px}.actions small{text-align:center;margin:0 8px 10px}.actions .btn{min-height:52px}
 .link{border:0;background:none;color:var(--ac);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 0}
 .lbl{font-size:13px;color:var(--mut)}.field{display:grid;gap:8px}
 .note{display:inline-flex;gap:8px;align-items:center;font-size:12px;color:var(--mut)}.note .spin{width:12px;height:12px;border-width:2px}
 .filt{display:grid;gap:10px}.filt .chips{gap:6px}.filt .pill{padding:6px 12px;font-size:13px}
 .pill.av{background:var(--bad);border-color:var(--bad);color:#fff}
 .search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--card);color:var(--mut)}
-.search:focus-within{border-color:var(--ink)}.search input{border:0;padding:11px 0;background:transparent}.search input:focus{border:0}
+.search:focus-within{border-color:var(--ink)}.search input{border:0;padding:11px 0;background:transparent}.search input:focus,.search input:focus-visible{border:0;outline:none;box-shadow:none}
+.ingbox{display:grid}.inglist{margin-top:6px;border:1px solid var(--line);border-radius:12px;background:var(--card);max-height:320px;overflow:auto;overscroll-behavior:contain}
+.irow{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;font-size:15px;color:inherit;text-align:start;cursor:pointer}.irow:hover{background:var(--bg)}
+.irow>span:nth-child(2){flex:1}.irow .ie{width:22px;text-align:center}.irow .ck{width:18px;color:var(--bad)}.irow.on{background:color-mix(in srgb,var(--bad) 9%,transparent);font-weight:600}.irow.free{background:var(--ac2);color:var(--ac);font-weight:600}
+.ingclose{display:block;margin:2px auto}
 .subhd{margin:0 -16px;padding:12px 16px 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ac);border-top:1px solid var(--line);background:color-mix(in srgb,var(--ac2) 55%,transparent);display:flex;gap:8px;flex-wrap:wrap}
 .subhd span{text-transform:none;letter-spacing:0;color:var(--mut);font-weight:500}
 .item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--ac2) 55%,transparent)}
@@ -138,7 +144,7 @@ dupT:'Heads up: you already uploaded this photo',dupIn:'It was already scanned i
 uns:'Heads up: {0} of the {1} dishes were not recognised with full certainty',unsR:'Heads up: {0} of the {1} items were not recognised with full certainty',unsD:'If you continue, they will be marked so you can check them against the menu.',unsDR:'If you continue, they will be marked so you can check them against the receipt.',lowRes:'The photo is low resolution — a sharper photo will give a better result.',retake:'Retake photo',keepIt:'Continue anyway',
 emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographed the menu and that the text is sharp and readable.',emptyRecT:'No items found in this photo',emptyRecD:'Make sure you photographed the whole receipt and that the text is sharp and readable.',scanAgain:'Scan again',
 scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
-policy:'Restaurant policy',starT:'Recommended dish',starD:'Especially recommended according to reviews on Google and review sites',starLoading:'Checking reviews of the restaurant…',ok2:'Got it',
+policy:'Restaurant policy',starT:'Recommended dish',starD:'Especially recommended according to reviews online',starLoading:'Checking reviews of the restaurant…',ok2:'Got it',
 ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',notFor:'Heads up: {0}',dietEdit:'Diet preferences',
 dietsT:'Dietary restrictions',dietsD:"We'll mark dishes that suit you and dishes to avoid.",
 dv:'Vegetarian',dvg:'Vegan',dh:'Halal',dk:'Kosher',dp:'Pescatarian',dgf:'Gluten-free',dlf:'Lactose-free',
@@ -152,7 +158,7 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -162,7 +168,7 @@ dupT:'שים לב: העלית את התמונה הזו כבר קודם',dupIn:'�
 uns:'שים לב: {0} מנות מתוך ה-{1} לא זוהו בוודאות מלאה',unsR:'שים לב: {0} פריטים מתוך ה-{1} לא זוהו בוודאות מלאה',unsD:'אם תמשיכו, הן יסומנו כדי שתוכלו לבדוק אותן מול התפריט.',unsDR:'אם תמשיכו, הם יסומנו כדי שתוכלו לבדוק אותם מול הקבלה.',lowRes:'התמונה ברזולוציה נמוכה — צילום חד יותר ישפר את התוצאה.',retake:'צלם מחדש',keepIt:'המשך בכל זאת',
 emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שצילמתם את התפריט ושהטקסט חד וקריא.',emptyRecT:'לא נמצאו פריטים בתמונה',emptyRecD:'ודאו שצילמתם את הקבלה כולה ושהטקסט חד וקריא.',scanAgain:'סרוק שוב',
 scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
-policy:'מדיניות המסעדה',starT:'מנה מומלצת',starD:'מנה מומלצת במיוחד לפי ביקורות בגוגל ובאתרי ביקורות',starLoading:'בודק ביקורות על המסעדה…',ok2:'הבנתי',
+policy:'מדיניות המסעדה',starT:'מנה מומלצת',starD:'מנה מומלצת במיוחד לפי ביקורות ברשת',starLoading:'בודק ביקורות על המסעדה…',ok2:'הבנתי',
 ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו. המרכיבים מזוהים אוטומטית ועלולים לטעות: באלרגיה, ודאו תמיד מול הצוות.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',notFor:'שים לב: {0}',dietEdit:'העדפות תזונה',
 dietsT:'מגבלות תזונה',dietsD:'נסמן לכם בתפריט מנות מתאימות ומנות שכדאי להימנע מהן.',
 dv:'צמחוני',dvg:'טבעוני',dh:'חלאל',dk:'כשר',dp:'פסקטריאני',dgf:'ללא גלוטן',dlf:'ללא לקטוז',
@@ -176,7 +182,7 @@ aNotOrd:'„{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'„
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את „{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות „{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
 const CONTACT='',LEGAL_DATE='29.09.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
@@ -206,7 +212,7 @@ terms:['Terms of service',[
 ['Fair use',"Only scan photos you're allowed to take, and don't use the service unlawfully or to overload it. We may limit the number of scans."],
 ['Liability',"To the extent the law allows, we aren't liable for damage caused by relying on the app's results. We may change the service and these terms; the current version is always shown here."]]]}};
 let S=JSON.parse(localStorage.getItem('mrai2')||'null')||{};
-S={lang:null,cur:'USD',menus:[],receipts:[],started:false,diet:[],avoid:[],...S};
+S={lang:null,cur:'USD',menus:[],receipts:[],started:false,diet:[],avoid:[],avoidTxt:[],...S};
 if(!S.lang){const n=(navigator.language||'en'),l=LANGS.find(x=>x[0]===n)||LANGS.find(x=>x[0]===n.split('-')[0])||LANGS[1];S.lang=l[0];S.cur=l[2]}
 let V={screen:S.started?'home':'setup',jobs:[],q:[]};
 const save=()=>{try{localStorage.setItem('mrai2',JSON.stringify(S))}catch(e){}};
@@ -261,12 +267,16 @@ ok(h)}
 let rT=0;const soon=()=>{if(rT)return;rT=setTimeout(()=>{rT=0;if(/input|select|textarea/i.test(document.activeElement.tagName))return soon();render()},120)};
 const jobs=id=>V.jobs.filter(j=>j.id===id);
 const cleanIngr=o=>{const r={};for(const k in o){const v=o[k];if(Array.isArray(v))r[String(k).toLowerCase().slice(0,30)]=[String(v[0]||k).slice(0,40),String(v[1]||'').slice(0,8)]}return r};
-// a dish already on the menu (same name, same or missing price) is merged instead of listed twice
-function addDish(M,i,pg,seq){const key=norm(i.original),price=+i.price||0;
+// A dish already on the menu (same name, same section, same or missing price) is merged instead of listed twice,
+// so overlapping photos don't duplicate dishes. An add-on belongs to the dish above it and is only merged with the same add-on of the same dish.
+function addDish(M,i,pg,seq,ctx){const key=norm(i.original),price=+i.price||0,addon=i.addon===true,parent=addon?ctx.parent:'';
+let cat=String(i.category||''),catTr=String(i.category_tr||'');const sub=String(i.sub||''),subTr=String(i.sub_tr||'');
+if(!cat&&ctx.inherit){cat=ctx.inherit.cat;catTr=ctx.inherit.catTr} // a photo that starts mid-section continues the previous page's section
 const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:String(m.l).slice(0,40)})),ing=(i.ing||[]).map(s=>String(s).toLowerCase().slice(0,30));
-const same=M.items.find(x=>norm(x.orig)===key&&(!x.price||!price||Math.abs(x.price-price)<.005));
+if(!addon)ctx.parent=key;
+const same=M.items.find(x=>norm(x.orig)===key&&!!x.addon===addon&&(!addon||x.parent===parent)&&(!x.price||!price||Math.abs(x.price-price)<.005)&&(!x.cat||!cat||norm(x.cat)===norm(cat)));
 if(same){if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);same.ing=[...new Set([...(same.ing||[]),...ing])];if(!(same.marks||[]).length)same.marks=marks;return null}
-const d={id:uid(),orig:String(i.original),tr:String(i.translation||''),price,cat:String(i.category||''),catTr:String(i.category_tr||''),sub:String(i.sub||''),subTr:String(i.sub_tr||''),unsure:i.unsure===true,addon:i.addon===true,marks,ing,ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
+const d={id:uid(),orig:String(i.original),tr:String(i.translation||''),price,cat,catTr,sub,subTr,unsure:i.unsure===true,addon,parent,marks,ing,ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
 M.items.push(d);return d}
 function scanMenuPage(M,pg){pick(file=>checkNew(file,()=>scanMenuPage(M,pg),h=>runPage(M,pg,file,h)))}
 // scans one photo into M (or a new menu) as page pg; several pages can scan at once and still show in page order
@@ -275,21 +285,30 @@ if(isNew){M={id:uid(),title:'',cur:S.cur,items:[],hashes:[],date:Date.now()};S.m
 M.hashes=M.hashes||[];
 if(pg==null)pg=Math.max(0,...M.items.map(i=>i.pg||0),...M.hashes.map(x=>x.pg||0))+1;
 M.hashes=M.hashes.filter(x=>x.pg!==pg);if(h)M.hashes.push({h,pg});
-const job={id:M.id,pg,n:0};V.jobs.push(job);render();let uns=0,low=false,err='',seq=0;
+const job={id:M.id,pg,n:0};V.jobs.push(job);render();let uns=0,unc=0,low=false,err='',seq=0;
+const ctx={parent:'',inherit:null,started:false};
 try{const image=await shrink(file);low=shrink.last<1200;
 await scanStream(image,o=>{
 if(o.meta){if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
 else if(o.ingr)M.ingr=Object.assign(M.ingr||{},cleanIngr(o.ingr));
-else if(o.item&&o.item.original){const d=addDish(M,o.item,pg,seq++);if(d){job.n++;if(d.unsure)uns++}}
+else if('unclear' in o){unc=+o.unclear||0;M.unclear={...(M.unclear||{}),[pg]:unc}}
+else if(o.item&&o.item.original){
+if(!ctx.started){ctx.started=true;if(!o.item.category){const prev=M.items.filter(x=>(x.pg||0)<pg).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0))).pop();if(prev&&prev.cat)ctx.inherit={cat:prev.cat,catTr:prev.catTr}}}
+if(o.item.category)ctx.inherit=null;
+const d=addDish(M,o.item,pg,seq++,ctx);if(d){job.n++;if(d.unsure)uns++}}
 soon()})}
 catch(e){err=e.message||t('fail')}
 finally{V.jobs=V.jobs.filter(j=>j!==job)}
 if(!job.n&&!seq){M.hashes=M.hashes.filter(x=>x.pg!==pg);
-if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id){V.screen='home';V.id=null}}render();
+if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id&&V.screen==='menu'){goTo('home')}}render();
 return failSheet(err?t('fail'):t('emptyMenuT'),err||t('emptyMenuD'),()=>{const m=S.menus.find(x=>x.id===M.id);scanMenuPage(m||null,m?pg:null)})}
 render();if(err)toast(err);
-if(uns)unsSheet(f(t('uns'),uns,job.n),t('unsD'),low,()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);render();scanMenuPage(m,pg)});
-if(!jobs(M.id).length)fetchStars(M)}
+if(uns||unc){const lines=[uns&&f(t('uns'),uns,job.n),unc&&f(t('unclearMarks'),unc)].filter(Boolean);
+openSheet(`<div class="al warn strong">${ico('warn',18)}<div>${lines.map(l=>`<b>${esc(l)}</b>`).join('<br>')}<br><small>${esc((uns?t('unsD'):t('unclearD'))+(low?' '+t('lowRes'):''))}</small></div></div><button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,
+{retake:()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);if(m.unclear)delete m.unclear[pg];render();scanMenuPage(m,pg)}})}
+// one review lookup for pages scanned close together (each lookup is a paid web search)
+clearTimeout(V.starTimer);V.starTimer=setTimeout(()=>{if(!jobs(M.id).length)fetchStars(M)},STARS_DELAY)}
+let STARS_DELAY=15000;
 // asks the server which dishes reviews of this restaurant single out
 async function fetchStars(M){const key=norm(M.title)+':'+M.items.length;if(!M.title||!M.items.length||M.starsKey===key)return;M.starsKey=key;V.starring=M.id;soon();
 try{const j=await api({mode:'popular',restaurant:M.title,dishes:M.items.filter(i=>!i.addon).map(i=>i.orig),currency:M.cur,language:langName()});M.stars=(j.popular||[]).map(norm)}catch(e){M.starsKey=''}
@@ -350,7 +369,7 @@ ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 
 plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
 const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 // ---------- views ----------
-const bar=(title,back)=>`<header class=top><button class="ic back" data-a=go data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
+const bar=(title,back)=>`<header class=top><button class="ic back" data-a=back data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
 const step=(q,a,id,dis)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 ${dis?'disabled':''} aria-label="+1">+</button></div>`;
 function setup(){const back=V.prev?V.prev.screen+(V.prev.id?':'+V.prev.id:''):'home';
 return (S.started?bar(t('set'),back):'')+`<section class=hero>${S.started?'':`<div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>`}
@@ -367,15 +386,34 @@ function legalV(){const L=(LEGAL[S.lang]||LEGAL.en)[V.legal]||LEGAL.en.privacy;
 return bar(L[0],'home')+`<article class="pad legal"><small class=mut>${t('updated')} ${LEGAL_DATE}</small>${L[1].map(([h,p])=>`<section><h3>${esc(h)}</h3><p>${esc(p)}</p></section>`).join('')}${CONTACT?`<section><h3>${t('contact')}</h3><p dir=auto>${esc(CONTACT)}</p></section>`:''}</article>`}
 const ingLabel=(M,k)=>(M.ingr&&M.ingr[k]&&M.ingr[k][0])||k;
 const ingEmoji=(M,k)=>(M.ingr&&M.ingr[k]&&M.ingr[k][1])||'•';
-// ingredient chips: selected ones first, then the most common; a search shows every match
-function ingChips(M){const cnt={};M.items.forEach(i=>(i.ing||[]).forEach(k=>cnt[k]=(cnt[k]||0)+1));
-const q=norm(V.ingq);let keys=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
-if(q)keys=keys.filter(k=>norm(ingLabel(M,k)).includes(q)||norm(k).includes(q));
-const sel=keys.filter(k=>S.avoid.includes(k)),rest=keys.filter(k=>!S.avoid.includes(k)),lim=q||V.ingAll?rest:rest.slice(0,Math.max(0,12-sel.length)),more=!q&&rest.length>lim.length;
-if(!keys.length)return `<small class=mut>${t('noIng')}</small>`;
-return [...sel,...lim].map(k=>`<button class="pill${S.avoid.includes(k)?' av':''}" data-a=ing data-x="${esc(k)}" aria-pressed=${S.avoid.includes(k)}>${esc(ingEmoji(M,k))} ${esc(ingLabel(M,k))}</button>`).join('')+(more||V.ingAll&&!q?`<button class=link data-a=ingall>${t(V.ingAll?'less':'more')}</button>`:'')}
-function itemV(i,M){const av=(i.ing||[]).filter(k=>S.avoid.includes(k)),bad=S.diet.filter(d=>(i.no||[]).includes(d)),good=bad.length?[]:S.diet.filter(d=>(i.ok||[]).includes(d)),star=(M.stars||[]).includes(norm(i.orig)),dim=av.length||bad.length;
-const warn=[];if(av.length)warn.push(f(t('contains'),av.map(k=>ingLabel(M,k)).join(', ')));if(bad.length)warn.push(f(t('notFor'),bad.map(d=>t('n'+d)).join(', ')));
+// A dish contains an ingredient if the scan tagged it, or if the ingredient's name appears in the dish name or description
+// (e.g. "פיסטוק" in "…, פיסטוקים, …"). It matches from the start of a word, also after the prefixes ו/ה/ב
+// ("ופיסטוקים"), but not in the middle of another word ("עגל" does not match "מעגל"). Terms under 3 letters only match tags.
+const textHas=(i,term)=>{const q=norm(term);if(q.length<3)return false;
+const ws=String(i.orig+' '+(i.tr||'')).split(/[^\p{L}\p{N}]+/u).map(norm).filter(Boolean);
+return ws.some((w,k)=>{const s=ws.slice(k).join('');return s.startsWith(q)||('והב'.includes(w[0])&&w.length>q.length&&s.slice(1).startsWith(q))})};
+const dishHas=(M,i,k)=>(i.ing||[]).includes(k)||textHas(i,ingLabel(M,k));
+const termHas=(M,i,w)=>textHas(i,w)||(i.ing||[]).some(k=>norm(k)===norm(w)||(norm(w).length>=3&&norm(ingLabel(M,k)).includes(norm(w))));
+const avoidHits=(M,i)=>[...S.avoid.filter(k=>dishHas(M,i,k)).map(k=>ingLabel(M,k)),...(S.avoidTxt||[]).filter(w=>termHas(M,i,w))];
+const ingCount=M=>{const keys=new Set([...Object.keys(M.ingr||{}),...M.items.flatMap(i=>i.ing||[])]),c={};keys.forEach(k=>{const n=M.items.filter(i=>dishHas(M,i,k)).length;if(n)c[k]=n});return c};
+const ingPill=(M,k,on)=>`<button class="pill${on?' av':''}" data-a=ing data-x="${esc(k)}" aria-pressed=${on}>${esc(ingEmoji(M,k))} ${esc(ingLabel(M,k))}${on?' ✕':''}</button>`;
+// chips under the search: what is marked (tap ✕ to clear), then quick picks of the most common ingredients
+function ingChips(M){const cnt=ingCount(M),top=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).filter(k=>!S.avoid.includes(k)).slice(0,8);
+return [...S.avoid.map(k=>ingPill(M,k,true)),...(S.avoidTxt||[]).map(w=>`<button class="pill av" data-a=ingtxt data-x="${esc(w)}" aria-pressed=true>🔎 ${esc(w)} ✕</button>`),...top.map(k=>ingPill(M,k,false))].join('')}
+// the full list that opens from the search field: every ingredient on the menu, filtered by what is typed;
+// a typed word that is not in the list can still be marked, and matches dish names and descriptions
+function ingList(M){const cnt=ingCount(M),raw=(V.ingq||'').trim(),q=norm(raw);
+const keys=Object.keys(cnt).sort((a,b)=>ingLabel(M,a).localeCompare(ingLabel(M,b),S.lang)).filter(k=>!q||norm(ingLabel(M,k)).includes(q)||norm(k).includes(q));
+let h='';if(q.length>=2&&!keys.some(k=>norm(ingLabel(M,k))===q)){const n=M.items.filter(i=>termHas(M,i,raw)).length,on=(S.avoidTxt||[]).some(w=>norm(w)===q);
+h+=`<button class="irow free${on?' on':''}" data-a=ingtxt data-x="${esc(raw)}" role=option aria-selected=${on}><span class=ie>${ico('search',16)}</span><span>${esc(f(t('avoidTerm'),raw))}</span><small>${f(t('dishesN'),n)}</small><span class=ck>${on?ico('check',18):''}</span></button>`}
+h+=keys.map(k=>{const on=S.avoid.includes(k);return `<button class="irow${on?' on':''}" data-a=ing data-x="${esc(k)}" role=option aria-selected=${on}><span class=ie>${esc(ingEmoji(M,k))}</span><span>${esc(ingLabel(M,k))}</span><small>${f(t('dishesN'),cnt[k])}</small><span class=ck>${on?ico('check',18):''}</span></button>`}).join('');
+return (h||`<p class=mut style="padding:12px;margin:0">${t('noIng')}</p>`)+`<button class="link ingclose" data-a=ingclose>${t('close')}</button>`}
+// updates only the ingredient list and chips, so the search field keeps focus while typing
+function paintIng(){const M=cm(),box=$('.ingbox');if(!M||!box)return;let l=$('#inglist');
+if(V.ingOpen){if(!l){box.insertAdjacentHTML('beforeend','<div class=inglist id=inglist role=listbox></div>');l=$('#inglist')}l.innerHTML=ingList(M)}else if(l)l.remove();
+const q=$('#ingq');if(q)q.setAttribute('aria-expanded',!!V.ingOpen);const c=$('#ingchips');if(c)c.innerHTML=ingChips(M)}
+function itemV(i,M){const av=avoidHits(M,i),bad=S.diet.filter(d=>(i.no||[]).includes(d)),good=bad.length?[]:S.diet.filter(d=>(i.ok||[]).includes(d)),star=(M.stars||[]).includes(norm(i.orig)),dim=av.length||bad.length;
+const warn=[];if(av.length)warn.push(f(t('contains'),[...new Set(av)].join(', ')));if(bad.length)warn.push(f(t('notFor'),bad.map(d=>t('n'+d)).join(', ')));
 return `<div class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
 ${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${star?`<button class=star data-a=star aria-label="${t('starT')}">⭐</button>`:''}</div>
@@ -396,13 +434,19 @@ return bar(M.title||t('menuName'),'home')+`<div class=pad><input class=ttl data-
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
 ${priced||V.starring===M.id?`<div class=row>${priced?`<span class=chip>${M.cur}</span>`:'<span></span>'}${V.starring===M.id?`<span class=note><span class=spin></span>${t('starLoading')}</span>`:''}</div>`:''}
 ${hasIng||S.diet.length?`<div class="card filt"><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=editdiet>${S.diet.map(dIco).join(' ')} ${t('dietEdit')}</button></div>
-${hasIng?`<label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off></label><div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t('ingD')}</small>`:''}</div>`:''}
+${hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t('ingD')}</small>`:''}</div>`:''}
+${Object.values(M.unclear||{}).reduce((a,b)=>a+b,0)?`<div class="al warn" role=status>${ico('warn',18)}<span>${esc(f(t('unclearMarks'),Object.values(M.unclear).reduce((a,b)=>a+b,0)))}</span></div>`:''}
 ${sectionsV(M)}
-${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?`<button class="btn ghost wide addpg" data-a=mpage>${ico('cam',18)}${t('addPage')}</button>`:`<p class=empty>${t('empty')}</p>`}
+${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?orderV(M,n,tot,priced):`<p class=empty>${t('empty')}</p>`}
 </div>
-<div class=sticky><div>${js.length
-?`<div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t('scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button>`
-:`<div><small>${n} ${t('order')}</small>${priced?`<br><b class=n>${mv(tot,M.cur)}</b>`:''}</div><button class="btn acc" data-a=tor>${t('saveScan')}</button>`}</div></div>`}
+${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t('scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button></div></div>`:''}`}
+// end of the menu: what was ordered and its total, then the two next steps, each with a line saying what it does
+function orderV(M,n,tot,priced){const ord=[...M.items].filter(i=>i.qty>0).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0)));
+return `<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t('yourOrder')}</h3>
+${n?ord.map(i=>`<div class=ln><span><b class=oq dir=ltr>${i.qty}×</b> <span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span></span>${priced?`<span class=n>${fmt(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
++`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot">${mv(tot,M.cur)}</b>`:''}</div>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
+<div class=actions><button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>
+<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small></div>`}
 // ---------- receipt checks ----------
 const words=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2);
 function matchMenu(M,name){const a=norm(name);let m=M.items.find(x=>norm(x.orig)===a);if(m)return m;
@@ -454,14 +498,32 @@ ${name?`<a class="card review" target=_blank rel=noopener href="https://www.goog
 const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
 function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti)}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
 return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.title||r.restaurant||t('rTitle'),`${fmt(grand(r),r.cur)} · ${day(r.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
-function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)()}
+function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)();syncHistory()}
+// ---------- phone/browser back button ----------
+// Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
+// While a dialog or the ingredient list is open, Back only closes it.
+const navState=()=>({screen:V.screen,id:V.id||null,legal:V.screen==='legal'?V.legal:null});
+const sameNav=(a,b)=>!!a&&!!b&&a.screen===b.screen&&(a.id||null)===(b.id||null)&&(a.legal||null)===(b.legal||null);
+function syncHistory(){const cur=navState();if(!V.hist||!V.hist.length){V.hist=[cur];try{history.replaceState({i:0,...cur},'')}catch(e){}return}
+if(sameNav(cur,V.hist[V.hist.length-1]))return;V.hist.push(cur);try{history.pushState({i:V.hist.length-1,...cur},'')}catch(e){}}
+window.addEventListener('popstate',e=>{const st=e.state||{i:0,screen:S.started?'home':'setup'},i=st.i||0,mine=V.navBack;V.navBack=false;
+if(!mine&&($('#sheet').classList.contains('on')||V.ingOpen)){if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet()}else{V.ingOpen=false;paintIng()}
+try{history.pushState({i:i+1,...V.hist[i+1]||navState()},'')}catch(err){}return}
+V.hist=(V.hist||[]).slice(0,i);V.hist.push({screen:st.screen,id:st.id||null,legal:st.legal||null});
+V.screen=st.screen;V.id=st.id||null;if(st.legal)V.legal=st.legal;V.shp=null;render();scrollTo(0,0)});
+// the ← in the header goes back through history when that is where it leads, so it matches the phone's Back button
+function goTo(target){const[s,i]=String(target).split(':'),tgt={screen:s,id:i||null,legal:null},prev=V.hist&&V.hist[V.hist.length-2];
+if(prev&&sameNav(prev,tgt)){V.navBack=true;history.back();return}V.screen=s;V.id=i||null;V.shp=null;render();scrollTo(0,0)}
 // ---------- actions ----------
 const confirmDel=(title,desc,yes)=>openSheet(`<h3>${esc(f(t('delT'),title||'—'))}</h3><p class=mut>${desc}</p><button class="btn danger" data-a=sa data-x=yes>${ico('trash',18)}${t('delBtn')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{yes});
 const ACT={
 legal:(id,x)=>{V.legal=x;V.screen='legal';render();scrollTo(0,0)},
-go:(id,x)=>{const[s,i]=String(x).split(':');V.screen=s;V.id=i||null;V.shp=null;render();scrollTo(0,0)},
+go:(id,x)=>goTo(x),
+back:(id,x)=>{if(V.hist&&V.hist.length>1){V.navBack=true;history.back()}else goTo(x)}, // header ←: same as the phone's Back
 sa:(id,x)=>{const c=V.ctx||{},off=!!($('#hintsoff')&&$('#hintsoff').checked);closeSheet();c[x]&&c[x](off)},
-start:()=>{S.started=true;const p=V.prev;V.prev=null;V.screen=p?p.screen:'home';V.id=p?p.id:null;render();scrollTo(0,0)},
+start:()=>{const first=!S.started;S.started=true;const p=V.prev;V.prev=null;
+if(first){V.hist=[];V.screen='home';V.id=null;render();return} // first run: home replaces setup, so Back doesn't return to it
+goTo(p?p.screen+(p.id?':'+p.id:''):'home')},
 set:()=>{V.prev=null;V.screen='setup';render()},
 editdiet:()=>{V.prev={screen:'menu',id:V.id};V.screen='setup';render();scrollTo(0,0)},
 diet:(id,x)=>{S.diet=S.diet.includes(x)?S.diet.filter(d=>d!==x):[...S.diet,x];render()},
@@ -469,7 +531,8 @@ nm:()=>withHints(false,()=>scanMenuPage(null)),
 mpage:()=>{const M=cm();withHints(false,()=>scanMenuPage(M))},
 mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);render()},
 ing:(id,x)=>{S.avoid=S.avoid.includes(x)?S.avoid.filter(k=>k!==x):[...S.avoid,x];render()},
-ingall:()=>{V.ingAll=!V.ingAll;render()},
+ingtxt:(id,x)=>{const w=String(x||'').trim(),a=S.avoidTxt||[];if(!w)return;S.avoidTxt=a.some(v=>norm(v)===norm(w))?a.filter(v=>norm(v)!==norm(w)):[...a,w];render()},
+ingclose:()=>{V.ingOpen=false;paintIng()},
 star:()=>openSheet(`<div class=starbox><span class=big>⭐</span><b>${t('starD')}</b></div><button class=btn data-a=sa data-x=no>${t('ok2')}</button>`),
 tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
 nr:()=>withHints(true,()=>scanReceipt(null,null)),
@@ -496,8 +559,14 @@ shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
 document.addEventListener('change',e=>{const b=e.target.closest('[data-c]');if(b&&CH[b.dataset.c])CH[b.dataset.c](b.value,b.dataset.id,b)});
 // typing in the ingredient search only refreshes the chips, so the field keeps focus
-document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;const c=$('#ingchips'),M=cm();if(c&&M)c.innerHTML=ingChips(M)}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sheet').classList.contains('on'))closeSheet();else if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click()}});
+document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;V.ingOpen=true;paintIng()}});
+// the ingredient list opens when the search field is focused and closes on a tap outside the filter card
+document.addEventListener('focusin',e=>{if(e.target.id==='ingq'&&!V.ingOpen){V.ingOpen=true;paintIng()}});
+document.addEventListener('pointerdown',e=>{if(e.target.closest('#ingq')){if(!V.ingOpen){V.ingOpen=true;paintIng()}}else if(V.ingOpen&&!e.target.closest('.filt')){V.ingOpen=false;paintIng()}});
+document.addEventListener('keydown',e=>{
+// Enter in the ingredient search marks the typed ingredient (or the typed word)
+if(e.key==='Enter'&&e.target.id==='ingq'){e.preventDefault();const M=cm(),raw=e.target.value,q=norm(raw);if(!M||q.length<2)return;const k=Object.keys(ingCount(M)).find(k=>norm(ingLabel(M,k))===q||norm(k)===q);V.ingq='';if(k&&!S.avoid.includes(k))ACT.ing(null,k);else if(k)render();else if(!(S.avoidTxt||[]).some(w=>norm(w)===q))ACT.ingtxt(null,raw);else render();return}
+if(e.key==='Escape'&&V.ingOpen&&!$('#sheet').classList.contains('on')){V.ingOpen=false;paintIng()}else if(e.key==='Escape'&&$('#sheet').classList.contains('on'))closeSheet();else if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click()}});
 render();
 (async()=>{try{if(S.rates&&Date.now()-(S.ratesAt||0)<6e4*60*12)return;const d=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();if(d.rates){S.rates=d.rates;S.ratesAt=Date.now();save();if(!/input|select/i.test(document.activeElement.tagName))render()}}catch(e){}})();
 </script></body></html>
