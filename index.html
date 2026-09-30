@@ -780,8 +780,9 @@ function undoToast(msg,undo){const e=$('#toast');e.innerHTML=`<span>${esc(msg)}<
 e.querySelector('.undo').onclick=()=>{e.style.display='none';undo();render()};clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
 // the split as plain text: each person's amount and what they had, to send to the others
 function splitText(R){const n=R.payers,g=grand(R),sh=R.equal?equalShares(g,n):shares(R),name=R.restaurant||R.title||'',lines=[t('shareHdr')+(name?' — '+name:'')];
-for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+i.orig);a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${i.orig} (1/${x.p.length})`));return o});
+for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+nameTr(i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${nameTr(i)} 1/${x.p.length}`));return o});
 lines.push(`${t('person')} ${p+1}: ${fmt(sh[p],R.cur)}${its.length?' — '+its.join(', '):''}`)}
+const left=R.equal?0:r2(g-sh.reduce((a,b)=>a+b,0));if(left>0)lines.push(`${t('unassigned')}: ${fmt(left,R.cur)}`);
 lines.push(`${t('total')}: ${fmt(g,R.cur)}`);return lines.join('\n')}
 async function shareSplit(){const R=cr();if(!R)return;const text=splitText(R);
 try{if(navigator.share){await navigator.share({text});return}}catch(e){if(e&&e.name==='AbortError')return}
