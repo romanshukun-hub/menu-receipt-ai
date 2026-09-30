@@ -634,7 +634,7 @@ ${js.length?`<div class="card list"><div class=skel></div><div class=skel style=
 </div>
 ${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t(js.some(j=>j.hq)?'recheck':'scanMenuNow')}</b><br><small>${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button></div></div>`
 // while browsing: a small bar with how many dishes are chosen and their total, jumping to the order
-:n?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&conv(sum,M.cur,S.cur);
+:n&&V.obarHid!==M.id?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&conv(sum,M.cur,S.cur);
 return `<div class="sticky obar"><div><div><b>${f(t('orderTotal'),n)}</b>${priced?`<br><small class=n>${fmt(sum,M.cur)}${cv!=null&&cv!==false?` · ≈ ${fmt(cv,S.cur)}`:''}</small>`:''}</div><button class="btn acc sm" data-a=toorder>${t('seeOrder')}</button></div></div>`})():''}`}
 // end of the menu: what was ordered and its total, then the two next steps, each with a line saying what it does
 function orderV(M,n,tot,priced){const ord=[...M.items].filter(i=>i.qty>0).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0)));
@@ -838,7 +838,7 @@ const confirmDel=(title,desc,yes)=>openSheet(`<h3>${esc(f(t('delT'),title||'—'
 const ACT={
 legal:(id,x)=>{V.legal=x;V.screen='legal';render();scrollTo(0,0)},
 waiter:()=>waiterView(),
-toorder:()=>{const h=$('.ordersum');h&&h.scrollIntoView({behavior:'smooth',block:'start'})}, // the card's top stays clear of the sticky header (scroll-margin)
+toorder:()=>{V.obarHid=V.id;render();const h=$('.ordersum');h&&h.scrollIntoView({behavior:'smooth',block:'start'})}, // the bar stays hidden until the order changes again // the card's top stays clear of the sticky header (scroll-margin)
 sharesplit:()=>shareSplit(),
 edl:id=>editLine(id),
 install:async()=>{if(!installEvt)return;installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;render()},
@@ -854,7 +854,7 @@ editdiet:()=>{V.prev={screen:'menu',id:V.id};V.screen='setup';render();scrollTo(
 diet:(id,x)=>{S.diet=S.diet.includes(x)?S.diet.filter(d=>d!==x):[...S.diet,x];render()},
 nm:()=>withHints(false,()=>scanMenuPage(null)),
 mpage:()=>{const M=cm();withHints(false,()=>scanMenuPage(M))},
-mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);render()},
+mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);V.obarHid=null;render()},
 ing:(id,x)=>{S.avoid=S.avoid.includes(x)?S.avoid.filter(k=>k!==x):[...S.avoid,x];render()},
 ingtxt:(id,x)=>{const w=String(x||'').trim(),a=S.avoidTxt||[];if(!w)return;S.avoidTxt=a.some(v=>norm(v)===norm(w))?a.filter(v=>norm(v)!==norm(w)):[...a,w];render()},
 ingclose:()=>{V.ingOpen=false;paintIng();const a=document.activeElement;if(a&&a.id==='ingq')a.blur()}, // also hides the phone keyboard
