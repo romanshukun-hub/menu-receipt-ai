@@ -230,7 +230,6 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 /* history: switch between all, menus and bills */
 .al.demo .btn{margin-top:10px;width:auto}
 .rhead{padding-bottom:4px}.rhead h1{margin:0 0 12px}.rsel{display:flex;gap:8px;flex-wrap:wrap}.rsel label{display:flex;align-items:center;gap:6px;flex:1;min-width:140px;margin:0}.rsel select{flex:1;min-width:0}
-.scanhow{padding:16px}.scanhow h3{margin:0 0 4px;font-size:16px}.scanhow .how{border:0;padding:6px 0 0;background:none;gap:12px}.scanhow .how li{align-items:center;font-size:15px}
 .htabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--line)}.htab{flex:1;border:0;border-radius:10px;padding:10px 6px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}.htab.on{background:var(--card);box-shadow:0 1px 3px #0002}
 /* history: date filter; the day picker is a real date field laid over the chip */
 .hdates .pill{font-size:14px;padding:7px 12px}.hpick{position:relative;display:inline-flex;align-items:center;gap:6px;cursor:pointer}.hpick input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
@@ -252,8 +251,6 @@ emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographe
 scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
 policy:'Restaurant policy',
 ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
-siT:'While we read your menu',si1:'We read every dish and translate it for you',si2:'Prices are converted to {0}',
-si3:'Choose dishes, and your order is built at the bottom of the page',si4:'After the meal, scan the bill: we check it against your order and catch mistakes',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
 demoBtn:'Try it without scanning',demoBtnD:'A sample menu and bill, without using a scan',
@@ -287,8 +284,6 @@ emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שציל
 scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
 policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
-siT:'בזמן שאנחנו קוראים את התפריט',si1:'קוראים כל מנה ומתרגמים אותה בשבילכם',si2:'ממירים את המחירים ל{0}',
-si3:'בוחרים מנות, וההזמנה נבנית בסוף העמוד',si4:'אחרי הארוחה סורקים את החשבונית, ובודקים שהיא תואמת להזמנה ושאין בה טעויות',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
 demoBtn:'נסו בלי לסרוק',demoBtnD:'תפריט וקבלה לדוגמה, בלי להשתמש בסריקה',
@@ -476,7 +471,6 @@ if(!job.n&&!seq){const show=kind==='receipt'?()=>wrongKind('rec',file,M):()=>fai
 if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id&&V.screen==='menu')return goTo('home',show)}render();
 return show()}
 if(file.h){M.hashes=(M.hashes||[]).filter(x=>x.pg!==pg);M.hashes.push({pg,h:file.h})} // remembered, so the same photo is recognised next time
-S.scanIntro=true; // the first-scan explanation is shown once
 render();if(err)toast(err);
 // a message after the scan only when most dishes are doubtful; otherwise each doubtful dish says so in the menu
 if(uns&&uns>job.n/2){
@@ -685,15 +679,11 @@ for(const i of items){if(!g||g.cat!==(i.cat||'')){flush();g={cat:i.cat||'',catTr
 if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
 rows+=itemV(i,M)}
 flush();return out}
-// the first menu scan explains, while it runs, what is happening and what comes next (shown until that scan ends)
-const curName=c=>{try{return new Intl.DisplayNames([S.lang==='x'?'en':S.lang,'en'],{type:'currency'}).of(c)}catch(e){return c}};
-const scanIntro=()=>`<section class="card scanhow" role=note><h3>${t('siT')}</h3><ol class=how>${[['search','si1'],['coin','si2'],['check','si3'],['receipt','si4']].map(([i,k])=>`<li><span class=hn>${ico(i,20)}</span><span>${esc(f(t(k),curName(S.cur)))}</span></li>`).join('')}</ol></section>`;
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
 const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
 function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0),hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return (M.rest?restHead(M)+'<div class=pad>':bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
-${js.length&&!S.scanIntro&&!real(S.menus).some(m=>m.id!==M.id&&m.items.length)?scanIntro():''}
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
 ${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo&&!M.rest?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
