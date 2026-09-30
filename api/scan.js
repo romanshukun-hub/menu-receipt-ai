@@ -139,7 +139,8 @@ async function streamMenu(key, content, res) {
         const id = norm(o.original) + '|' + (+o.price || 0);
         if (before.has(id)) return; // already sent before a retry
         const uf = o.unsure === true ? ['name'] : arr(o.unsure, 4).map(String).filter(x => ['name', 'price', 'ingredients', 'marks'].includes(x));
-        sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; if (uf.includes('marks')) st.umarks++; if (arr(o.marks).length) st.marked++; // only a doubtful name or price makes the stronger model read the page again
+        sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; if (uf.includes('marks')) st.umarks++; if (arr(o.marks).length) st.marked++;
+        if (arr(o.marks).some(m => /^[A-Z0-9]{1,2}([\s,.\/-]+[A-Z0-9]{1,2})*$/.test(String((m && m.l) || '').trim()))) st.rawMarks = true; // a legend letter left untranslated ("A C G")
         send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
           unsure: uf, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
       };
@@ -147,7 +148,8 @@ async function streamMenu(key, content, res) {
       if (!st.err || st.notMenu) break;
     }
     st.missing = st.sections.filter(s => ![...st.seen].some(x => x && (x.includes(s) || s.includes(x)))).length;
-    if (st.legend && st.n >= 3 && !st.marked) st.umarks = st.n; // the menu explains markings but none were read next to any dish
+    // the menu has a legend, but markings came back as raw letters ("A C G" instead of their meaning) or were read next to only a few dishes
+    if (st.legend && st.n >= 3 && (st.rawMarks || st.marked < st.n / 3)) st.umarks = st.n;
     return st;
   };
   let st = await pass(MODEL), model = MODEL;
