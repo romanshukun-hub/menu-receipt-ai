@@ -233,6 +233,13 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .htabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--line)}.htab{flex:1;border:0;border-radius:10px;padding:10px 6px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}.htab.on{background:var(--card);box-shadow:0 1px 3px #0002}
 /* history: date filter; the day picker is a real date field laid over the chip */
 .hdates .pill{font-size:14px;padding:7px 12px}.hpick{position:relative;display:inline-flex;align-items:center;gap:6px;cursor:pointer}.hpick input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+/* buttons, chips, search fields and pickers stand out with a soft shadow, so it is clear they can be tapped */
+:root{--sh:0 1px 2px rgba(27,24,20,.10),0 3px 8px rgba(27,24,20,.08)}
+@media(prefers-color-scheme:dark){:root{--sh:0 1px 2px rgba(0,0,0,.5),0 3px 10px rgba(0,0,0,.35)}}
+.btn,.pill,.search,select{box-shadow:var(--sh)}
+.btn.ghost{background:var(--card);box-shadow:inset 0 0 0 1px var(--line),var(--sh)}
+.btn:active,.pill:active{box-shadow:none;transform:translateY(1px)}
+.btn:disabled{box-shadow:none}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -250,9 +257,14 @@ uns:'Heads up: {0} of the {1} dishes were not recognised with full certainty',un
 emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographed the menu and that the text is sharp and readable.',emptyRecT:'No items found in this photo',emptyRecD:'Make sure you photographed the whole receipt and that the text is sharp and readable.',scanAgain:'Scan again',
 scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
 policy:'Restaurant policy',
-ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
+ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
+rpBtn:'Create a restaurant page',rpUpd:'Update the restaurant page',rpBtnD:'A link and QR code where guests see this menu in their language and currency',
+rpT:'Restaurant page',rpD:'Before creating the page, check that the dish names and prices are right. The dishes are translated into every language once.',
+rpSlug:'Page address (English letters, digits and dashes)',rpGo:'Create the page',rpProg:'Translating into every language… {0}/{1}',
+rpDone:'The page is ready',rpDoneD:'Print the QR card or send the link. The page is not listed in search engines.',rpOpen:'Open the page',rpCopy:'Copy the link',
+rpCopied:'Link copied',rpCard:'Download the QR card',rpBadSlug:'Use English letters, digits and dashes',adminOn:'Manager mode is on',adminBad:'Wrong manager code',
 demoBtn:'Try it without scanning',demoBtnD:'A sample menu and bill, without using a scan',
 demoMenu:"This is a sample menu. Try choosing dishes, searching, or marking ingredients you don't eat.",demoRecGo:'To the sample bill',
 demoRec:'This is a sample bill for the order from the sample menu. Try checking it and splitting it between people.',demoReal:'Scan a real menu',
@@ -283,9 +295,14 @@ uns:'שים לב: {0} מנות מתוך ה-{1} לא זוהו בוודאות מל
 emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שצילמתם את התפריט ושהטקסט חד וקריא.',emptyRecT:'לא נמצאו פריטים בתמונה',emptyRecD:'ודאו שצילמתם את הקבלה כולה ושהטקסט חד וקריא.',scanAgain:'סרוק שוב',
 scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
 policy:'מדיניות המסעדה',
-ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
+ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
+rpBtn:'צור דף למסעדה',rpUpd:'עדכן את דף המסעדה',rpBtnD:'קישור וקוד QR שבהם האורחים רואים את התפריט בשפה ובמטבע שלהם',
+rpT:'דף למסעדה',rpD:'לפני שיוצרים את הדף, בדקו שהשמות והמחירים נכונים. המנות מתורגמות לכל השפות פעם אחת.',
+rpSlug:'כתובת הדף (אותיות באנגלית, ספרות ומקפים)',rpGo:'צור את הדף',rpProg:'מתרגמים לכל השפות… {0}/{1}',
+rpDone:'הדף מוכן',rpDoneD:'הדפיסו את כרטיס ה-QR או שלחו את הקישור. הדף לא מופיע במנועי חיפוש.',rpOpen:'פתח את הדף',rpCopy:'העתק קישור',
+rpCopied:'הקישור הועתק',rpCard:'הורד כרטיס QR',rpBadSlug:'השתמשו באותיות באנגלית, ספרות ומקפים',adminOn:'מצב מנהל הופעל',adminBad:'קוד מנהל שגוי',
 demoBtn:'נסו בלי לסרוק',demoBtnD:'תפריט וקבלה לדוגמה, בלי להשתמש בסריקה',
 demoMenu:'זה תפריט לדוגמה. נסו לבחור מנות, לחפש או לסמן מרכיבים שאתם לא אוכלים.',demoRecGo:'לקבלה לדוגמה',
 demoRec:'זו קבלה לדוגמה להזמנה מהתפריט לדוגמה. נסו לבדוק אותה ולחלק אותה בין המשתתפים.',demoReal:'לסריקת תפריט אמיתי',
@@ -502,13 +519,53 @@ const real=a=>a.filter(x=>!x.demo);
 const REST=(location.search.match(/[?&]r=([a-z0-9-]+)/)||[])[1]||null;
 function restApply(M){const L=M.src.tr[S.lang]||M.src.tr[String(S.lang).split('-')[0]]||M.src.tr.en||{};const g=(o,k)=>(o||{})[k]||'';
 M.items.forEach(i=>{i.tr=g(L.items,i.id);i.catTr=g(L.cats,i.cat);i.subTr=g(L.subs,i.sub)});
-M.ingr=Object.fromEntries(Object.entries(M.src.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]]));M.lang=S.lang}
-async function restLoad(){try{const r=await fetch('rdata/'+REST+'.json',{cache:'no-cache'});if(!r.ok)throw 0;const d=await r.json();
+M.ingr=Object.fromEntries(Object.entries(M.src.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]]));
+if(M.src.policy)M.policy={...M.src.policy,text:L.policy||M.src.policy.text};M.lang=S.lang}
+async function restLoad(){try{let r=await fetch('rdata/'+REST+'.json',{cache:'no-cache'}); // a prepared sample, else a page created in the app
+if(!r.ok)r=await fetch('/api/rest?slug='+REST);if(!r.ok)throw 0;const d=await r.json();
 const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
 restApply(M);V.rmenu=M;V.screen='menu';V.id=M.id}catch(e){V.screen='home';V.id=null;toast(t('fail'))}render()}
 // the guest's bill: the menu and the order become a normal menu in their app, and the bill scan compares with it
 function restToApp(){const M=V.rmenu,C={...M,id:uid(),rest:false,src:undefined,date:Date.now(),items:M.items.map(i=>({...i}))};delete C.src;delete C.lang;
 S.menus.unshift(C);S.started=true;V.rmenu=null;V.id=C.id;try{history.replaceState(history.state,'',location.pathname)}catch(e){}save();withHints(true,()=>scanReceipt(C.id,null))}
+// ---------- creating a restaurant page from a scanned menu (manager only: ?admin=<code> once on the device) ----------
+// The dishes, headings, ingredients and price rules are translated into every app language (one call per language),
+// then the page is saved on the server; the result is a link and a printable QR card.
+const slugify=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+const pageUrl=s=>location.origin+'/?r='+s;
+function restSheet(M){openSheet(`<h3>${t('rpT')}</h3><p class=mut>${t('rpD')}</p><label>${t('rpSlug')}<input id=rpslug dir=ltr value="${esc(M.restSlug||slugify(M.title))}" placeholder="trattoria-anna" autocomplete=off autocapitalize=off></label>
+<button class=btn data-a=rpgo>${ico('check',18)}${t(M.restSlug?'rpUpd':'rpGo')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})}
+async function restPublish(M,slug){const base=String(S.lang==='x'?'en':S.lang).split('-')[0],G=()=>({items:{},cats:{},subs:{},ingr:{}});
+const items=M.items.map(i=>{const o={id:i.id,orig:i.orig,price:i.price,cat:i.cat||'',pg:i.pg,seq:i.seq,ing:i.ing||[],may:i.may||[]};if(i.local)o.local=i.local;if(i.sub)o.sub=i.sub;if(i.addon){o.addon=true;o.parent=i.parent}
+for(const k of['marks','ok','no'])if((i[k]||[]).length)o[k]=i[k];if(i.hot)o.hot=true;return o});
+const cats=[...new Set(M.items.map(i=>i.cat).filter(Boolean))],subs=[...new Set(M.items.map(i=>i.sub).filter(Boolean))],ings=Object.keys(M.ingr||{});
+const strings={},back=[],add=(k,g,id,v,tr)=>{strings[k]=v+(tr&&norm(tr)!==norm(v)?' || '+tr:'');back.push([k,g,id])};
+M.items.forEach((i,n)=>add('i'+n,'items',i.id,i.orig,i.tr));cats.forEach((c,n)=>add('c'+n,'cats',c,c,(M.items.find(i=>i.cat===c)||{}).catTr));
+subs.forEach((c,n)=>add('s'+n,'subs',c,c,(M.items.find(i=>i.sub===c)||{}).subTr));ings.forEach((k,n)=>add('g'+n,'ingr',k,k,M.ingr[k][0]));
+if(M.policy&&M.policy.text)add('p0','policy','',M.policy.text);
+const own=G();M.items.forEach(i=>{if(i.tr)own.items[i.id]=i.tr;if(i.catTr)own.cats[i.cat]=i.catTr;if(i.subTr)own.subs[i.sub]=i.subTr});ings.forEach(k=>own.ingr[k]=M.ingr[k][0]);if(M.policy&&M.policy.text)own.policy=M.policy.text;
+const tr={[base]:own},todo=[...new Set(LANGS.map(l=>l[0].split('-')[0]))].filter(c=>c!==base);let done=0;
+const prog=()=>{const e=$('#rpprog');if(e)e.textContent=f(t('rpProg'),done,todo.length)};
+closeSheet();openSheet(`<div class="scan-st" role=status><span class=spin></span><div><b id=rpprog></b></div></div>`,{});prog();
+const one=async c=>{const nm=new Intl.DisplayNames(['en'],{type:'language'}).of(c);let err;
+for(let a=0;a<4;a++){try{const j=await api({mode:'dishes',admin:S.adminKey,language:nm,strings});const o=G();back.forEach(([k,g,id])=>{const v=j.strings[k];if(v){if(g==='policy')o.policy=v;else o[g][id]=v}});tr[c]=o;done++;prog();return}
+catch(e){err=e;await new Promise(z=>setTimeout(z,3000*(a+1)))}}throw err};
+for(let k=0;k<todo.length;k+=4)await Promise.all(todo.slice(k,k+4).map(one));
+const data={title:M.title,cur:M.cur,policy:M.policy||null,items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
+const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:S.adminKey,slug,data})}),j=await r.json().catch(()=>({}));
+if(!r.ok)throw new Error(j.error||t('fail'));M.restSlug=slug;save();closeSheet();restDone(M.title,slug)}
+// a printable card: the restaurant's name, the QR code and a line saying what it opens (in English, for guests from anywhere)
+async function qrCard(title,url){if(!window.QRCode)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=ok;s.onerror=no;document.head.append(s)});
+const box=document.createElement('div');new QRCode(box,{text:url,width:720,height:720,correctLevel:QRCode.CorrectLevel.M});await new Promise(z=>setTimeout(z,300));
+const q=box.querySelector('canvas'),W=1200,H=1560,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');try{await document.fonts.load('700 80px Rubik')}catch(e){}
+x.fillStyle='#f4f1eb';x.fillRect(0,0,W,H);x.fillStyle='#fff';x.beginPath();x.roundRect(80,80,W-160,H-160,60);x.fill();x.textAlign='center';
+let fs=84;x.font=`700 ${fs}px Rubik`;while(x.measureText(title).width>W-240&&fs>40){fs-=4;x.font=`700 ${fs}px Rubik`}x.fillStyle='#1b1814';x.fillText(title,W/2,260);
+x.fillStyle='#c2410c';x.font='600 54px Rubik';x.fillText('Menu in your language',W/2,360);x.fillStyle='#6b645c';x.font='400 36px Rubik';x.fillText('Speisekarte · Menú · Carte · Меню · 菜单 · メニュー',W/2,425);
+x.drawImage(q,(W-720)/2,500,720,720);x.fillStyle='#1b1814';x.font='500 44px Rubik';x.fillText('Scan with your phone camera',W/2,1330);
+x.fillStyle='#6b645c';x.font='400 36px Rubik';x.fillText('Prices in your currency · allergens · no app needed',W/2,1395);return c.toDataURL('image/png')}
+async function restDone(title,slug){const url=pageUrl(slug);let card='';try{card=await qrCard(title,url)}catch(e){}
+openSheet(`<h3>${t('rpDone')}</h3><p class=mut>${t('rpDoneD')}</p>${card?`<img src="${card}" alt="QR" style="width:100%;border-radius:14px;border:1px solid var(--line)">`:''}<p dir=ltr style="margin:0;word-break:break-all"><b>${esc(url)}</b></p>
+<a class=btn href="${esc(url)}" target=_blank rel=noopener>${ico('ext',18)}${t('rpOpen')}</a><button class="btn ghost" data-a=rpcopy data-x="${esc(url)}">${t('rpCopy')}</button>${card?`<a class="btn ghost" href="${card}" download="qr-${slug}.png">${ico('img',18)}${t('rpCard')}</a>`:''}<button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
 const demoNote=(txt,btn)=>`<div class="al pol strong demo" role=note>${ico('info',18)}<div><span>${t(txt)}</span>${btn}</div></div>`;
 // a scanned receipt arrives in three kinds of pieces: its header, one line per item, and the totals at the end
 function receiptMeta(R,m){if(!R.items.length&&isCur(m.currency))R.cur=m.currency;if(!R.restaurant&&m.restaurant)R.restaurant=m.restaurant;if(!R.rdate&&m.date)R.rdate=String(m.date).slice(0,30)}
@@ -712,6 +769,7 @@ ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qt
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`
 +`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
 <div class=actions>${M.demo||M.rest?'':`<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>`}
+${S.adminKey&&!M.demo&&!M.rest?`<button class="btn ghost wide" data-a=rpage>${ico('ext',18)}${t(M.restSlug?'rpUpd':'rpBtn')}</button><small class=mut>${M.restSlug?`<bdi dir=ltr>${esc(pageUrl(M.restSlug))}</bdi>`:t('rpBtnD')}</small>`:''}
 ${M.rest?`<button class="btn acc wide" data-a=rtoapp>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`
 :S.receipts.some(r=>r.id===M.receiptId)
 // this menu was scanned to check a bill that is already scanned: compare with it instead of scanning a new one
@@ -951,6 +1009,9 @@ cmpmark:()=>{const R=cr(),M=S.menus.find(m=>m.id===R.menuId);if(!M)return;M.rece
 cmpgo:()=>{const M=cm(),R=S.receipts.find(r=>r.id===M.receiptId);if(!R)return;R.menuId=M.id;goTo('receipt:'+R.id)}, // back to the receipt, now compared with the order
 filt:()=>{S.filtOpen=!S.filtOpen;V.filtLayer=S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
 rtoapp:()=>restToApp(),
+rpage:()=>restSheet(cm()),
+rpgo:()=>{const M=cm(),slug=slugify(($('#rpslug')||{}).value||'');if(!slug||slug.length<2)return toast(t('rpBadSlug'));restPublish(M,slug).catch(e=>{closeSheet();failSheet(t('fail'),e.message||t('fail'),()=>restSheet(M))})},
+rpcopy:(id,x)=>{try{navigator.clipboard.writeText(x);toast(t('rpCopied'))}catch(e){}},
 tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
 nr:()=>menuFirst(()=>withHints(true,()=>scanReceipt(null,null))),
 rscan:()=>{const R=cr();withHints(true,()=>scanReceipt(R.menuId,R))},
@@ -1003,6 +1064,9 @@ if(!ok)return false;
 V.screen='home';V.id=null;render();V.screen=p.screen;V.id=p.id||null;if(p.legal)V.legal=p.legal;render();
 const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return true}
 // ?intro in the link shows the first-visit screen again (to preview it); saved data stays as it is
+// ?admin=<code>: turns on manager mode on this device (creating restaurant pages) once the server accepts the code
+{const ak=(location.search.match(/[?&]admin=([^&]+)/)||[])[1];if(ak){const k=decodeURIComponent(ak);try{history.replaceState(history.state,'',location.pathname)}catch(e){}
+fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,check:true})}).then(r=>{if(r.ok){S.adminKey=k;save();render();toast(t('adminOn'))}else toast(t('adminBad'))}).catch(()=>toast(t('adminBad')))}}
 if(REST){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.append(m);V.screen='rload';render();restLoad()}
 else if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
 ensureLang(); // load the chosen language if it is not built in
