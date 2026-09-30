@@ -114,7 +114,7 @@ section:first-of-type>.cat{margin-top:18px}
 /* nothing may push the page sideways on a phone */
 #app{overflow-x:clip}
 /* the page column never grows past the screen; long warnings wrap instead of widening it */
-.pad{grid-template-columns:minmax(0,1fr)}.item>.info{flex:1 1 auto;min-width:0}
+.pad{grid-template-columns:minmax(0,1fr)}.item>.info{flex:1 1 auto;min-width:0;grid-template-columns:minmax(0,1fr)}.photo{max-width:100%}
 .avoid-b,.unsure-b{width:auto;max-width:100%;white-space:normal;justify-self:start;align-items:flex-start}.avoid-b svg,.unsure-b svg{flex:none;margin-top:2px}
 .item.dim{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 45%,transparent)}
 .item.dim .nm,.item.dim .desc,.item.dim .pr,.item.dim .tags,.item.dim .photo{opacity:.4;filter:grayscale(1)}
