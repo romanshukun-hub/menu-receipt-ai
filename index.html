@@ -798,11 +798,17 @@ const l=$('#sheet .wlist'),m=$('#sheet .wmore');if(l&&m){const upd=()=>{m.hidden
 function undoToast(msg,undo){const e=$('#toast');e.innerHTML=`<span>${esc(msg)}</span><button class=undo type=button>${t('undo')}</button>`;e.style.display='flex';
 e.querySelector('.undo').onclick=()=>{e.style.display='none';undo();render()};clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
 // the split as plain text: each person's amount and what they had, to send to the others
-function splitText(R){const n=R.payers,g=grand(R),sh=R.equal?equalShares(g,n):shares(R),name=R.restaurant||R.title||'',lines=[t('shareHdr')+(name?' — '+name:'')];
-for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+billName(R,i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${billName(R,i)} 1/${x.p.length}`));return o});
-lines.push(`${t('person')} ${p+1}: ${fmt(sh[p],R.cur)}${its.length?' — '+its.join(', '):''}`)}
-const left=R.equal?0:r2(g-sh.reduce((a,b)=>a+b,0));if(left>0)lines.push(`${t('unassigned')}: ${fmt(left,R.cur)}`);
-lines.push(`${t('total')}: ${fmt(g,R.cur)}`);return lines.join('\n')}
+// laid out for a chat message: a heading, then each person with their amount (and in the user's currency) and their dishes as bullets
+function splitText(R){const n=R.payers,g=grand(R),sh=R.equal?equalShares(g,n):shares(R),name=R.restaurant||R.title||'';
+const amt=v=>{const c=R.cur!==S.cur&&conv(v,R.cur,S.cur);return fmt(v,R.cur)+(c!=null&&c!==false?` (≈ ${fmt(c,S.cur)})`:'')};
+const dish=i=>{const m=billMain(i),tr=i.tr&&norm(i.tr)!==norm(m)?i.tr:'';return tr?`${m} — ${tr}`:m};
+const lines=[`🧾 ${t('shareHdr')}${name?' — '+name:''}`,''];
+for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+dish(i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${dish(i)} (1/${x.p.length})`));return o});
+lines.push(`👤 ${t('person')} ${p+1}: *${amt(sh[p])}*`,...its.map(x=>'• '+x),'')}
+const left=R.equal?0:r2(g-sh.reduce((a,b)=>a+b,0));if(left>0)lines.push(`${t('unassigned')}: ${amt(left)}`);
+lines.push(`${t('total')}: ${amt(g)}`);
+// no invisible direction marks (they show up as stray characters when the text is copied)
+return lines.join('\n').replace(/[‎‏⁦-⁩]/g,'')}
 async function shareSplit(){const R=cr();if(!R)return;const text=splitText(R);
 try{if(navigator.share){await navigator.share({text});return}}catch(e){if(e&&e.name==='AbortError')return}
 window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener')}
