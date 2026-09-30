@@ -91,7 +91,11 @@ async function readStream(r, onLine, u) {
       if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
       text += d.delta.text;
       let j;
-      while ((j = text.indexOf('\n')) >= 0) { onLine(text.slice(0, j)); text = text.slice(j + 1); }
+      while ((j = text.indexOf('\n')) >= 0) {
+        // onLine can stop the read early (the result is already known to be weak)
+        if (onLine(text.slice(0, j)) === 'stop') { reader.cancel().catch(() => {}); return ''; }
+        text = text.slice(j + 1);
+      }
     }
   }
   onLine(text);
@@ -141,6 +145,8 @@ async function streamMenu(key, content, res) {
         const uf = o.unsure === true ? ['name'] : arr(o.unsure, 4).map(String).filter(x => ['name', 'price', 'ingredients', 'marks'].includes(x));
         sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; if (uf.includes('marks')) st.umarks++; if (arr(o.marks).length) st.marked++;
         if (arr(o.marks).some(m => /^[A-Z0-9]{1,2}([\s,.\/-]+[A-Z0-9]{1,2})*$/.test(String((m && m.l) || '').trim()))) st.rawMarks = true; // a legend letter left untranslated ("A C G")
+        // with a legend on the menu, untranslated letters mean the markings are not being read well: stop now and let the stronger model read the page
+        if (st.legend && st.rawMarks && model !== FALLBACK && FALLBACK !== MODEL) { st.umarks = st.n; return 'stop'; }
         send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
           unsure: uf, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
       };
