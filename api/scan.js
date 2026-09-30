@@ -1,8 +1,9 @@
 // Vercel serverless proxy. Set ANTHROPIC_API_KEY in Project Settings > Environment Variables.
-const MODEL = process.env.ANTHROPIC_MODEL || 'claude-opus-5-5';
-// a cheaper model can be asked for per request (used to compare quality and cost); only these are accepted
-const MODELS = ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-sonnet-5', 'claude-haiku-4-5'];
-const effortOf = (model, effort) => model.startsWith('claude-haiku') ? {} : { output_config: { effort } }; // Haiku has no effort setting
+// Scans run on a fast, cheaper model; when a scan comes back empty, fails, or has many uncertain lines,
+// the same photo is read again with the stronger model (the app is told to drop what it got so far).
+const MODEL = process.env.SCAN_MODEL || 'claude-sonnet-5-5';
+const FALLBACK = process.env.FALLBACK_MODEL || 'claude-opus-5-5';
+const needsFallback = s => !s.n || !!s.err || (s.n >= 3 && s.uns / s.n > 1 / 3);
 const MENU_EFFORT = process.env.MENU_EFFORT || 'low'; // reading a menu needs little reasoning; lower effort = faster
 const hits = new Map(); // best-effort per-instance rate limit
 
@@ -70,93 +71,11 @@ const aiErr = async r => { const t = await r.text().catch(() => ''); let j = {};
 
 const arr = (a, n = 20) => Array.isArray(a) ? a.slice(0, n) : [];
 
-// Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, {"ingr":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
-// If the AI service fails mid-stream (e.g. overloaded), it starts over and skips the dishes already sent.
-async function streamMenu(key, content, res, model = MODEL) {
-  const send = o => res.write(JSON.stringify(o) + '\n');
-  const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
-  const sent = new Set();
-  let keep = null, n = 0, err = '', notMenu = false; const usage = { input_tokens: 0, output_tokens: 0 }; // reported at the end so the cost of a scan can be checked
-  for (let attempt = 0; attempt < 3; attempt++) {
-    if (attempt) await new Promise(ok => setTimeout(ok, 2000 * attempt));
-    const r = await ask(key, { model, max_tokens: 20000, stream: true, ...effortOf(model, MENU_EFFORT), messages: [{ role: 'user', content }] });
-    if (!r.ok) {
-      const m = await aiErr(r);
-      if (!res.headersSent) return res.status(502).json({ error: m, code: 'ai' });
-      err = m; continue;
-    }
-    if (!res.headersSent) res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
-    const before = new Set(sent);
-    let cat = '', catTr = '', sub = '', subTr = '', text = '', sse = '';
-    err = '';
-    const line = s => {
-      const a = s.indexOf('{'), b = s.lastIndexOf('}');
-      if (a < 0 || b < a) return;
-      let o; try { o = JSON.parse(s.slice(a, b + 1)); } catch (e) { return; }
-      if ('menu' in o || 'keep' in o) {
-        if (o.menu === false) notMenu = true;
-        keep = String(o.keep || '').toLowerCase().slice(0, 2) || null;
-        const p = o.policy && typeof o.policy === 'object' ? { tax_included: o.policy.tax_included ?? null, service_pct: +o.policy.service_pct || null, text: String(o.policy.text || '').slice(0, 300) } : null;
-        if (!attempt) send({ meta: { restaurant: o.restaurant || null, currency: o.currency || null, policy: p } });
-        return;
-      }
-      if (o.ingredients && typeof o.ingredients === 'object') return send({ ingr: o.ingredients });
-      if ('unclear_marks' in o && !('original' in o)) return send({ unclear: Math.max(0, Math.min(99, parseInt(o.unclear_marks) || 0)) });
-      if ('category' in o && !('original' in o)) { cat = String(o.category || ''); catTr = String(o.category_translation || ''); sub = subTr = ''; return; }
-      if ('subsection' in o && !('original' in o)) { sub = String(o.subsection || ''); subTr = sub ? String(o.subsection_translation || '') : ''; return; }
-      if (!o.original) return;
-      if (keep && o.lang && String(o.lang).toLowerCase().slice(0, 2) !== keep) return; // same dishes printed twice: only the kept language
-      const id = norm(o.original) + '|' + (+o.price || 0);
-      if (before.has(id)) return; // already sent before a retry
-      sent.add(id); n++;
-      send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
-        unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
-    };
-    const reader = r.body.getReader(), dec = new TextDecoder();
-    read: for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      sse += dec.decode(value, { stream: true });
-      let k;
-      while ((k = sse.indexOf('\n')) >= 0) {
-        const ev = sse.slice(0, k).trim(); sse = sse.slice(k + 1);
-        if (!ev.startsWith('data:')) continue;
-        let d; try { d = JSON.parse(ev.slice(5)); } catch (e) { continue; }
-        if (d.type === 'error') { err = d.error?.message || 'AI service error.'; reader.cancel().catch(() => {}); break read; }
-        if (d.type === 'message_start') { const u = d.message?.usage || {}; usage.input_tokens += (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0); }
-        if (d.type === 'message_delta' && d.usage) usage.output_tokens += d.usage.output_tokens || 0;
-        if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
-        text += d.delta.text;
-        let j;
-        while ((j = text.indexOf('\n')) >= 0) { line(text.slice(0, j)); text = text.slice(j + 1); }
-      }
-    }
-    if (!err) { line(text); break; }
-    if (notMenu) break;
-  }
-  send({ usage });
-  send(err && !notMenu ? { error: err, code: 'ai' } : n ? { done: true } : { done: true, empty: true });
-  res.end();
-}
-
-// Streams a receipt as NDJSON: {"meta":{...}}, {"item":{...}} per line on the bill, {"totals":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}
-async function streamReceipt(key, content, res, model = MODEL) {
-  const r = await ask(key, { model, max_tokens: 16000, stream: true, ...effortOf(model, MENU_EFFORT), messages: [{ role: 'user', content }] });
-  if (!r.ok) return res.status(502).json({ error: await aiErr(r), code: 'ai' });
-  res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
-  const send = o => res.write(JSON.stringify(o) + '\n'), num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
-  let n = 0, err = '', text = '', sse = '', isReceipt = true; const usage = { input_tokens: 0, output_tokens: 0 };
-  const line = s => {
-    const a = s.indexOf('{'), b = s.lastIndexOf('}');
-    if (a < 0 || b < a) return;
-    let o; try { o = JSON.parse(s.slice(a, b + 1)); } catch (e) { return; }
-    if ('receipt' in o) { isReceipt = o.receipt !== false; return send({ meta: { receipt: isReceipt, restaurant: o.restaurant || null, currency: o.currency || null, date: o.date || null } }); }
-    if (o.totals && typeof o.totals === 'object') { const x = o.totals; return send({ totals: { tax: num(x.tax) || 0, tax_included_in_prices: x.tax_included_in_prices !== false, service_charge: num(x.service_charge) || 0, service_pct: num(x.service_pct), tip: num(x.tip) || 0, other_fees: num(x.other_fees) || 0, subtotal: num(x.subtotal), total: num(x.total) } }); }
-    if (!o.original || !isReceipt) return;
-    n++; send({ item: { original: String(o.original), translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
-  };
+// reads an Anthropic SSE stream: every text line goes to onLine; usage is added to u. Returns an error message or ''.
+async function readStream(r, onLine, u) {
   const reader = r.body.getReader(), dec = new TextDecoder();
-  read: for (;;) {
+  let sse = '', text = '';
+  for (;;) {
     const { done, value } = await reader.read();
     if (done) break;
     sse += dec.decode(value, { stream: true });
@@ -165,18 +84,106 @@ async function streamReceipt(key, content, res, model = MODEL) {
       const ev = sse.slice(0, k).trim(); sse = sse.slice(k + 1);
       if (!ev.startsWith('data:')) continue;
       let d; try { d = JSON.parse(ev.slice(5)); } catch (e) { continue; }
-      if (d.type === 'error') { err = d.error?.message || 'AI service error.'; reader.cancel().catch(() => {}); break read; }
-      if (d.type === 'message_start') { const u = d.message?.usage || {}; usage.input_tokens += (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0); }
-      if (d.type === 'message_delta' && d.usage) usage.output_tokens += d.usage.output_tokens || 0;
+      if (d.type === 'error') { reader.cancel().catch(() => {}); return d.error?.message || 'AI service error.'; }
+      if (d.type === 'message_start') { const x = d.message?.usage || {}; u.input_tokens += (x.input_tokens || 0) + (x.cache_read_input_tokens || 0) + (x.cache_creation_input_tokens || 0); }
+      if (d.type === 'message_delta' && d.usage) u.output_tokens += d.usage.output_tokens || 0;
       if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
       text += d.delta.text;
       let j;
-      while ((j = text.indexOf('\n')) >= 0) { line(text.slice(0, j)); text = text.slice(j + 1); }
+      while ((j = text.indexOf('\n')) >= 0) { onLine(text.slice(0, j)); text = text.slice(j + 1); }
     }
   }
-  if (!err) line(text);
-  send({ usage });
-  send(err ? { error: err, code: 'ai' } : n ? { done: true } : { done: true, empty: true });
+  onLine(text);
+  return '';
+}
+const parseLine = s => { const a = s.indexOf('{'), b = s.lastIndexOf('}'); if (a < 0 || b < a) return null; try { return JSON.parse(s.slice(a, b + 1)); } catch (e) { return null; } };
+const startStream = res => { if (!res.headersSent) res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' }); };
+
+// Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, {"ingr":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
+// If the AI service fails mid-stream (e.g. overloaded), it starts over and skips the dishes already sent.
+// If the result is weak (see needsFallback), {"restart":true} tells the app to drop this page's dishes and the stronger model reads it again.
+async function streamMenu(key, content, res) {
+  const send = o => res.write(JSON.stringify(o) + '\n');
+  const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+  const usage = { input_tokens: 0, output_tokens: 0 }; // reported at the end so the cost of a scan can be checked
+  const pass = async model => {
+    const sent = new Set(), st = { n: 0, uns: 0, err: '', notMenu: false };
+    let keep = null, metaSent = false;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if (attempt) await new Promise(ok => setTimeout(ok, 2000 * attempt));
+      const r = await ask(key, { model, max_tokens: 20000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
+      if (!r.ok) { st.err = await aiErr(r); continue; }
+      startStream(res);
+      const before = new Set(sent);
+      let cat = '', catTr = '', sub = '', subTr = '';
+      st.err = '';
+      const line = s => {
+        const o = parseLine(s); if (!o) return;
+        if ('menu' in o || 'keep' in o) {
+          if (o.menu === false) st.notMenu = true;
+          keep = String(o.keep || '').toLowerCase().slice(0, 2) || null;
+          const p = o.policy && typeof o.policy === 'object' ? { tax_included: o.policy.tax_included ?? null, service_pct: +o.policy.service_pct || null, text: String(o.policy.text || '').slice(0, 300) } : null;
+          if (!metaSent) { metaSent = true; send({ meta: { restaurant: o.restaurant || null, currency: o.currency || null, policy: p } }); }
+          return;
+        }
+        if (o.ingredients && typeof o.ingredients === 'object') return send({ ingr: o.ingredients });
+        if ('unclear_marks' in o && !('original' in o)) return send({ unclear: Math.max(0, Math.min(99, parseInt(o.unclear_marks) || 0)) });
+        if ('category' in o && !('original' in o)) { cat = String(o.category || ''); catTr = String(o.category_translation || ''); sub = subTr = ''; return; }
+        if ('subsection' in o && !('original' in o)) { sub = String(o.subsection || ''); subTr = sub ? String(o.subsection_translation || '') : ''; return; }
+        if (!o.original) return;
+        if (keep && o.lang && String(o.lang).toLowerCase().slice(0, 2) !== keep) return; // same dishes printed twice: only the kept language
+        const id = norm(o.original) + '|' + (+o.price || 0);
+        if (before.has(id)) return; // already sent before a retry
+        sent.add(id); st.n++; if (o.unsure === true) st.uns++;
+        send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
+          unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
+      };
+      st.err = await readStream(r, line, usage);
+      if (!st.err || st.notMenu) break;
+    }
+    return st;
+  };
+  let st = await pass(MODEL), model = MODEL;
+  if (needsFallback(st) && FALLBACK !== MODEL) {
+    if (res.headersSent) send({ restart: true });
+    model = FALLBACK; st = await pass(FALLBACK);
+  }
+  if (!res.headersSent) return res.status(502).json({ error: st.err || 'AI service error.', code: 'ai' });
+  send({ usage, model });
+  send(st.err && !st.notMenu ? { error: st.err, code: 'ai' } : st.n ? { done: true } : { done: true, empty: true });
+  res.end();
+}
+
+// Streams a receipt as NDJSON: {"meta":{...}}, {"item":{...}} per line on the bill, {"totals":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
+// A weak result is read again by the stronger model, after {"restart":true}.
+async function streamReceipt(key, content, res) {
+  const send = o => res.write(JSON.stringify(o) + '\n'), num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
+  const usage = { input_tokens: 0, output_tokens: 0 };
+  const pass = async model => {
+    const st = { n: 0, uns: 0, err: '' };
+    const r = await ask(key, { model, max_tokens: 16000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
+    if (!r.ok) { st.err = await aiErr(r); return st; }
+    startStream(res);
+    let isReceipt = true;
+    const line = s => {
+      const o = parseLine(s); if (!o) return;
+      if ('receipt' in o) { isReceipt = o.receipt !== false; return send({ meta: { receipt: isReceipt, restaurant: o.restaurant || null, currency: o.currency || null, date: o.date || null } }); }
+      if (o.totals && typeof o.totals === 'object') { const x = o.totals; return send({ totals: { tax: num(x.tax) || 0, tax_included_in_prices: x.tax_included_in_prices !== false, service_charge: num(x.service_charge) || 0, service_pct: num(x.service_pct), tip: num(x.tip) || 0, other_fees: num(x.other_fees) || 0, subtotal: num(x.subtotal), total: num(x.total) } }); }
+      if (!o.original || !isReceipt) return;
+      st.n++; if (o.unsure === true) st.uns++;
+      send({ item: { original: String(o.original), translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
+    };
+    st.err = await readStream(r, line, usage);
+    return st;
+  };
+  let st = await pass(MODEL), model = MODEL;
+  if (needsFallback(st) && FALLBACK !== MODEL) {
+    if (res.headersSent) send({ restart: true });
+    model = FALLBACK; st = await pass(FALLBACK);
+  }
+  if (!res.headersSent) return res.status(502).json({ error: st.err || 'AI service error.', code: 'ai' });
+  send({ usage, model });
+  send(st.err ? { error: st.err, code: 'ai' } : st.n ? { done: true } : { done: true, empty: true });
   res.end();
 }
 
@@ -220,7 +227,6 @@ module.exports = async (req, res) => {
   hits.set(ip, [...recent, now]);
 
   const { image, mode, language, currency } = req.body || {};
-  const model = MODELS.includes(req.body?.model) ? req.body.model : MODEL;
   const lang = String(language || 'English').replace(/[^\p{L}\p{M}\p{N} ()\-]/gu, '').slice(0, 40) || 'English'; // \p{M}: vowel marks, e.g. हिन्दी, ไทย
   const cur = /^[A-Z]{3}$/.test(currency) ? currency : 'USD';
   try {
@@ -232,8 +238,8 @@ module.exports = async (req, res) => {
       { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: image } },
       { type: 'text', text: P[mode](lang, cur) }
     ];
-    if (mode === 'menu') return await streamMenu(key, content, res, model);
-    return await streamReceipt(key, content, res, model);
+    if (mode === 'menu') return await streamMenu(key, content, res);
+    return await streamReceipt(key, content, res);
   } catch (e) {
     if (res.headersSent) { try { res.write(JSON.stringify({ error: 'Scan failed. Please try again.', code: 'failed' }) + '\n'); } catch (_) {} return res.end(); }
     return fail(res, 500, 'failed', 'Scan failed. Please try again.');
