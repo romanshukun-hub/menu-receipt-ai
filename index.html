@@ -229,6 +229,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .ordersum{scroll-margin-top:calc(72px + env(safe-area-inset-top))}
 /* history: switch between all, menus and bills */
 .al.demo .btn{margin-top:10px;width:auto}
+.rhead{padding-bottom:4px}.rhead h1{margin:0 0 12px}.rsel{display:flex;gap:8px;flex-wrap:wrap}.rsel label{display:flex;align-items:center;gap:6px;flex:1;min-width:140px;margin:0}.rsel select{flex:1;min-width:0}
 .scanhow{padding:16px}.scanhow h3{margin:0 0 4px;font-size:16px}.scanhow .how{border:0;padding:6px 0 0;background:none;gap:12px}.scanhow .how li{align-items:center;font-size:15px}
 .htabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--line)}.htab{flex:1;border:0;border-radius:10px;padding:10px 6px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}.htab.on{background:var(--card);box-shadow:0 1px 3px #0002}
 /* history: date filter; the day picker is a real date field laid over the chip */
@@ -500,6 +501,20 @@ const R={id:'demo-r',demo:true,title:'',restaurant:M.title,menuId:M.id,cur:'EUR'
 parts:[{rp:1,tax:5,service:0,other:5,tip:0}],fees:{tax:5,taxIncl:true,service:0,other:5,tip:0},printedTotal:60,tipMode:'pct',tipPct:10,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};
 S.menus.unshift(M);S.receipts.unshift(R);return M}
 const real=a=>a.filter(x=>!x.demo);
+// ---------- restaurant page (?r=<name>) ----------
+// A restaurant's own menu, prepared once and kept as a file (rdata/<name>.json) with its dishes already translated into
+// every language, so opening it costs nothing. Guests see it in their phone's language and currency and can choose
+// dishes and show the waiter; scanning the bill copies the menu and the order into their own app to check it.
+const REST=(location.search.match(/[?&]r=([a-z0-9-]+)/)||[])[1]||null;
+function restApply(M){const L=M.src.tr[S.lang]||M.src.tr[String(S.lang).split('-')[0]]||M.src.tr.en||{};const g=(o,k)=>(o||{})[k]||'';
+M.items.forEach(i=>{i.tr=g(L.items,i.id);i.catTr=g(L.cats,i.cat);i.subTr=g(L.subs,i.sub)});
+M.ingr=Object.fromEntries(Object.entries(M.src.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]]));M.lang=S.lang}
+async function restLoad(){try{const r=await fetch('rdata/'+REST+'.json',{cache:'no-cache'});if(!r.ok)throw 0;const d=await r.json();
+const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
+restApply(M);V.rmenu=M;V.screen='menu';V.id=M.id}catch(e){V.screen='home';V.id=null;toast(t('fail'))}render()}
+// the guest's bill: the menu and the order become a normal menu in their app, and the bill scan compares with it
+function restToApp(){const M=V.rmenu,C={...M,id:uid(),rest:false,src:undefined,date:Date.now(),items:M.items.map(i=>({...i}))};delete C.src;delete C.lang;
+S.menus.unshift(C);S.started=true;V.rmenu=null;V.id=C.id;try{history.replaceState(history.state,'',location.pathname)}catch(e){}save();withHints(true,()=>scanReceipt(C.id,null))}
 const demoNote=(txt,btn)=>`<div class="al pol strong demo" role=note>${ico('info',18)}<div><span>${t(txt)}</span>${btn}</div></div>`;
 // a scanned receipt arrives in three kinds of pieces: its header, one line per item, and the totals at the end
 function receiptMeta(R,m){if(!R.items.length&&isCur(m.currency))R.cur=m.currency;if(!R.restaurant&&m.restaurant)R.restaurant=m.restaurant;if(!R.rdate&&m.date)R.rdate=String(m.date).slice(0,30)}
@@ -532,7 +547,7 @@ render();if(err)toast(err);
 if(uns&&uns>job.n/2)unsSheet(f(t('unsR'),uns,job.n),t('unsDR'),low,()=>{const r=S.receipts.find(x=>x.id===R.id);if(!r)return;removePart(r,rp);
 if(!r.items.length){S.receipts=S.receipts.filter(x=>x!==r);V.screen=menuId?'menu':'home';V.id=menuId||null;render();scanReceipt(menuId,null)}else{render();scanReceipt(menuId,r)}})}
 // ---------- math (all amounts rounded to cents, so lines always add up) ----------
-const cm=()=>S.menus.find(m=>m.id===V.id),cr=()=>S.receipts.find(r=>r.id===V.id);
+const cm=()=>V.rmenu&&V.rmenu.id===V.id?V.rmenu:S.menus.find(m=>m.id===V.id),cr=()=>S.receipts.find(r=>r.id===V.id);
 const sub=R=>r2(R.items.reduce((s,i)=>s+i.unit*i.qty,0));
 const taxAdd=R=>R.fees.taxIncl?0:r2(R.fees.tax);
 const billFees=R=>r2(taxAdd(R)+(+R.fees.service||0)+(+R.fees.other||0)+(+R.fees.tip||0));
@@ -658,7 +673,7 @@ ${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b></div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
 ${i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}</span>`:''}
-${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
+${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
 // the dish search matches the English name (or the name as printed), the local name and the translation; accents and case are ignored
 // a Hebrew singular or plural ending is dropped from the search, so "עגבניה" also finds "עגבניות"
@@ -673,13 +688,15 @@ flush();return out}
 // the first menu scan explains, while it runs, what is happening and what comes next (shown until that scan ends)
 const curName=c=>{try{return new Intl.DisplayNames([S.lang==='x'?'en':S.lang,'en'],{type:'currency'}).of(c)}catch(e){return c}};
 const scanIntro=()=>`<section class="card scanhow" role=note><h3>${t('siT')}</h3><ol class=how>${[['search','si1'],['coin','si2'],['check','si3'],['receipt','si4']].map(([i,k])=>`<li><span class=hn>${ico(i,20)}</span><span>${esc(f(t(k),curName(S.cur)))}</span></li>`).join('')}</ol></section>`;
-function menuV(){const M=cm();if(!M)return home();const js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0),hasIng=M.items.some(i=>(i.ing||[]).length);
+// the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
+const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
+function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.reduce((s,j)=>s+j.n,0),hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
-return bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">
+return (M.rest?restHead(M)+'<div class=pad>':bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
 ${js.length&&!S.scanIntro&&!real(S.menus).some(m=>m.id!==M.id&&m.items.length)?scanIntro():''}
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
-${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
+${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo&&!M.rest?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
 ${hasIng||S.diet.length||js.length?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
 ${js.length?`<p class=ingwait role=status><span class=spin></span><span>${t('ingWait')}</span></p>` // the ingredient list is complete (and translated) only once the whole menu is read
 :hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}><button type=button class=sdone data-a=ingclose>${t("done")}</button></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><small class="mut ingd">${t("ingD")}</small>${allergyNote()}<div class=chips id=ingchips>${ingChips(M)}</div>`:''}
@@ -704,8 +721,9 @@ ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qt
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`
 +`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
-<div class=actions>${M.demo?'':`<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>`}
-${S.receipts.some(r=>r.id===M.receiptId)
+<div class=actions>${M.demo||M.rest?'':`<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>`}
+${M.rest?`<button class="btn acc wide" data-a=rtoapp>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`
+:S.receipts.some(r=>r.id===M.receiptId)
 // this menu was scanned to check a bill that is already scanned: compare with it instead of scanning a new one
 ?`<button class="btn acc wide" data-a=cmpgo ${n?'':'disabled'}>${ico('receipt',18)}${t('cmpGo')}</button><small class=mut>${t('cmpGoD')}</small>`
 :`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>`}
@@ -820,7 +838,7 @@ const tab=V.htab||'all',tb=(k,l)=>`<button class="htab${tab===k?' on':''}" data-
 return bar(t('hist'),'home')+`<div class=pad><div class=htabs role=tablist>${tb('all',`${t('allT')} (${dm+dr})`)}${tb('m',`${t('menus')} (${dm})`)}${tb('r',`${t('receipts')} (${dr})`)}</div>
 ${real(S.menus).length+real(S.receipts).length>1?`<label class=search>${ico('search',18)}<input id=histq type=search placeholder="${t('histQ')}" value="${esc(V.hq||'')}" dir=auto autocomplete=off></label>`:''}${dates}
 <div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}`:''}</div></div>`}
-function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)();syncHistory();syncLayer()}
+function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer()}
 // ---------- phone/browser back button ----------
 // Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
 // While a dialog or the ingredient list is open, Back only closes it.
@@ -942,6 +960,7 @@ cmpmenu:()=>{const R=cr();withHints(false,()=>scanMenuPage(null,null,R.id))}, //
 cmpmark:()=>{const R=cr(),M=S.menus.find(m=>m.id===R.menuId);if(!M)return;M.receiptId=R.id;goTo('menu:'+M.id)}, // go mark what was ordered
 cmpgo:()=>{const M=cm(),R=S.receipts.find(r=>r.id===M.receiptId);if(!R)return;R.menuId=M.id;goTo('receipt:'+R.id)}, // back to the receipt, now compared with the order
 filt:()=>{S.filtOpen=!S.filtOpen;V.filtLayer=S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
+rtoapp:()=>restToApp(),
 tor:()=>{const M=cm();save();withHints(true,()=>scanReceipt(M.id,null))},
 nr:()=>menuFirst(()=>withHints(true,()=>scanReceipt(null,null))),
 rscan:()=>{const R=cr();withHints(true,()=>scanReceipt(R.menuId,R))},
@@ -959,7 +978,7 @@ dm:id=>{const k=S.menus.findIndex(x=>x.id===id),m=S.menus[k];confirmDel(m&&(m.ti
 dr:id=>{const k=S.receipts.findIndex(x=>x.id===id),r=S.receipts[k];confirmDel(r&&(r.restaurant||r.title),t('delRec'),()=>{S.receipts=S.receipts.filter(x=>x.id!==id);render();undoToast(t('deletedT'),()=>S.receipts.splice(k,0,r))})}};
 const CH={
 slang:v=>{S.lang=v;const l=LANGS.find(x=>x[0]===v);if(l)S.cur=l[2];render();ensureLang()},
-sname:v=>{S.langName=v.trim();render();ensureLang()},scur:v=>{S.cur=v;save()},
+sname:v=>{S.langName=v.trim();render();ensureLang()},scur:v=>{S.cur=v;save();if(V.rmenu)render()},
 mtitle:v=>{cm().title=v.trim();render()},rtitle:v=>{cr().title=v;render()},rrest:v=>{cr().restaurant=v.trim();render()},
 ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()},foth:v=>{cr().fees.other=r2(v);render()},ftip:v=>{cr().fees.tip=r2(v);render()},
 tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
@@ -994,7 +1013,8 @@ if(!ok)return false;
 V.screen='home';V.id=null;render();V.screen=p.screen;V.id=p.id||null;if(p.legal)V.legal=p.legal;render();
 const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return true}
 // ?intro in the link shows the first-visit screen again (to preview it); saved data stays as it is
-if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
+if(REST){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.append(m);V.screen='rload';render();restLoad()}
+else if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
 ensureLang(); // load the chosen language if it is not built in
 (async()=>{try{if(S.rates&&Date.now()-(S.ratesAt||0)<6e4*60*12)return;const d=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();if(d.rates){S.rates=d.rates;S.ratesAt=Date.now();save();if(!/input|select/i.test(document.activeElement.tagName))render()}}catch(e){}})();
 </script></body></html>
