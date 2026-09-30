@@ -1,5 +1,8 @@
 // Vercel serverless proxy. Set ANTHROPIC_API_KEY in Project Settings > Environment Variables.
 const MODEL = process.env.ANTHROPIC_MODEL || 'claude-opus-5-5';
+// a cheaper model can be asked for per request (used to compare quality and cost); only these are accepted
+const MODELS = ['claude-opus-5-5', 'claude-sonnet-5', 'claude-haiku-4-5'];
+const effortOf = (model, effort) => model.startsWith('claude-haiku') ? {} : { output_config: { effort } }; // Haiku has no effort setting
 const MENU_EFFORT = process.env.MENU_EFFORT || 'low'; // reading a menu needs little reasoning; lower effort = faster
 const hits = new Map(); // best-effort per-instance rate limit
 
@@ -29,7 +32,7 @@ Dish fields:
 - "marks": allergen/diet markings printed next to the dish (letters, symbols or icons explained by the menu's legend), each {"c": one of v, vg, gf, lf, spicy, nuts, other, "l": the marking as printed, or the legend's meaning for an icon}. [] if none.
 - "ing": only ingredients actually written on the menu for this dish (in its name, description or marks), as short lowercase singular English keys - never guess here. Use the specific ingredient (e.g. "pistachio", "walnut", "hazelnut", "shrimp", "salmon", "parmesan", "mushroom") AND add its allergen group key when it has one: "nuts" (tree nuts), "peanut", "gluten", "milk", "egg", "fish", "shellfish", "sesame", "soy", "celery", "mustard". Include "gluten" for pasta, pizza, bread, breadcrumbs; "milk" for cheese, cream, butter. Use the same key for the same ingredient everywhere.
 - "may": allergens and ingredients NOT written on the menu but usually in this kind of dish (e.g. "egg" for fresh pasta, a Caesar dressing or a mayonnaise-based sauce like tonnato; "nuts" for pesto). Same keys as "ing"; never repeat a key that is already in "ing"; [] when nothing is likely.
-- "ok": diet codes (${DIETS}) the dish clearly fits; "no": codes it clearly breaks (e.g. pork or shellfish break k and h; meat breaks v, vg and p; cheese or egg breaks vg; meat with dairy breaks k; pasta breaks gf unless marked gluten-free). Leave out codes you can't judge.
+- "ok": ONLY diet codes (${DIETS}) the menu itself marks for this dish - a symbol, legend letter or word printed with the dish or over its section or page (e.g. "V", a vegan leaf, "GF", "L = lactose free", a "GLUTEN FREE" heading). Never infer "ok" from the ingredients; [] when the menu shows no such mark. "no": codes it clearly breaks (e.g. pork or shellfish break k and h; meat breaks v, vg and p; cheese or egg breaks vg; meat with dairy breaks k; pasta breaks gf unless marked gluten-free). Leave out codes you can't judge.
 
 Rules:
 - Follow the SAME ORDER as the menu: its reading direction (right-to-left for Hebrew/Arabic), section by section, top to bottom; finish one column before starting the next. Never sort, group or reorder.
@@ -68,14 +71,14 @@ const arr = (a, n = 20) => Array.isArray(a) ? a.slice(0, n) : [];
 
 // Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, {"ingr":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
 // If the AI service fails mid-stream (e.g. overloaded), it starts over and skips the dishes already sent.
-async function streamMenu(key, content, res) {
+async function streamMenu(key, content, res, model = MODEL) {
   const send = o => res.write(JSON.stringify(o) + '\n');
   const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
   const sent = new Set();
   let keep = null, n = 0, err = '', notMenu = false; const usage = { input_tokens: 0, output_tokens: 0 }; // reported at the end so the cost of a scan can be checked
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt) await new Promise(ok => setTimeout(ok, 2000 * attempt));
-    const r = await ask(key, { model: MODEL, max_tokens: 20000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
+    const r = await ask(key, { model, max_tokens: 20000, stream: true, ...effortOf(model, MENU_EFFORT), messages: [{ role: 'user', content }] });
     if (!r.ok) {
       const m = await aiErr(r);
       if (!res.headersSent) return res.status(502).json({ error: m, code: 'ai' });
@@ -136,8 +139,8 @@ async function streamMenu(key, content, res) {
 }
 
 // Streams a receipt as NDJSON: {"meta":{...}}, {"item":{...}} per line on the bill, {"totals":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}
-async function streamReceipt(key, content, res) {
-  const r = await ask(key, { model: MODEL, max_tokens: 16000, stream: true, output_config: { effort: MENU_EFFORT }, messages: [{ role: 'user', content }] });
+async function streamReceipt(key, content, res, model = MODEL) {
+  const r = await ask(key, { model, max_tokens: 16000, stream: true, ...effortOf(model, MENU_EFFORT), messages: [{ role: 'user', content }] });
   if (!r.ok) return res.status(502).json({ error: await aiErr(r), code: 'ai' });
   res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
   const send = o => res.write(JSON.stringify(o) + '\n'), num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
@@ -216,6 +219,7 @@ module.exports = async (req, res) => {
   hits.set(ip, [...recent, now]);
 
   const { image, mode, language, currency } = req.body || {};
+  const model = MODELS.includes(req.body?.model) ? req.body.model : MODEL;
   const lang = String(language || 'English').replace(/[^\p{L}\p{M}\p{N} ()\-]/gu, '').slice(0, 40) || 'English'; // \p{M}: vowel marks, e.g. हिन्दी, ไทย
   const cur = /^[A-Z]{3}$/.test(currency) ? currency : 'USD';
   try {
@@ -227,8 +231,8 @@ module.exports = async (req, res) => {
       { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: image } },
       { type: 'text', text: P[mode](lang, cur) }
     ];
-    if (mode === 'menu') return await streamMenu(key, content, res);
-    return await streamReceipt(key, content, res);
+    if (mode === 'menu') return await streamMenu(key, content, res, model);
+    return await streamReceipt(key, content, res, model);
   } catch (e) {
     if (res.headersSent) { try { res.write(JSON.stringify({ error: 'Scan failed. Please try again.', code: 'failed' }) + '\n'); } catch (_) {} return res.end(); }
     return fail(res, 500, 'failed', 'Scan failed. Please try again.');
