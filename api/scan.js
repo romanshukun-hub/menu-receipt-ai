@@ -1,7 +1,7 @@
 // Vercel serverless proxy. Set ANTHROPIC_API_KEY in Project Settings > Environment Variables.
 const MODEL = process.env.ANTHROPIC_MODEL || 'claude-opus-5-5';
 // a cheaper model can be asked for per request (used to compare quality and cost); only these are accepted
-const MODELS = ['claude-opus-5-5', 'claude-sonnet-5', 'claude-haiku-4-5'];
+const MODELS = ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-sonnet-5', 'claude-haiku-4-5'];
 const effortOf = (model, effort) => model.startsWith('claude-haiku') ? {} : { output_config: { effort } }; // Haiku has no effort setting
 const MENU_EFFORT = process.env.MENU_EFFORT || 'low'; // reading a menu needs little reasoning; lower effort = faster
 const hits = new Map(); // best-effort per-instance rate limit
@@ -19,12 +19,13 @@ If "menu" is false, output only line 1.
 Then, in menu order:
 - when a main section starts: {"category": heading copied exactly as printed, "category_translation": heading translated into ${l}}
 - when a boxed or labelled sub-section starts inside the current section (e.g. a "TABLE SERVICE" or "CHEF'S FAVOURITE" box): {"subsection": its label copied exactly as printed, "subsection_translation": label translated into ${l}}; when the sub-section ends and the main section continues: {"subsection": null}
-- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "unsure": boolean, "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
+- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "local": see below, "unsure": boolean, "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
 - then: {"ingredients": {"<ingredient key>": ["<name in ${l}>", "<one emoji>"], ...}} for every key you used in "ing" or "may"
 - last line: {"unclear_marks": the number of allergen/diet symbols or markings you saw next to dishes but could not identify or match to the menu's legend (0 if none)}
 
 Dish fields:
-- "original": the dish name copied EXACTLY as printed - same language, spelling and words; never translate, correct, shorten or transliterate it. If the name continues on the same line in a smaller or lighter font, include that continuation. Read small text letter by letter; never replace a hard-to-read word with a different, more familiar dish.
+- "original": the dish name copied EXACTLY as printed - same spelling and words; never translate, correct, shorten or transliterate it yourself. If the menu ALSO prints this dish's name in English (e.g. an English line under the local name, or an English column), use that printed English name here, copied exactly. If the name continues on the same line in a smaller or lighter font, include that continuation. Read small text letter by letter; never replace a hard-to-read word with a different, more familiar dish.
+- "local": when "original" is the printed English name, the dish name as printed in the menu's other language, copied exactly (so it can be matched to the bill); otherwise null.
 - "translation": if a description or ingredient list is printed under or next to the dish (in any language), translate that whole description into ${l}; if there is no description, translate the dish name into ${l}.
 - "unsure": true if any word of the name, or the price, was blurry, cut off or hard to read and you had to guess part of it.
 - "addon": true for an optional extra printed under a dish (e.g. "+ caviar (10gr) + 9.900") - list it right after that dish, with the add-on text as "original" and its price.
@@ -108,7 +109,7 @@ async function streamMenu(key, content, res, model = MODEL) {
       const id = norm(o.original) + '|' + (+o.price || 0);
       if (before.has(id)) return; // already sent before a retry
       sent.add(id); n++;
-      send({ item: { original: o.original, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
+      send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
         unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
     };
     const reader = r.body.getReader(), dec = new TextDecoder();
