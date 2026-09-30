@@ -188,7 +188,7 @@ const $=s=>document.querySelector(s),app=$('#app');
 const LANGS=[['he','עברית','ILS'],['en','English (US)','USD'],['en-GB','English (UK)','GBP'],['en-CA','English (CA)','CAD'],['en-AU','English (AU)','AUD'],['ar','العربية','AED'],['de','Deutsch','EUR'],['fr','Français','EUR'],['es','Español','EUR'],['it','Italiano','EUR'],['pt','Português (BR)','BRL'],['ru','Русский','RUB'],['uk','Українська','UAH'],['tr','Türkçe','TRY'],['ja','日本語','JPY'],['ko','한국어','KRW'],['zh','中文','CNY'],['th','ไทย','THB'],['hi','हिन्दी','INR'],['vi','Tiếng Việt','VND'],['id','Bahasa Indonesia','IDR'],['pl','Polski','PLN'],['nl','Nederlands','EUR'],['el','Ελληνικά','EUR'],['sv','Svenska','SEK'],['cs','Čeština','CZK'],['ro','Română','RON'],['hu','Magyar','HUF'],['fa','فارسی','IRR'],['ka','ქართული','GEL']];
 const RTL=['he','ar','fa'];
 const I={en:{title:'Smart Menu Translator & Bill Checker',sub:'Scan the menu, order, then scan the bill and split it fairly.',lang:'Language',cur:'Currency',other:'Other language…',otherPh:'Type a language',start:'Continue',saveSet:'Save',hello:'What do you need?',scanMenu:'Scan a menu',scanMenuD:'Translate dishes and build your order',scanReceipt:'Scan a receipt',scanReceiptD:'Check the bill and split it',hist:'History',histD:'Saved menus and receipts',set:'Settings',back:'Back',menuName:'Restaurant name',
-addPage:'Scan another menu page',findPhoto:'See photos of this dish',unsureTag:'May contain an error in the name or price — check it',
+addPage:'Scan another menu page',findPhoto:'See photos of this dish',unsureTag:'May contain an error in the name or price — check it',unsureIn:'May be misread: {0} — worth checking',u_name:'name',u_price:'price',u_ingredients:'ingredients',u_marks:'diet marking',
 hintsT:'Tips for a good menu scan',hint1:'Make sure the text is sharp and readable on screen before you take the photo',hint2:'Good lighting, no reflections',hint3:'Big menu? Photograph each part separately and add it with "{0}"',
 rHintsT:'Tips for photographing the receipt',rHint1:'Fit the whole receipt in the photo — from the first line down to the total',rHint2:'Shoot straight from above, on a flat surface, without folds',rHint3:'Good lighting, no shadows or glare on the paper',rHint4:'Long receipt? Photograph it in parts and add each part separately',
 hintsOff:"Don't show again",hintsGo:'Got it, take a photo',cancel:'Cancel',
@@ -212,7 +212,7 @@ review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write 
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
 fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',nameMissing:"We couldn't read the restaurant name — you can type it here",issues1:'1 problem found on the bill',issuesN:'{0} problems found on the bill',cmpT:'Compare with your order',cmpD:'To check the bill against what you ordered: scan the menu, mark the dishes you ordered, and we will compare.',cmpBtn:'Scan the menu to compare',cmpMark:"You haven't marked what you ordered yet. Mark the dishes and we will compare them with the bill.",cmpMarkBtn:'Mark the dishes in the menu',cmpGo:'Compare with the scanned bill',cmpGoD:'Mark the dishes you ordered, then tap here to check the bill against them.',leftOf:'{0} of {1} left',splitHint:'Choose what person {0} takes. A dish for several people? Tap "Split".',itemsSoFar:'{0} items so far',dnohot:'No spicy',translating:'Translating the app…',err_net:'No internet connection. Check your connection and try again.',err_image:'This photo could not be read. Try another photo.',err_rate:'Too many scans in a short time. Wait a minute and try again.',err_ai:'The scanning service is busy right now. Please try again in a moment.',err_failed:'The scan failed. Please try again.',err_config:'The service is not set up yet.',err_mode:'Something went wrong. Please try again.',err_method:'Something went wrong. Please try again.',feesT:'Taxes and fees on the bill',sumT:'Summary',takenBy:'Taken by {0}',unshare:'Remove this split',filtHide:'Hide',filtOn:'{0} active',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',dishesAddons:'{0} dishes and add-ons',updated:'Last updated:',contact:'Contact'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
-addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',
+addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק',unsureIn:'ייתכן שנקרא לא נכון: {0} — כדאי לבדוק',u_name:'השם',u_price:'המחיר',u_ingredients:'המרכיבים',u_marks:'הסימון התזונתי',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
 rHintsT:'טיפים לצילום הקבלה',rHint1:'ודאו שכל הקבלה בתמונה — מהשורה הראשונה ועד הסכום הכולל',rHint2:'צלמו ישר מלמעלה, על משטח שטוח ובלי קיפולים',rHint3:'תאורה טובה, בלי צל או השתקפויות על הנייר',rHint4:'קבלה ארוכה? צלמו אותה בכמה חלקים והוסיפו כל חלק בנפרד',
 hintsOff:'אל תציג שוב',hintsGo:'הבנתי, לצלם',cancel:'ביטול',
@@ -347,7 +347,7 @@ const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:St
 if(!addon)ctx.parent=key;
 const same=M.items.find(x=>norm(x.orig)===key&&!!x.addon===addon&&(!addon||x.parent===parent)&&(!x.price||!price||Math.abs(x.price-price)<.005)&&(!x.cat||!cat||norm(x.cat)===norm(cat)));
 if(same){if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);same.ing=[...new Set([...(same.ing||[]),...ing])];if(may)same.may=[...new Set([...(same.may||[]),...may])].filter(k=>!same.ing.includes(k));if(!(same.marks||[]).length)same.marks=marks;return null}
-const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),price,cat,catTr,sub,subTr,unsure:i.unsure===true,addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
+const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),price,cat,catTr,sub,subTr,...(()=>{const uf=Array.isArray(i.unsure)?i.unsure.map(String):i.unsure===true?["name","price"]:[];return{unsure:uf.length>0,uf}})(),addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
 M.items.push(d);return d}
 function scanMenuPage(M,pg,link){pick(file=>runPage(M,pg,file,link))}
 // scans one photo into M (or a new menu) as page pg; several pages can scan at once and still show in page order
@@ -370,7 +370,7 @@ else if('unclear' in o){unc=+o.unclear||0;M.unclear={...(M.unclear||{}),[pg]:unc
 else if(o.item&&o.item.original){
 if(!ctx.started){ctx.started=true;if(!o.item.category){const prev=M.items.filter(x=>(x.pg||0)<pg).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0))).pop();if(prev&&prev.cat)ctx.inherit={cat:prev.cat,catTr:prev.catTr}}}
 if(o.item.category)ctx.inherit=null;
-const d=addDish(M,o.item,pg,seq++,ctx);if(d){job.ids.add(d.id);job.n++;if(d.unsure)uns++}}
+const d=addDish(M,o.item,pg,seq++,ctx);if(d){job.ids.add(d.id);job.n++;if(d.uf.some(x=>x==='name'||x==='price'))uns++}}
 soon()})}
 catch(e){err=e.message||t('fail')}
 finally{V.jobs=V.jobs.filter(j=>j!==job)}
@@ -378,8 +378,9 @@ if(!job.n&&!seq){const show=()=>failSheet(err?t('fail'):t('emptyMenuT'),err||t('
 if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id&&V.screen==='menu')return goTo('home',show)}render();
 return show()}
 render();if(err)toast(err);
-if(uns||unc){const lines=[uns&&f(t('uns'),uns,job.n),unc&&f(t('unclearMarks'),unc)].filter(Boolean);
-openSheet(`<div class="al warn strong">${ico('warn',18)}<div>${lines.map(l=>`<b>${esc(l)}</b>`).join('<br>')}<br><small>${esc((uns?t('unsD'):t('unclearD'))+(low?' '+t('lowRes'):''))}</small></div></div><button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,
+// a message after the scan only when most dishes are doubtful; otherwise each doubtful dish says so in the menu
+if(uns&&uns>job.n/2){
+openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns'),uns,job.n))}</b><br><small>${esc(t('unsD')+(low?' '+t('lowRes'):''))}</small></div></div><button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,
 {retake:()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);if(m.unclear)delete m.unclear[pg];render();scanMenuPage(m,pg)}})}
 }
 // ---------- receipts ----------
@@ -411,7 +412,7 @@ if(!job.n){removePart(R,rp);const show=()=>failSheet(err?t('fail'):t('emptyRecT'
 if(isNew&&!R.items.length){S.receipts=S.receipts.filter(x=>x!==R);if(V.screen==='receipt'&&V.id===R.id)return goTo(menuId?'menu:'+menuId:'home',show)}render();
 return show()}
 render();if(err)toast(err);
-if(uns)unsSheet(f(t('unsR'),uns,job.n),t('unsDR'),low,()=>{const r=S.receipts.find(x=>x.id===R.id);if(!r)return;removePart(r,rp);
+if(uns&&uns>job.n/2)unsSheet(f(t('unsR'),uns,job.n),t('unsDR'),low,()=>{const r=S.receipts.find(x=>x.id===R.id);if(!r)return;removePart(r,rp);
 if(!r.items.length){S.receipts=S.receipts.filter(x=>x!==r);V.screen=menuId?'menu':'home';V.id=menuId||null;render();scanReceipt(menuId,null)}else{render();scanReceipt(menuId,r)}})}
 // ---------- math (all amounts rounded to cents, so lines always add up) ----------
 const cm=()=>S.menus.find(m=>m.id===V.id),cr=()=>S.receipts.find(r=>r.id===V.id);
@@ -528,7 +529,7 @@ function itemV(i,M){const av=avoidHits(M,i),dc=S.diet.map(d=>[d,dietClash(i,d)])
 const sure=[...new Set([...av.sure,...dSure])],warn=sure.length?[f(t('contains'),sure.join(', '))]:[];
 const may=[...new Set([...av.may,...dMay])].filter(x=>!sure.includes(x)),mayW=may.length?f(t('mayContain'),may.join(', ')):'';
 return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
-${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(mayW)}</span>`:''}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTag')}</span>`:''}
+${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(mayW)}</span>`:''}${i.unsure?`<span class=unsure-b>${ico('warn',14)}${i.uf&&i.uf.length?esc(f(t('unsureIn'),i.uf.map(x=>t('u_'+x)).join(', '))):t('unsureTag')}</span>`:''}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b></div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
 ${(i.marks||[]).length?`<div class=tags>${(i.marks||[]).map(m=>`<span class=tag>${MARK[m.c]?MARK[m.c]+' ':''}${esc(m.l)}</span>`).join('')}</div>`:''}

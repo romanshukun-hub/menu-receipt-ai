@@ -20,7 +20,7 @@ If "menu" is false, output only line 1.
 Then, in menu order:
 - when a main section starts: {"category": heading copied exactly as printed (when the heading is printed in several languages, e.g. "DESSZERT · DESSERT", only its English part), "category_translation": heading translated into ${l}}
 - when a boxed or labelled sub-section starts inside the current section (e.g. a "TABLE SERVICE" or "CHEF'S FAVOURITE" box): {"subsection": its label copied exactly as printed, "subsection_translation": label translated into ${l}}; when the sub-section ends and the main section continues: {"subsection": null}
-- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "local": see below, "unsure": boolean, "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
+- for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "local": see below, "unsure": [...], "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
 - then: {"ingredients": {"<ingredient key>": ["<everyday name in ${l}, only ${l} letters>", "<one emoji>"], ...}} for every key you used in "ing" or "may"
 - last line: {"unclear_marks": the number of allergen/diet symbols or markings you saw next to dishes but could not identify or match to the menu's legend (0 if none)}
 
@@ -28,7 +28,7 @@ Dish fields:
 - "original": the dish name copied EXACTLY as printed - same spelling and words; never translate, correct, shorten or transliterate it yourself. If the menu ALSO prints this dish's NAME in English (a translated title, e.g. "Somlói galuska" with "Hungarian sponge cake" under it, or "+ Gomba | Mushrooms"), use that printed English name here, copied exactly. An English description or ingredient list (e.g. "Spaghettini, pecorino, black pepper" under "Spaghettini cacio e pepe") is NOT a name: keep the printed name then. If the name continues on the same line in a smaller or lighter font, include that continuation. Read small text letter by letter; never replace a hard-to-read word with a different, more familiar dish.
 - "local": when "original" is the printed English name, the dish name as printed in the menu's other language, copied exactly (so it can be matched to the bill); otherwise null.
 - "translation": if a description or ingredient list is printed under or next to the dish (in any language), translate that whole description into ${l}; if there is no description, translate the dish name into ${l}. Write natural ${l} with the everyday ${l} words for foods, using ONLY the ${l} alphabet - never mix in letters from another alphabet (e.g. no "ş" or Latin letters inside a Hebrew word); proper names may stay as they are.
-- "unsure": true if any word of the name, or the price, was blurry, cut off or hard to read and you had to guess part of it.
+- "unsure": what you are NOT sure you read correctly for this dish, as a list of: "name" (a word of the name was blurry, cut off or guessed), "price" (the price was hard to read or guessed), "ingredients" (the description or ingredient list was hard to read, cut off or guessed), "marks" (a diet or allergen marking next to the dish that you could not read or identify for sure). [] when everything was clear.
 - "addon": true for an optional extra printed under a dish (e.g. "+ caviar (10gr) + 9.900") - list it right after that dish, with the add-on text as "original" and its price.
 - "hot": true if the dish is spicy (chili, hot sauce, "piccante", "diavola", a chili mark, or spicy by its nature), else false.
 - "marks": allergen/diet markings printed next to the dish (letters, symbols or icons explained by the menu's legend), each {"c": one of v, vg, gf, lf, spicy, nuts, other, "l": what the marking means according to the menu's legend, written in ${l} (e.g. "A" in a legend "A = gluten" becomes gluten in ${l}); the marking as printed only when there is no legend}. One entry per marking. [] if none.
@@ -134,9 +134,10 @@ async function streamMenu(key, content, res) {
         if (keep && o.lang && String(o.lang).toLowerCase().slice(0, 2) !== keep) return; // same dishes printed twice: only the kept language
         const id = norm(o.original) + '|' + (+o.price || 0);
         if (before.has(id)) return; // already sent before a retry
-        sent.add(id); st.n++; if (o.unsure === true) st.uns++;
+        const uf = o.unsure === true ? ['name'] : arr(o.unsure, 4).map(String).filter(x => ['name', 'price', 'ingredients', 'marks'].includes(x));
+        sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; // only a doubtful name or price makes the stronger model read the page again
         send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
-          unsure: o.unsure === true, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
+          unsure: uf, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
       };
       st.err = await readStream(r, line, usage);
       if (!st.err || st.notMenu) break;
