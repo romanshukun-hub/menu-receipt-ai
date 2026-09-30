@@ -460,7 +460,8 @@ const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="n
 const bar=(title,back)=>`<header class=top><button class="ic back" data-a=back data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
 const step=(q,a,id,dis)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 ${dis?'disabled':''} aria-label="+1">+</button></div>`;
 function setup(){const back=V.prev?V.prev.screen+(V.prev.id?':'+V.prev.id:''):'home';
-return (S.started?bar(t('set'),back):'')+`<section class=hero>${S.started?'':`<div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>
+const first=!S.started||V.intro; // V.intro: the first-visit screen opened with ?intro (to preview it)
+return (first?'':bar(t('set'),back))+`<section class=hero>${!first?'':`<div class=mark>${ico('receipt',26)}</div><h1>${t('title')}</h1><p class=mut>${t('sub')}</p>
 <ol class=how aria-label="${t('howT')}">${[['menu','how1T','how1'],['check','how2T','how2'],['receipt','how3T','how3']].map(([i,a,b],k)=>`<li><span class=hn>${ico(i,20)}</span><span><b>${k+1}. ${t(a)}</b><small>${t(b)}</small></span></li>`).join('')}</ol>
 <h3 class=setT>${t('setupT')}</h3>`}
 <label>${t('lang')}<select data-c=slang>${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}<option value=x ${S.lang==='x'?'selected':''}>${t('other')}</option></select></label>
@@ -701,7 +702,8 @@ legal:(id,x)=>{V.legal=x;V.screen='legal';render();scrollTo(0,0)},
 go:(id,x)=>goTo(x),
 back:(id,x)=>{if(V.hist&&V.hist.length>1)stepBack();else goTo(x)}, // header ←: same as the phone's Back
 sa:(id,x)=>{const c=V.ctx||{},off=!!($('#hintsoff')&&$('#hintsoff').checked);closeSheet();c[x]&&c[x](off)},
-start:()=>{const first=!S.started;S.started=true;const p=V.prev;V.prev=null;
+start:()=>{const first=!S.started||V.intro;if(V.intro)try{history.replaceState(history.state,'',location.pathname)}catch(e){} // drop ?intro once it has been seen
+V.intro=false;S.started=true;const p=V.prev;V.prev=null;
 if(first){V.hist=[];V.screen='home';V.id=null;render();return} // first run: home replaces setup, so Back doesn't return to it
 goTo(p?p.screen+(p.id?':'+p.id:''):'home')},
 set:()=>{V.prev=null;V.screen='setup';render()},
@@ -766,6 +768,8 @@ const ok=p.screen==='menu'?S.menus.some(m=>m.id===p.id):p.screen==='receipt'?S.r
 if(!ok)return false;
 V.screen='home';V.id=null;render();V.screen=p.screen;V.id=p.id||null;if(p.legal)V.legal=p.legal;render();
 const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return true}
-if(!resume())render();ensureLang(); // load the chosen language if it is not built in
+// ?intro in the link shows the first-visit screen again (to preview it); saved data stays as it is
+if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(!resume())render();
+ensureLang(); // load the chosen language if it is not built in
 (async()=>{try{if(S.rates&&Date.now()-(S.ratesAt||0)<6e4*60*12)return;const d=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();if(d.rates){S.rates=d.rates;S.ratesAt=Date.now();save();if(!/input|select/i.test(document.activeElement.tagName))render()}}catch(e){}})();
 </script></body></html>
