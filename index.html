@@ -609,7 +609,7 @@ const wa=words(name);let best=null,bs=0;for(const x of M.items)for(const n of na
 // When several dishes fit but only one of them was ordered, the order settles it.
 // Returns the dish, or {amb:true} when it stays unclear, or null when nothing on the menu fits.
 function matchInfo(M,name){const a=norm(name),wa=words(name);
-const pick=c=>{const u=[...new Map(c.map(x=>[norm(x.orig),x])).values()];if(u.length===1)return u[0];const o=u.filter(x=>x.qty>0);return o.length===1?o[0]:{amb:true}};
+const pick=c=>{const u=[...new Map(c.map(x=>[norm(x.orig),x])).values()];if(u.length===1)return u[0];const o=u.filter(x=>x.qty>0);return o.length===1?o[0]:{amb:true,cands:u}};
 const ex=M.items.filter(x=>names(x).some(n=>norm(n)===a));if(ex.length)return pick(ex);
 const inc=M.items.filter(x=>names(x).some(n=>{const b=norm(n);return a.length>3&&b.length>3&&(b.includes(a)||a.includes(b))}));if(inc.length)return pick(inc);
 const sc=M.items.map(x=>[x,Math.max(0,...names(x).map(n=>{const wb=words(n);return wb.length&&wa.length?wa.filter(w=>wb.includes(w)).length/Math.max(wa.length,wb.length):0}))]),bs=Math.max(0,...sc.map(s=>s[1]));
@@ -622,10 +622,12 @@ const billName=(R,i)=>{const m=billDish(R,i);return m?`${m.orig} (${i.orig})`:i.
 // Returns plain sentences; the receipt screen lists them together in one box.
 function issues(R){const o=[],M=S.menus.find(m=>m.id===R.menuId),c=v=>fmt(v,R.cur);
 if(M){const ordered=M.items.filter(x=>x.qty>0),hasOrder=ordered.length>0,got=new Map();
-R.items.forEach(i=>{const mi=matchInfo(M,i.orig);if(mi&&mi.amb){o.push(f(t('aAmbig'),i.orig));return} // unclear which dish it is: say so rather than guess
-const m=mi;if(m)got.set(m.id,(got.get(m.id)||0)+i.qty);
+const amb=[],check=(i,m)=>{if(m)got.set(m.id,(got.get(m.id)||0)+i.qty);
 if(hasOrder&&(!m||!m.qty))o.push(f(t('aNotOrd'),billName(R,i)));
-if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))o.push(f(t('aPrice'),billName(R,i),c(i.unit),c(m.price)))});
+if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))o.push(f(t('aPrice'),billName(R,i),c(i.unit),c(m.price)))};
+R.items.forEach(i=>{const mi=matchInfo(M,i.orig);if(mi&&mi.amb)amb.push([i,mi.cands]);else check(i,mi)});
+// an unclear line goes to the one ordered dish among its candidates still missing from the bill; otherwise it is flagged, not guessed
+amb.forEach(([i,cands])=>{const miss=cands.filter(x=>x.qty>0&&(got.get(x.id)||0)<x.qty);if(miss.length===1)check(i,miss[0]);else o.push(f(t('aAmbig'),i.orig))});
 if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)o.push(f(t('aMissing'),m.orig));else if(q!==m.qty)o.push(f(t('aQty'),m.orig,q,m.qty))});
 const pol=M.policy;if(pol&&pol.service_pct&&R.fees.service>0){const exp=sub(R)*pol.service_pct/100;if(Math.abs(exp-R.fees.service)>Math.max(1,exp*.03))o.push(f(t('aSvcPol'),c(R.fees.service),pol.service_pct))}}
 // the receipt's own arithmetic; only rounding (about 1 unit) is tolerated, so a 50 HUF overcharge on 34,000 is still reported
