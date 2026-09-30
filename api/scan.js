@@ -4,7 +4,7 @@
 const MODEL = process.env.SCAN_MODEL || 'claude-sonnet-5-5';
 const FALLBACK = process.env.FALLBACK_MODEL || 'claude-opus-5-5';
 // weak: nothing read, an error, many doubtful names/prices, or a section the model saw in the photo but never listed (a page or column skipped)
-const needsFallback = s => !s.n || !!s.err || (s.n >= 3 && s.uns / s.n > 1 / 3) || (s.n >= 3 && (s.umarks || 0) / s.n > 1 / 3) || !!s.missing; // also when many diet/allergen markings could not be read (tiny letters next to names)
+const needsFallback = s => !s.n || !!s.err || (s.n >= 3 && s.uns / s.n > 1 / 3) || (s.n >= 3 && (s.umarks || 0) / s.n > 1 / 3) || !!s.missing || !!s.handoff; // also when many diet/allergen markings could not be read (tiny letters next to names)
 const MENU_EFFORT = process.env.MENU_EFFORT || 'low'; // reading a menu needs little reasoning; lower effort = faster
 const hits = new Map(); // best-effort per-instance rate limit
 
@@ -128,6 +128,8 @@ async function streamMenu(key, content, res) {
           if (o.menu === false) st.notMenu = true;
           if (o.kind) st.kind = String(o.kind);
           if (o.legend === true) st.legend = true;
+          // allergen letters explained by a legend are tiny and easy to misread: such menus are read by the stronger model from the start
+          if (st.legend && model !== FALLBACK && FALLBACK !== MODEL) { st.handoff = true; return 'stop'; }
           if (!st.sections.length) st.sections = arr(o.sections, 40).map(norm).filter(Boolean);
           keep = String(o.keep || '').toLowerCase().slice(0, 2) || null;
           const p = o.policy && typeof o.policy === 'object' ? { tax_included: o.policy.tax_included ?? null, service_pct: +o.policy.service_pct || null, text: String(o.policy.text || '').slice(0, 300) } : null;
@@ -160,7 +162,7 @@ async function streamMenu(key, content, res) {
   };
   let st = await pass(MODEL), model = MODEL;
   if (needsFallback(st) && st.kind !== 'receipt' && FALLBACK !== MODEL) { // a photo of a bill is not re-read as a menu
-    if (res.headersSent) send({ restart: true });
+    if (res.headersSent && !st.handoff) send({ restart: true }); // a handoff at the very start has nothing to take back
     model = FALLBACK; st = await pass(FALLBACK);
   }
   if (!res.headersSent) return res.status(502).json({ error: st.err || 'AI service error.', code: 'ai' });
