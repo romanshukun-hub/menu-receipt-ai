@@ -221,6 +221,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .onb{font-size:13px;color:var(--mut)}
 /* a short hint under a settings field */
 .fhelp{font-size:13px;color:var(--mut);margin-top:-2px}
+/* jumping to the order leaves room for the sticky header, so the card is seen from its title */
+.ordersum{scroll-margin-top:calc(72px + env(safe-area-inset-top))}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -829,7 +831,7 @@ const confirmDel=(title,desc,yes)=>openSheet(`<h3>${esc(f(t('delT'),title||'—'
 const ACT={
 legal:(id,x)=>{V.legal=x;V.screen='legal';render();scrollTo(0,0)},
 waiter:()=>waiterView(),
-toorder:()=>{const h=$('#ordh');h&&h.scrollIntoView({behavior:'smooth',block:'start'})},
+toorder:()=>{const h=$('.ordersum');h&&h.scrollIntoView({behavior:'smooth',block:'start'})}, // the card's top stays clear of the sticky header (scroll-margin)
 sharesplit:()=>shareSplit(),
 edl:id=>editLine(id),
 install:async()=>{if(!installEvt)return;installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;render()},
