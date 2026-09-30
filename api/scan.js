@@ -22,7 +22,7 @@ Then, in menu order - the photo may show two or more pages or columns side by si
 - when a main section starts: {"category": heading copied exactly as printed (when the heading is printed in several languages, e.g. "DESSZERT · DESSERT", only its English part), "category_translation": heading translated into ${l}}
 - when a boxed or labelled sub-section starts inside the current section (e.g. a "TABLE SERVICE" or "CHEF'S FAVOURITE" box): {"subsection": its label copied exactly as printed, "subsection_translation": label translated into ${l}}; when the sub-section ends and the main section continues: {"subsection": null}
 - for each dish: {"original": dish name, "translation": see below, "price": number (0 if none), "lang": ISO 639-1 code of "original", "local": see below, "unsure": [...], "addon": boolean, "hot": boolean, "marks": [...], "ing": [...], "may": [...], "ok": [...], "no": [...]}
-- then: {"ingredients": {"<ingredient key>": ["<everyday name in ${l}, only ${l} letters>", "<one emoji>"], ...}} for every key you used in "ing" or "may"
+- right after the last dish of EACH section (not only at the end): {"ingredients": {"<ingredient key>": ["<everyday name in ${l}, only ${l} letters>", "<one emoji>"], ...}} for every key first used in that section's "ing" or "may" (never repeat a key already given), so the names are ready while the rest is still being read
 - last line: {"unclear_marks": the number of allergen/diet symbols or markings you saw next to dishes but could not identify or match to the menu's legend (0 if none)}
 
 Dish fields:
