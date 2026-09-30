@@ -217,6 +217,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 /* usual tipping */
 .tipn{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;font-size:14.5px;color:var(--ink)}.tipn svg{color:var(--ac);flex:none;margin-top:2px}
 .sharebtn{margin-top:12px}
+/* the name as printed, under a bill line shown by its English name */
+.onb{font-size:13px;color:var(--mut)}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -666,7 +668,13 @@ const sureMatch=(M,name)=>{const m=matchInfo(M,name);return m&&!m.amb?m:null};
 // every dish name in the app comes with its translation into the chosen language (when it differs from the name)
 const trOf=x=>x.tr&&norm(x.tr)!==norm(x.orig)?x.tr:'';
 const nameTr=x=>trOf(x)?`${x.orig} (${trOf(x)})`:x.orig;
-const billName=(R,i)=>nameTr(i);
+// a bill line is named in English when the bill itself prints an English name for it, otherwise as printed
+const billMain=i=>i.en||i.orig;
+// the name lines of a bill line: main name, then (only without an English name on the bill) the menu's English name,
+// the translation into the chosen language, and - when the main name is the bill's English - the name as printed, small
+const billLines=(R,i,tag,pre='')=>{const m=billMain(i),en=!i.en&&billEn(R,i),tr=i.tr&&norm(i.tr)!==norm(m)?i.tr:'';
+return `<b dir=auto>${pre}${esc(m)}</b>${en?`<${tag} class=ren><bdi>${esc(en)}</bdi></${tag}>`:''}${tr?`<${tag} class=${tag==='span'?'rtr':'dtr'} dir=auto>${esc(tr)}</${tag}>`:''}${i.en?`<small class=onb dir=auto>${esc(i.orig)}</small>`:''}`};
+const billName=(R,i)=>{const m=billMain(i),tr=i.tr&&norm(i.tr)!==norm(m)?i.tr:'';return tr?`${m} (${tr})`:m};
 // Under a bill line, the English name the menu prints for that dish - only when the match is certain:
 // the same name, or a partial one with the same price (a cheaper "Csokoládétorta" is not the menu's cake with ice cream).
 function billEn(R,i){if(i.en)return i.en; // an English name printed on the bill itself comes first
@@ -705,7 +713,7 @@ const xl=[taxAdd(R)?t('tax'):'',+R.fees.service?t('svc'):'',+R.fees.other?t('fee
 const brk=p=>{const d=r2(pSub(R,p)),x=r2(sh[p]-d);return xl&&x>0?f(t('splitBreak'),fmt(d,R.cur),xl,fmt(x,R.cur)):''};
 const row=i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0,others=Object.entries(a.ind).filter(([p,c])=>+p!==P&&c>0).map(([p,c])=>`${t('person')} ${+p+1}${c>1?` ×${c}`:''}`);
 const meta=[`${fmt(i.unit,R.cur)}${i.qty>1?' '+t('perUnit'):''}`];if(i.qty>1&&!done)meta.push(f(t('leftOf'),rem,i.qty));if(others.length)meta.push(f(t('takenBy'),others.join(', ')));
-return `<div class="srow${done?' done':''}"><div class=info><b dir=auto>${done?`<span class=dck>${ico('check',17)}</span>`:''}${esc(i.orig)}</b>${billEn(R,i)?`<small class=ren><bdi>${esc(billEn(R,i))}</bdi></small>`:""}${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:""}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>q+1).join('+')):f(t('shared1'),x.p.map(q=>q+1).join('+'))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
+return `<div class="srow${done?' done':''}"><div class=info>${billLines(R,i,'small',done?`<span class=dck>${ico('check',17)}</span>`:'')}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>q+1).join('+')):f(t('shared1'),x.p.map(q=>q+1).join('+'))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
 <div class=sact>${inSh||(done&&!mine)?'':step(mine,'iq',i.id,done)}${done?'':`<button class="btn ghost sm${V.shp===i.id?' pressed':''}" data-a=shp data-id=${i.id} aria-pressed=${V.shp===i.id} aria-expanded=${V.shp===i.id}>${t('share')}</button>`}</div></div>${V.shp===i.id&&!done?shPanel(R,i,rem):''}`};
 return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${t('person')} ${p+1}<small class=n>${fmt(sh[p],R.cur)}</small></button>`).join('')}</div>
 <div class=sbox role=status><p class=hint>${ico('info',18)}<span><b>${f(t('splitHintA'),P+1)}</b><small>${t('splitHintB')}</small></span></p>
@@ -717,14 +725,14 @@ const ln=(k,v,cls)=>`<div class="ln${cls?' '+cls:''}"><span>${k}</span><span cla
 return bar(t('recHdr'),M?'menu:'+M.id:'home')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${scanning?t('menuName'):t('nameMissing')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.rdate||nq?`<small class="mut rdate">${[R.rdate?`<bdi>${esc(R.rdate)}</bdi>`:'',nq?`<b class=cnt1>${f(t('itemsCount'),nq)}</b>`:''].filter(Boolean).join(' · ')}</small>`:''}</div>
 ${iss.length?`<div class="al bad strong issues" role=alert>${ico('warn',18)}<div><b>${f(t(iss.length===1?'issues1':'issuesN'),iss.length)}</b><ul>${iss.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`
 :!scanning&&R.items.length&&ordered?`<div class="al ok" role=status>${ico('check',18)}<span>${t('ok')}</span></div>`:''}
-${!scanning&&R.fees.service>0?`<div class="al warn strong svcal" role=status>${ico('info',18)}<div><b>${t('svcAlert')}${R.svcPct?` (${R.svcPct}%)`:''}</b><div class="svamt n">${mv(R.fees.service,R.cur)}</div><small>${t('svcAlertD')}</small></div></div>`:''}
+${!scanning&&R.fees.service>0?`<div class="al warn strong svcal" role=status>${ico('info',18)}<div><b>${t("svcAlert")}${svcPctOf(R)?` (${svcPctOf(R)}%)`:""}</b><div class="svamt n">${mv(R.fees.service,R.cur)}</div><small>${t('svcAlertD')}</small></div></div>`:''}
 ${!scanning&&R.items.length&&!ordered?`<div class="card cmp"><h3>${t('cmpT')}</h3><p class=mut>${t(M?'cmpMark':'cmpD')}</p><button class="btn acc wide" data-a=${M?'cmpmark':'cmpmenu'}>${ico(M?'menu':'cam',18)}${t(M?'cmpMarkBtn':'cmpBtn')}</button></div>`:''}
 <div class=card><div class=row style="margin-bottom:4px"><h3 style="margin:0">${t('items')}</h3><span class=chip>${f(t('itemsCount'),nq)} · ${R.cur}</span></div>
-${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span dir=ltr class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTagR')}</span>`:''}<b dir=auto>${esc(i.orig)}</b>${billEn(R,i)?`<span class=ren><bdi>${esc(billEn(R,i))}</bdi></span>`:''}${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class=rtr dir=auto>${esc(i.tr)}</span>`:''}${i.qty>1?`<small class=n dir=ltr>${i.qty} × ${fmt(i.unit,R.cur)}</small>`:''}</div><div class=end><b class=n>${mv(i.unit*i.qty,R.cur)}</b>${scanning?'':`<span class=racts><button class="x ed" data-a=edl data-id=${i.id}>${t('edit')}</button><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></span>`}${i.edited?`<small class=edited>${t('editedMark')}</small>`:''}</div></div>`).join('')}
+${R.items.map(i=>`<div class="ln rit${i.unsure?' unsure':''}"><span dir=ltr class="qty${i.qty>1?' many':''}" aria-label="${t('qty')} ${i.qty}">×${i.qty}</span><div class=info>${i.unsure?`<span class=unsure-b>${ico('warn',14)}${t('unsureTagR')}</span>`:''}${billLines(R,i,'span')}${i.qty>1?`<small class=n dir=ltr>${i.qty} × ${fmt(i.unit,R.cur)}</small>`:''}</div><div class=end><b class=n>${mv(i.unit*i.qty,R.cur)}</b>${scanning?'':`<span class=racts><button class="x ed" data-a=edl data-id=${i.id}>${t('edit')}</button><button class=x data-a=ri data-id=${i.id}>${t('remove')}</button></span>`}${i.edited?`<small class=edited>${t('editedMark')}</small>`:''}</div></div>`).join('')}
 ${scanning?`<div class=skel></div><div class=skel style="opacity:.6"></div>`:`<button class="btn ghost sm wide" style="margin-top:12px" data-a=rscan>${ico('cam',16)}${t('scanRec')}</button>`}</div>
 ${scanning?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t(js.some(j=>j.hq)?'recheck':'scanRecNow')}</b><br><small>${f(t("itemsSoFar"),js.reduce((a,j)=>a+j.n,0))}</small></div></div><button class="btn acc sm" data-a=rscan>${ico("cam",18)}${t("nextPart")}</button></div></div>`:`
 <div class=card><h3>${t('yourTip')}</h3>${tb>0&&!R.fees.service?`<small class=mut style="display:block;margin:-6px 0 10px">${t('tipNote')}</small>`:''}${tipInfo(R)?`<p class=tipn>${ico('info',16)}<span>${esc(tipInfo(R))}</span></p>`:''}<div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
-<div class=card><h3>${t('sumT')}</h3>${ln(t('subtotal'),mv(s,R.cur))}${taxAdd(R)?ln(t('tax'),mv(taxAdd(R),R.cur)):''}${R.fees.service?ln(t('svc')+(R.svcPct?` (${R.svcPct}%)`:''),mv(R.fees.service,R.cur)):''}${R.fees.other?ln(t('fees'),mv(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),mv(tb,R.cur)):''}${ln(t('yourTip'),mv(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.printedTotal&&Math.abs(R.printedTotal-(g-tp))>Math.max(1,(g-tp)*.0002)?ln(t('printedTotal'),`<b>${mv(R.printedTotal,R.cur)}</b>`,'badln'):''}${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxInc')}: ${fmt(R.fees.tax,R.cur)}</small>`:''}</div>
+<div class=card><h3>${t('sumT')}</h3>${ln(t('subtotal'),mv(s,R.cur))}${taxAdd(R)?ln(t('tax'),mv(taxAdd(R),R.cur)):''}${R.fees.service?ln(t("svc")+(svcPctOf(R)?` (${svcPctOf(R)}%)`:""),mv(R.fees.service,R.cur)):''}${R.fees.other?ln(t('fees'),mv(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),mv(tb,R.cur)):''}${ln(t('yourTip'),mv(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.printedTotal&&Math.abs(R.printedTotal-(g-tp))>Math.max(1,(g-tp)*.0002)?ln(t('printedTotal'),`<b>${mv(R.printedTotal,R.cur)}</b>`,'badln'):''}${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxInc')}: ${fmt(R.fees.tax,R.cur)}</small>`:''}</div>
 ${R.items.length?`<div class=card><h3>${t('split')}</h3><label class="chk big"><input type=checkbox data-c=splitq ${R.split?'checked':''}>${t('splitQ')}</label>${R.split?`<div style="margin-top:14px">${splitV(R)}</div>`:''}</div>`:''}
 ${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}`}
 </div>`}
@@ -780,7 +788,7 @@ function undoToast(msg,undo){const e=$('#toast');e.innerHTML=`<span>${esc(msg)}<
 e.querySelector('.undo').onclick=()=>{e.style.display='none';undo();render()};clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
 // the split as plain text: each person's amount and what they had, to send to the others
 function splitText(R){const n=R.payers,g=grand(R),sh=R.equal?equalShares(g,n):shares(R),name=R.restaurant||R.title||'',lines=[t('shareHdr')+(name?' — '+name:'')];
-for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+nameTr(i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${nameTr(i)} 1/${x.p.length}`));return o});
+for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+billName(R,i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${billName(R,i)} 1/${x.p.length}`));return o});
 lines.push(`${t('person')} ${p+1}: ${fmt(sh[p],R.cur)}${its.length?' — '+its.join(', '):''}`)}
 const left=R.equal?0:r2(g-sh.reduce((a,b)=>a+b,0));if(left>0)lines.push(`${t('unassigned')}: ${fmt(left,R.cur)}`);
 lines.push(`${t('total')}: ${fmt(g,R.cur)}`);return lines.join('\n')}
@@ -791,7 +799,9 @@ window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener')
 const TIPS={HUF:'10–15',EUR:'5–10',USD:'15–20',CAD:'15–20',GBP:'10–12.5',ILS:'10–15',CZK:'10',PLN:'10',TRY:'5–10',AED:'10',CHF:'5',RON:'10',SEK:'5–10',MXN:'10–15',THB:'5–10',JPY:'0',CNY:'0',KRW:'0'};
 const tipNorm=c=>{const v=TIPS[c];return v==null?'':v==='0'?f(t('tipNone'),c):f(t('tipUsual'),v,c)};
 // when the bill already charges service, it says no tip is needed (and how much service was charged) instead of the local custom
-const tipInfo=R=>+R.fees.service>0?(R.svcPct?f(t('tipSvcPct'),R.svcPct):t('tipSvc')):tipNorm(R.cur);
+// the service percentage: as printed, or worked out from the amount when the bill prints only the amount
+const svcPctOf=R=>+R.svcPct||(sub(R)>0&&+R.fees.service>0?Math.round(R.fees.service/sub(R)*1000)/10:0);
+const tipInfo=R=>+R.fees.service>0?(svcPctOf(R)?f(t('tipSvcPct'),svcPctOf(R)):t('tipSvc')):tipNorm(R.cur);
 // fixing a line of the bill by hand (quantity and unit price), instead of scanning it again
 function editLine(id){const R=cr(),i=R&&R.items.find(x=>x.id===id);if(!i)return;let q=i.qty,u=i.unit;
 openSheet(`<h3>${t('editT')}</h3><p class=mut dir=auto>${esc(i.orig)}</p><div class=g2><label>${t('qty')}<input id=edq type=number min=1 step=1 inputmode=numeric value="${i.qty}"></label><label>${t('unitPrice')} (${R.cur})<input id=edu type=number min=0 step=any inputmode=decimal value="${i.unit}"></label></div><button class=btn data-a=sa data-x=save>${t('saveEdit')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,
