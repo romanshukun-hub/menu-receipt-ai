@@ -542,7 +542,8 @@ ${i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}</span>
 ${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
 // the dish search matches the English name (or the name as printed), the local name and the translation; accents and case are ignored
-const dq=M=>V.dqId===M.id?sn(V.dq||''):'';
+// a Hebrew singular or plural ending is dropped from the search, so "עגבניה" also finds "עגבניות"
+const dq=M=>{if(V.dqId!==M.id)return'';const q=sn(V.dq||'');return q.length>3?q.replace(/(ים|ות|ה)$/,''):q};
 const dishHit=(i,q)=>!q||[i.orig,i.local,i.tr].some(s=>sn(s).includes(q));
 function sectionsV(M){const q=dq(M),items=M.items.filter(i=>dishHit(i,q)).sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));let out='',g=null,sub='',rows='';
 const flush=()=>{if(g)out+=`<section>${g.cat?`<div ${ltrText(g.cat)?"dir=ltr ":""}class=cat><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</div>`:''}<div class="card list">${rows}</div></section>`;rows=''};
