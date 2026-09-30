@@ -188,7 +188,7 @@ uns:'Heads up: {0} of the {1} dishes were not recognised with full certainty',un
 emptyMenuT:'No dishes found in this photo',emptyMenuD:'Make sure you photographed the menu and that the text is sharp and readable.',emptyRecT:'No items found in this photo',emptyRecD:'Make sure you photographed the whole receipt and that the text is sharp and readable.',scanAgain:'Scan again',
 scanMenuNow:'Scanning the menu…',scanRecNow:'Scanning the receipt…',nextPage:'Next page',soFar:'{0} dishes so far',
 policy:'Restaurant policy',
-ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',cv:'meat or fish',cvg:'animal products',ch:'non-halal ingredients',ck:'non-kosher ingredients',cp:'meat',cgf:'gluten',clf:'lactose',cnohot:'spicy ingredients',allergyNote:'Ingredients are detected automatically and may be wrong: with an allergy, always check with the staff.',dietEdit:'Diet preferences',
+ingT:'Ingredient filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',noMatch:'Nothing matches the search',cv:'meat or fish',cvg:'animal products',ch:'non-halal ingredients',ck:'non-kosher ingredients',cp:'meat',cgf:'gluten',clf:'lactose',cnohot:'spicy ingredients',allergyNote:'Ingredients are detected automatically and may be wrong: with an allergy, always check with the staff.',dietEdit:'Diet preferences',
 dietsT:'Dietary restrictions',dietsD:"We'll mark dishes that suit you and dishes to avoid.",
 dv:'Vegetarian',dvg:'Vegan',dh:'Halal',dk:'Kosher',dp:'Pescatarian',dgf:'Gluten-free',dlf:'Lactose-free',
 
@@ -212,7 +212,7 @@ uns:'שים לב: {0} מנות מתוך ה-{1} לא זוהו בוודאות מל
 emptyMenuT:'לא נמצאו מנות בתמונה',emptyMenuD:'ודאו שצילמתם את התפריט ושהטקסט חד וקריא.',emptyRecT:'לא נמצאו פריטים בתמונה',emptyRecD:'ודאו שצילמתם את הקבלה כולה ושהטקסט חד וקריא.',scanAgain:'סרוק שוב',
 scanMenuNow:'סורק את התפריט…',scanRecNow:'סורק את החשבונית…',nextPage:'העמוד הבא',soFar:'{0} מנות עד עכשיו',
 policy:'מדיניות המסעדה',
-ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',cv:'בשר או דגים',cvg:'מוצרים מן החי',ch:'רכיבים לא חלאל',ck:'רכיבים לא כשרים',cp:'בשר',cgf:'גלוטן',clf:'לקטוז',cnohot:'רכיבים חריפים',allergyNote:'המרכיבים מזוהים אוטומטית ועלולים לטעות: באלרגיה, ודאו תמיד מול הצוות.',dietEdit:'העדפות תזונה',
+ingT:'סינון מרכיבים',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',noMatch:'לא נמצאו תוצאות לחיפוש',cv:'בשר או דגים',cvg:'מוצרים מן החי',ch:'רכיבים לא חלאל',ck:'רכיבים לא כשרים',cp:'בשר',cgf:'גלוטן',clf:'לקטוז',cnohot:'רכיבים חריפים',allergyNote:'המרכיבים מזוהים אוטומטית ועלולים לטעות: באלרגיה, ודאו תמיד מול הצוות.',dietEdit:'העדפות תזונה',
 dietsT:'מגבלות תזונה',dietsD:'נסמן לכם בתפריט מנות מתאימות ומנות שכדאי להימנע מהן.',
 dv:'צמחוני',dvg:'טבעוני',dh:'חלאל',dk:'כשר',dp:'פסקטריאני',dgf:'ללא גלוטן',dlf:'ללא לקטוז',
 
@@ -599,7 +599,11 @@ ${name?`<a class="card review" target=_blank rel=noopener href="https://www.goog
 </div>`}
 const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
 function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti)}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
-return bar(t('hist'),'home')+`<div class=pad><div class=cat>${t('menus')}</div>${S.menus.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}<div class=cat>${t('receipts')}</div>${S.receipts.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||`<p class=empty>${t('empty')}</p>`}</div>`}
+// search by restaurant name: menus and receipts whose name contains the typed text (accents and case ignored)
+const q=norm(V.hq||''),hit=s=>!q||norm(s||'').includes(q),none=`<p class=empty>${t(q?'noMatch':'empty')}</p>`;
+const ms=S.menus.filter(m=>hit(m.title)),rs=S.receipts.filter(r=>hit(r.restaurant)||hit(r.title));
+return bar(t('hist'),'home')+`<div class=pad>${S.menus.length+S.receipts.length>1?`<label class=search>${ico('search',18)}<input id=histq type=search placeholder="${t('histQ')}" value="${esc(V.hq||'')}" dir=auto autocomplete=off></label>`:''}
+<div id=hlist><div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}</div></div>`}
 function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)();syncHistory();syncLayer()}
 // ---------- phone/browser back button ----------
 // Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
@@ -684,7 +688,9 @@ shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
 document.addEventListener('change',e=>{const b=e.target.closest('[data-c]');if(b&&CH[b.dataset.c])CH[b.dataset.c](b.value,b.dataset.id,b)});
 // typing in the ingredient search only refreshes the chips, so the field keeps focus
-document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;V.ingOpen=true;paintIng()}});
+document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;V.ingOpen=true;paintIng()}
+// the history search re-draws the list and keeps typing in the field
+if(e.target.id==='histq'){V.hq=e.target.value;const p=e.target.selectionStart;render();const i=$('#histq');if(i){i.focus();i.setSelectionRange(p,p)}}});
 // the ingredient list opens when the search field is focused and closes on a tap outside the filter card
 document.addEventListener('focusin',e=>{if(e.target.id==='ingq'&&!V.ingOpen){V.ingOpen=true;paintIng()}});
 document.addEventListener('pointerdown',e=>{if(e.target.closest('#ingq')){if(!V.ingOpen){V.ingOpen=true;paintIng()}}else if(V.ingOpen&&!e.target.closest('.filt')){V.ingOpen=false;paintIng()}});
