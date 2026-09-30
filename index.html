@@ -758,9 +758,11 @@ const q=sn(V.hq||''),hit=s=>!q||sn(s||'').includes(q),none=`<p class=empty>${t(q
 const ms=S.menus.filter(m=>hit(m.title)&&inDate(m.date)),rs=S.receipts.filter(r=>(hit(r.restaurant)||hit(r.title))&&inDate(r.date));
 const dp=(k,l)=>`<button class="pill${hd===k?' on':''}" data-a=hdate data-x=${k} aria-pressed=${hd===k}>${l}</button>`,picked=/^\d{4}-/.test(hd);
 const dates=S.menus.length+S.receipts.length>1?`<div class="chips hdates">${dp('all',t('dAll'))}${dp('today',t('dToday'))}${dp('7',f(t('dDays'),7))}${dp('30',f(t('dDays'),30))}<label class="pill hpick${picked?' on':''}">${ico('clock',16)}<span>${picked?day(hd+'T00:00'):t('dPick')}</span><input type=date data-c=hday value="${picked?hd:''}" aria-label="${t('dPick')}"></label></div>`:'';
-// tabs to switch between everything, menus only and bills only (the search works inside the chosen tab)
+// tabs to switch between everything, menus only and bills only (the search works inside the chosen tab);
+// their counts follow the chosen dates
+const dm=S.menus.filter(m=>inDate(m.date)).length,dr=S.receipts.filter(r=>inDate(r.date)).length;
 const tab=V.htab||'all',tb=(k,l)=>`<button class="htab${tab===k?' on':''}" data-a=htab data-x=${k} role=tab aria-selected=${tab===k}>${l}</button>`;
-return bar(t('hist'),'home')+`<div class=pad><div class=htabs role=tablist>${tb('all',t('allT'))}${tb('m',`${t('menus')} (${S.menus.length})`)}${tb('r',`${t('receipts')} (${S.receipts.length})`)}</div>
+return bar(t('hist'),'home')+`<div class=pad><div class=htabs role=tablist>${tb('all',`${t('allT')} (${dm+dr})`)}${tb('m',`${t('menus')} (${dm})`)}${tb('r',`${t('receipts')} (${dr})`)}</div>
 ${S.menus.length+S.receipts.length>1?`<label class=search>${ico('search',18)}<input id=histq type=search placeholder="${t('histQ')}" value="${esc(V.hq||'')}" dir=auto autocomplete=off></label>`:''}${dates}
 <div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}`:''}</div></div>`}
 function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV}[V.screen]||home)();syncHistory();syncLayer()}
