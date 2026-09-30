@@ -109,6 +109,10 @@ section:first-of-type>.cat{margin-top:18px}
 .subhd span{text-transform:none;letter-spacing:0;color:var(--mut);font-weight:500}
 .item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 35%,transparent);border-inline-start:3px solid var(--line)}
 .item.addon{padding:6px 0 10px}.item.addon .nm b{font-weight:500;font-size:14px}
+/* an add-on that is also highlighted (uncertain, dimmed, in a sub-section) keeps the inner padding of the highlight */
+.item.addon.unsure,.item.addon.dim,.item.addon.insub{padding-inline:16px}
+/* nothing may push the page sideways on a phone */
+#app{overflow-x:clip}
 .item.dim{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 45%,transparent)}
 .item.dim .nm,.item.dim .desc,.item.dim .pr,.item.dim .tags,.item.dim .photo{opacity:.4;filter:grayscale(1)}
 .avoid-b{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;font-weight:600;color:#fff;background:var(--bad);border-radius:8px;padding:4px 8px;width:max-content;max-width:100%}
@@ -287,7 +291,8 @@ TRX[lk]={v:I18N_VER,d,rtl:rtlL};try{localStorage.setItem('mrai-i18n:'+lk,JSON.st
 catch(e){if(Object.keys(d).length)TRX[lk]={v:'partial',d,rtl:rtlL};toast(e.message||t('fail'))}
 finally{if(V.i18nBusy===lk)V.i18nBusy=null;render()}}
 const f=(s,...a)=>s.replace(/\{(\d)\}/g,(_,i)=>a[i]);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// the low opening quote of some languages („Somlói“) is shown as a high one, so both quote marks sit at the top
+const esc=s=>String(s??'').replace(/[„‚]/g,c=>c==='„'?'“':'‘').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
 const norm=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,''); // ignores case, accents and punctuation
 const r2=n=>Math.round((+n||0)*100)/100;
@@ -540,7 +545,7 @@ function menuV(){const M=cm();if(!M)return home();const js=jobs(M.id),found=js.r
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
-${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t('dishesN'),M.items.filter(i=>!i.addon).length)}</span>${priced?`<span class=chip>${M.cur}</span>`:''}</span>${M.items.length&&!js.length?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
+${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t('dishesN'),M.items.length)}</span>${priced?`<span class=chip>${M.cur}</span>`:''}</span>${M.items.length&&!js.length?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
 ${hasIng||S.diet.length?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
 ${hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div>${allergyNote()}<div class=chips id=ingchips>${ingChips(M)}</div><small class=mut>${t("ingD")}</small>`:''}
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}</div></div>`
