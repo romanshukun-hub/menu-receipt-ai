@@ -795,12 +795,14 @@ function editLine(id){const R=cr(),i=R&&R.items.find(x=>x.id===id);if(!i)return;
 openSheet(`<h3>${t('editT')}</h3><p class=mut dir=auto>${esc(i.orig)}</p><div class=g2><label>${t('qty')}<input id=edq type=number min=1 step=1 inputmode=numeric value="${i.qty}"></label><label>${t('unitPrice')} (${R.cur})<input id=edu type=number min=0 step=any inputmode=decimal value="${i.unit}"></label></div><button class=btn data-a=sa data-x=save>${t('saveEdit')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,
 {save:()=>{const nq=Math.max(1,parseInt(q)||1),nu=Math.max(0,r2(+u||0));if(nq!==i.qty||nu!==i.unit){if(nq<used(R,i))delete R.assign[i.id];i.qty=nq;i.unit=nu;i.edited=true}render()}});
 const a=$('#edq'),b=$('#edu');if(a)a.oninput=e=>q=e.target.value;if(b)b.oninput=e=>u=e.target.value}
-// A quick look at the photo before paying for a scan: too dark, or too blurry to read small text (sharpness = spread of edge strength)
+// A quick look at the photo before paying for a scan: too dark, or too blurry to read small text.
+// Sharpness = spread of edge strength relative to the photo's contrast; measured on real menus: sharp 0.9-6, heavily blurred below 0.05.
 async function photoQuality(file){try{const b=await createImageBitmap(file),k=Math.min(1,480/Math.max(b.width,b.height)),w=Math.max(8,Math.round(b.width*k)),h=Math.max(8,Math.round(b.height*k)),c=document.createElement('canvas');c.width=w;c.height=h;
-const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(b,0,0,w,h);const d=x.getImageData(0,0,w,h).data,g=new Float32Array(w*h);let sum=0;for(let p=0,q=0;p<d.length;p+=4,q++){g[q]=.299*d[p]+.587*d[p+1]+.114*d[p+2];sum+=g[q]}
-let s=0,s2=0,n=0;for(let y=1;y<h-1;y++)for(let z=1;z<w-1;z++){const q=y*w+z,l=4*g[q]-g[q-1]-g[q+1]-g[q-w]-g[q+w];s+=l;s2+=l*l;n++}const v=s2/n-(s/n)**2,mean=sum/(w*h);
-return{dark:mean<QUAL.dark,blurry:v<QUAL.blur,mean:Math.round(mean),sharp:Math.round(v)}}catch(e){return{}}}
-const QUAL={dark:45,blur:25};
+const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(b,0,0,w,h);const d=x.getImageData(0,0,w,h).data,g=new Float32Array(w*h);let sum=0,sq=0;for(let p=0,q=0;p<d.length;p+=4,q++){const v=.299*d[p]+.587*d[p+1]+.114*d[p+2];g[q]=v;sum+=v;sq+=v*v}
+let s=0,s2=0,n=0;for(let y=1;y<h-1;y++)for(let z=1;z<w-1;z++){const q=y*w+z,l=4*g[q]-g[q-1]-g[q+1]-g[q-w]-g[q+w];s+=l;s2+=l*l;n++}
+const mean=sum/(w*h),contrast=Math.max(1,sq/(w*h)-mean*mean),sharp=(s2/n-(s/n)**2)/contrast;
+return{dark:mean<QUAL.dark,blurry:sharp<QUAL.blur,mean:Math.round(mean),sharp:+sharp.toFixed(3)}}catch(e){return{}}}
+const QUAL={dark:45,blur:.05};
 async function qualityCheck(file,go,retake){const q=await photoQuality(file);if(!q.dark&&!q.blurry)return go();
 openSheet(alertBox('warn',t(q.dark?'darkT':'blurT'),t('qualD'))+`<button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=go>${t('scanAnyway')}</button>`,{retake,go})}
 // "Install as an app" (browsers that offer it); the page then opens from the home screen and saved menus work offline
