@@ -204,7 +204,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 /* the translation under a dish name in the order summary and the bill split */
 .dtr{display:block;font-size:14px;color:var(--mut);font-weight:400}.onm{display:grid;gap:1px;min-width:0}
 /* waiter view: the order big and clear, in the menu's own language */
-#sheet .sh:has(.waiter){max-height:100dvh;overflow:auto;border-radius:0;padding-top:calc(24px + env(safe-area-inset-top))}
+#sheet .sh:has(.waiter){min-height:100dvh;max-height:100dvh;overflow:auto;border-radius:0;align-content:start;padding-top:calc(24px + env(safe-area-inset-top))}
 .waiter{display:grid;gap:16px}.waiter .wt{margin:0;font-size:15px;color:var(--mut);font-weight:600}
 .wr{display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)}.wq{font-size:28px;min-width:48px}.wr>span{display:grid;gap:4px}.wn{font-size:28px;line-height:1.2}.wr small{font-size:16px;color:var(--mut)}
 .wbtn{margin-top:12px}
@@ -774,7 +774,7 @@ if(prev&&sameNav(prev,tgt)){V.afterNav=then;stepBack();return}V.screen=s;V.id=i|
 // ---------- extras: waiter view, sharing, tips by country, editing, undo, photo checks, install ----------
 // "Show the waiter": the order big, in the menu's own language (the English name small underneath), to point at
 function waiterView(){const M=cm();if(!M)return;const ord=M.items.filter(i=>i.qty>0).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0)));
-openSheet(`<div class=waiter>${M.title?`<p class=wt dir=auto>${esc(M.title)}</p>`:''}${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${i.qty}×</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}</span></div>`).join('')}</div><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`)}
+openSheet(`<div class=waiter ${ord.some(i=>ltrText(i.local||i.orig))?"dir=ltr":""}>${M.title?`<p class=wt dir=auto>${esc(M.title)}</p>`:''}${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${i.qty}×</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}</span></div>`).join('')}</div><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`)}
 // a short message with an "Undo" button, used instead of asking first
 function undoToast(msg,undo){const e=$('#toast');e.innerHTML=`<span>${esc(msg)}</span><button class=undo type=button>${t('undo')}</button>`;e.style.display='flex';
 e.querySelector('.undo').onclick=()=>{e.style.display='none';undo();render()};clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
