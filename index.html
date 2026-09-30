@@ -408,7 +408,7 @@ openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns')
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
 // a scanned receipt arrives in three kinds of pieces: its header, one line per item, and the totals at the end
 function receiptMeta(R,m){if(!R.items.length&&isCur(m.currency))R.cur=m.currency;if(!R.restaurant&&m.restaurant)R.restaurant=m.restaurant;if(!R.rdate&&m.date)R.rdate=String(m.date).slice(0,30)}
-function receiptItem(R,i,rp){R.items.push({id:uid(),orig:String(i.original),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1),unsure:i.unsure===true,rp})}
+function receiptItem(R,i,rp){R.items.push({id:uid(),orig:String(i.original),...(i.en?{en:String(i.en)}:{}),tr:String(i.translation||''),unit:+i.unit_price||0,qty:Math.max(1,parseInt(i.quantity)||1),unsure:i.unsure===true,rp})}
 function receiptTotals(R,d,rp){const p={rp,tax:+d.tax||0,service:+d.service_charge||0,other:+d.other_fees||0,tip:+d.tip||0};
 R.fees.tax=r2(R.fees.tax+p.tax);R.fees.service=r2(R.fees.service+p.service);R.fees.other=r2(R.fees.other+p.other);R.fees.tip=r2((+R.fees.tip||0)+p.tip);
 if(d.tax_included_in_prices!=null)R.fees.taxIncl=!!d.tax_included_in_prices;if(+d.total)R.printedTotal=+d.total;if(+d.subtotal)R.printedSub=+d.subtotal;if(+d.service_pct)R.svcPct=+d.service_pct;(R.parts=R.parts||[]).push(p);
@@ -628,7 +628,8 @@ const sureMatch=(M,name)=>{const m=matchInfo(M,name);return m&&!m.amb?m:null};
 const billName=(R,i)=>i.orig;
 // Under a bill line, the English name the menu prints for that dish - only when the match is certain:
 // the same name, or a partial one with the same price (a cheaper "Csokoládétorta" is not the menu's cake with ice cream).
-function billEn(R,i){const M=S.menus.find(m=>m.id===R.menuId),m=M&&sureMatch(M,i.orig);if(!m||!m.local||norm(m.orig)===norm(i.orig))return '';
+function billEn(R,i){if(i.en)return i.en; // an English name printed on the bill itself comes first
+const M=S.menus.find(m=>m.id===R.menuId),m=M&&sureMatch(M,i.orig);if(!m||!m.local||norm(m.orig)===norm(i.orig))return '';
 const exact=names(m).some(n=>norm(n)===norm(i.orig));return exact||(m.price>0&&Math.abs(m.price-i.unit)<.5)?m.orig:''}
 // Problems with the bill: mismatches against the order (when there is one) and the receipt's own arithmetic.
 // Returns plain sentences; the receipt screen lists them together in one box.

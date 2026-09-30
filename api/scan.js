@@ -48,7 +48,7 @@ If prices show no currency symbol assume ${c}.`,
 Output JSON Lines only: one compact JSON object per line, no markdown, no other text.
 Line 1: {"receipt": true if the image shows a receipt/bill with purchased items, else false, "restaurant": string|null, "currency": ISO-4217 code|null, "date": string|null}
 If "receipt" is false, output only line 1.
-Then one line per purchased item, in the printed order: {"original": item name exactly as printed, "translation": the item's meaning in natural ${l}, written ONLY in the ${l} alphabet with the everyday ${l} words for foods (never leave a foreign word or Latin letters inside a ${l} translation; expand short bill abbreviations when the meaning is clear), "unit_price": price of ONE unit, "quantity": integer, "unsure": true if the name, quantity or price was blurry, cut off or hard to read and you had to guess part of it, else false}
+Then one line per purchased item, in the printed order: {"original": item name exactly as printed (without an English version printed next to it), "en": the item's English name exactly as the bill prints it - in brackets, after a slash, or on the line under it (e.g. "TÜKÖRTOJÁS (Fried Eggs)" → "Fried Eggs") - or null when the bill prints no English name; never translate it yourself, "translation": the item's meaning in natural ${l}, written ONLY in the ${l} alphabet with the everyday ${l} words for foods (never leave a foreign word or Latin letters inside a ${l} translation; expand short bill abbreviations when the meaning is clear), "unit_price": price of ONE unit, "quantity": integer, "unsure": true if the name, quantity or price was blurry, cut off or hard to read and you had to guess part of it, else false}
 Last line: {"totals": {"tax": VAT/sales tax amount (0 if none), "tax_included_in_prices": boolean, "service_charge": service fee charged (0 if none), "service_pct": its percentage if printed, else null, "tip": a tip or gratuity line explicitly added to the bill (0 if none), "other_fees": tourism/cover/other mandatory fees (0 if none), "subtotal": the subtotal as printed (even if it looks wrong) or null, "total": the final amount printed (even if it looks wrong) or null}}
 Copy every printed amount exactly as printed; never correct the receipt's arithmetic.
 If a line shows only a line total for quantity > 1, divide to get unit_price. Do not list tax, service, tip or total lines as items. If prices show no currency symbol assume ${c}.`
@@ -175,7 +175,7 @@ async function streamReceipt(key, content, res) {
       if (o.totals && typeof o.totals === 'object') { const x = o.totals; return send({ totals: { tax: num(x.tax) || 0, tax_included_in_prices: x.tax_included_in_prices !== false, service_charge: num(x.service_charge) || 0, service_pct: num(x.service_pct), tip: num(x.tip) || 0, other_fees: num(x.other_fees) || 0, subtotal: num(x.subtotal), total: num(x.total) } }); }
       if (!o.original || !isReceipt) return;
       st.n++; if (o.unsure === true) st.uns++;
-      send({ item: { original: String(o.original), translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
+      send({ item: { original: String(o.original), en: o.en && String(o.en) !== String(o.original) ? String(o.en).slice(0, 120) : null, translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
     };
     st.err = await readStream(r, line, usage);
     return st;
