@@ -199,6 +199,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .ingwait{display:flex;gap:10px;align-items:center;margin:0;padding:12px 14px;border-radius:12px;background:var(--bg);font-size:15px;color:var(--ink)}.ingwait .spin{width:18px;height:18px;border-width:2px;flex:none}
 /* the English name from the menu under a bill line */
 .ren{font-size:15px;font-weight:500;color:color-mix(in srgb,var(--ink) 75%,var(--mut))}
+/* the translation under a dish name in the order summary and the bill split */
+.dtr{display:block;font-size:14px;color:var(--mut);font-weight:400}.onm{display:grid;gap:1px;min-width:0}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -596,7 +598,7 @@ function orderV(M,n,tot,priced){const ord=[...M.items].filter(i=>i.qty>0).sort((
 // a service charge stated on the menu is added to the order, so the total is what the bill should come to
 const pct=+(M.policy&&M.policy.service_pct)||0,svc=priced&&pct?r2(tot*pct/100):0;
 return `<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t('yourOrder')}</h3>
-${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qty}×</b><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
+${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qty}×</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
 <div class=actions><button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>
@@ -627,7 +629,10 @@ const sc=M.items.map(x=>[x,Math.max(0,...names(x).map(n=>{const wb=words(n);retu
 return bs>=.6?pick(sc.filter(s=>s[1]===bs).map(s=>s[0])):null}
 const sureMatch=(M,name)=>{const m=matchInfo(M,name);return m&&!m.amb?m:null};
 // bill lines are always named as printed on the bill (the menu is only used to check them)
-const billName=(R,i)=>i.orig;
+// every dish name in the app comes with its translation into the chosen language (when it differs from the name)
+const trOf=x=>x.tr&&norm(x.tr)!==norm(x.orig)?x.tr:'';
+const nameTr=x=>trOf(x)?`${x.orig} (${trOf(x)})`:x.orig;
+const billName=(R,i)=>nameTr(i);
 // Under a bill line, the English name the menu prints for that dish - only when the match is certain:
 // the same name, or a partial one with the same price (a cheaper "Csokoládétorta" is not the menu's cake with ice cream).
 function billEn(R,i){if(i.en)return i.en; // an English name printed on the bill itself comes first
@@ -643,7 +648,7 @@ if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.0
 R.items.forEach(i=>{const mi=matchInfo(M,i.orig);if(mi&&mi.amb)amb.push([i,mi.cands]);else check(i,mi)});
 // an unclear line goes to the one ordered dish among its candidates still missing from the bill; otherwise it is flagged, not guessed
 amb.forEach(([i,cands])=>{const miss=cands.filter(x=>x.qty>0&&(got.get(x.id)||0)<x.qty);if(miss.length===1)check(i,miss[0]);else o.push(f(t('aAmbig'),i.orig))});
-if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)o.push(f(t('aMissing'),m.orig));else if(q!==m.qty)o.push(f(t('aQty'),m.orig,q,m.qty))});
+if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)o.push(f(t('aMissing'),nameTr(m)));else if(q!==m.qty)o.push(f(t('aQty'),nameTr(m),q,m.qty))});
 const pol=M.policy;if(pol&&pol.service_pct&&R.fees.service>0){const exp=sub(R)*pol.service_pct/100;if(Math.abs(exp-R.fees.service)>Math.max(1,exp*.03))o.push(f(t('aSvcPol'),c(R.fees.service),pol.service_pct))}}
 // the receipt's own arithmetic; only rounding (about 1 unit) is tolerated, so a 50 HUF overcharge on 34,000 is still reported
 const s=sub(R),T=+R.printedTotal||0,PS=+R.printedSub||0,pct=+R.svcPct||0,tipB=+R.fees.tip||0,E=r2(s+billFees(R)),tol=v=>Math.max(1,Math.abs(v)*.0002);
@@ -666,7 +671,7 @@ const xl=[taxAdd(R)?t('tax'):'',+R.fees.service?t('svc'):'',+R.fees.other?t('fee
 const brk=p=>{const d=r2(pSub(R,p)),x=r2(sh[p]-d);return xl&&x>0?f(t('splitBreak'),fmt(d,R.cur),xl,fmt(x,R.cur)):''};
 const row=i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0,others=Object.entries(a.ind).filter(([p,c])=>+p!==P&&c>0).map(([p,c])=>`${t('person')} ${+p+1}${c>1?` ×${c}`:''}`);
 const meta=[`${fmt(i.unit,R.cur)}${i.qty>1?' '+t('perUnit'):''}`];if(i.qty>1&&!done)meta.push(f(t('leftOf'),rem,i.qty));if(others.length)meta.push(f(t('takenBy'),others.join(', ')));
-return `<div class="srow${done?' done':''}"><div class=info><b dir=auto>${done?`<span class=dck>${ico('check',17)}</span>`:''}${esc(i.orig)}</b>${billEn(R,i)?`<small class=ren><bdi>${esc(billEn(R,i))}</bdi></small>`:''}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>q+1).join('+')):f(t('shared1'),x.p.map(q=>q+1).join('+'))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
+return `<div class="srow${done?' done':''}"><div class=info><b dir=auto>${done?`<span class=dck>${ico('check',17)}</span>`:''}${esc(i.orig)}</b>${billEn(R,i)?`<small class=ren><bdi>${esc(billEn(R,i))}</bdi></small>`:""}${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:""}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>q+1).join('+')):f(t('shared1'),x.p.map(q=>q+1).join('+'))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
 <div class=sact>${inSh||(done&&!mine)?'':step(mine,'iq',i.id,done)}${done?'':`<button class="btn ghost sm${V.shp===i.id?' pressed':''}" data-a=shp data-id=${i.id} aria-pressed=${V.shp===i.id} aria-expanded=${V.shp===i.id}>${t('share')}</button>`}</div></div>${V.shp===i.id&&!done?shPanel(R,i,rem):''}`};
 return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${t('person')} ${p+1}<small class=n>${fmt(sh[p],R.cur)}</small></button>`).join('')}</div>
 <div class=sbox role=status><p class=hint>${ico('info',18)}<span><b>${f(t('splitHintA'),P+1)}</b><small>${t('splitHintB')}</small></span></p>
