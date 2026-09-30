@@ -352,7 +352,7 @@ const errMsg=j=>j&&j.code&&I.en['err_'+j.code]?t('err_'+j.code):(j&&j.error)||t(
 async function post(body){try{return await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}catch(e){throw new Error(t('err_net'))}}
 async function api(body){const r=await post(body);const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(errMsg(j));return j}
 // menu scans stream back one JSON line per event ({meta}, {item}, {ingr}, {done}) so dishes appear while the page is still being read
-async function scanStream(image,onEvt,mode='menu'){const r=await post({image,mode,language:langName(),currency:S.cur});
+async function scanStream(image,onEvt,mode='menu'){const r=await post({image,mode,language:langName(),currency:S.cur,strict:!!(S.diet.length||S.avoid.length||(S.avoidTxt||[]).length)}); // strict: markings matter to this user
 if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(errMsg(j))}
 const rd=r.body.getReader(),dec=new TextDecoder();let buf='',done=false;
 for(;;){const x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});let k;
@@ -558,11 +558,12 @@ function itemV(i,M){const av=avoidHits(M,i),dc=S.diet.map(d=>[d,dietClash(i,d)])
 // dishes that fit get no tag; a clash says "contains" when it is written on the menu, "may contain" when it is only likely
 const sure=[...new Set([...av.sure,...dSure])],warn=sure.length?[f(t('contains'),sure.join(', '))]:[];
 const may=[...new Set([...av.may,...dMay])].filter(x=>!sure.includes(x)),mayW=may.length?f(t('mayContain'),may.join(', ')):'';
-return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${i.unsure?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
-${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(mayW)}</span>`:''}${i.unsure?(i.uf&&i.uf.length?i.uf.map(x=>t('uq_'+x)):[t('unsureTag')]).map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join(''):''}
+// doubts shown on the dish; a doubtful diet marking matters only to someone with diet restrictions or ingredients to avoid
+const careMarks=S.diet.length||S.avoid.length||(S.avoidTxt||[]).length,uq=!i.unsure?[]:i.uf&&i.uf.length?i.uf.filter(x=>x!=='marks'||careMarks).map(x=>t('uq_'+x)):[t('unsureTag')];
+return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${uq.length?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
+${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b></div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
-${(i.marks||[]).length?`<div class=tags>${(i.marks||[]).map(m=>`<span class=tag>${MARK[m.c]?MARK[m.c]+' ':''}${esc(m.l)}</span>`).join('')}</div>`:''}
 ${i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}</span>`:''}
 ${i.addon?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
@@ -587,7 +588,7 @@ ${js.length?`<p class=ingwait role=status><span class=spin></span><span>${t('ing
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}</div></div>`
 // closed: one button; it shows how many filters are on, so it is clear why some dishes are dimmed
 :(()=>{const on=S.avoid.length+(S.avoidTxt||[]).length+S.diet.length;return `<button class="btn ghost wide filt-btn${on?' on':''}" data-a=filt aria-expanded=false>${ico('search',18)}<span>${t('ingT')}</span>${on?`<span class=cnt>${f(t('filtOn'),on)}</span>`:''}</button>`})()):''}
-${Object.values(M.unclear||{}).reduce((a,b)=>a+b,0)?`<div class="al warn" role=status>${ico('warn',18)}<span>${esc(f(t('unclearMarks'),Object.values(M.unclear).reduce((a,b)=>a+b,0)))}</span></div>`:''}
+${(S.diet.length||S.avoid.length||(S.avoidTxt||[]).length)&&Object.values(M.unclear||{}).reduce((a,b)=>a+b,0)?`<div class="al warn" role=status>${ico('warn',18)}<span>${esc(f(t('unclearMarks'),Object.values(M.unclear).reduce((a,b)=>a+b,0)))}</span></div>`:''}
 ${M.items.length>3?`<label class="search dsearch">${ico("search",18)}<input id=dishq type=search placeholder="${t("dishQ")}" value="${esc(dq(M)?V.dq:"")}" dir=auto autocomplete=off aria-label="${t("dishQ")}"></label>`:""}
 ${dq(M)&&!M.items.some(i=>dishHit(i,dq(M)))?`<p class=empty>${t("noDish")}</p>`:sectionsV(M)}
 ${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?orderV(M,n,tot,priced):`<p class=empty>${t('empty')}</p>`}

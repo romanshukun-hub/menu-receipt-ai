@@ -107,7 +107,8 @@ const startStream = res => { if (!res.headersSent) res.writeHead(200, { 'Content
 // Streams the menu to the client as NDJSON: {"meta":{...}}, {"item":{...}} per dish, {"ingr":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
 // If the AI service fails mid-stream (e.g. overloaded), it starts over and skips the dishes already sent.
 // If the result is weak (see needsFallback), {"restart":true} tells the app to drop this page's dishes and the stronger model reads it again.
-async function streamMenu(key, content, res) {
+// strict: the user has diet restrictions or ingredients to avoid - only then do allergen markings matter enough to pay for the stronger model
+async function streamMenu(key, content, res, strict = false) {
   const send = o => res.write(JSON.stringify(o) + '\n');
   const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
   const usage = { input_tokens: 0, output_tokens: 0 }; // reported at the end so the cost of a scan can be checked
@@ -129,7 +130,7 @@ async function streamMenu(key, content, res) {
           if (o.kind) st.kind = String(o.kind);
           if (o.legend === true) st.legend = true;
           // allergen letters explained by a legend are tiny and easy to misread: such menus are read by the stronger model from the start
-          if (st.legend && model !== FALLBACK && FALLBACK !== MODEL) { st.handoff = true; return 'stop'; }
+          if (strict && st.legend && model !== FALLBACK && FALLBACK !== MODEL) { st.handoff = true; return 'stop'; }
           if (!st.sections.length) st.sections = arr(o.sections, 40).map(norm).filter(Boolean);
           keep = String(o.keep || '').toLowerCase().slice(0, 2) || null;
           const p = o.policy && typeof o.policy === 'object' ? { tax_included: o.policy.tax_included ?? null, service_pct: +o.policy.service_pct || null, text: String(o.policy.text || '').slice(0, 300) } : null;
@@ -145,10 +146,10 @@ async function streamMenu(key, content, res) {
         const id = norm(o.original) + '|' + (+o.price || 0);
         if (before.has(id)) return; // already sent before a retry
         const uf = o.unsure === true ? ['name'] : arr(o.unsure, 4).map(String).filter(x => ['name', 'price', 'ingredients', 'marks'].includes(x));
-        sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; if (uf.includes('marks')) st.umarks++; if (arr(o.marks).length) st.marked++;
+        sent.add(id); st.n++; if (uf.includes('name') || uf.includes('price')) st.uns++; if (strict && uf.includes('marks')) st.umarks++; if (arr(o.marks).length) st.marked++;
         if (arr(o.marks).some(m => /^[A-Z0-9]{1,2}([\s,.\/-]+[A-Z0-9]{1,2})*$/.test(String((m && m.l) || '').trim()))) st.rawMarks = true; // a legend letter left untranslated ("A C G")
         // with a legend on the menu, untranslated letters mean the markings are not being read well: stop now and let the stronger model read the page
-        if (st.legend && st.rawMarks && model !== FALLBACK && FALLBACK !== MODEL) { st.umarks = st.n; return 'stop'; }
+        if (strict && st.legend && st.rawMarks && model !== FALLBACK && FALLBACK !== MODEL) { st.umarks = st.n; return 'stop'; }
         send({ item: { original: o.original, local: o.local && o.local !== o.original ? String(o.local).slice(0, 160) : null, translation: o.translation || '', price: +o.price || 0, category: cat, category_tr: catTr, sub, sub_tr: subTr,
           unsure: uf, addon: o.addon === true, hot: o.hot === true, marks: arr(o.marks, 8), ing: arr(o.ing).map(String), may: arr(o.may, 12).map(String), ok: arr(o.ok, 7).map(String), no: arr(o.no, 7).map(String) } });
       };
@@ -157,7 +158,7 @@ async function streamMenu(key, content, res) {
     }
     st.missing = st.sections.filter(s => ![...st.seen].some(x => x && (x.includes(s) || s.includes(x)))).length;
     // the menu has a legend, but markings came back as raw letters ("A C G" instead of their meaning) or were read next to only a few dishes
-    if (st.legend && st.n >= 3 && (st.rawMarks || st.marked < st.n / 3)) st.umarks = st.n;
+    if (strict && st.legend && st.n >= 3 && (st.rawMarks || st.marked < st.n / 3)) st.umarks = st.n;
     return st;
   };
   let st = await pass(MODEL), model = MODEL;
@@ -255,7 +256,7 @@ module.exports = async (req, res) => {
       { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: image } },
       { type: 'text', text: P[mode](lang, cur) }
     ];
-    if (mode === 'menu') return await streamMenu(key, content, res);
+    if (mode === 'menu') return await streamMenu(key, content, res, req.body.strict === true);
     return await streamReceipt(key, content, res);
   } catch (e) {
     if (res.headersSent) { try { res.write(JSON.stringify({ error: 'Scan failed. Please try again.', code: 'failed' }) + '\n'); } catch (_) {} return res.end(); }
