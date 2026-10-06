@@ -232,6 +232,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .top h2{flex:1;min-width:0}.topshare{flex:none;margin-inline-start:auto;padding:9px 14px;border-radius:99px;background:var(--ac);color:#fff;font-size:15px;gap:6px}
 .filt-ph{width:100%;font:inherit;cursor:pointer;text-align:start;padding:11px 12px;min-height:46px}.filt-ph>span:first-of-type{flex:1;color:var(--mut);font-weight:400}
 .sotog{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:none;font:inherit;font-weight:700;color:var(--ink);cursor:pointer;padding:2px 0}.sotog>span:first-child{display:flex;align-items:center;gap:8px}.sotog .chv{display:grid;place-items:center;transition:transform .15s;transform:rotate(90deg)}.sotog .chv.open{transform:rotate(-90deg)}.sharedord .oln:first-of-type{margin-top:10px}
+.tblp{padding:10px 0;border-bottom:1px dashed var(--line)}.tblp:last-of-type{border-bottom:0}
 .islink{background:none;border:0;padding:0;font:inherit;font-weight:700;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .rit.isbadln{border:1.5px solid var(--bad);border-radius:12px;padding:10px;margin:6px 0;background:color-mix(in srgb,var(--bad) 7%,transparent)}
 .isbad{display:inline-flex;align-items:center;gap:5px;margin:4px 0;padding:3px 10px;border:0;border-radius:99px;background:var(--bad);color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;width:max-content}
@@ -276,7 +277,7 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
-taxIncShort:'Prices include VAT',soT:'What the sender chose',isT:'Check this dish',isTag:'Something is wrong here',isShow:'Show on the bill',bizT:'Restaurant page',bizD:"Scan the restaurant's menu and get its own page with a link and a QR code, where guests see the menu in their language and currency.",bizScan:'Scan a menu',bizScanD:'You can choose several photos (all the pages of the menu) at once.',bizMenus:'Scanned menus',bizNone:'No menus yet - scan a menu to start.',bizNoPage:'no page yet',bizMenuHdr:'Restaurant menu',bizLoginT:'The business account',bizLoginD:'First time? Enter the phone number and choose a password - the account is created. Next time, from any phone, use the same number and password.',bizPhone:'Phone number',bizPw:'Password (at least 6 characters)',bizGo:'Continue',bizCreated:'The account was created',bizOut:'Sign out',bizAs:'Signed in: {0}',whoT:'Who are you?',whoD:'Write your name and pick your place in the split, or join as a new person.',whoPh:'Your name',whoNew:'Join as a new person',liveOn:'Shared split - everyone with the link sees what each person chose',namesBtn:'Names',namesT:'Names of the people',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
+taxIncShort:'Prices include VAT',soT:'What the sender chose',tblT:"The table's order",tblTot:'Table total',myOrder:'My order',me:'me',mwT:"Join the table's order",mwD:'Write your name so everyone at the table sees what you order.',mwGo:'Join',myName:'My name',liveMenuOn:'Shared order - everyone at the table sees what each person adds',isT:'Check this dish',isTag:'Something is wrong here',isShow:'Show on the bill',bizT:'Restaurant page',bizD:"Scan the restaurant's menu and get its own page with a link and a QR code, where guests see the menu in their language and currency.",bizScan:'Scan a menu',bizScanD:'You can choose several photos (all the pages of the menu) at once.',bizMenus:'Scanned menus',bizNone:'No menus yet - scan a menu to start.',bizNoPage:'no page yet',bizMenuHdr:'Restaurant menu',bizLoginT:'The business account',bizLoginD:'First time? Enter the phone number and choose a password - the account is created. Next time, from any phone, use the same number and password.',bizPhone:'Phone number',bizPw:'Password (at least 6 characters)',bizGo:'Continue',bizCreated:'The account was created',bizOut:'Sign out',bizAs:'Signed in: {0}',whoT:'Who are you?',whoD:'Write your name and pick your place in the split, or join as a new person.',whoPh:'Your name',whoNew:'Join as a new person',liveOn:'Shared split - everyone with the link sees what each person chose',namesBtn:'Names',namesT:'Names of the people',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
 shareRecTxt:'The bill from {0} - open it to see the items and the split:',shareRecTxt0:'A bill I scanned - open it to see the items and the split:',
 shareGot:'Shared with you and saved in your history',shareBad:'This link could not be opened',sharedTag:'Shared with you',
 oRemove:'Remove',photoOf:'Photo {0} of {1}',photoDishes:'{0} dishes from this photo',photoDish1:'1 dish from this photo',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
@@ -318,7 +319,7 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
-taxIncShort:'המחירים כוללים מע״מ',soT:'מה בחר מי ששיתף',isT:'שימו לב למנה הזאת',isTag:'יש כאן טעות',isShow:'הצג בחשבונית',bizT:'דף תפריט למסעדה',bizD:'סרקו את התפריט של המסעדה וקבלו דף משלה עם קישור וקוד QR, שבו האורחים רואים את התפריט בשפה ובמטבע שלהם.',bizScan:'סריקת תפריט',bizScanD:'אפשר לבחור כמה תמונות (כל עמודי התפריט) בבת אחת.',bizMenus:'תפריטים שנסרקו',bizNone:'עדיין אין תפריטים – סרקו תפריט כדי להתחיל.',bizNoPage:'עדיין אין דף',bizMenuHdr:'תפריט המסעדה',bizLoginT:'חשבון העסק',bizLoginD:'בפעם הראשונה – הזינו מספר טלפון ובחרו סיסמה, והחשבון ייווצר. בפעמים הבאות, מכל טלפון, הזינו את אותו מספר ואותה סיסמה.',bizPhone:'מספר טלפון',bizPw:'סיסמה (לפחות 6 תווים)',bizGo:'המשך',bizCreated:'החשבון נוצר',bizOut:'יציאה',bizAs:'מחובר: {0}',whoT:'מי אתם?',whoD:'כתבו את השם שלכם ובחרו את המקום שלכם בחלוקה, או הצטרפו כמשתתף חדש.',whoPh:'השם שלכם',whoNew:'הצטרפות כמשתתף חדש',liveOn:'חלוקה משותפת – כל מי שיש לו את הקישור רואה מה כל אחד בחר',namesBtn:'שמות',namesT:'שמות המשתתפים',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
+taxIncShort:'המחירים כוללים מע״מ',soT:'מה בחר מי ששיתף',tblT:'ההזמנה של השולחן',tblTot:'סה״כ לשולחן',myOrder:'ההזמנה שלי',me:'אני',mwT:'הצטרפות להזמנה של השולחן',mwD:'כתבו את השם שלכם כדי שכולם בשולחן יראו מה הזמנתם.',mwGo:'הצטרפות',myName:'השם שלי',liveMenuOn:'הזמנה משותפת – כל מי שבשולחן רואה מה כל אחד מוסיף',isT:'שימו לב למנה הזאת',isTag:'יש כאן טעות',isShow:'הצג בחשבונית',bizT:'דף תפריט למסעדה',bizD:'סרקו את התפריט של המסעדה וקבלו דף משלה עם קישור וקוד QR, שבו האורחים רואים את התפריט בשפה ובמטבע שלהם.',bizScan:'סריקת תפריט',bizScanD:'אפשר לבחור כמה תמונות (כל עמודי התפריט) בבת אחת.',bizMenus:'תפריטים שנסרקו',bizNone:'עדיין אין תפריטים – סרקו תפריט כדי להתחיל.',bizNoPage:'עדיין אין דף',bizMenuHdr:'תפריט המסעדה',bizLoginT:'חשבון העסק',bizLoginD:'בפעם הראשונה – הזינו מספר טלפון ובחרו סיסמה, והחשבון ייווצר. בפעמים הבאות, מכל טלפון, הזינו את אותו מספר ואותה סיסמה.',bizPhone:'מספר טלפון',bizPw:'סיסמה (לפחות 6 תווים)',bizGo:'המשך',bizCreated:'החשבון נוצר',bizOut:'יציאה',bizAs:'מחובר: {0}',whoT:'מי אתם?',whoD:'כתבו את השם שלכם ובחרו את המקום שלכם בחלוקה, או הצטרפו כמשתתף חדש.',whoPh:'השם שלכם',whoNew:'הצטרפות כמשתתף חדש',liveOn:'חלוקה משותפת – כל מי שיש לו את הקישור רואה מה כל אחד בחר',namesBtn:'שמות',namesT:'שמות המשתתפים',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
 shareRecTxt:'החשבון מ-{0} – פתחו כדי לראות את הפריטים והחלוקה:',shareRecTxt0:'חשבון שסרקתי – פתחו כדי לראות את הפריטים והחלוקה:',
 shareGot:'שותף איתך ונשמר בהיסטוריה שלך',shareBad:'לא הצלחנו לפתוח את הקישור',sharedTag:'שותף איתך',
 oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',photoDishes:'{0} מנות מהתמונה הזאת',photoDish1:'מנה אחת מהתמונה הזאת',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
@@ -597,8 +598,9 @@ async function unpackShare(s){let bytes=Uint8Array.from(atob(s.slice(1).replace(
 // only what is needed travels: empty fields are left out, dishes go in menu order (no page numbers or dish ids - new ones are made on opening), and each section's
 // translation is written once instead of on every dish; opening the link fills the defaults back in
 const lean=o=>Object.fromEntries(Object.entries(o).filter(([k,v])=>!(v===''||v==null||v===false||v===0||(Array.isArray(v)&&!v.length))));
-const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,restEdit,shared,shareId,sharedOrder,items,...m}=M,ct={},st={};
-const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({id,pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean(uf&&uf.length?{...i,uf}:i)});
+// keepIds: a live (shared) order needs the same dish ids on every phone
+const shareMenu=(M,keepIds)=>{const{hashes,unclear,receiptId,restSlug,restEdit,shared,shareId,sharedOrder,live,items,...m}=M,ct={},st={};
+const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({id,pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean({...(keepIds?{id}:{}),...(uf&&uf.length?{...i,uf}:i)})});
 return {...lean(m),items:its,ct,st}};
 const shareRec=R=>{const{hashes,shared,shareId,live,items,...r}=R;return {...r,items:items.map(lean)}};
 // ---------- live split: everyone who opens the bill's link sees who pays for what, as it changes ----------
@@ -628,6 +630,24 @@ if(!/input|select|textarea/i.test((document.activeElement||{}).tagName||''))rend
 // opening the link: who am I in this split?
 function whoSheet(R){openSheet(`<h3>${t('whoT')}</h3><p class=mut>${t('whoD')}</p><input id=whoname placeholder="${t('whoPh')}" maxlength=20 dir=auto autocomplete=given-name>
 ${[...Array(R.payers).keys()].map(p=>`<button class="btn ghost" data-a=whome data-x=${p}>${ico('check',18)}${esc(pn(R,p))}</button>`).join('')}${R.payers<12?`<button class=btn data-a=whonew>${ico('plus',18)}${t('whoNew')}</button>`:''}`,{})}
+// ---------- live table order: a shared menu where everyone at the table orders, and all see what each person added ----------
+// The shared state is {people: {<person id>: {n: name, it: {<dish id>: count}}}}; each phone only ever changes its own person,
+// so when two save at once the later one simply takes the other's state and puts its own person back.
+const myItems=M=>Object.fromEntries(M.items.filter(i=>i.qty>0).map(i=>[i.id,i.qty]));
+const mlDesired=M=>{const L=M.live;return {...L.st,people:{...(L.st.people||{}),[L.pid]:{n:L.name||null,it:myItems(M)}}}};
+const mlDirty=M=>JSON.stringify(mlDesired(M).people[M.live.pid])!==JSON.stringify((M.live.st.people||{})[M.live.pid]||null);
+// the whole table's order as a menu (for the bill check: the bill is compared with what everyone ordered)
+const tableMenu=M=>{if(!M||!M.live)return M;const P=Object.values(mlDesired(M).people);return {...M,items:M.items.map(i=>({...i,qty:P.reduce((a,p)=>a+((p.it||{})[i.id]||0),0)}))}};
+async function menuLiveStart(M,packed){if(M.live)return M.live.code;try{const pid=uid(),st={people:{[pid]:{n:S.myName||null,it:myItems(M)}}},r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({live:'new',packed,st})}),j=await r.json();
+if(!r.ok||!j.code)return null;M.live={code:j.code,v:j.v,st,pid,name:S.myName||null};save();return j.code}catch(e){return null}}
+let mlBusy=false,mlTimer=null;const mlSoon=()=>{clearTimeout(mlTimer);mlTimer=setTimeout(mlPush,400)};
+async function mlPush(){const M=V.screen==='menu'&&cm();if(!M||!M.live||mlBusy||!mlDirty(M))return;mlBusy=true;
+try{for(let n=0;n<4;n++){const st=mlDesired(M),r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({live:M.live.code,base:M.live.v,st})}),j=await r.json().catch(()=>({}));
+if(r.ok&&j.ok){M.live.st=st;M.live.v=j.v;break}if(r.status===409&&j.st){M.live.st=j.st;M.live.v=j.v;continue}break}}catch(e){}finally{mlBusy=false;save();render()}}
+setInterval(async()=>{const M=V.screen==='menu'&&cm();if(!M||!M.live||mlBusy||document.hidden)return;if(mlDirty(M))return mlSoon();
+try{const r=await fetch('/api/rest?live='+M.live.code+'&since='+M.live.v);if(!r.ok)return;const j=await r.json();
+if(j.st&&j.v>M.live.v&&!mlBusy){M.live.st=j.st;M.live.v=j.v;if(!/input|select|textarea/i.test((document.activeElement||{}).tagName||''))render();else save()}}catch(e){}},3000);
+function menuWhoSheet(M){openSheet(`<h3>${t('mwT')}</h3><p class=mut>${t('mwD')}</p><input id=whoname value="${esc(M.live.name||S.myName||'')}" placeholder="${t('whoPh')}" maxlength=20 dir=auto autocomplete=given-name><button class=btn data-a=mwjoin>${ico('check',18)}${t('mwGo')}</button>`,{})}
 function namesSheet(R){openSheet(`<h3>${t('namesT')}</h3>${[...Array(R.payers).keys()].map(p=>`<input id=pn${p} value="${esc((R.pnames||[])[p]||'')}" placeholder="${esc(t('person')+' '+(p+1))}" maxlength=20 dir=auto>`).join('')}<button class=btn data-a=pnsave>${t('saveSet')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})}
 const unMenu=m=>{const{ct={},st={},...M}=m;M.items=m.items.map((i,n)=>({unsure:!!(i.uf&&i.uf.length),uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',cat:'',tr:'',price:0,qty:0,id:uid(),...i,
 catTr:i.catTr||ct[i.cat||'']||'',subTr:i.subTr||st[i.sub||'']||'',pg:i.pg||1,seq:i.seq!=null?i.seq:n}));return M};
@@ -637,7 +657,9 @@ const RM=R&&R.menuId&&S.menus.find(m=>m.id===R.menuId),name=isM?M.title:(R.resta
 let packed;try{packed=await packShare(isM?{v:2,m:shareMenu(M)}:{v:2,r:shareRec(R),m:RM?shareMenu(RM):null})}catch(e){return toast(t('fail'))}
 // a bill becomes a live split (?l=<code>); a menu gets a short link (?s=<code>) when the server can keep it;
 // otherwise everything goes in the link itself
-let url=location.origin+'/#s='+packed;const lc=R&&await liveStart(R,packed);
+let url=location.origin+'/#s='+packed;let lc=R&&await liveStart(R,packed);
+// a menu becomes a live table order (everyone adds their own dishes and sees the others')
+if(M&&!M.biz){try{lc=await menuLiveStart(M,await packShare({v:2,m:shareMenu(M,true)}))}catch(e){}}
 if(lc)url=location.origin+'/?l='+lc;
 else try{const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({share:packed})});const j=await r.json().catch(()=>({}));if(r.ok&&j.code)url=location.origin+'/?s='+j.code}catch(e){}
 if(lc)render();
@@ -653,13 +675,16 @@ else if(code){V.screen='rload';render();const r=await fetch('/api/rest?share='+c
 let h=5381;for(let i=0;i<s.length;i++)h=(h*33^s.charCodeAt(i))>>>0;const sid=lc?'L'+lc:h.toString(36);
 const put=(list,x,kind)=>{const old=list.find(y=>y.shareId===sid+kind);if(old)return old;const c={...x,id:uid(),shareId:sid+kind,shared:true,date:Date.now()};list.unshift(c);return c};
 // a shared menu (not a bill): what the sender chose is kept apart, and the order here starts empty for the person opening it
-if(o.m&&!o.r&&Array.isArray(o.m.items)){o.m.sharedOrder=o.m.items.filter(i=>i.qty>0).map(i=>({id:i.id,qty:i.qty}));o.m.items.forEach(i=>{i.qty=0})}
+if(o.m&&!o.r&&!L&&Array.isArray(o.m.items)){o.m.sharedOrder=o.m.items.filter(i=>i.qty>0).map(i=>({id:i.id,qty:i.qty}));o.m.items.forEach(i=>{i.qty=0})}
 let M=o.m&&Array.isArray(o.m.items)?put(S.menus,o.m,'m'):null;
 let R=null;if(o.r&&Array.isArray(o.r.items)){R=put(S.receipts,o.r,'r');R.menuId=M?M.id:null;if(M)M.receiptId=R.id;V.screen='receipt';V.id=R.id;
 // a live split: the split as it is now, and the question who I am (asked once per phone)
 if(L){const fresh=!R.live;R.live={code:lc,v:L.v,base:JSON.stringify(liveNorm(L.st))};liveApply(R,L.st);R.split=true;if(fresh)R.askWho=true}}
-else if(M){V.screen='menu';V.id=M.id}else{V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
-S.started=true;save();render();scrollTo(0,0);if(R&&R.askWho){delete R.askWho;save();whoSheet(R)}else toast(t('shareGot'))}
+else if(M){V.screen='menu';V.id=M.id;
+// a live table order: my order starts empty, the others' orders come from the server, and I say who I am (once)
+if(L){if(!M.live){M.items.forEach(i=>{i.qty=0});M.live={code:lc,v:L.v,st:L.st,pid:uid(),name:S.myName||null};M.askWho=true}else{M.live.st=L.st;M.live.v=L.v}}}
+else{V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
+S.started=true;save();render();scrollTo(0,0);if(R&&R.askWho){delete R.askWho;save();whoSheet(R)}else if(M&&M.askWho){delete M.askWho;save();menuWhoSheet(M)}else toast(t('shareGot'))}
 // a printable card: the restaurant's name, the QR code and a line saying what it opens (in English, for guests from anywhere)
 async function qrCard(title,url){if(!window.QRCode)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=ok;s.onerror=no;document.head.append(s)});
 const box=document.createElement('div');new QRCode(box,{text:url,width:720,height:720,correctLevel:QRCode.CorrectLevel.M});await new Promise(z=>setTimeout(z,300));
@@ -918,7 +943,15 @@ const pct=+(M.policy&&M.policy.service_pct)||0,svc=priced&&pct?r2(tot*pct/100):0
 const so=(M.sharedOrder||[]).map(x=>({i:M.items.find(i=>i.id===x.id),q:x.qty})).filter(x=>x.i),soOpen=V.soOpen===M.id;
 const soV=so.length?`<section class="card sharedord"><button class=sotog data-a=sotog aria-expanded=${soOpen}><span>${ico('share',17)}${t('soT')} <span class=n>(${so.reduce((a,x)=>a+x.q,0)})</span></span><span class="chv${soOpen?' open':''}">${ico('chev',16)}</span></button>
 ${soOpen?so.map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join(''):''}</section>`:'';
-return soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t('yourOrder')}</h3>
+// a live table order: everyone's dishes by name, with each person's total and the table's total (a panel that opens on tap)
+let tbl='';if(M.live){const P=Object.entries(mlDesired(M).people),find=id=>M.items.find(i=>i.id===id),open=V.soOpen===M.id;
+const who=(pid,p,k)=>pid===M.live.pid?`${esc(p.n||t('me'))} (${t('me')})`:esc(p.n||t('person')+' '+(k+1));
+const its=p=>Object.entries(p.it||{}).map(([id,q])=>({i:find(id),q})).filter(x=>x.i&&x.q>0),sum=p=>its(p).reduce((a,x)=>a+x.q*x.i.price,0);
+const cnt=P.reduce((a,[,p])=>a+its(p).reduce((b,x)=>b+x.q,0),0),tot=P.reduce((a,[,p])=>a+sum(p),0);
+tbl=`<p class=livebar>${ico('share',16)}<span>${t('liveMenuOn')}</span></p><section class="card sharedord"><button class=sotog data-a=sotog aria-expanded=${open}><span>${ico('menu',17)}${t('tblT')} <span class=n>(${cnt})</span></span><span class="chv${open?' open':''}">${ico('chev',16)}</span></button>
+${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln"><b>${who(pid,p,k)}</b>${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
++(priced?`<div class=ln><b>${t('tblTot')}</b><b class="n tot end">${mv(tot,M.cur)}</b></div>`:'')+`<button class=link data-a=mwname>${t('myName')}</button>`:''}</section>`}
+return tbl+soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t(M.live?'myOrder':'yourOrder')}</h3>
 ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qty}×</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
 <span class=oacts>${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
@@ -978,7 +1011,7 @@ function issSheet(id){const R=cr(),i=R&&R.items.find(x=>x.id===id);if(!i)return;
 openSheet(`${alertBox('bad',t('isT'),billName(R,i))}<ul class=islist>${its.map(x=>`<li>${esc(x.t)}</li>`).join('')}</ul><button class=btn data-a=isshow data-id=${id}>${ico('receipt',18)}${t('isShow')}</button><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
 // a problem about one dish keeps the bill line it is about ({t: text, name: the dish as written in the text, id: bill line}),
 // so the app can link the name to that line and mark the line in red
-function issues(R){const o=[],M=S.menus.find(m=>m.id===R.menuId),c=v=>fmt(v,R.cur),at=(txt,name,id)=>o.push({t:txt,name,id});
+function issues(R){const o=[],M=tableMenu(S.menus.find(m=>m.id===R.menuId)),c=v=>fmt(v,R.cur),at=(txt,name,id)=>o.push({t:txt,name,id});
 if(M){const ordered=M.items.filter(x=>x.qty>0),hasOrder=ordered.length>0,got=new Map(),line=new Map();
 const amb=[],check=(i,m)=>{if(m){got.set(m.id,(got.get(m.id)||0)+i.qty);if(!line.has(m.id))line.set(m.id,i.id)}
 if(hasOrder&&(!m||!m.qty))at(f(t('aNotOrd'),billName(R,i)),billName(R,i),i.id);
@@ -1016,7 +1049,7 @@ return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(
 <div class=sprog>${left>0?`<div class=sboxn><span>${t('assigned')}<b class=n>${fmt(asg,R.cur)}</b></span><span class=lft>${t('left')}<b class=n>${fmt(left,R.cur)}</b></span></div>`:`<p class=alldone>${ico('check',18)}${t('allAssigned')}</p>`}<div class=bar><i style="width:${pct}%"></i></div></div></div>
 ${R.items.map(row).join('')}
 <section class=ptot aria-labelledby=ptoth><h4 id=ptoth>${t('perPerson')}</h4>${[...Array(n).keys()].map(p=>`<div class=ln><span>${esc(pn(R,p))}${brk(p)?`<small class="n pbd">${esc(brk(p))}</small>`:''}</span><b class="n end">${mv(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class="ln ptotal"><b>${t('total')}</b><b class="n tot end">${mv(g,R.cur)}</b></div>${xl?`<p class=pnote>${ico('info',16)}<span>${t('splitFees')}</span></p>`:''}<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button></section>`}
-function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'',js=rjobs(R.id),scanning=js.length>0,iss=scanning?[]:issues(R),issIds=new Set(iss.map(x=>x&&x.id).filter(Boolean)),ordered=M&&M.items.some(i=>i.qty>0);
+function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'',js=rjobs(R.id),scanning=js.length>0,iss=scanning?[]:issues(R),issIds=new Set(iss.map(x=>x&&x.id).filter(Boolean)),ordered=M&&tableMenu(M).items.some(i=>i.qty>0);
 const ln=(k,v,cls)=>`<div class="ln${cls?' '+cls:''}"><span>${k}</span><span class=n>${v}</span></div>`;
 return bar(t('recHdr'),M?'menu:'+M.id:'home',R.items.length&&!scanning&&!R.demo?shareBtn():'')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${scanning?t('menuName'):t('nameMissing')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}${R.demo?demoNote('demoRec',`<button class="btn sm" data-a=nm>${ico('cam',16)}${t('demoReal')}</button>`):''}${R.rdate||nq?`<small class="mut rdate">${[R.rdate?`<bdi>${esc(R.rdate)}</bdi>`:'',nq?`<b class=cnt1>${f(t('itemsCount'),nq)}</b>`:''].filter(Boolean).join(' · ')}</small>`:''}</div>
 ${iss.length?`<div class="al bad strong issues" role=alert>${ico('warn',18)}<div><b>${f(t(iss.length===1?'issues1':'issuesN'),iss.length)}</b><ul>${iss.map(x=>`<li>${issLi(x)}</li>`).join("")}</ul></div></div>`
@@ -1051,7 +1084,8 @@ ${real(S.menus).length+real(S.receipts).length>1?`<label class=search>${ico('sea
 <div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}`:''}</div></div>`}
 function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,biz:bizV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer();
 // a change to a live split is sent to everyone who has the link
-if(V.screen==='receipt'){const R=cr();if(R&&R.live&&JSON.stringify(liveSt(R))!==R.live.base)liveSoon()}}
+if(V.screen==='receipt'){const R=cr();if(R&&R.live&&JSON.stringify(liveSt(R))!==R.live.base)liveSoon()}
+if(V.screen==='menu'){const M=cm();if(M&&M.live&&mlDirty(M))mlSoon()}}
 // ---------- phone/browser back button ----------
 // Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
 // While a dialog or the ingredient list is open, Back only closes it.
@@ -1193,6 +1227,8 @@ try{const j=await bizApi({acct:'login',phone,password});S.bizSess={sess:j.sess,p
 bizout:()=>{delete S.bizSess;V.bizPages=null;V.bizLoaded=false;S.menus=S.menus.filter(m=>!m.biz);save();render()},
 bizopen:(id,x)=>bizOpen(x),
 isgo:id=>issSheet(id),
+mwjoin:()=>{const M=cm(),nm=cleanName(($('#whoname')||{}).value);M.live.name=nm||null;if(nm)S.myName=nm;closeSheet();render()},
+mwname:()=>menuWhoSheet(cm()),
 sotog:()=>{const M=cm();V.soOpen=V.soOpen===M.id?null:M.id;render()},
 isshow:id=>{closeSheet();const e=document.getElementById('rl-'+id);if(!e)return;e.scrollIntoView({behavior:'smooth',block:'center'});e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')},
 bizcard:async()=>{const M=cm();if(M&&M.restSlug)restDone(M.title,M.restSlug)},
