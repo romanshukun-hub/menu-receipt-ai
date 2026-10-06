@@ -1059,7 +1059,9 @@ try{history.scrollRestoration='manual'}catch(e){}
 const layerOpen=()=>$('#sheet').classList.contains('on')||!!V.ingOpen||!!V.shp||(!!V.filtLayer&&S.filtOpen&&V.screen==='menu');
 function syncLayer(){if(layerOpen()&&!V.layerEntry){V.layerEntry=true;try{history.pushState({...(history.state||{}),layer:1},'')}catch(e){}}}
 function syncHistory(){const cur=navState();if(!V.hist||!V.hist.length){V.hist=[cur];V.layerEntry=false;try{history.replaceState({i:0,...cur},'')}catch(e){}return}
-const top=V.hist[V.hist.length-1];if(sameNav(cur,top))return;top.y=scrollY;V.filtLayer=false;V.hist.push(cur);const st={i:V.hist.length-1,...cur};
+const top=V.hist[V.hist.length-1];if(sameNav(cur,top))return;
+// the loading screen of a shared link or a restaurant page is not a place to go back to: what loads takes its place
+if(top.screen==='rload'){V.hist[V.hist.length-1]=cur;try{history.replaceState({i:V.hist.length-1,...cur},'')}catch(e){}return}top.y=scrollY;V.filtLayer=false;V.hist.push(cur);const st={i:V.hist.length-1,...cur};
 try{if(V.layerEntry){V.layerEntry=false;history.replaceState(st,'')}else history.pushState(st,'')}catch(e){}}
 // closes the top layer; returns false when nothing was open
 function closeLayer(){if($('#sheet').classList.contains('on')){V.ctx=null;closeSheet();return true}
