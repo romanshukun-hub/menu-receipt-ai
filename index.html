@@ -584,14 +584,14 @@ const b64u=bytes=>{let b='';for(let i=0;i<bytes.length;i+=8192)b+=String.fromCha
 const zip=async(bytes,how)=>new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new (how?CompressionStream:DecompressionStream)('deflate-raw'))).arrayBuffer());
 async function packShare(o){const raw=new TextEncoder().encode(JSON.stringify(o));return window.CompressionStream?'z'+b64u(await zip(raw,1)):'j'+b64u(raw)}
 async function unpackShare(s){let bytes=Uint8Array.from(atob(s.slice(1).replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));if(s[0]==='z')bytes=await zip(bytes,0);return JSON.parse(new TextDecoder().decode(bytes))}
-// only what is needed travels: empty fields are left out, dishes go in menu order (no page numbers), and each section's
+// only what is needed travels: empty fields are left out, dishes go in menu order (no page numbers or dish ids - new ones are made on opening), and each section's
 // translation is written once instead of on every dish; opening the link fills the defaults back in
 const lean=o=>Object.fromEntries(Object.entries(o).filter(([k,v])=>!(v===''||v==null||v===false||v===0||(Array.isArray(v)&&!v.length))));
 const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,shared,shareId,items,...m}=M,ct={},st={};
-const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean(uf&&uf.length?{...i,uf}:i)});
+const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({id,pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean(uf&&uf.length?{...i,uf}:i)});
 return {...lean(m),items:its,ct,st}};
 const shareRec=R=>{const{hashes,shared,shareId,items,...r}=R;return {...r,items:items.map(lean)}};
-const unMenu=m=>{const{ct={},st={},...M}=m;M.items=m.items.map((i,n)=>({unsure:!!(i.uf&&i.uf.length),uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',cat:'',tr:'',price:0,qty:0,...i,
+const unMenu=m=>{const{ct={},st={},...M}=m;M.items=m.items.map((i,n)=>({unsure:!!(i.uf&&i.uf.length),uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',cat:'',tr:'',price:0,qty:0,id:uid(),...i,
 catTr:i.catTr||ct[i.cat||'']||'',subTr:i.subTr||st[i.sub||'']||'',pg:i.pg||1,seq:i.seq!=null?i.seq:n}));return M};
 const unRec=r=>({tipMode:'pct',tipPct:0,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},parts:[],printedTotal:0,...r,fees:{tax:0,taxIncl:true,service:0,other:0,tip:0,...(r.fees||{})},items:r.items.map(i=>({tr:'',unit:0,qty:1,unsure:false,...i}))});
 async function shareNow(){const isM=V.screen==='menu',M=isM?cm():null,R=isM?null:cr();if(!M&&!R)return;
