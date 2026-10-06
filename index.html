@@ -455,7 +455,13 @@ let cat=String(i.category||''),catTr=String(i.category_tr||'');const sub=String(
 if(!cat&&ctx.inherit){cat=ctx.inherit.cat;catTr=ctx.inherit.catTr} // a photo that starts mid-section continues the previous page's section
 const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:String(m.l).slice(0,40)})),ing=(i.ing||[]).map(s=>String(s).toLowerCase().slice(0,30)),may=Array.isArray(i.may)?i.may.map(s=>String(s).toLowerCase().slice(0,30)).filter(k=>!ing.includes(k)):null;
 if(!addon)ctx.parent=key;
-const same=M.items.find(x=>norm(x.orig)===key&&!!x.addon===addon&&(!addon||x.parent===parent)&&(!x.price||!price||Math.abs(x.price-price)<.005)&&(!x.cat||!cat||norm(x.cat)===norm(cat)));
+// the same dish read twice is kept once: on one page the match is loose (a price or heading missing on one copy); across pages only
+// the same name, price and section count, so a dish on another page that only shares its name (e.g. "Espresso" with the
+// desserts and again with the drinks) is never merged into one already scanned
+const sameDish=x=>norm(x.orig)===key&&!!x.addon===addon&&(!addon||x.parent===parent)&&(x.pg===pg
+?(!x.price||!price||Math.abs(x.price-price)<.005)&&(!x.cat||!cat||norm(x.cat)===norm(cat))
+:Math.abs((x.price||0)-price)<.005&&norm(x.cat||"")===norm(cat)&&norm(x.sub||"")===norm(sub));
+const same=M.items.find(sameDish);
 if(same){if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);same.ing=[...new Set([...(same.ing||[]),...ing])];if(may)same.may=[...new Set([...(same.may||[]),...may])].filter(k=>!same.ing.includes(k));if(!(same.marks||[]).length)same.marks=marks;return null}
 const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),price,cat,catTr,sub,subTr,...(()=>{const uf=Array.isArray(i.unsure)?i.unsure.map(String):i.unsure===true?["name","price"]:[];return{unsure:uf.length>0,uf}})(),addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
 M.items.push(d);return d}
