@@ -34,10 +34,29 @@ const store = {
 const CODE = /^[A-Za-z0-9]{8,12}$/, shares = new Map(); // shares: best-effort limit on new share links, per instance
 const newCode = () => { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789', b = crypto.randomBytes(10); let s = ''; for (const x of b) s += a[x % a.length]; return s; };
 
+// Live bill split: "live:<code>:bill" holds the packed bill, "live:<code>" holds {"v": version, "st": split state}.
+// A change is saved only on top of the version it was made from (compare-and-set in one Redis script); otherwise the
+// current state comes back and the app merges its own changes into it and tries again. Kept for 7 days.
+const LIVE_TTL = 7 * 86400;
+const CAS = `local cur=redis.call('GET',KEYS[1]) if not cur then return {-1,''} end local d=cjson.decode(cur)
+if tonumber(d.v)~=tonumber(ARGV[1]) then return {0,cur} end local nv=tonumber(d.v)+1
+redis.call('SET',KEYS[1],'{"v":'..nv..',"st":'..ARGV[2]..'}','EX',ARGV[3]) redis.call('EXPIRE',KEYS[2],ARGV[3]) return {nv,''}`;
+
 module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
       if (req.query.diag) return res.status(200).json({ adminKey: !!(process.env.ADMIN_KEY || '').trim(), redis: !!(RURL && RTOK), blob: !!process.env.BLOB_READ_WRITE_TOKEN });
+      // a live split: the whole bill when opening it, then only the state (and only when it changed since "since")
+      if (req.query.live) {
+        const code = String(req.query.live);
+        if (!CODE.test(code) || !(RURL && RTOK)) return fail(res, 404, 'none', 'Not found.');
+        res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Robots-Tag', 'noindex');
+        const doc = await redis(['GET', `live:${code}`]); if (!doc) return fail(res, 404, 'none', 'Not found.');
+        const d = JSON.parse(doc), since = parseInt(req.query.since);
+        if (!isNaN(since)) return res.status(200).json(d.v > since ? d : { v: d.v });
+        const packed = await redis(['GET', `live:${code}:bill`]); if (!packed) return fail(res, 404, 'none', 'Not found.');
+        return res.status(200).json({ packed, v: d.v, st: d.st });
+      }
       // opening a short share link (?s=<code>): the packed menu or bill
       if (req.query.share) {
         const code = String(req.query.share);
@@ -60,6 +79,27 @@ module.exports = async (req, res) => {
     }
     if (req.method !== 'POST') return fail(res, 405, 'method', 'Method not allowed');
     const ip = String(req.headers['x-forwarded-for'] || 'x').split(',')[0].trim(), now = Date.now();
+    // live split: start one (the bill and its split so far) or save a change to one
+    if ((req.body || {}).live !== undefined) {
+      const b = req.body; if (!(RURL && RTOK)) return fail(res, 503, 'config', 'Live split is not available.');
+      const st = JSON.stringify(b.st || {}); if (st.length > 60000 || typeof b.st !== 'object') return fail(res, 400, 'data', 'Invalid split.');
+      if (b.live === 'new') {
+        const packed = b.packed;
+        if (typeof packed !== 'string' || packed.length < 10 || packed.length > 300000 || !/^[zj][A-Za-z0-9_-]+$/.test(packed)) return fail(res, 400, 'data', 'Invalid bill.');
+        const recent = (shares.get(ip) || []).filter(t => now - t < 600000);
+        if (recent.length >= 30) return fail(res, 429, 'rate', 'Too many share links. Try again later.');
+        shares.set(ip, [...recent, now]);
+        const code = newCode();
+        await redis(['SET', `live:${code}:bill`, packed, 'EX', LIVE_TTL]);
+        await redis(['SET', `live:${code}`, JSON.stringify({ v: 1, st: b.st }), 'EX', LIVE_TTL]);
+        return res.status(200).json({ code, v: 1 });
+      }
+      const code = String(b.live); if (!CODE.test(code)) return fail(res, 400, 'data', 'Invalid split.');
+      const r = await redis(['EVAL', CAS, '2', `live:${code}`, `live:${code}:bill`, String(parseInt(b.base) || 0), st, String(LIVE_TTL)]);
+      if (r[0] === -1) return fail(res, 404, 'none', 'Not found.');
+      if (r[0] === 0) { const d = JSON.parse(r[1]); return res.status(409).json({ ok: false, v: d.v, st: d.st }); }
+      return res.status(200).json({ ok: true, v: r[0] });
+    }
     // a short link for sharing a menu or a bill (anyone may create one): the packed text is kept for 90 days under a random code
     if ((req.body || {}).share !== undefined) {
       const packed = req.body.share;
