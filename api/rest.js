@@ -1,4 +1,4 @@
-// Restaurant pages: a menu prepared in the app (dishes already translated into every language) is kept on the server
+// Restaurant pages and short share links: a menu prepared in the app (dishes already translated into every language) is kept on the server
 // as rdata:<name>, and guests open it with ?r=<name>.
 // Setup (Vercel > Project > Storage): connect an Upstash Redis database (adds KV_REST_API_URL / KV_REST_API_TOKEN)
 // or a Blob store (adds BLOB_READ_WRITE_TOKEN), and set ADMIN_KEY in Environment Variables - only someone with that
