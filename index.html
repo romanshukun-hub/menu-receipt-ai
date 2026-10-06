@@ -230,6 +230,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 /* history: switch between all, menus and bills */
 .al.demo .btn{margin-top:10px;width:auto}
 .tline{display:inline-block;white-space:nowrap}
+.top h2{flex:1;min-width:0}.sharebtn{flex:none;margin-inline-start:auto;padding:9px 14px;border-radius:99px;background:var(--ac);color:#fff;font-size:15px;gap:6px}
+.shtag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ac);background:var(--ac2);border-radius:99px;padding:4px 10px;width:max-content}
 .cathd{display:flex;align-items:center;gap:10px;width:100%;font:inherit;text-align:start;cursor:pointer;background:var(--card);border:1px solid var(--line);border-inline-start:4px solid var(--ac);border-radius:14px;padding:14px;margin:12px 0 0;box-shadow:var(--sh);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);font-weight:700}
 .cathd.open{margin-bottom:8px}.cathd .catnm{display:grid;gap:2px;flex:1;min-width:0}.cathd .catn{font-size:13px;font-weight:500;color:var(--mut);text-transform:none;letter-spacing:0;white-space:nowrap}.cathd .catn b{color:var(--ac)}
 .cathd .chv{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--bg);color:var(--ac);transition:transform .15s}.cathd .chv svg{transform:rotate(90deg)}.cathd.open .chv{transform:rotate(180deg)}
@@ -267,6 +269,9 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
+shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
+shareRecTxt:'The bill from {0} - open it to see the items and the split:',shareRecTxt0:'A bill I scanned - open it to see the items and the split:',
+shareGot:'Shared with you and saved in your history',shareBad:'This link could not be opened',sharedTag:'Shared with you',
 oRemove:'Remove',photoOf:'Photo {0} of {1}',photoDishes:'{0} dishes from this photo',photoDish1:'1 dish from this photo',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
 rpBtn:'Create a restaurant page',rpUpd:'Update the restaurant page',rpBtnD:'A link and QR code where guests see this menu in their language and currency',
 rpT:'Restaurant page',rpD:'Before creating the page, check that the dish names and prices are right. The dishes are translated into every language once.',
@@ -306,6 +311,9 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
+shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
+shareRecTxt:'החשבון מ-{0} – פתחו כדי לראות את הפריטים והחלוקה:',shareRecTxt0:'חשבון שסרקתי – פתחו כדי לראות את הפריטים והחלוקה:',
+shareGot:'שותף איתך ונשמר בהיסטוריה שלך',shareBad:'לא הצלחנו לפתוח את הקישור',sharedTag:'שותף איתך',
 oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',photoDishes:'{0} מנות מהתמונה הזאת',photoDish1:'מנה אחת מהתמונה הזאת',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
 rpBtn:'צור דף למסעדה',rpUpd:'עדכן את דף המסעדה',rpBtnD:'קישור וקוד QR שבהם האורחים רואים את התפריט בשפה ובמטבע שלהם',
 rpT:'דף למסעדה',rpD:'לפני שיוצרים את הדף, בדקו שהשמות והמחירים נכונים. המנות מתורגמות לכל השפות פעם אחת.',
@@ -570,6 +578,31 @@ for(let k=0;k<todo.length;k+=4)await Promise.all(todo.slice(k,k+4).map(one));
 const data={title:M.title,cur:M.cur,policy:M.policy||null,items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
 const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:S.adminKey,slug,data})}),j=await r.json().catch(()=>({}));
 if(!r.ok)throw new Error(j.error||t('fail'));M.restSlug=slug;save();closeSheet();restDone(M.title,slug)}
+// ---------- sharing a menu or a bill ----------
+// The menu (dishes, translations, what was chosen) or the bill (items, tip, split - with its menu) is packed into the link
+// itself, compressed, after "#" - so it is never sent to the server. Opening the link saves a copy in the other person's app.
+const b64u=bytes=>{let b='';for(let i=0;i<bytes.length;i+=8192)b+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
+const zip=async(bytes,how)=>new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new (how?CompressionStream:DecompressionStream)('deflate-raw'))).arrayBuffer());
+async function packShare(o){const raw=new TextEncoder().encode(JSON.stringify(o));return window.CompressionStream?'z'+b64u(await zip(raw,1)):'j'+b64u(raw)}
+async function unpackShare(s){let bytes=Uint8Array.from(atob(s.slice(1).replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));if(s[0]==='z')bytes=await zip(bytes,0);return JSON.parse(new TextDecoder().decode(bytes))}
+const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,shared,...m}=M;return m};
+const shareRec=R=>{const{hashes,...r}=R;return r};
+async function shareNow(){const isM=V.screen==='menu',M=isM?cm():null,R=isM?null:cr();if(!M&&!R)return;
+const RM=R&&R.menuId&&S.menus.find(m=>m.id===R.menuId),name=isM?M.title:(R.restaurant||(RM&&RM.title)||'');
+let url;try{url=location.origin+'/#s='+await packShare(isM?{v:1,m:shareMenu(M)}:{v:1,r:shareRec(R),m:RM?shareMenu(RM):null})}catch(e){return toast(t('fail'))}
+const text=name?f(t(isM?'shareMenuTxt':'shareRecTxt'),name):t(isM?'shareMenuTxt0':'shareRecTxt0');
+// the phone's own share sheet (WhatsApp and every other app); where there is none, a WhatsApp link and "copy link"
+if(navigator.share){try{await navigator.share({title:name||t('title'),text,url});return}catch(e){if(e&&e.name==='AbortError')return}}
+openSheet(`<h3>${t('shareT')}</h3><p class=mut>${esc(text)}</p><a class=btn href="https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}" target=_blank rel=noopener>${ico('share',18)}${t('shareWa')}</a><button class="btn ghost" data-a=rpcopy data-x="${esc(url)}">${t('rpCopy')}</button><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
+// opening a shared link: the menu / bill is saved in this app (once - opening the same link again shows the same copy)
+async function openShared(){const s=location.hash.slice(3);try{history.replaceState(history.state,'',location.pathname+location.search)}catch(e){}
+let o;try{o=await unpackShare(s)}catch(e){V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
+let h=5381;for(let i=0;i<s.length;i++)h=(h*33^s.charCodeAt(i))>>>0;const sid=h.toString(36);
+const put=(list,x,kind)=>{const old=list.find(y=>y.shareId===sid+kind);if(old)return old;const c={...x,id:uid(),shareId:sid+kind,shared:true,date:Date.now()};list.unshift(c);return c};
+let M=o.m&&Array.isArray(o.m.items)?put(S.menus,o.m,'m'):null;
+if(o.r&&Array.isArray(o.r.items)){const R=put(S.receipts,o.r,'r');R.menuId=M?M.id:null;if(M)M.receiptId=R.id;V.screen='receipt';V.id=R.id}
+else if(M){V.screen='menu';V.id=M.id}else{V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
+S.started=true;save();render();scrollTo(0,0);toast(t('shareGot'))}
 // a printable card: the restaurant's name, the QR code and a line saying what it opens (in English, for guests from anywhere)
 async function qrCard(title,url){if(!window.QRCode)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=ok;s.onerror=no;document.head.append(s)});
 const box=document.createElement('div');new QRCode(box,{text:url,width:720,height:720,correctLevel:QRCode.CorrectLevel.M});await new Promise(z=>setTimeout(z,300));
@@ -644,12 +677,14 @@ warn:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 
 info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
 trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 img:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4L5 21"/>',
-star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/>',
+star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/>',
 ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
 plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
 const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 // ---------- views ----------
-const bar=(title,back)=>`<header class=top><button class="ic back" data-a=back data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2></header>`;
+const bar=(title,back,extra)=>`<header class=top><button class="ic back" data-a=back data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2>${extra||''}</header>`;
+// the share button at the top of a menu or a bill
+const shareBtn=()=>`<button class="btn sm sharebtn" data-a=share>${ico('share',17)}<span>${t('shareT')}</span></button>`;
 const step=(q,a,id,dis)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 ${dis?'disabled':''} aria-label="+1">+</button></div>`;
 function setup(){const back=V.prev?V.prev.screen+(V.prev.id?':'+V.prev.id:''):'home';
 const first=!S.started||V.intro; // V.intro: the first-visit screen opened with ?intro (to preview it)
@@ -767,7 +802,8 @@ flush();return out}
 const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
 function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
-return (M.rest?restHead(M)+'<div class=pad>':bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
+return (M.rest?restHead(M)+'<div class=pad>':bar(t('menuHdr'),'home',M.items.length&&!js.length&&!M.demo?shareBtn():'')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
+${M.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
 ${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo&&!M.rest?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
@@ -883,7 +919,7 @@ ${R.items.map(row).join('')}
 <section class=ptot aria-labelledby=ptoth><h4 id=ptoth>${t('perPerson')}</h4>${[...Array(n).keys()].map(p=>`<div class=ln><span>${t('person')} ${p+1}${brk(p)?`<small class="n pbd">${esc(brk(p))}</small>`:''}</span><b class="n end">${mv(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class="ln ptotal"><b>${t('total')}</b><b class="n tot end">${mv(g,R.cur)}</b></div>${xl?`<p class=pnote>${ico('info',16)}<span>${t('splitFees')}</span></p>`:''}<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button></section>`}
 function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'',js=rjobs(R.id),scanning=js.length>0,iss=scanning?[]:issues(R),ordered=M&&M.items.some(i=>i.qty>0);
 const ln=(k,v,cls)=>`<div class="ln${cls?' '+cls:''}"><span>${k}</span><span class=n>${v}</span></div>`;
-return bar(t('recHdr'),M?'menu:'+M.id:'home')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${scanning?t('menuName'):t('nameMissing')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.demo?demoNote('demoRec',`<button class="btn sm" data-a=nm>${ico('cam',16)}${t('demoReal')}</button>`):''}${R.rdate||nq?`<small class="mut rdate">${[R.rdate?`<bdi>${esc(R.rdate)}</bdi>`:'',nq?`<b class=cnt1>${f(t('itemsCount'),nq)}</b>`:''].filter(Boolean).join(' · ')}</small>`:''}</div>
+return bar(t('recHdr'),M?'menu:'+M.id:'home',R.items.length&&!scanning&&!R.demo?shareBtn():'')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${scanning?t('menuName'):t('nameMissing')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}${R.demo?demoNote('demoRec',`<button class="btn sm" data-a=nm>${ico('cam',16)}${t('demoReal')}</button>`):''}${R.rdate||nq?`<small class="mut rdate">${[R.rdate?`<bdi>${esc(R.rdate)}</bdi>`:'',nq?`<b class=cnt1>${f(t('itemsCount'),nq)}</b>`:''].filter(Boolean).join(' · ')}</small>`:''}</div>
 ${iss.length?`<div class="al bad strong issues" role=alert>${ico('warn',18)}<div><b>${f(t(iss.length===1?'issues1':'issuesN'),iss.length)}</b><ul>${iss.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`
 :!scanning&&R.items.length&&ordered?`<div class="al ok" role=status>${ico('check',18)}<span>${t('ok')}</span></div>`:''}
 ${!scanning&&R.fees.service>0?`<div class="al warn strong svcal" role=status>${ico('info',18)}<div><b>${t("svcAlert")}${svcPctOf(R)?` (${svcPctOf(R)}%)`:""}</b><div class="svamt n">${mv(R.fees.service,R.cur)}</div><small>${t('svcAlertD')}</small></div></div>`:''}
@@ -1043,6 +1079,7 @@ cmpmark:()=>{const R=cr(),M=S.menus.find(m=>m.id===R.menuId);if(!M)return;M.rece
 cmpgo:()=>{const M=cm(),R=S.receipts.find(r=>r.id===M.receiptId);if(!R)return;R.menuId=M.id;goTo('receipt:'+R.id)}, // back to the receipt, now compared with the order
 filt:()=>{S.filtOpen=!S.filtOpen;V.filtLayer=S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
 rtoapp:()=>restToApp(),
+share:()=>shareNow(),
 rpage:()=>restSheet(cm()),
 rpgo:()=>{const M=cm(),slug=slugify(($('#rpslug')||{}).value||'');if(!slug||slug.length<2)return toast(t('rpBadSlug'));restPublish(M,slug).catch(e=>{closeSheet();failSheet(t('fail'),e.message||t('fail'),()=>restSheet(M))})},
 rpcopy:(id,x)=>{try{navigator.clipboard.writeText(x);toast(t('rpCopied'))}catch(e){}},
@@ -1101,6 +1138,7 @@ const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return tr
 // ?admin=<code>: turns on manager mode on this device (creating restaurant pages) once the server accepts the code
 {const ak=(location.search.match(/[?&]admin=([^&]+)/)||[])[1];if(ak){const k=decodeURIComponent(ak);try{history.replaceState(history.state,'',location.pathname)}catch(e){}
 fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,check:true})}).then(r=>{if(r.ok){S.adminKey=k;save();render();toast(t('adminOn'))}else toast(t('adminBad'))}).catch(()=>toast(t('adminBad')))}}
+if(/^#s=/.test(location.hash))openShared();else
 if(REST){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.append(m);V.screen='rload';render();restLoad()}
 else if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
 ensureLang(); // load the chosen language if it is not built in
