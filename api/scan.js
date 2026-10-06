@@ -51,7 +51,7 @@ If "receipt" is false, output only line 1.
 Then one line per purchased item, in the printed order: {"original": item name exactly as printed (without an English version printed next to it), "en": the item's English name exactly as the bill prints it - in brackets, after a slash, or on the line under it (e.g. "TÜKÖRTOJÁS (Fried Eggs)" → "Fried Eggs") - or null when the bill prints no English name; never translate it yourself, "translation": the item's meaning in natural ${l}, written ONLY in the ${l} alphabet with the everyday ${l} words for foods (never leave a foreign word or Latin letters inside a ${l} translation; expand short bill abbreviations when the meaning is clear), "unit_price": price of ONE unit, "quantity": integer, "unsure": true if the name, quantity or price was blurry, cut off or hard to read and you had to guess part of it, else false}
 Last line: {"totals": {"tax": VAT/sales tax amount (0 if none), "tax_included_in_prices": boolean, "service_charge": service fee charged (0 if none), "service_pct": its percentage if printed, else null, "tip": a tip or gratuity line explicitly added to the bill (0 if none), "other_fees": tourism/cover/other mandatory fees (0 if none), "subtotal": the subtotal as printed (even if it looks wrong) or null, "total": the final amount printed (even if it looks wrong) or null}}
 Copy every printed amount exactly as printed; never correct the receipt's arithmetic.
-If a line shows only a line total for quantity > 1, divide to get unit_price. Do not list tax, service, tip or total lines as items. If prices show no currency symbol assume ${c}.`
+If a line shows only a line total for quantity > 1, divide to get unit_price. Do not list tax, service, tip or total lines as items - a service charge printed like an item line (e.g. "SZERVÍZ DÍJ 782", "Service Charge A", "Coperto", "Servizio") goes into "service_charge" (the sum of all such lines), never into the items. VAT lines that only show how much VAT the total contains (e.g. "AFA 27%", "MwSt", "IVA incl.", a net/gross breakdown) mean the tax is included in the prices: "tax_included_in_prices": true. If prices show no currency symbol assume ${c}.`
 };
 
 // retries temporary failures (overloaded / rate limited / server errors) a few times before giving up
@@ -181,6 +181,7 @@ async function streamMenu(key, content, res, strict = false) {
 
 // Streams a receipt as NDJSON: {"meta":{...}}, {"item":{...}} per line on the bill, {"totals":{...}}, then {"done":true}, {"done":true,"empty":true} or {"error":"..."}.
 // A weak result is read again by the stronger model, after {"restart":true}.
+const SVC_LINE = /^\s*(?:[A-Z]\d{2}\s+)?(?:szerv[ií]z\s*d[ií]j|szerv[ií]zd[ií]j|service\s*(?:charge|fee)|servizio|coperto|bedienung|servicio|taxa\s+de\s+servi[cç]o|servis\s*[uü]creti|op[łl]ata\s+serwisowa)\b/i;
 async function streamReceipt(key, content, res) {
   const send = o => res.write(JSON.stringify(o) + '\n'), num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
   const usage = { input_tokens: 0, output_tokens: 0 };
@@ -193,8 +194,19 @@ async function streamReceipt(key, content, res) {
     const line = s => {
       const o = parseLine(s); if (!o) return;
       if ('receipt' in o) { if (o.kind) st.kind = String(o.kind); isReceipt = o.receipt !== false && st.kind !== 'menu'; return send({ meta: { receipt: isReceipt, kind: st.kind || null, restaurant: o.restaurant || null, currency: o.currency || null, date: o.date || null } }); }
-      if (o.totals && typeof o.totals === 'object') { const x = o.totals; return send({ totals: { tax: num(x.tax) || 0, tax_included_in_prices: x.tax_included_in_prices !== false, service_charge: num(x.service_charge) || 0, service_pct: num(x.service_pct), tip: num(x.tip) || 0, other_fees: num(x.other_fees) || 0, subtotal: num(x.subtotal), total: num(x.total) } }); }
+      if (o.totals && typeof o.totals === 'object') { const x = o.totals, T = { tax: num(x.tax) || 0, tax_included_in_prices: x.tax_included_in_prices !== false, service_charge: num(x.service_charge) || 0, service_pct: num(x.service_pct), tip: num(x.tip) || 0, other_fees: num(x.other_fees) || 0, subtotal: num(x.subtotal), total: num(x.total) };
+        // service lines taken out of the items count as the service charge (unless it already holds them)
+        if (st.svc && T.service_charge < st.svc - 0.5) T.service_charge = Math.round(st.svc * 100) / 100;
+        // the bill's own arithmetic decides whether its VAT is inside the prices: items + fees = total means it is
+        if (T.tax && T.total) { const base = st.sum + T.service_charge + T.other_fees + T.tip, tol = Math.max(2, T.total * 0.005);
+          if (Math.abs(base - T.total) <= tol && Math.abs(base + T.tax - T.total) > tol) T.tax_included_in_prices = true;
+          else if (Math.abs(base + T.tax - T.total) <= tol && Math.abs(base - T.total) > tol) T.tax_included_in_prices = false; }
+        return send({ totals: T }); }
       if (!o.original || !isReceipt) return;
+      // a service charge printed as an item line ("SZERVÍZ DÍJ", "Service Charge", "Coperto") is not something anyone ordered
+      const amt = (num(o.unit_price) || 0) * Math.max(1, parseInt(o.quantity) || 1);
+      if (SVC_LINE.test(String(o.original))) { st.svc = (st.svc || 0) + amt; return; }
+      st.sum = (st.sum || 0) + amt;
       st.n++; if (o.unsure === true) st.uns++;
       send({ item: { original: String(o.original), en: o.en && String(o.en) !== String(o.original) ? String(o.en).slice(0, 120) : null, translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
     };
