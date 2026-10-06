@@ -266,7 +266,7 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
-oRemove:'Remove',photoOf:'Photo {0} of {1}',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
+oRemove:'Remove',photoOf:'Photo {0} of {1}',photoDishes:'{0} dishes from this photo',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
 rpBtn:'Create a restaurant page',rpUpd:'Update the restaurant page',rpBtnD:'A link and QR code where guests see this menu in their language and currency',
 rpT:'Restaurant page',rpD:'Before creating the page, check that the dish names and prices are right. The dishes are translated into every language once.',
 rpSlug:'Page address (English letters, digits and dashes)',rpGo:'Create the page',rpProg:'Translating into every language… {0}/{1}',
@@ -305,7 +305,7 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
-oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
+oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',photoDishes:'{0} מנות מהתמונה הזאת',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
 rpBtn:'צור דף למסעדה',rpUpd:'עדכן את דף המסעדה',rpBtnD:'קישור וקוד QR שבהם האורחים רואים את התפריט בשפה ובמטבע שלהם',
 rpT:'דף למסעדה',rpD:'לפני שיוצרים את הדף, בדקו שהשמות והמחירים נכונים. המנות מתורגמות לכל השפות פעם אחת.',
 rpSlug:'כתובת הדף (אותיות באנגלית, ספרות ומקפים)',rpGo:'צור את הדף',rpProg:'מתרגמים לכל השפות… {0}/{1}',
@@ -483,7 +483,7 @@ M.hashes=M.hashes||[];
 if(pg==null)pg=M.pages=Math.max(M.pages||0,...M.items.map(i=>i.pg||0),...V.jobs.filter(j=>j.id===M.id).map(j=>j.pg))+1; // next page number, unique even while other pages are still scanning
 
 V.batch=V.batch||{};if(!jobs(M.id).length)V.batch[M.id]={total:0,done:0};V.batch[M.id].total++; // photos scanned together: "photo 2 of 4"
-const job={id:M.id,pg,n:0,ids:new Set()};V.jobs.push(job);render();let uns=0,unc=0,low=false,err='',seq=0,kind=null;
+const job={id:M.id,pg,n:0,ids:new Set(),idx:V.batch[M.id].total};V.jobs.push(job);render();let uns=0,unc=0,low=false,err='',seq=0,kind=null;
 const ctx={parent:'',inherit:null,started:false};
 try{const image=await shrink(file);low=shrink.last<1200;
 await scanStream(image,o=>{
@@ -760,7 +760,7 @@ rows+=itemV(i,M)}
 flush();return out}
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
 const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
-function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=M.items.length,hasIng=M.items.some(i=>(i.ing||[]).length);
+function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return (M.rest?restHead(M)+'<div class=pad>':bar(t('menuHdr'),'home')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
@@ -777,7 +777,7 @@ ${M.items.length>3?`<label class="search dsearch">${ico("search",18)}<input id=d
 ${dq(M)&&!M.items.some(i=>dishHit(i,dq(M)))?`<p class=empty>${t("noDish")}</p>`:sectionsV(M)}
 ${js.length?`<div class="card list"><div class=skel></div><div class=skel style="opacity:.6"></div></div>`:M.items.length?orderV(M,n,tot,priced):`<p class=empty>${t('empty')}</p>`}
 </div>
-${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t(js.some(j=>j.hq)?'recheck':'scanMenuNow')}</b><br><small>${(()=>{const b=(V.batch||{})[M.id];return b&&b.total>1?f(t('photoOf'),Math.min(b.done+1,b.total),b.total)+' · ':''})()}${f(t('soFar'),found)}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button></div></div>`
+${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t(js.some(j=>j.hq)?'recheck':'scanMenuNow')}</b><br><small>${(()=>{const b=(V.batch||{})[M.id];return b&&b.total>1?f(t('photoOf'),js[0].idx||1,b.total)+' · '+f(t('photoDishes'),found):f(t('soFar'),found)})()}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button></div></div>`
 // while browsing: a small bar with how many dishes are chosen and their total, jumping to the order
 :n&&V.obarHid!==M.id?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&conv(sum,M.cur,S.cur);
 return `<div class="sticky obar"><div><div><b>${f(t('orderTotal'),n)}</b>${priced?`<br><small class=n>${fmt(sum,M.cur)}${cv!=null&&cv!==false?` · ≈ ${fmt(cv,S.cur)}`:''}</small>`:''}</div><button class="btn acc sm" data-a=toorder>${t('seeOrder')}</button></div></div>`})():''}`}
