@@ -230,6 +230,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 /* history: switch between all, menus and bills */
 .al.demo .btn{margin-top:10px;width:auto}
 .top h2{flex:1;min-width:0}.topshare{flex:none;margin-inline-start:auto;padding:9px 14px;border-radius:99px;background:var(--ac);color:#fff;font-size:15px;gap:6px}
+.filt-ph{width:100%;font:inherit;cursor:pointer;text-align:start;padding:11px 12px;min-height:46px}.filt-ph>span:first-of-type{flex:1;color:var(--mut);font-weight:400}
 .islink{background:none;border:0;padding:0;font:inherit;font-weight:700;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .rit.isbadln{border:1.5px solid var(--bad);border-radius:12px;padding:10px;margin:6px 0;background:color-mix(in srgb,var(--bad) 7%,transparent)}
 .isbad{display:inline-flex;align-items:center;gap:5px;margin:4px 0;padding:3px 10px;border:0;border-radius:99px;background:var(--bad);color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;width:max-content}
@@ -892,7 +893,7 @@ ${js.length?`<p class=ingwait role=status><span class=spin></span><span>${t('ing
 :hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}><button type=button class=sdone data-a=ingclose>${t("done")}</button></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><small class="mut ingd">${t("ingD")}</small>${allergyNote()}<div class=chips id=ingchips>${ingChips(M)}</div>`:''}
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}</div></div>`
 // closed: one button; it shows how many filters are on, so it is clear why some dishes are dimmed
-:(()=>{const on=S.avoid.length+(S.avoidTxt||[]).length+S.diet.length;return `<button class="btn ghost wide filt-btn${on?' on':''}" data-a=filt aria-expanded=false>${ico('search',18)}<span>${t('ingT')}</span>${on?`<span class=cnt>${f(t('filtOn'),on)}</span>`:''}</button>`})()):''}
+:(()=>{const on=S.avoid.length+(S.avoidTxt||[]).length+S.diet.length;return `<button class="search filt-btn filt-ph${on?' on':''}" data-a=filt aria-expanded=false>${ico('search',18)}<span>${t('ingT')}</span>${on?`<span class=cnt>${f(t('filtOn'),on)}</span>`:''}</button>`})()):''}
 ${(S.diet.length||S.avoid.length||(S.avoidTxt||[]).length)&&Object.values(M.unclear||{}).reduce((a,b)=>a+b,0)?`<div class="al warn" role=status>${ico('warn',18)}<span>${esc(f(t('unclearMarks'),Object.values(M.unclear).reduce((a,b)=>a+b,0)))}</span></div>`:''}
 ${M.items.length>3?`<label class="search dsearch">${ico("search",18)}<input id=dishq type=search placeholder="${t("dishQ")}" value="${esc(dq(M)?V.dq:"")}" dir=auto autocomplete=off aria-label="${t("dishQ")}"></label>`:""}
 ${dq(M)&&!M.items.some(i=>dishHit(i,dq(M)))?`<p class=empty>${t("noDish")}</p>`:sectionsV(M)}
