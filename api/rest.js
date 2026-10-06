@@ -19,27 +19,39 @@ const redis = async cmd => { const r = await fetch(RURL, { method: 'POST', heade
   const j = await r.json().catch(() => ({})); if (!r.ok || j.error) throw new Error(j.error || 'storage'); return j.result; };
 const store = {
   ready: () => !!(RURL && RTOK) || !!process.env.BLOB_READ_WRITE_TOKEN,
-  async get(slug) {
-    if (RURL && RTOK) return await redis(['GET', `rdata:${slug}`]);
-    const { head } = require('@vercel/blob'); let meta; try { meta = await head(`rdata/${slug}.json`); } catch (e) { return null; }
+  // keys: "rdata:<page>" (restaurant pages), "share:<code>" (a shared menu or bill, kept for 90 days)
+  async get(k) {
+    if (RURL && RTOK) return await redis(['GET', k]);
+    const { head } = require('@vercel/blob'); let meta; try { meta = await head(k.replace(':', '/') + '.json'); } catch (e) { return null; }
     const r = await fetch(meta.url, { cache: 'no-store' }); return r.ok ? await r.text() : null;
   },
-  async set(slug, body) {
-    if (RURL && RTOK) return await redis(['SET', `rdata:${slug}`, body]);
+  async set(k, body, ttl) {
+    if (RURL && RTOK) return await redis(ttl ? ['SET', k, body, 'EX', ttl] : ['SET', k, body]);
     const { put } = require('@vercel/blob');
-    await put(`rdata/${slug}.json`, body, { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
+    await put(k.replace(':', '/') + '.json', body, { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
   }
 };
+const CODE = /^[A-Za-z0-9]{8,12}$/, shares = new Map(); // shares: best-effort limit on new share links, per instance
+const newCode = () => { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789', b = crypto.randomBytes(10); let s = ''; for (const x of b) s += a[x % a.length]; return s; };
 
 module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
       if (req.query.diag) return res.status(200).json({ adminKey: !!(process.env.ADMIN_KEY || '').trim(), redis: !!(RURL && RTOK), blob: !!process.env.BLOB_READ_WRITE_TOKEN });
+      // opening a short share link (?s=<code>): the packed menu or bill
+      if (req.query.share) {
+        const code = String(req.query.share);
+        if (!CODE.test(code) || !store.ready()) return fail(res, 404, 'none', 'Not found.');
+        const v = await store.get(`share:${code}`);
+        if (!v) return fail(res, 404, 'none', 'Not found.');
+        res.setHeader('Cache-Control', 'private, max-age=300'); res.setHeader('X-Robots-Tag', 'noindex');
+        return res.status(200).json({ packed: v });
+      }
       // a guest opening a page
       const slug = String(req.query.slug || '');
       if (!SLUG.test(slug)) return fail(res, 400, 'slug', 'Invalid page name.');
       if (!store.ready()) return fail(res, 404, 'none', 'Not found.');
-      const body = await store.get(slug);
+      const body = await store.get(`rdata:${slug}`);
       if (!body) return fail(res, 404, 'none', 'Not found.');
       res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
       res.setHeader('X-Robots-Tag', 'noindex');
@@ -48,6 +60,17 @@ module.exports = async (req, res) => {
     }
     if (req.method !== 'POST') return fail(res, 405, 'method', 'Method not allowed');
     const ip = String(req.headers['x-forwarded-for'] || 'x').split(',')[0].trim(), now = Date.now();
+    // a short link for sharing a menu or a bill (anyone may create one): the packed text is kept for 90 days under a random code
+    if ((req.body || {}).share !== undefined) {
+      const packed = req.body.share;
+      if (!store.ready()) return fail(res, 503, 'config', 'Short links are not available.');
+      if (typeof packed !== 'string' || packed.length < 10 || packed.length > 300000 || !/^[zj][A-Za-z0-9_-]+$/.test(packed)) return fail(res, 400, 'data', 'Invalid share.');
+      const recent = (shares.get(ip) || []).filter(t => now - t < 600000);
+      if (recent.length >= 30) return fail(res, 429, 'rate', 'Too many share links. Try again later.');
+      shares.set(ip, [...recent, now]);
+      const code = newCode(); await store.set(`share:${code}`, packed, 90 * 86400);
+      return res.status(200).json({ code });
+    }
     const bad = (tries.get(ip) || []).filter(t => now - t < 600000);
     if (bad.length >= 10) return fail(res, 429, 'rate', 'Too many attempts. Try again later.');
     const { key, slug, data, check } = req.body || {};
@@ -59,7 +82,7 @@ module.exports = async (req, res) => {
     if (!data || typeof data !== 'object' || !Array.isArray(data.items) || !data.items.length || typeof data.tr !== 'object') return fail(res, 400, 'data', 'Invalid menu.');
     const body = JSON.stringify({ ...data, slug, updated: now });
     if (body.length > 2e6) return fail(res, 413, 'size', 'The menu is too large.');
-    await store.set(slug, body);
+    await store.set(`rdata:${slug}`, body);
     return res.status(200).json({ ok: true, slug });
   } catch (e) {
     return fail(res, 500, 'failed', 'Saving the page failed. Please try again.');

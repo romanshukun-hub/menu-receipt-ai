@@ -584,18 +584,30 @@ const b64u=bytes=>{let b='';for(let i=0;i<bytes.length;i+=8192)b+=String.fromCha
 const zip=async(bytes,how)=>new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new (how?CompressionStream:DecompressionStream)('deflate-raw'))).arrayBuffer());
 async function packShare(o){const raw=new TextEncoder().encode(JSON.stringify(o));return window.CompressionStream?'z'+b64u(await zip(raw,1)):'j'+b64u(raw)}
 async function unpackShare(s){let bytes=Uint8Array.from(atob(s.slice(1).replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));if(s[0]==='z')bytes=await zip(bytes,0);return JSON.parse(new TextDecoder().decode(bytes))}
-const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,shared,...m}=M;return m};
-const shareRec=R=>{const{hashes,...r}=R;return r};
+// only what is needed travels: empty fields are left out, dishes go in menu order (no page numbers), and each section's
+// translation is written once instead of on every dish; opening the link fills the defaults back in
+const lean=o=>Object.fromEntries(Object.entries(o).filter(([k,v])=>!(v===''||v==null||v===false||v===0||(Array.isArray(v)&&!v.length))));
+const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,shared,shareId,items,...m}=M,ct={},st={};
+const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean(uf&&uf.length?{...i,uf}:i)});
+return {...lean(m),items:its,ct,st}};
+const shareRec=R=>{const{hashes,shared,shareId,items,...r}=R;return {...r,items:items.map(lean)}};
+const unMenu=m=>{const{ct={},st={},...M}=m;M.items=m.items.map((i,n)=>({unsure:!!(i.uf&&i.uf.length),uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',cat:'',tr:'',price:0,qty:0,...i,
+catTr:i.catTr||ct[i.cat||'']||'',subTr:i.subTr||st[i.sub||'']||'',pg:i.pg||1,seq:i.seq!=null?i.seq:n}));return M};
+const unRec=r=>({tipMode:'pct',tipPct:0,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},parts:[],printedTotal:0,...r,fees:{tax:0,taxIncl:true,service:0,other:0,tip:0,...(r.fees||{})},items:r.items.map(i=>({tr:'',unit:0,qty:1,unsure:false,...i}))});
 async function shareNow(){const isM=V.screen==='menu',M=isM?cm():null,R=isM?null:cr();if(!M&&!R)return;
 const RM=R&&R.menuId&&S.menus.find(m=>m.id===R.menuId),name=isM?M.title:(R.restaurant||(RM&&RM.title)||'');
-let url;try{url=location.origin+'/#s='+await packShare(isM?{v:1,m:shareMenu(M)}:{v:1,r:shareRec(R),m:RM?shareMenu(RM):null})}catch(e){return toast(t('fail'))}
+let packed;try{packed=await packShare(isM?{v:2,m:shareMenu(M)}:{v:2,r:shareRec(R),m:RM?shareMenu(RM):null})}catch(e){return toast(t('fail'))}
+// a short link (?s=<code>) when the server can keep it; otherwise everything goes in the link itself
+let url=location.origin+'/#s='+packed;
+try{const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({share:packed})});const j=await r.json().catch(()=>({}));if(r.ok&&j.code)url=location.origin+'/?s='+j.code}catch(e){}
 const text=name?f(t(isM?'shareMenuTxt':'shareRecTxt'),name):t(isM?'shareMenuTxt0':'shareRecTxt0');
 // the phone's own share sheet (WhatsApp and every other app); where there is none, a WhatsApp link and "copy link"
 if(navigator.share){try{await navigator.share({title:name||t('title'),text,url});return}catch(e){if(e&&e.name==='AbortError')return}}
 openSheet(`<h3>${t('shareT')}</h3><p class=mut>${esc(text)}</p><a class=btn href="https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}" target=_blank rel=noopener>${ico('share',18)}${t('shareWa')}</a><button class="btn ghost" data-a=rpcopy data-x="${esc(url)}">${t('rpCopy')}</button><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
 // opening a shared link: the menu / bill is saved in this app (once - opening the same link again shows the same copy)
-async function openShared(){const s=location.hash.slice(3);try{history.replaceState(history.state,'',location.pathname+location.search)}catch(e){}
-let o;try{o=await unpackShare(s)}catch(e){V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
+async function openShared(){const code=(location.search.match(/[?&]s=([A-Za-z0-9]{8,12})/)||[])[1];let s=code?'':location.hash.slice(3);
+try{history.replaceState(history.state,'',location.pathname+location.search.replace(/[?&]s=[A-Za-z0-9]+/,'').replace(/^&/,'?'))}catch(e){}
+let o;try{if(code){V.screen='rload';render();const r=await fetch('/api/rest?share='+code);if(!r.ok)throw 0;s=(await r.json()).packed}o=await unpackShare(s);if(o.m)o.m=unMenu(o.m);if(o.r)o.r=unRec(o.r)}catch(e){V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
 let h=5381;for(let i=0;i<s.length;i++)h=(h*33^s.charCodeAt(i))>>>0;const sid=h.toString(36);
 const put=(list,x,kind)=>{const old=list.find(y=>y.shareId===sid+kind);if(old)return old;const c={...x,id:uid(),shareId:sid+kind,shared:true,date:Date.now()};list.unshift(c);return c};
 let M=o.m&&Array.isArray(o.m.items)?put(S.menus,o.m,'m'):null;
@@ -1136,7 +1148,7 @@ const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return tr
 // ?admin=<code>: turns on manager mode on this device (creating restaurant pages) once the server accepts the code
 {const ak=(location.search.match(/[?&]admin=([^&]+)/)||[])[1];if(ak){const k=decodeURIComponent(ak);try{history.replaceState(history.state,'',location.pathname)}catch(e){}
 fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,check:true})}).then(r=>{if(r.ok){S.adminKey=k;save();render();toast(t('adminOn'))}else toast(t('adminBad'))}).catch(()=>toast(t('adminBad')))}}
-if(/^#s=/.test(location.hash))openShared();else
+if(/^#s=/.test(location.hash)||/[?&]s=[A-Za-z0-9]{8,12}(&|$)/.test(location.search))openShared();else
 if(REST){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.append(m);V.screen='rload';render();restLoad()}
 else if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
 ensureLang(); // load the chosen language if it is not built in
