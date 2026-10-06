@@ -111,19 +111,35 @@ module.exports = async (req, res) => {
       const code = newCode(); await store.set(`share:${code}`, packed, 90 * 86400);
       return res.status(200).json({ code });
     }
-    const bad = (tries.get(ip) || []).filter(t => now - t < 600000);
-    if (bad.length >= 10) return fail(res, 429, 'rate', 'Too many attempts. Try again later.');
-    const { key, slug, data, check } = req.body || {};
-    if (!(process.env.ADMIN_KEY || '').trim()) return fail(res, 500, 'config', 'ADMIN_KEY is not set on the server (or the site was not redeployed after setting it).');
-    if (!isAdmin(key)) { tries.set(ip, [...bad, now]); return fail(res, 403, 'key', 'Wrong manager code.'); }
-    if (check) return res.status(200).json({ ok: true, storage: store.ready() });
-    if (!store.ready()) return fail(res, 500, 'config', 'Page storage is not connected (connect Upstash Redis or a Blob store to the project in Vercel, then redeploy).');
-    if (typeof slug !== 'string' || !SLUG.test(slug)) return fail(res, 400, 'slug', 'Use lowercase English letters, digits and dashes.');
-    if (!data || typeof data !== 'object' || !Array.isArray(data.items) || !data.items.length || typeof data.tr !== 'object') return fail(res, 400, 'data', 'Invalid menu.');
-    const body = JSON.stringify({ ...data, slug, updated: now });
+    const { key, slug, data, check, edit } = req.body || {};
+    // the manager code (?admin= in the app) - checked, with a limit on wrong tries
+    if (check) {
+      const bad = (tries.get(ip) || []).filter(t => now - t < 600000);
+      if (bad.length >= 10) return fail(res, 429, 'rate', 'Too many attempts. Try again later.');
+      if (!isAdmin(key)) { tries.set(ip, [...bad, now]); return fail(res, 403, 'key', 'Wrong manager code.'); }
+      return res.status(200).json({ ok: true, storage: store.ready() });
+    }
+    // Restaurant pages, from the business link (?biz): anyone may create one; it gets a new random address and a secret
+    // edit key that only the creating phone keeps, so only that phone (or the manager) can update the page later.
+    if (!(RURL && RTOK)) return fail(res, 500, 'config', 'Page storage is not connected.');
+    if (!data || typeof data !== 'object' || !Array.isArray(data.items) || !data.items.length || data.items.length > 600 || typeof data.tr !== 'object') return fail(res, 400, 'data', 'Invalid menu.');
+    const admin = isAdmin(key);
+    let page = slug, token = edit;
+    if (page) {
+      if (typeof page !== 'string' || !SLUG.test(page)) return fail(res, 400, 'slug', 'Invalid page.');
+      const owner = await redis(['GET', `redit:${page}`]);
+      if (!admin && !(owner && typeof edit === 'string' && edit.length === owner.length && crypto.timingSafeEqual(Buffer.from(edit), Buffer.from(owner)))) return fail(res, 403, 'key', 'This page can only be updated from the phone that created it.');
+    } else {
+      // new pages: at most 10 an hour from one network (the manager is not limited)
+      if (!admin) { const n = await redis(['INCR', `rl:page:${ip}`]); if (n === 1) await redis(['EXPIRE', `rl:page:${ip}`, 3600]); if (n > 10) return fail(res, 429, 'rate', 'Too many new pages. Try again in an hour.'); }
+      do page = newCode().toLowerCase().slice(0, 8); while (await redis(['EXISTS', `rdata:${page}`]));
+      token = crypto.randomBytes(18).toString('base64url');
+      await redis(['SET', `redit:${page}`, token]);
+    }
+    const body = JSON.stringify({ ...data, slug: page, updated: now });
     if (body.length > 2e6) return fail(res, 413, 'size', 'The menu is too large.');
-    await store.set(`rdata:${slug}`, body);
-    return res.status(200).json({ ok: true, slug });
+    await store.set(`rdata:${page}`, body);
+    return res.status(200).json({ ok: true, slug: page, edit: token });
   } catch (e) {
     return fail(res, 500, 'failed', 'Saving the page failed. Please try again.');
   }

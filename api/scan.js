@@ -283,14 +283,19 @@ ${JSON.stringify(Object.fromEntries(entries))}` }] });
 }
 const isAdmin = k => { const a = process.env.ADMIN_KEY || ''; if (!a || typeof k !== 'string' || a.length !== k.length) return false;
   return require('crypto').timingSafeEqual(Buffer.from(a), Buffer.from(k)); };
+// restaurant-page translations are open to anyone (the business link), counted per network in Upstash Redis:
+// a page needs one call per language (about 27), so 300 an hour is about 10 pages
+const pageCalls = async ip => { const u = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, tk = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!u || !tk) return 0; const q = c => fetch(u, { method: 'POST', headers: { Authorization: `Bearer ${tk}`, 'Content-Type': 'application/json' }, body: JSON.stringify(c) }).then(r => r.json()).then(j => j.result);
+  try { const n = await q(['INCR', `rl:dish:${ip}`]); if (n === 1) await q(['EXPIRE', `rl:dish:${ip}`, 3600]); return n; } catch (e) { return 0; } };
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return fail(res, 405, 'method', 'Method not allowed');
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return fail(res, 500, 'config', 'Server is not configured (missing API key).');
-  // translating a restaurant page: the manager only, and not counted with scans (one call per language)
+  // translating a restaurant page (one call per language): not counted with scans, but limited per network (not for the manager)
   if ((req.body || {}).mode === 'dishes') {
-    if (!isAdmin(req.body.admin)) return fail(res, 403, 'key', 'Wrong manager code.');
+    if (!isAdmin(req.body.admin) && (await pageCalls(String(req.headers['x-forwarded-for'] || 'x').split(',')[0].trim())) > 300) return fail(res, 429, 'rate', 'Too many translations. Try again in an hour.');
     const l = String(req.body.language || '').replace(/[^\p{L}\p{M}\p{N} ()\-]/gu, '').slice(0, 40) || 'English';
     try { return await translateDishes(key, req.body, res, l); } catch (e) { return fail(res, 500, 'failed', 'Translation failed.'); }
   }
