@@ -229,7 +229,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .ordersum{scroll-margin-top:calc(72px + env(safe-area-inset-top))}
 /* history: switch between all, menus and bills */
 .al.demo .btn{margin-top:10px;width:auto}
-.top h2{flex:1;min-width:0}.sharebtn{flex:none;margin-inline-start:auto;padding:9px 14px;border-radius:99px;background:var(--ac);color:#fff;font-size:15px;gap:6px}
+.top h2{flex:1;min-width:0}.topshare{flex:none;margin-inline-start:auto;padding:9px 14px;border-radius:99px;background:var(--ac);color:#fff;font-size:15px;gap:6px}
+.livebar{display:flex;gap:8px;align-items:center;margin:0 0 12px;padding:10px 12px;border-radius:12px;background:var(--ac2);color:var(--ac);font-size:14px;font-weight:600}
 .shtag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ac);background:var(--ac2);border-radius:99px;padding:4px 10px;width:max-content}
 .cathd{display:flex;align-items:center;gap:10px;width:100%;font:inherit;text-align:start;cursor:pointer;background:var(--card);border:1px solid var(--line);border-inline-start:4px solid var(--ac);border-radius:14px;padding:14px;margin:12px 0 0;box-shadow:var(--sh);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);font-weight:700}
 .cathd.open{margin-bottom:8px}.cathd .catnm{display:grid;gap:2px;flex:1;min-width:0}.cathd .catn{font-size:13px;font-weight:500;color:var(--mut);text-transform:none;letter-spacing:0;white-space:nowrap}.cathd .catn b{color:var(--ac)}
@@ -268,7 +269,7 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
-taxIncShort:'Prices include VAT',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
+taxIncShort:'Prices include VAT',whoT:'Who are you?',whoD:'Write your name and pick your place in the split, or join as a new person.',whoPh:'Your name',whoNew:'Join as a new person',liveOn:'Shared split - everyone with the link sees what each person chose',namesBtn:'Names',namesT:'Names of the people',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
 shareRecTxt:'The bill from {0} - open it to see the items and the split:',shareRecTxt0:'A bill I scanned - open it to see the items and the split:',
 shareGot:'Shared with you and saved in your history',shareBad:'This link could not be opened',sharedTag:'Shared with you',
 oRemove:'Remove',photoOf:'Photo {0} of {1}',photoDishes:'{0} dishes from this photo',photoDish1:'1 dish from this photo',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
@@ -310,7 +311,7 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
-taxIncShort:'המחירים כוללים מע״מ',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
+taxIncShort:'המחירים כוללים מע״מ',whoT:'מי אתם?',whoD:'כתבו את השם שלכם ובחרו את המקום שלכם בחלוקה, או הצטרפו כמשתתף חדש.',whoPh:'השם שלכם',whoNew:'הצטרפות כמשתתף חדש',liveOn:'חלוקה משותפת – כל מי שיש לו את הקישור רואה מה כל אחד בחר',namesBtn:'שמות',namesT:'שמות המשתתפים',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
 shareRecTxt:'החשבון מ-{0} – פתחו כדי לראות את הפריטים והחלוקה:',shareRecTxt0:'חשבון שסרקתי – פתחו כדי לראות את הפריטים והחלוקה:',
 shareGot:'שותף איתך ונשמר בהיסטוריה שלך',shareBad:'לא הצלחנו לפתוח את הקישור',sharedTag:'שותף איתך',
 oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',photoDishes:'{0} מנות מהתמונה הזאת',photoDish1:'מנה אחת מהתמונה הזאת',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
@@ -590,30 +591,64 @@ const lean=o=>Object.fromEntries(Object.entries(o).filter(([k,v])=>!(v===''||v==
 const shareMenu=M=>{const{hashes,unclear,receiptId,restSlug,shared,shareId,items,...m}=M,ct={},st={};
 const its=[...items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)).map(({id,pg,seq,catTr,subTr,unsure,uf,...i})=>{if(i.cat&&catTr)ct[i.cat]=catTr;if(i.sub&&subTr)st[i.sub]=subTr;return lean(uf&&uf.length?{...i,uf}:i)});
 return {...lean(m),items:its,ct,st}};
-const shareRec=R=>{const{hashes,shared,shareId,items,...r}=R;return {...r,items:items.map(lean)}};
+const shareRec=R=>{const{hashes,shared,shareId,live,items,...r}=R;return {...r,items:items.map(lean)}};
+// ---------- live split: everyone who opens the bill's link sees who pays for what, as it changes ----------
+// The shared part is the split itself (people, names, who took which dish, the tip); which person "I" am stays on each phone.
+const pn=(R,p)=>(R.pnames&&R.pnames[p])||t('person')+' '+(p+1);
+const cleanName=s=>String(s||'').replace(/[<>&"]/g,'').trim().slice(0,20);
+const liveNorm=o=>({payers:o.payers||2,assign:o.assign||{},equal:!!o.equal,tipMode:o.tipMode||'pct',tipPct:+o.tipPct||0,tipCustom:+o.tipCustom||0,pnames:(o.pnames||[]).map(x=>x||null)});
+const liveSt=R=>liveNorm(R);
+function liveApply(R,st){const s=JSON.parse(JSON.stringify(liveNorm(st)));Object.assign(R,s);R.cp=Math.min(R.cp||0,R.payers-1)}
+// someone else saved first: take their state and put back what I changed since my last sync (dish by dish, name by name)
+function liveMerge(sv,base,loc){const J=JSON.stringify,o=JSON.parse(J(sv));for(const k of['payers','equal','tipMode','tipPct','tipCustom'])if(J(loc[k])!==J(base[k]))o[k]=loc[k];
+const A=o.assign,la=loc.assign,ba=base.assign;for(const id of new Set([...Object.keys(la),...Object.keys(ba)]))if(J(la[id])!==J(ba[id])){if(la[id]===undefined)delete A[id];else A[id]=la[id]}
+for(let i=0;i<Math.max(loc.pnames.length,base.pnames.length);i++)if(loc.pnames[i]!==base.pnames[i])o.pnames[i]=loc.pnames[i]||null;return o}
+async function liveStart(R,packed){if(R.live)return R.live.code;try{const st=liveSt(R),r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({live:'new',packed,st})}),j=await r.json();
+if(!r.ok||!j.code)return null;R.live={code:j.code,v:j.v,base:JSON.stringify(st)};R.split=true;save();return j.code}catch(e){return null}}
+let liveBusy=false,liveTimer=null;const liveSoon=()=>{clearTimeout(liveTimer);liveTimer=setTimeout(livePush,400)};
+async function livePush(){const R=V.screen==='receipt'&&cr();if(!R||!R.live||liveBusy||JSON.stringify(liveSt(R))===R.live.base)return;liveBusy=true;
+try{for(let n=0;n<4;n++){const st=liveSt(R),r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({live:R.live.code,base:R.live.v,st})}),j=await r.json().catch(()=>({}));
+if(r.ok&&j.ok){R.live.v=j.v;R.live.base=JSON.stringify(st);break}
+if(r.status===409&&j.st){const sv=liveNorm(j.st);liveApply(R,liveMerge(sv,JSON.parse(R.live.base),st));R.live.v=j.v;R.live.base=JSON.stringify(sv);continue}break}}
+catch(e){}finally{liveBusy=false;save();render()}}
+// every 3 seconds, while the bill is on screen: take the others' changes (only when mine are already saved)
+setInterval(async()=>{const R=V.screen==='receipt'&&cr();if(!R||!R.live||liveBusy||document.hidden)return;if(JSON.stringify(liveSt(R))!==R.live.base)return liveSoon();
+try{const r=await fetch('/api/rest?live='+R.live.code+'&since='+R.live.v);if(!r.ok)return;const j=await r.json();
+if(j.st&&j.v>R.live.v&&!liveBusy&&JSON.stringify(liveSt(R))===R.live.base){const sv=liveNorm(j.st);liveApply(R,sv);R.live.v=j.v;R.live.base=JSON.stringify(sv);
+if(!/input|select|textarea/i.test((document.activeElement||{}).tagName||''))render();else save()}}catch(e){}},3000);
+// opening the link: who am I in this split?
+function whoSheet(R){openSheet(`<h3>${t('whoT')}</h3><p class=mut>${t('whoD')}</p><input id=whoname placeholder="${t('whoPh')}" maxlength=20 dir=auto autocomplete=given-name>
+${[...Array(R.payers).keys()].map(p=>`<button class="btn ghost" data-a=whome data-x=${p}>${ico('check',18)}${esc(pn(R,p))}</button>`).join('')}${R.payers<12?`<button class=btn data-a=whonew>${ico('plus',18)}${t('whoNew')}</button>`:''}`,{})}
+function namesSheet(R){openSheet(`<h3>${t('namesT')}</h3>${[...Array(R.payers).keys()].map(p=>`<input id=pn${p} value="${esc((R.pnames||[])[p]||'')}" placeholder="${esc(t('person')+' '+(p+1))}" maxlength=20 dir=auto>`).join('')}<button class=btn data-a=pnsave>${t('saveSet')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})}
 const unMenu=m=>{const{ct={},st={},...M}=m;M.items=m.items.map((i,n)=>({unsure:!!(i.uf&&i.uf.length),uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',cat:'',tr:'',price:0,qty:0,id:uid(),...i,
 catTr:i.catTr||ct[i.cat||'']||'',subTr:i.subTr||st[i.sub||'']||'',pg:i.pg||1,seq:i.seq!=null?i.seq:n}));return M};
 const unRec=r=>({tipMode:'pct',tipPct:0,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},parts:[],printedTotal:0,...r,fees:{tax:0,taxIncl:true,service:0,other:0,tip:0,...(r.fees||{})},items:r.items.map(i=>({tr:'',unit:0,qty:1,unsure:false,...i}))});
 async function shareNow(){const isM=V.screen==='menu',M=isM?cm():null,R=isM?null:cr();if(!M&&!R)return;
 const RM=R&&R.menuId&&S.menus.find(m=>m.id===R.menuId),name=isM?M.title:(R.restaurant||(RM&&RM.title)||'');
 let packed;try{packed=await packShare(isM?{v:2,m:shareMenu(M)}:{v:2,r:shareRec(R),m:RM?shareMenu(RM):null})}catch(e){return toast(t('fail'))}
-// a short link (?s=<code>) when the server can keep it; otherwise everything goes in the link itself
-let url=location.origin+'/#s='+packed;
-try{const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({share:packed})});const j=await r.json().catch(()=>({}));if(r.ok&&j.code)url=location.origin+'/?s='+j.code}catch(e){}
+// a bill becomes a live split (?l=<code>); a menu gets a short link (?s=<code>) when the server can keep it;
+// otherwise everything goes in the link itself
+let url=location.origin+'/#s='+packed;const lc=R&&await liveStart(R,packed);
+if(lc)url=location.origin+'/?l='+lc;
+else try{const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({share:packed})});const j=await r.json().catch(()=>({}));if(r.ok&&j.code)url=location.origin+'/?s='+j.code}catch(e){}
+if(lc)render();
 const text=name?f(t(isM?'shareMenuTxt':'shareRecTxt'),name):t(isM?'shareMenuTxt0':'shareRecTxt0');
 // the phone's own share sheet (WhatsApp and every other app); where there is none, a WhatsApp link and "copy link"
 if(navigator.share){try{await navigator.share({title:name||t('title'),text,url});return}catch(e){if(e&&e.name==='AbortError')return}}
 openSheet(`<h3>${t('shareT')}</h3><p class=mut>${esc(text)}</p><a class=btn href="https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}" target=_blank rel=noopener>${ico('share',18)}${t('shareWa')}</a><button class="btn ghost" data-a=rpcopy data-x="${esc(url)}">${t('rpCopy')}</button><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
 // opening a shared link: the menu / bill is saved in this app (once - opening the same link again shows the same copy)
-async function openShared(){const code=(location.search.match(/[?&]s=([A-Za-z0-9]{8,12})/)||[])[1];let s=code?'':location.hash.slice(3);
-try{history.replaceState(history.state,'',location.pathname+location.search.replace(/[?&]s=[A-Za-z0-9]+/,'').replace(/^&/,'?'))}catch(e){}
-let o;try{if(code){V.screen='rload';render();const r=await fetch('/api/rest?share='+code);if(!r.ok)throw 0;s=(await r.json()).packed}o=await unpackShare(s);if(o.m)o.m=unMenu(o.m);if(o.r)o.r=unRec(o.r)}catch(e){V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
-let h=5381;for(let i=0;i<s.length;i++)h=(h*33^s.charCodeAt(i))>>>0;const sid=h.toString(36);
+async function openShared(){const code=(location.search.match(/[?&]s=([A-Za-z0-9]{8,12})/)||[])[1],lc=(location.search.match(/[?&]l=([A-Za-z0-9]{8,12})/)||[])[1];let s=code||lc?'':location.hash.slice(3),L=null;
+try{history.replaceState(history.state,'',location.pathname+location.search.replace(/[?&][sl]=[A-Za-z0-9]+/,'').replace(/^&/,'?'))}catch(e){}
+let o;try{if(lc){V.screen='rload';render();const r=await fetch('/api/rest?live='+lc);if(!r.ok)throw 0;L=await r.json();s=L.packed}
+else if(code){V.screen='rload';render();const r=await fetch('/api/rest?share='+code);if(!r.ok)throw 0;s=(await r.json()).packed}o=await unpackShare(s);if(o.m)o.m=unMenu(o.m);if(o.r)o.r=unRec(o.r)}catch(e){V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
+let h=5381;for(let i=0;i<s.length;i++)h=(h*33^s.charCodeAt(i))>>>0;const sid=lc?'L'+lc:h.toString(36);
 const put=(list,x,kind)=>{const old=list.find(y=>y.shareId===sid+kind);if(old)return old;const c={...x,id:uid(),shareId:sid+kind,shared:true,date:Date.now()};list.unshift(c);return c};
 let M=o.m&&Array.isArray(o.m.items)?put(S.menus,o.m,'m'):null;
-if(o.r&&Array.isArray(o.r.items)){const R=put(S.receipts,o.r,'r');R.menuId=M?M.id:null;if(M)M.receiptId=R.id;V.screen='receipt';V.id=R.id}
+let R=null;if(o.r&&Array.isArray(o.r.items)){R=put(S.receipts,o.r,'r');R.menuId=M?M.id:null;if(M)M.receiptId=R.id;V.screen='receipt';V.id=R.id;
+// a live split: the split as it is now, and the question who I am (asked once per phone)
+if(L){const fresh=!R.live;R.live={code:lc,v:L.v,base:JSON.stringify(liveNorm(L.st))};liveApply(R,L.st);R.split=true;if(fresh)R.askWho=true}}
 else if(M){V.screen='menu';V.id=M.id}else{V.screen=S.started?'home':'setup';render();return toast(t('shareBad'))}
-S.started=true;save();render();scrollTo(0,0);toast(t('shareGot'))}
+S.started=true;save();render();scrollTo(0,0);if(R&&R.askWho){delete R.askWho;save();whoSheet(R)}else toast(t('shareGot'))}
 // a printable card: the restaurant's name, the QR code and a line saying what it opens (in English, for guests from anywhere)
 async function qrCard(title,url){if(!window.QRCode)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=ok;s.onerror=no;document.head.append(s)});
 const box=document.createElement('div');new QRCode(box,{text:url,width:720,height:720,correctLevel:QRCode.CorrectLevel.M});await new Promise(z=>setTimeout(z,300));
@@ -695,7 +730,7 @@ const ico=(k,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="n
 // ---------- views ----------
 const bar=(title,back,extra)=>`<header class=top><button class="ic back" data-a=back data-x=${back} aria-label="${t('back')}">${ico('back')}</button><h2>${esc(title)}</h2>${extra||''}</header>`;
 // the share button at the top of a menu or a bill
-const shareBtn=()=>`<button class="btn sm sharebtn" data-a=share>${ico('share',17)}<span>${t('shareT')}</span></button>`;
+const shareBtn=()=>`<button class="btn sm topshare" data-a=share>${ico('share',17)}<span>${t('shareT')}</span></button>`;
 const step=(q,a,id,dis)=>`<div class="step${q>0?' on':''}"><button data-a=${a} data-id=${id} data-x=-1 ${q<=0?'disabled':''} aria-label="-1">−</button><span>${q}</span><button data-a=${a} data-id=${id} data-x=1 ${dis?'disabled':''} aria-label="+1">+</button></div>`;
 function setup(){const back=V.prev?V.prev.screen+(V.prev.id?':'+V.prev.id:''):'home';
 const first=!S.started||V.intro; // V.intro: the first-visit screen opened with ?intro (to preview it)
@@ -909,25 +944,25 @@ if(pct&&R.fees.service>0&&R.items.length){const exp=r2(s*pct/100);if(Math.abs(R.
 if(T&&R.items.length){const d=r2(T-E);if(Math.abs(d)>tol(E))o.push(subOff?f(t('aTotalSub'),c(T),c(Math.abs(d)),c(E)):d>0&&!tipB?f(t('aTipMaybe'),c(T),c(d)):f(t('aTotal'),c(T),c(E)))}
 return o}
 function shPanel(R,i,rem){const a=R.assign[i.id],sq=Math.min(V.shq||1,rem);
-return `<div class=panel>${rem>1?`<label>${t('units')}<select data-c=shq>${[...Array(rem).keys()].map(k=>`<option ${k+1===sq?'selected':''}>${k+1}</option>`).join('')}</select></label>`:''}<div class=pl>${[...Array(R.payers).keys()].map(p=>`<label class=chk><input type=checkbox data-c=shp2 data-x=${p} ${(V.shs||[]).includes(p)?'checked':''} ${a&&a.ind[p]?'disabled':''}>${t('person')} ${p+1}</label>`).join('')}</div><button class="btn sm" data-a=shsave data-id=${i.id}>${t('saveSplit')}</button></div>`}
+return `<div class=panel>${rem>1?`<label>${t('units')}<select data-c=shq>${[...Array(rem).keys()].map(k=>`<option ${k+1===sq?'selected':''}>${k+1}</option>`).join('')}</select></label>`:''}<div class=pl>${[...Array(R.payers).keys()].map(p=>`<label class=chk><input type=checkbox data-c=shp2 data-x=${p} ${(V.shs||[]).includes(p)?'checked':''} ${a&&a.ind[p]?'disabled':''}>${esc(pn(R,p))}</label>`).join('')}</div><button class="btn sm" data-a=shsave data-id=${i.id}>${t('saveSplit')}</button></div>`}
 // Split: tabs for each person with their amount; for the selected person, one compact row per dish.
 // Dishes keep the bill's order; a dish that is fully assigned stays where it is, colored and marked with ✓.
 function splitV(R){const n=R.payers,P=R.cp,g=grand(R);
-const head=`<div class=row><span>${t('payers')}</span><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''} aria-label="-1">−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''} aria-label="+1">+</button></div></div><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
-if(R.equal){const e=equalShares(g,n),same=e.every(x=>x===e[0]);return head+(same?`<div class=ln style="margin-top:10px"><span>${t('each')}</span><b class="tot n">${money(e[0],R.cur)}</b></div>`:`<div style="margin-top:10px">${e.map((x,p)=>`<div class=ln><span>${t('person')} ${p+1}</span><b class=n>${money(x,R.cur)}</b></div>`).join('')}</div>`)+`<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button>`}
+const head=`${R.live?`<p class=livebar>${ico('share',16)}<span>${t('liveOn')}</span></p>`:''}<div class=row><span>${t('payers')}</span><button class=link data-a=pnames>${t('namesBtn')}</button><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''} aria-label="-1">−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''} aria-label="+1">+</button></div></div><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
+if(R.equal){const e=equalShares(g,n),same=e.every(x=>x===e[0]);return head+(same?`<div class=ln style="margin-top:10px"><span>${t('each')}</span><b class="tot n">${money(e[0],R.cur)}</b></div>`:`<div style="margin-top:10px">${e.map((x,p)=>`<div class=ln><span>${esc(pn(R,p))}</span><b class=n>${money(x,R.cur)}</b></div>`).join('')}</div>`)+`<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button>`}
 const sh=shares(R),asg=r2(sh.reduce((a,b)=>a+b,0)),left=r2(g-asg),pct=g>0?Math.min(100,asg/g*100):0;
 // what a person pays on top of their dishes (their share of tax, service, fees and tip) is spelled out, so 7,500 → 8,625 is explained
 const xl=[taxAdd(R)?t('tax'):'',+R.fees.service?t('svc'):'',+R.fees.other?t('fees'):'',(+R.fees.tip||tipAmt(R))?t('tipW'):''].filter(Boolean).join(', ');
 const brk=p=>{const d=r2(pSub(R,p)),x=r2(sh[p]-d);return xl&&x>0?f(t('splitBreak'),fmt(d,R.cur),xl,fmt(x,R.cur)):''};
-const row=i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0,others=Object.entries(a.ind).filter(([p,c])=>+p!==P&&c>0).map(([p,c])=>`${t('person')} ${+p+1}${c>1?` ×${c}`:''}`);
+const row=i=>{const rem=i.qty-used(R,i),a=R.assign[i.id]||{ind:{},sh:[]},mine=a.ind[P]||0,inSh=a.sh.some(x=>x.p.includes(P)),done=rem<=0,others=Object.entries(a.ind).filter(([p,c])=>+p!==P&&c>0).map(([p,c])=>`${esc(pn(R,+p))}${c>1?` ×${c}`:''}`);
 const meta=[`${fmt(i.unit,R.cur)}${i.qty>1?' '+t('perUnit'):''}`];if(i.qty>1&&!done)meta.push(f(t('leftOf'),rem,i.qty));if(others.length)meta.push(f(t('takenBy'),others.join(', ')));
-return `<div class="srow${done?' done':''}"><div class=info>${billLines(R,i,'small',done?`<span class=dck>${ico('check',17)}</span>`:'')}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>q+1).join('+')):f(t('shared1'),x.p.map(q=>q+1).join('+'))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
+return `<div class="srow${done?' done':''}"><div class=info>${billLines(R,i,'small',done?`<span class=dck>${ico('check',17)}</span>`:'')}<small class=n>${esc(meta.join(' · '))}</small>${a.sh.length?`<div class=chips>${a.sh.map((x,k)=>`<span class=shchip>${x.q>1?f(t('sharedN'),x.q,x.p.map(q=>pn(R,q)).join(' + ')):f(t('shared1'),x.p.map(q=>pn(R,q)).join(' + '))}<button class=shx data-a=unsh data-id=${i.id} data-x=${k} aria-label="${t('unshare')}">✕</button></span>`).join('')}</div>`:''}</div>
 <div class=sact>${inSh||(done&&!mine)?'':step(mine,'iq',i.id,done)}${done?'':`<button class="btn ghost sm${V.shp===i.id?' pressed':''}" data-a=shp data-id=${i.id} aria-pressed=${V.shp===i.id} aria-expanded=${V.shp===i.id}>${t('share')}</button>`}</div></div>${V.shp===i.id&&!done?shPanel(R,i,rem):''}`};
-return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${t('person')} ${p+1}<small class=n>${fmt(sh[p],R.cur)}</small></button>`).join('')}</div>
+return head+`<div class=tabs style="margin-top:12px">${[...Array(n).keys()].map(p=>`<button class="tab ${p===P?'on':''}" data-a=tab data-x=${p}>${esc(pn(R,p))}<small class=n>${fmt(sh[p],R.cur)}</small></button>`).join('')}</div>
 <div class=sbox role=status><p class=hint>${ico('info',18)}<span><b>${f(t('splitHintA'),P+1)}</b><small>${t('splitHintB')}</small></span></p>
 <div class=sprog>${left>0?`<div class=sboxn><span>${t('assigned')}<b class=n>${fmt(asg,R.cur)}</b></span><span class=lft>${t('left')}<b class=n>${fmt(left,R.cur)}</b></span></div>`:`<p class=alldone>${ico('check',18)}${t('allAssigned')}</p>`}<div class=bar><i style="width:${pct}%"></i></div></div></div>
 ${R.items.map(row).join('')}
-<section class=ptot aria-labelledby=ptoth><h4 id=ptoth>${t('perPerson')}</h4>${[...Array(n).keys()].map(p=>`<div class=ln><span>${t('person')} ${p+1}${brk(p)?`<small class="n pbd">${esc(brk(p))}</small>`:''}</span><b class="n end">${mv(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class="ln ptotal"><b>${t('total')}</b><b class="n tot end">${mv(g,R.cur)}</b></div>${xl?`<p class=pnote>${ico('info',16)}<span>${t('splitFees')}</span></p>`:''}<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button></section>`}
+<section class=ptot aria-labelledby=ptoth><h4 id=ptoth>${t('perPerson')}</h4>${[...Array(n).keys()].map(p=>`<div class=ln><span>${esc(pn(R,p))}${brk(p)?`<small class="n pbd">${esc(brk(p))}</small>`:''}</span><b class="n end">${mv(sh[p],R.cur)}</b></div>`).join('')}${left>0?`<div class=ln><span class=mut>${t('unassigned')}</span><b class=n>${fmt(left,R.cur)}</b></div>`:''}<div class="ln ptotal"><b>${t('total')}</b><b class="n tot end">${mv(g,R.cur)}</b></div>${xl?`<p class=pnote>${ico('info',16)}<span>${t('splitFees')}</span></p>`:''}<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button></section>`}
 function recV(){const R=cr();if(!R)return home();const s=sub(R),tb=+R.fees.tip||0,tp=tipAmt(R),g=grand(R),M=S.menus.find(m=>m.id===R.menuId),nq=R.items.reduce((a,i)=>a+i.qty,0),name=R.restaurant||(M&&M.title)||'',js=rjobs(R.id),scanning=js.length>0,iss=scanning?[]:issues(R),ordered=M&&M.items.some(i=>i.qty>0);
 const ln=(k,v,cls)=>`<div class="ln${cls?' '+cls:''}"><span>${k}</span><span class=n>${v}</span></div>`;
 return bar(t('recHdr'),M?'menu:'+M.id:'home',R.items.length&&!scanning&&!R.demo?shareBtn():'')+`<div class=pad><div><input class=ttl data-c=rrest placeholder="${scanning?t('menuName'):t('nameMissing')}" value="${esc(R.restaurant)}" dir=auto aria-label="${t('menuName')}">${R.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}${R.demo?demoNote('demoRec',`<button class="btn sm" data-a=nm>${ico('cam',16)}${t('demoReal')}</button>`):''}${R.rdate||nq?`<small class="mut rdate">${[R.rdate?`<bdi>${esc(R.rdate)}</bdi>`:'',nq?`<b class=cnt1>${f(t('itemsCount'),nq)}</b>`:''].filter(Boolean).join(' · ')}</small>`:''}</div>
@@ -961,7 +996,9 @@ const tab=V.htab||'all',tb=(k,l)=>`<button class="htab${tab===k?' on':''}" data-
 return bar(t('hist'),'home')+`<div class=pad><div class=htabs role=tablist>${tb('all',`${t('allT')} (${dm+dr})`)}${tb('m',`${t('menus')} (${dm})`)}${tb('r',`${t('receipts')} (${dr})`)}</div>
 ${real(S.menus).length+real(S.receipts).length>1?`<label class=search>${ico('search',18)}<input id=histq type=search placeholder="${t('histQ')}" value="${esc(V.hq||'')}" dir=auto autocomplete=off></label>`:''}${dates}
 <div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}`:''}</div></div>`}
-function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer()}
+function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer();
+// a change to a live split is sent to everyone who has the link
+if(V.screen==='receipt'){const R=cr();if(R&&R.live&&JSON.stringify(liveSt(R))!==R.live.base)liveSoon()}}
 // ---------- phone/browser back button ----------
 // Every screen change becomes a history entry, so Back returns to the previous screen instead of leaving the app.
 // While a dialog or the ingredient list is open, Back only closes it.
@@ -1014,7 +1051,7 @@ const amt=v=>{const c=R.cur!==S.cur&&conv(v,R.cur,S.cur);return fmt(v,R.cur)+(c!
 const dish=i=>{const m=billMain(i),tr=i.tr&&norm(i.tr)!==norm(m)?i.tr:'';return tr?`${m} — ${tr}`:m};
 const lines=[`🧾 ${t('shareHdr')}${name?' — '+name:''}`,''];
 for(let p=0;p<n;p++){const its=R.equal?[]:R.items.flatMap(i=>{const a=R.assign[i.id];if(!a)return[];const o=[];if(a.ind[p])o.push((a.ind[p]>1?a.ind[p]+'× ':'')+dish(i));a.sh.filter(x=>x.p.includes(p)).forEach(x=>o.push(`${dish(i)} (1/${x.p.length})`));return o});
-lines.push(`👤 ${t('person')} ${p+1}: *${amt(sh[p])}*`,...its.map(x=>'• '+x),'')}
+lines.push(`👤 ${pn(R,p)}: *${amt(sh[p])}*`,...its.map(x=>'• '+x),'')}
 const left=R.equal?0:r2(g-sh.reduce((a,b)=>a+b,0));if(left>0)lines.push(`${t('unassigned')}: ${amt(left)}`);
 lines.push(`${t('total')}: ${amt(g)}`);
 // no invisible direction marks (they show up as stray characters when the text is copied)
@@ -1089,6 +1126,10 @@ cmpmark:()=>{const R=cr(),M=S.menus.find(m=>m.id===R.menuId);if(!M)return;M.rece
 cmpgo:()=>{const M=cm(),R=S.receipts.find(r=>r.id===M.receiptId);if(!R)return;R.menuId=M.id;goTo('receipt:'+R.id)}, // back to the receipt, now compared with the order
 filt:()=>{S.filtOpen=!S.filtOpen;V.filtLayer=S.filtOpen;V.ingOpen=false;render();if(S.filtOpen){const c=$('#filt');c&&c.scrollIntoView({block:'nearest',behavior:'smooth'})}},
 rtoapp:()=>restToApp(),
+whome:(id,x)=>{const R=cr(),nm=cleanName(($('#whoname')||{}).value);R.cp=+x;if(nm)(R.pnames=R.pnames||[])[+x]=nm;closeSheet();render()},
+whonew:()=>{const R=cr(),nm=cleanName(($('#whoname')||{}).value);if(R.payers>=12)return;R.payers++;R.cp=R.payers-1;if(nm)(R.pnames=R.pnames||[])[R.cp]=nm;closeSheet();render()},
+pnames:()=>namesSheet(cr()),
+pnsave:()=>{const R=cr();R.pnames=[...Array(R.payers).keys()].map(p=>cleanName(($('#pn'+p)||{}).value)||null);closeSheet();render()},
 share:()=>shareNow(),
 rpage:()=>restSheet(cm()),
 rpgo:()=>{const M=cm(),slug=slugify(($('#rpslug')||{}).value||'');if(!slug||slug.length<2)return toast(t('rpBadSlug'));restPublish(M,slug).catch(e=>{closeSheet();failSheet(t('fail'),e.message||t('fail'),()=>restSheet(M))})},
@@ -1148,7 +1189,7 @@ const y=+p.y||0;scrollTo(0,y);requestAnimationFrame(()=>scrollTo(0,y));return tr
 // ?admin=<code>: turns on manager mode on this device (creating restaurant pages) once the server accepts the code
 {const ak=(location.search.match(/[?&]admin=([^&]+)/)||[])[1];if(ak){const k=decodeURIComponent(ak);try{history.replaceState(history.state,'',location.pathname)}catch(e){}
 fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,check:true})}).then(r=>{if(r.ok){S.adminKey=k;save();render();toast(t('adminOn'))}else toast(t('adminBad'))}).catch(()=>toast(t('adminBad')))}}
-if(/^#s=/.test(location.hash)||/[?&]s=[A-Za-z0-9]{8,12}(&|$)/.test(location.search))openShared();else
+if(/^#s=/.test(location.hash)||/[?&][sl]=[A-Za-z0-9]{8,12}(&|$)/.test(location.search))openShared();else
 if(REST){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.append(m);V.screen='rload';render();restLoad()}
 else if(/[?&]intro\b/.test(location.search)){V.intro=true;V.screen='setup';render()}else if(FRESH||!resume())render();
 ensureLang(); // load the chosen language if it is not built in
