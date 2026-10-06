@@ -31,6 +31,10 @@ const store = {
     await put(k.replace(':', '/') + '.json', body, { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
   }
 };
+// a business account's key is its phone number's last 9 digits, so "050-123-4567", "+972 50 123 4567" and "0501234567" match
+const phoneKey = p => { const d = String(p || '').replace(/\D/g, ''); return d.length >= 9 && d.length <= 15 ? d.slice(-9) : null; };
+const hashPw = pw => { const salt = crypto.randomBytes(16); return { salt: salt.toString('hex'), hash: crypto.scryptSync(pw, salt, 32).toString('hex') }; };
+const sessPhone = async t => typeof t === 'string' && /^[A-Za-z0-9_-]{20,64}$/.test(t) && RURL && RTOK ? await redis(['GET', `sess:${t}`]) : null;
 const CODE = /^[A-Za-z0-9]{8,12}$/, shares = new Map(); // shares: best-effort limit on new share links, per instance
 const newCode = () => { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789', b = crypto.randomBytes(10); let s = ''; for (const x of b) s += a[x % a.length]; return s; };
 
@@ -119,26 +123,63 @@ module.exports = async (req, res) => {
       if (!isAdmin(key)) { tries.set(ip, [...bad, now]); return fail(res, 403, 'key', 'Wrong manager code.'); }
       return res.status(200).json({ ok: true, storage: store.ready() });
     }
-    // Restaurant pages, from the business link (?biz): anyone may create one; it gets a new random address and a secret
-    // edit key that only the creating phone keeps, so only that phone (or the manager) can update the page later.
     if (!(RURL && RTOK)) return fail(res, 500, 'config', 'Page storage is not connected.');
+    // ---- business accounts: phone number + password ----
+    // "acct:<phone>" = {salt, hash (scrypt), pages: [{slug, title}]}; signing in gives a session ("sess:<token>" = phone, 90 days).
+    // The first sign-in with a new number creates the account with the password given.
+    const acct = (req.body || {}).acct;
+    if (acct) {
+      const b = req.body;
+      if (acct === 'pages') { const ph = await sessPhone(b.sess); if (!ph) return fail(res, 401, 'sess', 'Please sign in again.'); const a = JSON.parse(await redis(['GET', `acct:${ph}`]) || '{}'); return res.status(200).json({ pages: a.pages || [] }); }
+      const ph = phoneKey(b.phone); if (!ph) return fail(res, 400, 'phone', 'Enter a valid phone number.');
+      const pw = String(b.password || '');
+      if (acct === 'reset') { // the manager sets a new password for a business that forgot it
+        if (!isAdmin(key)) return fail(res, 403, 'key', 'Wrong manager code.');
+        if (pw.length < 6) return fail(res, 400, 'password', 'The password must have at least 6 characters.');
+        const a = JSON.parse(await redis(['GET', `acct:${ph}`]) || 'null'); if (!a) return fail(res, 404, 'none', 'No account with this number.');
+        await redis(['SET', `acct:${ph}`, JSON.stringify({ ...a, ...hashPw(pw) })]); return res.status(200).json({ ok: true });
+      }
+      if (acct !== 'login') return fail(res, 400, 'data', 'Invalid request.');
+      // wrong passwords: at most 10 per number (and 30 per network) in 15 minutes
+      const lim = async (k, max) => { const n = await redis(['INCR', k]); if (n === 1) await redis(['EXPIRE', k, 900]); return n > max; };
+      const a = JSON.parse(await redis(['GET', `acct:${ph}`]) || 'null');
+      let created = false;
+      if (!a) {
+        if (pw.length < 6) return fail(res, 400, 'password', 'Choose a password with at least 6 characters.');
+        await redis(['SET', `acct:${ph}`, JSON.stringify({ ...hashPw(pw), pages: [], created: now })]); created = true;
+      } else {
+        if (await redis(['GET', `rl:login:${ph}`]) > 10 || await redis(['GET', `rl:loginip:${ip}`]) > 30) return fail(res, 429, 'rate', 'Too many wrong passwords. Try again in 15 minutes.');
+        const h = crypto.scryptSync(pw, Buffer.from(a.salt, 'hex'), 32);
+        if (!crypto.timingSafeEqual(h, Buffer.from(a.hash, 'hex'))) { await lim(`rl:login:${ph}`, 10); await lim(`rl:loginip:${ip}`, 30); return fail(res, 403, 'password', 'Wrong phone number or password.'); }
+      }
+      const tok = crypto.randomBytes(24).toString('base64url'); await redis(['SET', `sess:${tok}`, ph, 'EX', 90 * 86400]);
+      return res.status(200).json({ sess: tok, created, pages: (a && a.pages) || [] });
+    }
+    // Restaurant pages, from the business link (?biz), by a signed-in business: a new page gets a random address and
+    // belongs to that account; only its account (or the manager, or the phone that made it before accounts existed) can update it.
     if (!data || typeof data !== 'object' || !Array.isArray(data.items) || !data.items.length || data.items.length > 600 || typeof data.tr !== 'object') return fail(res, 400, 'data', 'Invalid menu.');
-    const admin = isAdmin(key);
+    const admin = isAdmin(key), ph = await sessPhone(req.body.sess);
+    if (!admin && !ph) return fail(res, 401, 'sess', 'Please sign in again.');
     let page = slug, token = edit;
     if (page) {
       if (typeof page !== 'string' || !SLUG.test(page)) return fail(res, 400, 'slug', 'Invalid page.');
-      const owner = await redis(['GET', `redit:${page}`]);
-      if (!admin && !(owner && typeof edit === 'string' && edit.length === owner.length && crypto.timingSafeEqual(Buffer.from(edit), Buffer.from(owner)))) return fail(res, 403, 'key', 'This page can only be updated from the phone that created it.');
+      const owner = await redis(['GET', `redit:${page}`]), acctOwner = await redis(['GET', `rowner:${page}`]);
+      const byToken = owner && typeof edit === 'string' && edit.length === owner.length && crypto.timingSafeEqual(Buffer.from(edit), Buffer.from(owner));
+      if (!admin && !byToken && !(ph && acctOwner === ph)) return fail(res, 403, 'key', 'This page belongs to another account.');
+      if (ph && !acctOwner) await redis(['SET', `rowner:${page}`, ph]); // a page made before accounts joins the account that updates it
     } else {
       // new pages: at most 10 an hour from one network (the manager is not limited)
       if (!admin) { const n = await redis(['INCR', `rl:page:${ip}`]); if (n === 1) await redis(['EXPIRE', `rl:page:${ip}`, 3600]); if (n > 10) return fail(res, 429, 'rate', 'Too many new pages. Try again in an hour.'); }
       do page = newCode().toLowerCase().slice(0, 8); while (await redis(['EXISTS', `rdata:${page}`]));
       token = crypto.randomBytes(18).toString('base64url');
       await redis(['SET', `redit:${page}`, token]);
+      if (ph) await redis(['SET', `rowner:${page}`, ph]);
     }
     const body = JSON.stringify({ ...data, slug: page, updated: now });
     if (body.length > 2e6) return fail(res, 413, 'size', 'The menu is too large.');
     await store.set(`rdata:${page}`, body);
+    // the account's list of pages (with the restaurant's name), so they can be found again from any phone
+    if (ph) { const a = JSON.parse(await redis(['GET', `acct:${ph}`]) || 'null'); if (a) { const pages = (a.pages || []).filter(p => p.slug !== page); pages.unshift({ slug: page, title: String(data.title || '').slice(0, 80), updated: now }); await redis(['SET', `acct:${ph}`, JSON.stringify({ ...a, pages })]); } }
     return res.status(200).json({ ok: true, slug: page, edit: token });
   } catch (e) {
     return fail(res, 500, 'failed', 'Saving the page failed. Please try again.');
