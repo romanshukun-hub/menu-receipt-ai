@@ -234,7 +234,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .cathd .chv{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--bg);color:var(--ac);transition:transform .15s}.cathd .chv svg{transform:rotate(90deg)}.cathd.open .chv{transform:rotate(180deg)}
 .cathd:active{box-shadow:none;transform:translateY(1px)}section:first-of-type>.cathd{margin-top:12px}
 .catbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
-.oacts{display:flex;flex-wrap:wrap;gap:6px}.oacts .photo{margin-top:4px;min-height:32px;font-size:13px;font-weight:600}.odel{font:inherit;color:var(--bad)}
+.oacts{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}.oacts .photo{margin-top:4px;min-height:32px;font-size:13px;font-weight:600}.odel{font:inherit;color:var(--bad)}
 .rhead{padding-bottom:4px}.rhead h1{margin:0 0 12px}.rsel{display:flex;gap:8px;flex-wrap:wrap}.rsel label{display:flex;align-items:center;gap:6px;flex:1;min-width:140px;margin:0}.rsel select{flex:1;min-width:0}
 .htabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--line)}.htab{flex:1;border:0;border-radius:10px;padding:10px 6px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}.htab.on{background:var(--card);box-shadow:0 1px 3px #0002}
 /* history: date filter; the day picker is a real date field laid over the chip */
@@ -266,7 +266,7 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
-oRemove:'Remove',oRemoved:'Removed from the order',catSel:'{0} chosen',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
+oRemove:'Remove',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
 rpBtn:'Create a restaurant page',rpUpd:'Update the restaurant page',rpBtnD:'A link and QR code where guests see this menu in their language and currency',
 rpT:'Restaurant page',rpD:'Before creating the page, check that the dish names and prices are right. The dishes are translated into every language once.',
 rpSlug:'Page address (English letters, digits and dashes)',rpGo:'Create the page',rpProg:'Translating into every language… {0}/{1}',
@@ -305,7 +305,7 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
-oRemove:'הסר',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
+oRemove:'הסר',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
 rpBtn:'צור דף למסעדה',rpUpd:'עדכן את דף המסעדה',rpBtnD:'קישור וקוד QR שבהם האורחים רואים את התפריט בשפה ובמטבע שלהם',
 rpT:'דף למסעדה',rpD:'לפני שיוצרים את הדף, בדקו שהשמות והמחירים נכונים. המנות מתורגמות לכל השפות פעם אחת.',
 rpSlug:'כתובת הדף (אותיות באנגלית, ספרות ומקפים)',rpGo:'צור את הדף',rpProg:'מתרגמים לכל השפות… {0}/{1}',
@@ -743,7 +743,7 @@ const dishHit=(i,q)=>!q||[i.orig,i.local,i.tr].some(s=>sn(s).includes(q));
 const catOpen=(M,cat)=>!cat||!!dq(M)||!!(V.copen||{})[M.id+'|'+norm(cat)];
 function sectionsV(M){const q=dq(M),items=M.items.filter(i=>dishHit(i,q)).sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));let out='',g=null,sub='',rows='';
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
-out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</span><span class=catn dir=auto>${f(t('dishesN'),g.n)}${g.sel?` · <b>${f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
+out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
 if(cats.length&&!q)out+=`<div class=catbar><small class=mut>${t(anyOpen?'catTapOpen':'catTap')}</small><button class=link data-a=catall data-x=${anyOpen?0:1}>${t(anyOpen?'catNone':'catAll')}</button></div>`;
 for(const i of items){if(!g||g.cat!==(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
@@ -780,7 +780,7 @@ function orderV(M,n,tot,priced){const ord=[...M.items].filter(i=>i.qty>0).sort((
 const pct=+(M.policy&&M.policy.service_pct)||0,svc=priced&&pct?r2(tot*pct/100):0;
 return `<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t('yourOrder')}</h3>
 ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qty}×</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
-<span class=oacts>${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('findPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
+<span class=oacts>${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`
 +`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
