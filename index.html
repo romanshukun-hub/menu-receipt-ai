@@ -278,6 +278,13 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .berow{display:flex;align-items:center;gap:4px;border-top:1px solid var(--line)}.beitem{flex:1;display:flex;gap:10px;align-items:center;border:0;background:none;font:inherit;color:inherit;text-align:start;padding:10px 0;cursor:pointer;min-width:0}.beitem img{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none}.bein{display:flex;flex-direction:column;min-width:0}
 .bechks{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.behrs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .logerr{font-size:13px;word-break:break-word;color:var(--bad);margin:4px 0}.logrow{display:flex;flex-direction:column;gap:4px}
+.drag{touch-action:none;cursor:grab}.becat.dragging{opacity:.9;position:relative;z-index:5;box-shadow:0 10px 28px rgba(0,0,0,.25)}.becat.dropat{outline:2px dashed var(--ac);outline-offset:2px}
+.behrs3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.ic.on{color:var(--ac)}
+.was{color:var(--mut);font-weight:400;font-size:13.5px}.promo{display:inline-flex;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--warnbg);color:var(--warn);margin-inline-start:6px}
+.sugg .optr:last-child{border-bottom:0}.bizad{display:flex;flex-direction:column;gap:6px;align-items:flex-start;text-decoration:none;color:inherit;border:1.5px dashed var(--ac);margin-top:18px}
+.btn.wa{color:#0f7a5f;border-color:#25D366;margin-top:22px}.btn.wa svg{color:#25D366}.supd{display:block;text-align:center;margin-top:4px}
+.swatch{display:inline-flex;gap:4px;vertical-align:middle}.swatch i{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);display:inline-block}
+.themed h1,.themed .cat,.themed .nm b,.themed h3{font-family:var(--hf,inherit)}.themed.upper .cat .catnm>span:first-child,.themed.upper h1{text-transform:uppercase;letter-spacing:.05em}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -342,7 +349,17 @@ beImg:'Dish photo',beImgAdd:'Upload a photo',beImgDel:'Remove the photo',beImgBu
 pVatInc:'Prices include VAT.',pVatExc:'Prices do not include VAT.',pSvcInc:'Service is included in the prices.',pSvcAdd:'A service charge of {0}% will be added to the bill.',
 al_gluten:'Gluten',al_milk:'Milk',al_egg:'Eggs',al_nuts:'Tree nuts',al_peanut:'Peanuts',al_fish:'Fish',al_shellfish:'Shellfish',al_sesame:'Sesame',al_soy:'Soy',al_celery:'Celery',al_mustard:'Mustard',
 bizNewBtn:'Build a menu by hand',bizNewD:'Without scanning: add sections and dishes yourself.',
-logsT:'Scan problems',logsBtn:'Scan problems',logsD:'{0} problems recorded, latest first. Photos are kept for 14 days.',logsImg:'Show the photo',logsNone:'No problems recorded.',logsClear:'Delete all',logsClearD:'All recorded problems and their photos will be deleted.',logsRef:'Refresh'},
+logsT:'Scan problems',logsBtn:'Scan problems',logsD:'{0} problems recorded, latest first. Photos are kept for 14 days.',logsImg:'Show the photo',logsNone:'No problems recorded.',logsClear:'Delete all',logsClearD:'All recorded problems and their photos will be deleted.',logsRef:'Refresh',
+beC_lang:'Guests can choose the language (the menu is translated)',beC_cnotes:'Guests can add changes and notes to a dish',
+bePer:'Priced by weight / amount',bePerQ:'The price is for',bePerU:'Unit',beNote:'Note next to the dish (optional)',beNotePh:'For example: takes 25 minutes',
+beIngs:'Ingredients (separated by commas)',beIngsPh:'For example: tomato, basil, mozzarella',beMods:'Changes guests can ask for (separated by commas)',beModsPh:'For example: no onion, well done, sauce on the side',
+beChoices:'A choice guests must make (separated by commas)',beChoicesPh:'For example: fries, rice, salad',beHappy:'Special price at certain hours',beHappyP:'Price',
+beSugg:'Suggest it at the end of the order',beUps:'Suggest with this dish (upgrades, extras, drinks)',beUpsD:'Guests who add this dish are offered these.',
+bePromo:'Discount at certain hours (happy hour)',bePromoPct:'Discount (%)',beDrag:'Drag to change the order',
+beTheme:'Design',beThemeD:'The page takes its colours and style from a photo of your menu, or of any design you like.',beThemeBtn:'Design from a photo',beThemeBusy:'Working out the design…',beThemeDone:'The design was updated',beThemeOff:'Back to the standard design',
+upsT:'Goes well with it',suggT:'You might also like',suggAdd:'Add',promoTag:'Now {0}% off',cnBtn:'Changes / note',cnT:'Changes and notes for the kitchen',cnPh:'Anything else? For example: allergic to peanuts',cnSave:'Save',
+bizAdT:'Want a menu like this for your business?',bizAdD:'A digital menu in every language, with a QR code - ready in minutes.',bizAdBtn:'Create a menu',
+supBtn:'Support on WhatsApp',supD:'Questions or a problem? Write to us.',supSoon:'WhatsApp support will be available here soon.'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק מול התפריט',unsureTagR:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק מול הקבלה',uq_name:'ייתכן ששם המנה לא נקרא נכון — כדאי לבדוק מול התפריט',uq_price:'ייתכן שהמחיר לא נקרא נכון — כדאי לבדוק מול התפריט',uq_ingredients:'ייתכן שאחד המרכיבים לא נקרא נכון — כדאי לבדוק מול התפריט',uq_marks:'ייתכן שאחד הסימונים התזונתיים לא נקרא נכון — כדאי לבדוק מול התפריט',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -400,8 +417,21 @@ beImg:'תמונת המנה',beImgAdd:'העלאת תמונה',beImgDel:'הסרת 
 pVatInc:'המחירים כוללים מע״מ.',pVatExc:'המחירים אינם כוללים מע״מ.',pSvcInc:'השירות כלול במחירים.',pSvcAdd:'יתווספו דמי שירות של {0}% לסכום החשבון הסופי.',
 al_gluten:'גלוטן',al_milk:'חלב',al_egg:'ביצים',al_nuts:'אגוזים',al_peanut:'בוטנים',al_fish:'דגים',al_shellfish:'פירות ים',al_sesame:'שומשום',al_soy:'סויה',al_celery:'סלרי',al_mustard:'חרדל',
 bizNewBtn:'בניית תפריט ידנית',bizNewD:'בלי לסרוק: מוסיפים קטגוריות ומנות בעצמכם.',
-logsT:'תקלות בסריקה',logsBtn:'תקלות בסריקה',logsD:'נרשמו {0} תקלות, מהחדשה לישנה. התמונות נשמרות 14 יום.',logsImg:'הצג את התמונה',logsNone:'לא נרשמו תקלות.',logsClear:'מחק הכול',logsClearD:'כל התקלות שנרשמו והתמונות שלהן יימחקו.',logsRef:'רענון'}};
+logsT:'תקלות בסריקה',logsBtn:'תקלות בסריקה',logsD:'נרשמו {0} תקלות, מהחדשה לישנה. התמונות נשמרות 14 יום.',logsImg:'הצג את התמונה',logsNone:'לא נרשמו תקלות.',logsClear:'מחק הכול',logsClearD:'כל התקלות שנרשמו והתמונות שלהן יימחקו.',logsRef:'רענון',
+beC_lang:'האורחים יכולים לבחור שפה (התפריט מתורגם)',beC_cnotes:'האורחים יכולים להוסיף שינויים והערות למנה',
+bePer:'מחיר לפי משקל / כמות',bePerQ:'המחיר הוא עבור',bePerU:'יחידה',beNote:'הערה ליד המנה (לא חובה)',beNotePh:'לדוגמה: זמן הכנה 25 דקות',
+beIngs:'מרכיבים (מופרדים בפסיק)',beIngsPh:'לדוגמה: עגבנייה, בזיליקום, מוצרלה',beMods:'שינויים שהאורח יכול לבקש (מופרדים בפסיק)',beModsPh:'לדוגמה: בלי בצל, עשוי היטב, רוטב בצד',
+beChoices:'בחירה שהאורח חייב לבצע (מופרדת בפסיק)',beChoicesPh:'לדוגמה: צ׳יפס, אורז, סלט',beHappy:'מחיר מיוחד בשעות מסוימות',beHappyP:'מחיר',
+beSugg:'להציע בסיום ההזמנה',beUps:'להציע יחד עם המנה (שדרוגים, תוספות, שתייה)',beUpsD:'מי שמוסיף את המנה יקבל הצעה להוסיף גם את אלה.',
+bePromo:'הנחה בשעות מסוימות (Happy Hour)',bePromoPct:'הנחה (%)',beDrag:'גררו כדי לשנות את הסדר',
+beTheme:'עיצוב',beThemeD:'הדף מקבל את הצבעים והסגנון מתמונה של התפריט שלכם, או של כל עיצוב שאתם אוהבים.',beThemeBtn:'עיצוב לפי תמונה',beThemeBusy:'מכינים את העיצוב…',beThemeDone:'העיצוב עודכן',beThemeOff:'חזרה לעיצוב הרגיל',
+upsT:'הולך טוב עם זה',suggT:'אולי תרצו גם',suggAdd:'הוסף',promoTag:'עכשיו {0}% הנחה',cnBtn:'שינויים / הערה',cnT:'שינויים והערות למטבח',cnPh:'משהו נוסף? לדוגמה: אלרגיה לבוטנים',cnSave:'שמירה',
+bizAdT:'רוצים תפריט כזה לעסק שלכם?',bizAdD:'תפריט דיגיטלי בכל השפות, עם קוד QR – מוכן תוך דקות.',bizAdBtn:'ליצירת תפריט',
+supBtn:'תמיכה בוואטסאפ',supD:'שאלה או תקלה? כתבו לנו.',supSoon:'התמיכה בוואטסאפ תהיה זמינה כאן בקרוב.'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
+// the support number for WhatsApp (digits only, with the country code); while empty, the button says support is coming soon
+const SUPPORT_WA='';
+const supBtn=()=>`<button class="btn ghost wide wa" data-a=support>${ico('wa',20)}${t('supBtn')}</button><small class="mut supd">${t('supD')}</small>`;
 const CONTACT='',LEGAL_DATE='07.10.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
 ['מה אנחנו אוספים','האפליקציה לא דורשת הרשמה ולא אוספת שם, טלפון או כתובת דוא״ל. התפריטים, ההזמנות, הקבלות וההגדרות שלכם (שפה, מטבע, מגבלות תזונה ומרכיבים שסימנתם) נשמרים בדפדפן שלכם, במכשיר שלכם. כשאתם משתפים תפריט או חשבון בקישור, או פותחים הזמנה או חלוקה משותפת, העותק המשותף נשמר בשרת שלנו עד 90 יום כדי שהקישור יעבוד. בעלי עסקים שיוצרים דף למסעדה נרשמים עם מספר טלפון וסיסמה, והדף שלהם נשמר בשרת.'],
@@ -596,6 +626,7 @@ V.batch=V.batch||{};if(!jobs(M.id).length)V.batch[M.id]={total:0,done:0};V.batch
 const job={id:M.id,pg,n:0,ids:new Set(),idx:V.batch[M.id].total};V.jobs.push(job);render();let uns=0,unc=0,low=false,err='',seq=0,kind=null;
 const ctx={parent:'',inherit:null,started:false};
 try{const image=await shrink(file);low=shrink.last<1200;
+if(M.biz&&!M.theme&&!M.themeTried){M.themeTried=true;themeFrom(M,image,true)} // a business's own menu: its page takes the look of the printed menu
 await scanStream(image,o=>{
 // the server is reading the photo again with a stronger model: drop what this page got so far
 if(o.restart){M.items=M.items.filter(i=>!job.ids.has(i.id));M.notes=(M.notes||[]).filter(n=>n.pg!==pg);job.ids.clear();job.n=0;job.hq=true;uns=0;seq=0;Object.assign(ctx,{parent:'',inherit:null,started:false,remap:null});soon();return}
@@ -647,17 +678,18 @@ const real=a=>a.filter(x=>!x.demo&&!x.biz); // the sample and the business porta
 // every language, so opening it costs nothing. Guests see it in their phone's language and currency and can choose
 // dishes and show the waiter; scanning the bill copies the menu and the order into their own app to check it.
 const REST=(location.search.match(/[?&]r=([a-z0-9-]+)/)||[])[1]||null;
-function restApply(M){const L=M.src.tr[S.lang]||M.src.tr[String(S.lang).split('-')[0]]||M.src.tr.en||{};const g=(o,k)=>(o||{})[k]||'';
+function restApply(M){const one=cfgOf(M).lang===false&&M.src.base,L=(one&&M.src.tr[one])||M.src.tr[S.lang]||M.src.tr[String(S.lang).split('-')[0]]||M.src.tr.en||M.src.tr[M.src.base]||{};const g=(o,k)=>(o||{})[k]||'',src=Object.fromEntries(M.src.items.map(x=>[x.id,x]));
+M.items.forEach(i=>{const s=src[i.id]||{};i.note=g(L.inotes,i.id)||s.note||'';if(i.mods)i.modsTr=i.mods.map((m,k)=>g(L.mods,i.id+'|'+k)||m);if(s.ch)i.ch={l:'',o:s.ch.o.map((o,k)=>({o:o.o,t:g(L.opts,i.id+'|'+k)}))}});
 M.items.forEach(i=>{i.tr=g(L.items,i.id);i.catTr=g(L.cats,i.cat);i.subTr=g(L.subs,i.sub);i.desc=g(L.descs,i.id)});
 M.notes=(M.src.notes||[]).map((n,k)=>({...n,text:g(L.notes,k)||n.text}));
 M.ingr=Object.fromEntries(Object.entries(M.src.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]]));
 if(M.src.policy)M.policy={...M.src.policy,text:L.policy||M.src.policy.text};M.lang=S.lang}
 async function restLoad(){try{let r=await fetch('rdata/'+REST+'.json',{cache:'no-cache'}); // a prepared sample, else a page created in the app
 if(!r.ok)r=await fetch('/api/rest?slug='+REST);if(!r.ok)throw 0;const d=await r.json();
-const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
-restApply(M);V.rmenu=M;V.screen='menu';V.id=M.id}catch(e){V.screen='home';V.id=null;toast(t('fail'))}render()}
+const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,promo:d.promo||null,theme:d.theme||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
+restApply(M);themeApply(M.theme);V.rmenu=M;V.screen='menu';V.id=M.id}catch(e){V.screen='home';V.id=null;toast(t('fail'))}render()}
 // the guest's bill: the menu and the order become a normal menu in their app, and the bill scan compares with it
-function restToApp(){const M=V.rmenu,C={...M,id:uid(),rest:false,src:undefined,date:Date.now(),items:M.items.map(i=>({...i}))};delete C.src;delete C.lang;
+function restToApp(){const M=V.rmenu,C={...M,id:uid(),rest:false,src:undefined,date:Date.now(),items:M.items.map(i=>({...i}))};delete C.src;delete C.lang;delete C.theme;themeApply(null);
 S.menus.unshift(C);S.started=true;V.rmenu=null;V.id=C.id;try{history.replaceState(history.state,'',location.pathname)}catch(e){}save();withHints(true,()=>scanReceipt(C.id,null))}
 // ---------- creating a restaurant page from a scanned menu (manager only: ?admin=<code> once on the device) ----------
 // The dishes, headings, ingredients and price rules are translated into every app language (one call per language),
@@ -670,23 +702,27 @@ function restSheet(M){openSheet(`<h3>${t('rpT')}</h3><p class=mut>${t('rpD')}</p
 <button class=btn data-a=rpgo>${ico('check',18)}${t(M.restSlug?'rpUpd':'rpGo')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})}
 async function restPublish(M){const base=String(S.lang==='x'?'en':S.lang).split('-')[0],G=()=>({items:{},cats:{},subs:{},ingr:{}});
 const items=M.items.map(i=>{const o={id:i.id,orig:i.orig,price:i.price,cat:i.cat||'',pg:i.pg,seq:i.seq,ing:i.ing||[],may:i.may||[]};if(i.local)o.local=i.local;if(i.sub)o.sub=i.sub;if(i.addon){o.addon=true;o.parent=i.parent}
-for(const k of['marks','ok','no'])if((i[k]||[]).length)o[k]=i[k];for(const k of['hot','soldOut','rec','isNew','img','portion','per','vb','vn','vnTr','ch','from','to'])if(i[k])o[k]=i[k];return o});
+for(const k of['marks','ok','no'])if((i[k]||[]).length)o[k]=i[k];for(const k of['hot','soldOut','rec','isNew','img','portion','per','vb','vn','vnTr','ch','from','to','note','mods','hp','sugg','ingC'])if(i[k]&&(!Array.isArray(i[k])||i[k].length))o[k]=i[k];
+if((i.ups||[]).length)o.ups=i.ups.filter(u=>M.items.some(x=>x.id===u));return o});
 const cats=[...new Set(M.items.map(i=>i.cat).filter(Boolean))],subs=[...new Set(M.items.map(i=>i.sub).filter(Boolean))],ings=Object.keys(M.ingr||{});
 const strings={},back=[],add=(k,g,id,v,tr)=>{strings[k]=v+(tr&&norm(tr)!==norm(v)?' || '+tr:'');back.push([k,g,id])};
 M.items.forEach((i,n)=>add('i'+n,'items',i.id,i.orig,i.tr));cats.forEach((c,n)=>add('c'+n,'cats',c,c,(M.items.find(i=>i.cat===c)||{}).catTr));
 subs.forEach((c,n)=>add('s'+n,'subs',c,c,(M.items.find(i=>i.sub===c)||{}).subTr));ings.forEach((k,n)=>add('g'+n,'ingr',k,k,M.ingr[k][0]));
 if(M.policy&&M.policy.text)add('p0','policy','',M.policy.text);
+// a dish's note, the changes guests can ask for and the choices they must make are translated as well
+M.items.forEach((i,n)=>{if(i.note){strings['t'+n]=i.note;back.push(['t'+n,'inotes',i.id])}(i.mods||[]).forEach((m,k)=>{strings['m'+n+'_'+k]=m;back.push(['m'+n+'_'+k,'mods',i.id+'|'+k])});if(i.ch)i.ch.o.forEach((o,k)=>{strings['o'+n+'_'+k]=o.o;back.push(['o'+n+'_'+k,'opts',i.id+'|'+k])})});
 // descriptions and the menu's notes are translated too (each is its own text, not a name)
 M.items.forEach((i,n)=>{if(i.desc){strings['d'+n]=i.desc;back.push(['d'+n,'descs',i.id])}});(M.notes||[]).forEach((x,n)=>{strings['n'+n]=x.text;back.push(['n'+n,'notes',n])});
 const own=G();M.items.forEach(i=>{if(i.desc)(own.descs=own.descs||{})[i.id]=i.desc});(M.notes||[]).forEach((x,n)=>(own.notes=own.notes||{})[n]=x.text);M.items.forEach(i=>{if(i.tr)own.items[i.id]=i.tr;if(i.catTr)own.cats[i.cat]=i.catTr;if(i.subTr)own.subs[i.sub]=i.subTr});ings.forEach(k=>own.ingr[k]=M.ingr[k][0]);if(M.policy&&M.policy.text)own.policy=M.policy.text;
-const tr={[base]:own},todo=[...new Set(LANGS.map(l=>l[0].split('-')[0]))].filter(c=>c!==base);let done=0;
+// when guests may not choose a language, the page stays in the business's own language and nothing is translated
+const tr={[base]:own},todo=cfgOf(M).lang===false?[]:[...new Set(LANGS.map(l=>l[0].split('-')[0]))].filter(c=>c!==base);let done=0;
 const prog=()=>{const e=$('#rpprog');if(e)e.textContent=f(t('rpProg'),done,todo.length)};
 closeSheet();openSheet(`<div class="scan-st" role=status><span class=spin></span><div><b id=rpprog></b></div></div>`,{});prog();
 const one=async c=>{const nm=new Intl.DisplayNames(['en'],{type:'language'}).of(c);let err;
 for(let a=0;a<4;a++){try{const j=await api({mode:'dishes',admin:bizKey(),language:nm,strings});const o=G();back.forEach(([k,g,id])=>{const v=j.strings[k];if(v){if(g==='policy')o.policy=v;else(o[g]=o[g]||{})[id]=v}});tr[c]=o;done++;prog();return}
 catch(e){err=e;await new Promise(z=>setTimeout(z,3000*(a+1)))}}throw err};
 for(let k=0;k<todo.length;k+=4)await Promise.all(todo.slice(k,k+4).map(one));
-const data={title:M.title,cur:M.cur,policy:M.policy||null,cfg:M.cfg||null,reviewUrl:M.reviewUrl||null,hours:M.hours||null,cats:M.cats||null,pol:M.pol||null,notes:(M.notes||[]).map(n=>({text:n.text,...(n.cat?{cat:n.cat}:{})})),items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
+const data={title:M.title,cur:M.cur,base,policy:M.policy||null,cfg:M.cfg||null,reviewUrl:M.reviewUrl||null,theme:M.theme||null,promo:M.promo||null,hours:M.hours||null,cats:M.cats||null,pol:M.pol||null,notes:(M.notes||[]).map(n=>({text:n.text,...(n.cat?{cat:n.cat}:{})})),items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
 const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:bizKey(),sess:(S.bizSess||{}).sess||null,slug:M.restSlug||null,edit:M.restEdit||null,data})}),j=await r.json().catch(()=>({}));
 if(!r.ok)throw new Error(j.error||t('fail'));M.restSlug=j.slug;if(j.edit)M.restEdit=j.edit;V.bizLoaded=false;save();closeSheet();restDone(M.title,j.slug)}
 // ---------- sharing a menu or a bill ----------
@@ -816,7 +852,7 @@ return head+`<div class=pad>${langSel()}${S.bizSess?`<div class=row><small class
 <button class="btn acc wide" data-a=bizscan>${ico('cam',18)}${t('bizScan')}</button><small class=mut>${t('bizScanD')}</small>
 <button class="btn ghost wide" data-a=biznew>${ico('edit',18)}${t('bizNewBtn')}</button><small class=mut>${t('bizNewD')}</small>
 <div class=cat>${t('bizMenus')}</div>${rows.join('')||`<p class=empty>${t('bizNone')}</p>`}
-${S.adminKey?`<button class="btn ghost wide" data-a=logs>${ico('warn',18)}${t('logsBtn')}</button><small class=mut>${t('adminOn')}</small>`:''}</div>`}
+${S.adminKey?`<button class="btn ghost wide" data-a=logs>${ico('warn',18)}${t('logsBtn')}</button><small class=mut>${t('adminOn')}</small>`:''}${supBtn()}</div>`}
 // the manager's dashboard: every scan that failed or came back weak (from the server) and every problem the app noticed
 // on a phone, latest first, with the photo that was scanned when there is one
 function logsV(){if(!V.logs&&!V.logsBusy){V.logsBusy=true;bizApi({logs:'list',key:bizKey()}).then(j=>{V.logs=j.logs||[]}).catch(e=>{V.logs=[];toast(e.message)}).finally(()=>{V.logsBusy=false;render()})}
@@ -830,7 +866,7 @@ ${rows.map(l=>`<div class="card logrow"><div class=row><b dir=ltr>${esc(l.kind)}
 // opening a page of the account on a phone that does not have its menu: the menu is rebuilt from the page (in this language)
 async function bizOpen(slug){let M=S.menus.find(m=>m.biz&&m.restSlug===slug);if(M)return goTo('menu:'+M.id);
 try{const r=await fetch('/api/rest?slug='+slug+'&x='+Date.now());if(!r.ok)throw 0;const d=await r.json(),base=String(S.lang==='x'?'en':S.lang).split('-')[0],L=d.tr[base]||d.tr.en||{},g=(o,k)=>(o||{})[k]||'';
-M={id:uid(),biz:true,restSlug:slug,title:d.title||'',cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,...(d.cats?{cats:d.cats}:{}),...(d.pol?{pol:d.pol}:{}),notes:(d.notes||[]).map((n,k)=>({...n,text:g(L.notes,k)||n.text})),date:Date.now(),ingr:Object.fromEntries(Object.entries(d.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]])),
+M={id:uid(),biz:true,restSlug:slug,title:d.title||'',cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,promo:d.promo||null,theme:d.theme||null,...(d.cats?{cats:d.cats}:{}),...(d.pol?{pol:d.pol}:{}),notes:(d.notes||[]).map((n,k)=>({...n,text:g(L.notes,k)||n.text})),date:Date.now(),ingr:Object.fromEntries(Object.entries(d.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]])),
 items:d.items.map((i,n)=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',pg:1,seq:n,...i,tr:g(L.items,i.id),desc:g(L.descs,i.id),catTr:g(L.cats,i.cat),subTr:g(L.subs,i.sub),qty:0}))};
 S.menus.unshift(M);save();goTo('menu:'+M.id)}catch(e){toast(t('fail'))}}
 // ---------- the business menu editor (a scanned menu, or one built by hand) ----------
@@ -846,9 +882,10 @@ function bizPolApply(M){const P=bizPol(M),parts=[P.vat==='inc'?t('pVatInc'):P.va
 M.policy=parts.length?{tax_included:P.vat==='inc'?true:P.vat==='exc'?false:null,service_pct:P.svc==='add'?(+P.pct||null):null,text:parts.join(' ')}:null}
 function bizEditV(M){bizNorm(M);const C=cfgOf(M),P=bizPol(M);
 const pill=(a,x,on,l)=>`<button class="pill${on?' on':''}" data-a=${a} data-x=${x} aria-pressed=${on}>${l}</button>`;
-const cat=(c,ci)=>{const its=M.items.filter(i=>(i.cat||'')===c);return `<section class="card becat"><div class=becath><input class=becatn data-c=bcatn data-id=${ci} value="${esc(c)}" placeholder="${t('beCatPh')}" dir=auto aria-label="${t('beCatPh')}">
-<button class="ic${hoursTxt((M.hours||{})[c])?' on':''}" data-a=bchours data-id=${ci} aria-label="${t('beHoursBtn')}">${ico('clock',17)}</button><button class=ic data-a=bcmove data-id=${ci} data-x=-1 ${ci?'':'disabled'} aria-label="${t('beUp')}">↑</button><button class=ic data-a=bcmove data-id=${ci} data-x=1 ${ci<M.cats.length-1?'':'disabled'} aria-label="${t('beDown')}">↓</button><button class="ic del" data-a=bcdel data-id=${ci} aria-label="${t('del')}">${ico('trash',17)}</button></div>
-${hoursTxt((M.hours||{})[c])?`<small class=catnote>${ico('clock',13)}<bdi>${hoursTxt(M.hours[c])}</bdi></small>`:''}${its.map((i,k)=>`<div class=berow><button class=beitem data-a=bedit data-id=${i.id}>${i.img?`<img src="${esc(i.img)}" alt="">`:''}<span class=bein><b dir=auto>${esc(i.orig||t('beNoName'))}</b><small class=mut dir=auto>${[C.prices&&i.price?fmt(i.price,M.cur):'',i.soldOut?t('soldOut'):'',i.rec?t('recBadge'):'',i.isNew?t('newBadge'):'',hoursTxt(i)].filter(Boolean).join(' · ')}</small></span></button>
+const pm=c=>{const p=(M.promo||{})[c];return p&&+p.pct&&hoursTxt(p)?`−${p.pct}% ${hoursTxt(p)}`:''};
+const cat=(c,ci)=>{const its=M.items.filter(i=>(i.cat||'')===c);return `<section class="card becat"><div class=becath><button class="ic drag" data-drag=${ci} aria-label="${t('beDrag')}" title="${t('beDrag')}">☰</button><input class=becatn data-c=bcatn data-id=${ci} value="${esc(c)}" placeholder="${t('beCatPh')}" dir=auto aria-label="${t('beCatPh')}">
+<button class="ic${hoursTxt((M.hours||{})[c])||pm(c)?' on':''}" data-a=bchours data-id=${ci} aria-label="${t('beHoursBtn')}">${ico('clock',17)}</button><button class=ic data-a=bcmove data-id=${ci} data-x=-1 ${ci?'':'disabled'} aria-label="${t('beUp')}">↑</button><button class=ic data-a=bcmove data-id=${ci} data-x=1 ${ci<M.cats.length-1?'':'disabled'} aria-label="${t('beDown')}">↓</button><button class="ic del" data-a=bcdel data-id=${ci} aria-label="${t('del')}">${ico('trash',17)}</button></div>
+${hoursTxt((M.hours||{})[c])||pm(c)?`<small class=catnote>${ico('clock',13)}<bdi>${[hoursTxt((M.hours||{})[c]),pm(c)].filter(Boolean).join(' · ')}</bdi></small>`:''}${its.map((i,k)=>`<div class=berow><button class=beitem data-a=bedit data-id=${i.id}>${i.img?`<img src="${esc(i.img)}" alt="">`:''}<span class=bein><b dir=auto>${esc(i.orig||t('beNoName'))}</b><small class=mut dir=auto>${[C.prices&&i.price?fmt(i.price,M.cur):'',i.soldOut?t('soldOut'):'',i.rec?t('recBadge'):'',i.isNew?t('newBadge'):'',hoursTxt(i)].filter(Boolean).join(' · ')}</small></span></button>
 <button class=ic data-a=bimove data-id=${i.id} data-x=-1 ${k?'':'disabled'} aria-label="${t('beUp')}">↑</button><button class=ic data-a=bimove data-id=${i.id} data-x=1 ${k<its.length-1?'':'disabled'} aria-label="${t('beDown')}">↓</button></div>`).join('')}
 <button class="btn ghost sm wide" data-a=badd data-id=${ci}>${ico('plus',16)}${t('beAddDish')}</button></section>`};
 return bar(t('bizMenuHdr'),'biz')+`<div class=pad><label>${t('beName')}<input data-c=mtitle value="${esc(M.title||'')}" dir=auto></label><label>${t('cur')}<select data-c=bcur>${curOpts(M.cur)}</select></label>
@@ -857,17 +894,27 @@ return bar(t('bizMenuHdr'),'biz')+`<div class=pad><label>${t('beName')}<input da
 <span class=lbl>${t('svc')}</span><div class=chips>${pill('bsvc','none',P.svc==='none',t('beSvcNone'))}${pill('bsvc','inc',P.svc==='inc',t('beSvcInc'))}${pill('bsvc','add',P.svc==='add',t('beSvcAdd'))}</div>
 ${P.svc==='add'?`<label>${t('beSvcPct')}<input type=number inputmode=decimal min=0 max=40 step=any data-c=bsvcp value="${esc(P.pct)}"></label>`:''}
 <label>${t('beNotes')}<textarea data-c=bnotes rows=3 dir=auto placeholder="${t('beNotesPh')}">${esc(P.notes||'')}</textarea></label>${M.policy&&M.policy.text?`<small class=mut>${t('bePreview')}: ${esc(M.policy.text)}</small>`:''}</div>
-<div class=cat>${t('beShowT')}</div><div class=card>${['prices','photos','ing','order','scanBill','google','review'].map(k=>`<label class=chk><input type=checkbox data-c=bcfg data-id=${k} ${C[k]?'checked':''}>${t('beC_'+k)}</label>`).join('')}
+<div class=cat>${t('beTheme')}</div><div class=card><p class=mut>${t('beThemeD')}</p>${M.theme?`<p><span class=swatch>${['bg','card','ink','accent'].map(k=>`<i style="background:${esc(M.theme[k]||'')}"></i>`).join('')}</span></p>`:''}
+<label class="btn ghost wide" style="cursor:pointer">${ico('img',18)}${t('beThemeBtn')}<input type=file accept="image/*" data-c=btheme hidden></label>${M.theme?`<button class=link data-a=bthemeoff>${t('beThemeOff')}</button>`:''}</div>
+<div class=cat>${t('beShowT')}</div><div class=card>${['prices','photos','ing','lang','order','cnotes','scanBill','review'].map(k=>`<label class=chk><input type=checkbox data-c=bcfg data-id=${k} ${C[k]?'checked':''}>${t('beC_'+k)}</label>`).join('')}
 ${C.review?`<label>${t('beReview')}<input type=url data-c=breview value="${esc(M.reviewUrl||'')}" dir=ltr placeholder="https://g.page/r/…"></label><small class=mut>${t('beReviewD')}</small>`:''}</div>
-${orderV(M,0,0,M.items.some(i=>i.price>0))}</div>`}
+${orderV(M,0,0,M.items.some(i=>i.price>0))}${supBtn()}</div>`}
 // a dish: name, description, price, section, sold out / recommended / new / spicy, diets it suits, allergens it contains
 function bdishSheet(M,id,ci){const i=id?M.items.find(x=>x.id===id):{orig:'',tr:'',price:0,cat:M.cats[+ci]||'',ok:[],ing:[]};if(!i)return;
 const ck=(k,on,l)=>`<label class=chk><input type=checkbox id=bd_${k} ${on?'checked':''}>${l}</label>`;
 openSheet(`<h3>${t(id?'beEditDish':'beAddDish')}</h3><label>${t('beDName')}<input id=bd_n value="${esc(i.orig)}" dir=auto></label><label>${t('beDDesc')}<textarea id=bd_d rows=2 dir=auto>${esc(i.tr||'')}</textarea></label>
-<label>${t('bePrice')} (${M.cur})<input id=bd_p type=number inputmode=decimal min=0 step=any value="${i.price||''}"></label><label>${t('beCat')}<select id=bd_c>${M.cats.map((c,k)=>`<option value=${k} ${c===(i.cat||'')?'selected':''}>${esc(c||t('beNoCat'))}</option>`).join('')}</select></label>
+<label>${t('bePrice')} (${M.cur})<input id=bd_p type=number inputmode=decimal min=0 step=any value="${i.price||''}"></label>
+<label class=chk><input type=checkbox id=bd_per ${i.per?'checked':''}>${t('bePer')}</label><div class=behrs><label>${t('bePerQ')}<input id=bd_perq type=number inputmode=decimal min=0 step=any value="${i.per?i.per.q:100}"></label><label>${t('bePerU')}<select id=bd_peru>${['g','kg','ml','l','pc'].map(u=>`<option value=${u} ${i.per&&i.per.u===u?'selected':''}>${u==='pc'?t('pcU'):u}</option>`).join('')}</select></label></div>
+<label>${t('beNote')}<input id=bd_note value="${esc(i.note||'')}" dir=auto placeholder="${t('beNotePh')}"></label>
+<label>${t('beIngs')}<input id=bd_ings value="${esc((i.ingC||[]).map(k=>(M.ingr[k]||[k])[0]).join(', '))}" dir=auto placeholder="${t('beIngsPh')}"></label>
+<label>${t('beChoices')}<input id=bd_ch value="${esc(i.ch?i.ch.o.map(o=>o.o).join(', '):'')}" dir=auto placeholder="${t('beChoicesPh')}"></label>
+<label>${t('beMods')}<input id=bd_mods value="${esc((i.mods||[]).join(', '))}" dir=auto placeholder="${t('beModsPh')}"></label><label>${t('beCat')}<select id=bd_c>${M.cats.map((c,k)=>`<option value=${k} ${c===(i.cat||'')?'selected':''}>${esc(c||t('beNoCat'))}</option>`).join('')}</select></label>
 <div class=bechks>${ck('so',i.soldOut,t('soldOut'))}${ck('rec',i.rec,t('recBadge'))}${ck('new',i.isNew,t('newBadge'))}${ck('hot',i.hot,t('spicyL'))}</div>
 <span class=lbl>${t('beImg')}</span><div class=row id=bd_imgbox>${i.img?`<img src="${esc(i.img)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`:'<span></span>'}<span><label class="btn ghost sm" style="cursor:pointer">${ico('img',16)}${t('beImgAdd')}<input type=file accept="image/*" data-c=bimg hidden></label>${i.img?` <button class=link data-a=bimgdel>${t('beImgDel')}</button>`:''}</span></div>
 <span class=lbl>${t('beHours')}</span><div class=behrs><label>${t('beFrom')}<input id=bd_from type=time value="${esc(i.from||'')}"></label><label>${t('beTo')}<input id=bd_to type=time value="${esc(i.to||'')}"></label></div><small class=mut>${t('beHoursD')}</small>
+<span class=lbl>${t('beHappy')}</span><div class=behrs3><label>${t('beHappyP')}<input id=bd_hpp type=number inputmode=decimal min=0 step=any value="${i.hp?i.hp.price:''}"></label><label>${t('beFrom')}<input id=bd_hpf type=time value="${esc(i.hp?i.hp.from:'')}"></label><label>${t('beTo')}<input id=bd_hpt type=time value="${esc(i.hp?i.hp.to:'')}"></label></div>
+${M.items.filter(x=>x.id!==id).length?`<label>${t('beUps')}<select id=bd_ups multiple size=4>${M.items.filter(x=>x.id!==id).map(x=>`<option value="${x.id}" ${(i.ups||[]).includes(x.id)?'selected':''}>${esc(x.orig)}</option>`).join('')}</select></label><small class=mut>${t('beUpsD')}</small>`:''}
+<label class=chk><input type=checkbox id=bd_sugg ${i.sugg?'checked':''}>${t('beSugg')}</label>
 <span class=lbl>${t('beDiets')}</span><div class=bechks>${DIETS.filter(([c])=>c!=='nohot').map(([c,e])=>ck('ok_'+c,(i.ok||[]).includes(c),`${e} ${t('d'+c)}`)).join('')}</div>
 <span class=lbl>${t('beAlg')}</span><div class=bechks>${ALG.map(([k,e])=>ck('al_'+k,(i.ing||[]).includes(k),`${e} ${t('al_'+k)}`)).join('')}</div>
 <button class=btn data-a=bdsave data-id=${id||''}>${ico('check',18)}${t('saveSet')}</button>${id?`<button class="btn ghost" data-a=bddel data-id=${id}>${ico('trash',18)}${t('del')}</button>`:''}<button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{});V.bdImg=undefined}
@@ -877,6 +924,13 @@ const ci=+g('c').value,nc=M.cats[ci]||'';if((i.cat||'')!==nc){i.cat=nc;i.catTr='
 Object.assign(i,{orig:name,tr:(g('d').value||'').trim(),price:Math.max(0,+g('p').value||0),soldOut:g('so').checked,rec:g('rec').checked,isNew:g('new').checked,hot:g('hot').checked,
 ok:DIETS.map(d=>d[0]).filter(c=>c!=='nohot'&&g('ok_'+c)&&g('ok_'+c).checked),from:g('from').value&&g('to').value?g('from').value:'',to:g('from').value&&g('to').value?g('to').value:''});
 if(V.bdImg!==undefined)i.img=V.bdImg;
+const list=k=>(g(k).value||'').split(/[,،、\n]/).map(s=>s.trim()).filter(Boolean).slice(0,12);
+if(g('per').checked&&+g('perq').value>0)i.per={q:+g('perq').value,u:g('peru').value};else delete i.per;
+i.note=(g('note').value||'').trim().slice(0,120);i.mods=list('mods');i.sugg=g('sugg').checked;if(g('ups'))i.ups=[...g('ups').selectedOptions].map(o=>o.value);
+const co=list('ch');if(co.length>1)i.ch={l:'',o:co.map(o=>({o,t:''}))};else delete i.ch;
+const hp={price:+g('hpp').value||0,from:g('hpf').value,to:g('hpt').value};if(hp.price>0&&hp.from&&hp.to)i.hp=hp;else delete i.hp;
+// ingredients typed by the business become entries of the menu's ingredient list (so guests can filter by them)
+M.ingr=M.ingr||{};const ic=list('ings').map(x=>{const k=x.toLowerCase().slice(0,30);if(!M.ingr[k])M.ingr[k]=[x,'🍽️'];return k});i.ing=[...(i.ing||[]).filter(k=>!(i.ingC||[]).includes(k)),...ic.filter(k=>!(i.ing||[]).includes(k)||(i.ingC||[]).includes(k))];i.ing=[...new Set(i.ing)];i.ingC=ic;
 const al=ALGK.filter(k=>g('al_'+k).checked);i.ing=[...(i.ing||[]).filter(k=>!ALGK.includes(k)),...al];M.ingr=M.ingr||{};al.forEach(k=>{if(!M.ingr[k])M.ingr[k]=[t('al_'+k),ALG.find(a=>a[0]===k)[1]]});
 closeSheet();bizNorm(M);save();render()}
 // a menu built by hand: an empty menu with one section, straight into the editor
@@ -1041,7 +1095,21 @@ if(i.may&&((i.ing||[]).some(k=>clashKey(d,k))||(kosherMix&&(i.ing||[]).some(k=>c
 return [...(i.ing||[]),...(i.may||[])].some(k=>clashKey(d,k))||kosherMix||(i.no||[]).includes(d)?'may':null}
 // a restaurant's own page can turn parts off (cfg, set in the business editor): prices, its photos, ingredient warnings,
 // ordering, the bill scan and the Google photo link; a dish can be sold out, recommended or new
-const cfgOf=M=>({prices:true,photos:true,ing:true,order:true,scanBill:true,google:!M.rest&&!M.biz,review:true,...(M.cfg||{})});
+const cfgOf=M=>({prices:true,photos:true,ing:true,order:true,scanBill:true,review:true,lang:true,cnotes:true,...(M.cfg||{}),google:!M.rest&&!M.biz});
+// a special price at certain hours (one dish), or a discount on a whole section at certain hours (happy hour): on the
+// guests' page the dish's price is the one that applies right now, with the usual price crossed out
+function promoApply(M){M.items.forEach(i=>{if(i.p0==null)i.p0=i.price;const cp=(M.promo||{})[i.cat||''],a=i.hp&&+i.hp.price>0&&inHours(i.hp)?+i.hp.price:cp&&+cp.pct>0&&inHours(cp)?r2(i.p0*(1-cp.pct/100)):0;
+i.price=a>0?a:i.p0;i.was=a>0&&a!==i.p0?i.p0:null;i.off=i.was&&!(i.hp&&inHours(i.hp))?+cp.pct:0})}
+// the changes a guest asked for on a dish ("no onion") and their own note: in the guest's language, or as the restaurant wrote them (for the waiter)
+const cnoteTxt=(i,orig)=>[...(i.cmods||[]).map(k=>(!orig&&(i.modsTr||[])[k])||(i.mods||[])[k]).filter(Boolean),i.ctxt||''].filter(Boolean).join(', ');
+// the page's look, taken from a photo of the restaurant's menu: colours, the heading font's kind and whether headings are in capitals
+const HFONT={serif:'Georgia,"Times New Roman",serif',slab:'Rockwell,"Roboto Slab","Courier New",serif',script:'"Segoe Script","Brush Script MT",cursive',mono:'ui-monospace,Menlo,Consolas,monospace',sans:'inherit'};
+const lum=h=>{const c=[1,3,5].map(k=>parseInt(h.slice(k,k+2),16)/255).map(v=>v<=.03928?v/12.92:((v+.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2]},contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+function themeApply(th){const r=document.documentElement,hex=v=>/^#[0-9a-f]{6}$/i.test(v||''),keys=['--bg','--card','--ink','--mut','--line','--ac','--ac2','--hf'];keys.forEach(k=>r.style.removeProperty(k));r.classList.remove('themed','upper');
+if(!th||!hex(th.bg)||!hex(th.accent))return;const bg=th.bg,dark=lum(bg)<.35,card=hex(th.card)?th.card:bg,ink=hex(th.ink)&&contrast(th.ink,bg)>=4.5&&contrast(th.ink,card)>=4.5?th.ink:dark?'#f5f1ea':'#1b1714',ac=contrast(th.accent,card)>=2.2?th.accent:dark?'#fb7d42':'#c2410c';
+r.style.setProperty('--bg',bg);r.style.setProperty('--card',card);r.style.setProperty('--ink',ink);r.style.setProperty('--mut',`color-mix(in srgb,${ink} 62%,${bg})`);r.style.setProperty('--line',`color-mix(in srgb,${ink} 16%,${bg})`);
+r.style.setProperty('--ac',ac);r.style.setProperty('--ac2',`color-mix(in srgb,${ac} 14%,${card})`);r.style.setProperty('--hf',HFONT[th.font]||'inherit');r.classList.add('themed');if(th.upper)r.classList.add('upper')}
+async function themeFrom(M,image,quiet){try{if(!quiet)toast(t('beThemeBusy'));const j=await api({mode:'theme',image:Array.isArray(image)?image[0]:image});if(j.theme){M.theme=j.theme;save();if(!quiet){toast(t('beThemeDone'));render()}}}catch(e){if(!quiet)toast(e.message)}}
 // a section or a dish can be set to show only at certain hours ("12:00"-"16:00"; past midnight works too) - on the guests' page
 const inHours=h=>{if(!h||!h.from||!h.to)return true;const d=new Date(),n=d.getHours()*60+d.getMinutes(),m=s=>+s.slice(0,2)*60+ +s.slice(3,5),a=m(h.from),b=m(h.to);return a<=b?n>=a&&n<b:n>=a||n<b};
 const showNow=(M,i)=>!M.rest||(inHours((M.hours||{})[i.cat||''])&&inHours(i));
@@ -1061,6 +1129,8 @@ const perLbl=(i,n)=>`${+(i.per.q*n).toFixed(2)} ${i.per.u==='pc'?t('pcU'):i.per.
 const pickTxt=(i,orig)=>{if(!i.ch||!(i.picks||[]).length)return'';const c={};i.picks.slice(0,i.qty).forEach(k=>c[k]=(c[k]||0)+1);
 return Object.entries(c).map(([k,n])=>{const o=i.ch.o[k];return o?(orig?o.o:(o.t||o.o))+(n>1?' ×'+n:''):''}).filter(Boolean).join(', ')};
 const addonsOf=(M,i)=>i.addon?[]:M.items.filter(a=>a.addon&&a.parent===norm(i.orig)&&a.pg===i.pg&&norm(a.cat||'')===norm(i.cat||''));
+// what the restaurant suggests with this dish (an upgrade, an extra, a drink): offered when the dish is added
+const upsOf=(M,i)=>M.rest?(i.ups||[]).map(u=>M.items.find(x=>x.id===u)).filter(x=>x&&!x.soldOut&&showNow(M,x)):[];
 const sizesOf=(M,i)=>i.vb?M.items.filter(x=>x.vb&&norm(x.vb)===norm(i.vb)&&norm(x.cat||'')===norm(i.cat||'')):[];
 // what there is to choose for this dish, as a short label on its card: size, the menu's own word for the choice, extras, weight
 const optTags=(M,i)=>[i._grp?t('optSize'):'',i.ch?(i.ch.l||t('optChoice')):'',!i._grp&&addonsOf(M,i).length?t('optExtras'):'',i.per?t('optWeight'):''].filter(Boolean);
@@ -1071,21 +1141,22 @@ return `<h3 dir=auto>${esc(grp.length>1?i.vb:i.orig)}</h3>${i.tr&&norm(i.tr)!==n
 ${grp.length>1?`<span class=lbl>${t('optSize')}</span>${grp.map(v=>row(v.vn||v.orig,v.vnTr,pr(v),step(v.qty,'oq',v.id))).join('')}`:''}
 ${i.ch&&grp.length<2?`<span class=lbl dir=auto>${esc(i.ch.l||t('optChoice'))}${C.prices&&i.price>0?` · ${fmt(i.price,M.cur)}`:''}</span>${i.ch.o.map((c,k)=>row(c.o,c.t,'',`<div class="step${pk(k)?' on':''}"><button data-a=oc data-id=${i.id} data-x=-1 data-k=${k} ${pk(k)?'':'disabled'} aria-label="-1">−</button><span>${pk(k)}</span><button data-a=oc data-id=${i.id} data-x=1 data-k=${k} aria-label="+1">+</button></div>`)).join('')}`:''}
 ${adds.length&&grp.length<2?`<span class=lbl>${t('optExtras')}</span>${adds.map(a=>row(a.orig.replace(/^\s*\+\s*/,''),a.tr,pr(a),step(a.qty,'oq',a.id))).join('')}`:''}
+${upsOf(M,i).length?`<span class=lbl>${t('upsT')}</span>${upsOf(M,i).map(a=>row(a.orig,a.tr,pr(a),a.ch||a.per?`<button class="btn sm ghost" data-a=opt data-id=${a.id}>${t('optPick')}</button>`:step(a.qty,'oq',a.id))).join('')}`:''}
 <button class=btn data-a=sa data-x=no>${ico('check',18)}${t('done')}</button>`}
 const optPaint=()=>{const e=$('#sheet .sh'),M=cm();if(e&&M&&V.opt)e.innerHTML=optHtml(M,V.opt);render()};
 // the dish itself: (its photo), badges, name, translation, price, the Google photo link and the +/- for ordering
 function itemPlain(i,M,C,w={}){const warn=w.warn||[],uq=w.uq||[],sold=!!i.soldOut,grp=i._grp,tags=sold||M.biz||!C.order?[]:optTags(M,i),hasOpt=grp||i.ch;
 return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${uq.length?' unsure':''}${w.dim||sold?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
-${C.photos&&i.img?`<img class=dimg src="${esc(i.img)}" alt="" loading=lazy>`:''}
+${''}
 ${sold||i.rec||i.isNew?`<span class=dbadges>${sold?`<span class="dbadge sold">${t('soldOut')}</span>`:''}${i.rec?`<span class="dbadge rec">${ico('star',13)}${t('recBadge')}</span>`:''}${i.isNew?`<span class="dbadge new">${t('newBadge')}</span>`:''}</span>`:''}
 ${warn.map(x=>`<span class=avoid-b>${ico('warn',14)}${esc(x)}</span>`).join('')}${w.mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(w.mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${i.hot?` <span aria-label="${t('spicyL')}">🌶️</span>`:''}</div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?(i.desc?`<span class=ntr dir=auto>${esc(i.tr)}</span>`:longV(i,i.tr)):''}${i.desc&&norm(i.desc)!==norm(i.tr)?longV(i,i.desc):''}
 ${i.note?`<span class=dnote dir=auto>${ico('info',14)}${esc(i.note)}</span>`:''}
 ${grp?`<span class="pr vars">${grp.map(v=>`<span class=var><bdi>${esc(v.vn)}</bdi>${C.prices&&v.price>0?` <b dir=${rtl()?"rtl":"ltr"}>${fmt(v.price,M.cur)}</b>`:''}${v.qty?` <i>×${v.qty}</i>`:''}</span>`).join('')}</span>`
-:C.prices&&i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}${i.per?`<small class=per> / <bdi>${perLbl(i,1)}</bdi></small>`:''}${i.portion?`<small class=per> · <bdi>${esc(i.portion)}</bdi></small>`:''}</span>`:i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}
+:C.prices&&i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${i.was?`<s class=was>${fmt(i.was,M.cur)}</s> `:''}${mv(i.price,M.cur)}${i.was&&i.off?`<span class=promo>${esc(f(t('promoTag'),i.off))}</span>`:''}${i.per?`<small class=per> / <bdi>${perLbl(i,1)}</bdi></small>`:''}${i.portion?`<small class=per> · <bdi>${esc(i.portion)}</bdi></small>`:''}</span>`:i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}
 ${tags.length?`<button class=opttag data-a=opt data-id=${grp?grp[0].id:i.id}>${ico('info',14)}<span>${esc(f(t('optHas'),tags.join(', ')))}</span></button>`:''}${i.ch&&i.qty&&pickTxt(i)?`<span class=picked dir=auto>${ico('check',14)}${esc(pickTxt(i))}</span>`:''}
-${C.photos&&i.img&&M.rest?`<button class=photo data-a=dimg data-id=${i.id}>${ico('img',16)}<span>${t('showPhoto')}</span></button>`:''}
+${C.photos&&i.img?`<button class=photo data-a=dimg data-id=${i.id}>${ico('img',16)}<span>${t('showPhoto')}</span></button>`:''}
 ${i.addon||!C.google?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${M.biz||!C.order||sold?'':hasOpt?`<button class="btn sm optb ${i.qty?'acc':'ghost'}" data-a=opt data-id=${grp?grp[0].id:i.id}>${i.qty?`${i.qty} ✓`:t('optPick')}</button>`
 :i.per?`<div class="step wstep${i.qty>0?' on':''}"><button data-a=mq data-id=${i.id} data-x=-1 ${i.qty<=0?'disabled':''} aria-label="−">−</button><span><bdi>${i.qty?perLbl(i,i.qty):'0'}</bdi></span><button data-a=mq data-id=${i.id} data-x=1 aria-label="+">+</button></div>`:step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
@@ -1100,7 +1171,7 @@ function sectionsV(M){const q=dq(M),base=M.items.filter(i=>dishHit(i,q)&&showNow
 // a section scanned in parts (from several photos) is shown once, where it first appears, with all its dishes
 base.forEach((i,n)=>{const c=norm(i.cat||'');if(!(c in first))first[c]=n});
 const items=base.map((i,n)=>[i,n]).sort((a,b)=>first[norm(a[0].cat||'')]-first[norm(b[0].cat||'')]||a[1]-b[1]).map(x=>x[0]);
-const cnote=c=>(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)).map(n=>n.text).join(' · ');
+const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])].join(' · ');
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
 out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${cnote(g.cat)?`<span class=catnote dir=auto>${ico('clock',13)}${esc(cnote(g.cat))}</span>`:''}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
@@ -1115,8 +1186,8 @@ if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub
 rows+=itemV(i,M)}
 flush();return out}
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
-const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
-function menuV(){const M=cm();if(!M)return home();if(M.biz&&!jobs(M.id).length)return bizEditV(M);if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
+const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel>${cfgOf(M).lang===false?'':`<label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label>`}<label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
+function menuV(){const M=cm();if(!M)return home();if(M.biz&&!jobs(M.id).length)return bizEditV(M);if(M.rest&&M.lang!==S.lang)restApply(M);if(M.rest)promoApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return (M.rest?restHead(M)+'<div class=pad>':bar(t(M.biz?'bizMenuHdr':'menuHdr'),M.biz?'biz':'home',M.items.length&&!js.length&&!M.demo&&!M.biz?shareBtn():'')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
 ${M.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}
@@ -1144,7 +1215,12 @@ function orderV(M,n,tot,priced){const C=cfgOf(M);
 // under the order: a Google review - the restaurant's own review link on its page, a search for its reviews otherwise
 const rvUrl=M.rest?(C.review&&M.reviewUrl)||'':M.demo||M.biz||!M.title?'':'https://www.google.com/search?q='+encodeURIComponent(M.title+' reviews');
 const rv=rvUrl?`<a class="card review" target=_blank rel=noopener href="${esc(rvUrl)}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),M.title||''))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:'';
-if(M.rest&&!C.order)return rv;
+// at the bottom of a restaurant's page: an invitation to make such a menu; at the bottom of every menu: support
+const tail=(M.rest?`<a class="card bizad" href="/?biz" target=_blank rel=noopener><b>${t('bizAdT')}</b><small class=mut>${t('bizAdD')}</small><span class="btn sm acc">${t('bizAdBtn')}</span></a>`:'')+(M.demo?'':supBtn());
+if(M.rest&&!C.order)return rv+tail;
+// the restaurant's suggestions at the end of the order (desserts, cocktails...): the ones not chosen yet
+const sg=M.rest?M.items.filter(i=>i.sugg&&!i.qty&&!i.soldOut&&showNow(M,i)).slice(0,6):[];
+const sgV=sg.length?`<section class="card sugg"><h3>${t('suggT')}</h3>${sg.map(i=>`<div class=optr><span class=info><b dir=auto>${esc(i.orig)}</b>${trOf(i)?`<small class=mut dir=auto>${esc(trOf(i))}</small>`:''}${C.prices&&i.price>0?`<small class=n>${mv(i.price,M.cur)}</small>`:''}</span><button class="btn sm ghost" data-a=${i.ch||i.per?'opt':'mq'} data-id=${i.id} data-x=1>${ico('plus',15)}${t('suggAdd')}</button></div>`).join('')}</section>`:'';
 // the business portal: no order - another page of the menu, and the restaurant's page (create, or update after a change)
 if(M.biz)return `<div class=actions><button class="btn acc wide" data-a=rpage>${ico('ext',18)}${t(M.restSlug?'rpUpd':'rpBtn')}</button><small class=mut>${M.restSlug?`<bdi dir=ltr>${esc(pageUrl(M.restSlug))}</bdi>`:t('rpBtnD')}</small>
 ${M.restSlug?`<button class="btn ghost wide" data-a=bizcard>${ico('img',18)}${t('rpCard')}</button>`:''}<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small></div>`;
@@ -1166,17 +1242,18 @@ ${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln"><b>${who(pid,p,k)}</b
 return tbl+soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t(M.live?'myOrder':'yourOrder')}</h3>
 ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${qtyLbl(i)}</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
 ${i.ch?(pickTxt(i)&&(i.picks||[]).length>=i.qty?`<small class=picked dir=auto>${ico('check',13)}${esc((i.ch.l?i.ch.l+': ':'')+pickTxt(i))}</small>`:`<small class="picked need" dir=auto>${ico('warn',13)}${esc(f(t('optNeed'),i.ch.l||t('optChoice')))}</small>`):''}
-<span class=oacts>${i.ch||sizesOf(M,i).length>1||addonsOf(M,i).length?`<button class="photo ochg" data-a=opt data-id=${i.id}>${ico('info',15)}<span>${t(i.ch||sizesOf(M,i).length>1?'optChange':'optAdd')}</span></button>`:''}${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
+${cnoteTxt(i)?`<small class=picked dir=auto>✎ ${esc(cnoteTxt(i))}</small>`:''}
+<span class=oacts>${M.rest&&C.cnotes&&!i.addon?`<button class="photo ochg" data-a=cnote data-id=${i.id}>${ico('edit',15)}<span>${t('cnBtn')}</span></button>`:''}${i.ch||sizesOf(M,i).length>1||addonsOf(M,i).length?`<button class="photo ochg" data-a=opt data-id=${i.id}>${ico('info',15)}<span>${t(i.ch||sizesOf(M,i).length>1?'optChange':'optAdd')}</span></button>`:''}${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`
-+`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
++`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>${n?sgV:''}
 <div class=actions>${M.demo||M.rest?'':`<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>`}
 ${M.biz?`<button class="btn acc wide" data-a=rpage>${ico('ext',18)}${t(M.restSlug?'rpUpd':'rpBtn')}</button><small class=mut>${M.restSlug?`<bdi dir=ltr>${esc(pageUrl(M.restSlug))}</bdi>`:t('rpBtnD')}</small>`:''}
 ${M.rest?(C.scanBill?`<button class="btn acc wide" data-a=rtoapp>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`:'')
 :S.receipts.some(r=>r.id===M.receiptId)
 // this menu was scanned to check a bill that is already scanned: compare with it instead of scanning a new one
 ?`<button class="btn acc wide" data-a=cmpgo ${n?'':'disabled'}>${ico('receipt',18)}${t('cmpGo')}</button><small class=mut>${t('cmpGoD')}</small>`
-:`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>${rv}`}
+:`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>${rv}${tail}`}
 // the diet choices, the same everywhere they appear (settings and the menu filter)
 // the allergy warning appears only once the user has chosen a diet or marked ingredients to avoid
 const allergyNote=()=>S.diet.length||S.avoid.length||(S.avoidTxt||[]).length?`<p class=allergy role=note>${ico("warn",16)}<span>${t("allergyNote")}</span></p>`:"";
@@ -1290,7 +1367,7 @@ ${scanning?`<div class=sticky><div><div class=scan-st role=status><span class=sp
 <div class=card><h3>${t('yourTip')}</h3>${tb>0&&!R.fees.service?`<small class=mut style="display:block;margin:-6px 0 10px">${t('tipNote')}</small>`:''}${tipInfo(R)?`<p class=tipn>${ico('info',16)}<span>${esc(tipInfo(R))}</span></p>`:''}<div class=chips>${[0,10,12,15].map(p=>`<button class="pill ${R.tipMode==='pct'&&R.tipPct===p?'on':''}" data-a=tip data-x=${p}>${p}%</button>`).join('')}<button class="pill ${R.tipMode==='custom'?'on':''}" data-a=tip data-x=c>${t('custom')}</button></div>${R.tipMode==='custom'?`<input style="margin-top:10px" type=number step=any inputmode=decimal data-c=tipc value="${R.tipCustom||''}" placeholder="${R.cur}">`:''}</div>
 <div class=card><h3>${t('sumT')}</h3>${ln(t('subtotal'),mv(s,R.cur))}${(()=>{const tl=taxAdd(R)&&printedLines(R,'taxLines',taxAdd(R));return tl?linesV(R,tl,t('tax')):taxAdd(R)?ln(t('tax')+(pctOf(taxAdd(R),sub(R))?` (${pctOf(taxAdd(R),sub(R))}%)`:''),mv(taxAdd(R),R.cur)):''})()}${(()=>{const sl=R.fees.service&&printedLines(R,'svcLines',+R.fees.service);return sl&&sl.some(l=>l.label)?linesV(R,sl,t('svc')):R.fees.service?ln(t("svc")+(svcPctOf(R)?` (${svcPctOf(R)}%)`:""),mv(R.fees.service,R.cur)):''})()}${R.fees.other?ln(t('fees'),mv(R.fees.other,R.cur)):''}${tb?ln(t('billTip'),mv(tb,R.cur)):''}${ln(t('yourTip'),mv(tp,R.cur))}<div class=ln><b>${t('total')}</b><b class="tot n">${mv(g,R.cur)}</b></div>${R.printedTotal&&Math.abs(R.printedTotal-(g-tp))>Math.max(1,(g-tp)*.0002)?ln(t('printedTotal'),`<b>${mv(R.printedTotal,R.cur)}</b>`,'badln'):''}${R.fees.taxIncl&&R.fees.tax?`<small class=mut>${t('taxIncShort')}</small>`:''}</div>
 ${R.items.length?`<div class=card><h3>${t('split')}</h3><label class="chk big"><input type=checkbox data-c=splitq ${R.split?'checked':''}>${t('splitQ')}</label>${R.split?`<div style="margin-top:14px">${splitV(R)}</div>`:''}</div>`:''}
-${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}`}
+${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}${R.demo?'':supBtn()}`}
 </div>`}
 const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
 // when it was scanned (date and hour) and from how many photos
@@ -1357,7 +1434,7 @@ if(prev&&sameNav(prev,tgt)){V.afterNav=then;stepBack();return}V.screen=s;V.id=i|
 // "Show the waiter": the order big, in the menu's own language (the English name small underneath), to point at
 function waiterView(){const M=cm();if(!M)return;const ord=M.items.filter(i=>i.qty>0).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0)));
 const lt=ord.some(i=>ltrText(i.local||i.orig))?'dir=ltr':'';
-openSheet(`<p class="waiter wt" dir=auto>${esc(M.title||'')}</p><div class=wlist ${lt}>${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${qtyLbl(i)}</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}${pickTxt(i,true)?`<small class=wpick dir=auto>→ ${esc(pickTxt(i,true))}</small>`:''}${i.cnote?`<small class=wpick dir=auto>✎ ${esc(i.cnote)}</small>`:''}</span></div>`).join('')}</div><p class=wmore hidden>${t('moreDishes')} ↓</p><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`);
+openSheet(`<p class="waiter wt" dir=auto>${esc(M.title||'')}</p><div class=wlist ${lt}>${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${qtyLbl(i)}</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}${pickTxt(i,true)?`<small class=wpick dir=auto>→ ${esc(pickTxt(i,true))}</small>`:''}${cnoteTxt(i,true)?`<small class=wpick dir=auto>✎ ${esc(cnoteTxt(i,true))}</small>`:''}</span></div>`).join('')}</div><p class=wmore hidden>${t('moreDishes')} ↓</p><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`);
 // "more dishes" shows while part of the list is still below
 const l=$('#sheet .wlist'),m=$('#sheet .wmore');if(l&&m){const upd=()=>{m.hidden=l.scrollTop+l.clientHeight>=l.scrollHeight-4};l.addEventListener('scroll',upd,{passive:true});requestAnimationFrame(upd)}}
 // a short message with an "Undo" button, used instead of asking first
@@ -1435,7 +1512,7 @@ mpage:()=>{const M=cm();withHints(false,()=>scanMenuPage(M))},
 // sheet for choosing, and so does the first portion of a dish that has extras
 mq:(id,x)=>{const M=cm(),i=M.items.find(i=>i.id===id);if(!i)return;if(i.ch){if(+x>0)return ACT.opt(id);(i.picks||[]).pop()}
 const u=i.per&&i.per.min?Math.max(1,Math.ceil(i.per.min/i.per.q)):1;i.qty=+x>0&&i.qty<u?u:Math.max(0,i.qty+ +x);if(i.qty<u)i.qty=0;V.obarHid=null;render();
-if(+x>0&&i.qty===u&&!i.per&&addonsOf(M,i).length)ACT.opt(id)},
+if(+x>0&&i.qty===u&&!i.per&&(addonsOf(M,i).length||upsOf(M,i).length))ACT.opt(id)},
 opt:id=>{const M=cm();if(!M)return;V.opt=id;openSheet(optHtml(M,id),{})},
 oq:(id,x)=>{const i=cm().items.find(i=>i.id===id);if(!i)return;i.qty=Math.max(0,i.qty+ +x);V.obarHid=null;optPaint()},
 oc:(id,x,el)=>{const i=cm().items.find(i=>i.id===id),k=+el.dataset.k;if(!i)return;i.picks=i.picks||[];if(+x>0){i.picks.push(k);i.qty++}else{const p=i.picks.lastIndexOf(k);if(p<0)return;i.picks.splice(p,1);i.qty=Math.max(0,i.qty-1)}V.obarHid=null;optPaint()},
@@ -1474,9 +1551,17 @@ bcmove:(id,x)=>{const M=cm(),a=+id,b=a+ +x;if(b<0||b>=M.cats.length)return;[M.ca
 bimove:(id,x)=>{const M=cm(),i=M.items.find(i=>i.id===id),its=M.items.filter(z=>(z.cat||'')===(i.cat||'')),k=its.indexOf(i),o=its[k+ +x];if(!o)return;[i.seq,o.seq]=[o.seq,i.seq];render()},
 bvat:(id,x)=>{const M=cm();bizPol(M).vat=x;bizPolApply(M);render()},bsvc:(id,x)=>{const M=cm();bizPol(M).svc=x;bizPolApply(M);render()},
 // a section shown only at certain hours
-bchours:id=>{const M=cm(),c=M.cats[+id],h=(M.hours||{})[c]||{};openSheet(`<h3 dir=auto>${esc(c||t('beNoCat'))}</h3><span class=lbl>${t('beHours')}</span><div class=behrs><label>${t('beFrom')}<input id=bh_from type=time value="${esc(h.from||'')}"></label><label>${t('beTo')}<input id=bh_to type=time value="${esc(h.to||'')}"></label></div><small class=mut>${t('beHoursD')}</small>
+bchours:id=>{const M=cm(),c=M.cats[+id],h=(M.hours||{})[c]||{},p=(M.promo||{})[c]||{};openSheet(`<h3 dir=auto>${esc(c||t('beNoCat'))}</h3><span class=lbl>${t('beHours')}</span><div class=behrs><label>${t('beFrom')}<input id=bh_from type=time value="${esc(h.from||'')}"></label><label>${t('beTo')}<input id=bh_to type=time value="${esc(h.to||'')}"></label></div><small class=mut>${t('beHoursD')}</small>
+<span class=lbl>${t('bePromo')}</span><div class=behrs3><label>${t('bePromoPct')}<input id=bp_pct type=number inputmode=decimal min=0 max=90 step=any value="${p.pct||''}"></label><label>${t('beFrom')}<input id=bp_from type=time value="${esc(p.from||'')}"></label><label>${t('beTo')}<input id=bp_to type=time value="${esc(p.to||'')}"></label></div>
 <button class=btn data-a=bchsave data-id=${id}>${ico('check',18)}${t('saveSet')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})},
-bchsave:id=>{const M=cm(),c=M.cats[+id],a=$('#bh_from').value,b=$('#bh_to').value;M.hours=M.hours||{};if(a&&b)M.hours[c]={from:a,to:b};else delete M.hours[c];closeSheet();render()},
+bchsave:id=>{const M=cm(),c=M.cats[+id],a=$('#bh_from').value,b=$('#bh_to').value;M.hours=M.hours||{};if(a&&b)M.hours[c]={from:a,to:b};else delete M.hours[c];
+const pp=Math.min(90,+$('#bp_pct').value||0),pf=$('#bp_from').value,pt=$('#bp_to').value;M.promo=M.promo||{};if(pp>0&&pf&&pt)M.promo[c]={pct:pp,from:pf,to:pt};else delete M.promo[c];closeSheet();render()},
+bthemeoff:()=>{const M=cm();delete M.theme;render()},
+support:()=>{if(SUPPORT_WA)window.open('https://wa.me/'+SUPPORT_WA,'_blank','noopener');else toast(t('supSoon'))},
+// a guest's changes and note on a dish in the order (the restaurant's page, when it allows them)
+cnote:id=>{const M=cm(),i=M.items.find(i=>i.id===id);if(!i)return;openSheet(`<h3>${t('cnT')}</h3><p class=mut dir=auto style="margin-top:-8px">${esc(i.orig)}</p>${(i.mods||[]).length?`<div class=bechks>${i.mods.map((m,k)=>`<label class=chk><input type=checkbox class=cnm value=${k} ${(i.cmods||[]).includes(k)?'checked':''}><span dir=auto>${esc((i.modsTr||[])[k]||m)}</span></label>`).join('')}</div>`:''}
+<label><textarea id=cn_txt rows=2 dir=auto maxlength=120 placeholder="${t('cnPh')}">${esc(i.ctxt||'')}</textarea></label><button class=btn data-a=cnsave data-id=${id}>${ico('check',18)}${t('cnSave')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})},
+cnsave:id=>{const i=cm().items.find(i=>i.id===id);if(!i)return;i.cmods=[...document.querySelectorAll('#sheet .cnm:checked')].map(e=>+e.value);i.ctxt=($('#cn_txt').value||'').trim().slice(0,120);closeSheet();render()},
 bimgdel:()=>{V.bdImg='';const b=$('#bd_imgbox');if(b)b.firstElementChild.outerHTML='<span></span>'},
 // ---- the manager's dashboard of scan problems ----
 logs:()=>{V.logs=null;V.logK='';goTo('logs')},logref:()=>{V.logs=null;render()},logk:(id,x)=>{V.logK=x;render()},
@@ -1518,11 +1603,20 @@ hday:v=>{V.hdate=v||'all';render()},
 bcatn:(v,ci)=>{const M=cm(),old=M.cats[+ci],nv=v.trim();if(nv===old)return;if(M.cats.includes(nv)){toast(t('beCatDup'));return render()}M.items.forEach(i=>{if((i.cat||'')===old){i.cat=nv;i.catTr=''}});M.cats[+ci]=nv;if(M.hours&&M.hours[old]){M.hours[nv]=M.hours[old];delete M.hours[old]}render()},
 bcur:v=>{cm().cur=v;render()},bsvcp:v=>{const M=cm();bizPol(M).pct=Math.min(40,Math.max(0,+v||0))||'';bizPolApply(M);render()},bnotes:v=>{const M=cm();bizPol(M).notes=v.trim();bizPolApply(M);render()},
 bcfg:(v,id,e)=>{const M=cm();M.cfg={...(M.cfg||{}),[id]:e.checked};render()},breview:v=>{const M=cm(),u=v.trim();M.reviewUrl=/^https?:\/\/\S+$/.test(u)?u:'';render()},
+btheme:async(v,id,el)=>{const file=el.files&&el.files[0],M=cm();if(!file||!M)return;try{await themeFrom(M,await shrink(file))}catch(e){toast(e.message||t('fail'))}},
 // a dish photo: made small on the phone (640px), uploaded, and kept with the dish when it is saved
 bimg:(v,id,el)=>{const file=el.files&&el.files[0];if(!file)return;const u=URL.createObjectURL(file),im=new Image();im.onload=async()=>{const k=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
 toast(t('beImgBusy'));try{const j=await bizApi({img:c.toDataURL('image/jpeg',.72).split(',')[1],sess:(S.bizSess||{}).sess||null,key:bizKey()});V.bdImg=j.url;const b=$('#bd_imgbox');if(b)b.firstElementChild.outerHTML=`<img src="${esc(j.url)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`}catch(e){toast(e.message)}};im.onerror=()=>toast(t('err_image'));im.src=u},
 shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.checked&&!s.includes(p))s.push(p);if(!e.checked)V.shs=s.filter(x=>x!==p)}};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
+// dragging a section of the business menu by its handle (☰) to another place
+let dragC=null;
+document.addEventListener('pointerdown',e=>{const h=e.target.closest('[data-drag]');if(!h)return;e.preventDefault();const el=h.closest('.becat');dragC={from:+h.dataset.drag,to:+h.dataset.drag,el,y:e.clientY};el.classList.add('dragging');try{h.setPointerCapture(e.pointerId)}catch(x){}});
+document.addEventListener('pointermove',e=>{if(!dragC)return;e.preventDefault();dragC.el.style.transform=`translateY(${e.clientY-dragC.y}px)`;const cs=[...document.querySelectorAll('.becat')];let to=dragC.from;
+cs.forEach((c,k)=>{if(c===dragC.el)return;const r=c.getBoundingClientRect(),mid=r.top+r.height/2;if(k<dragC.from&&e.clientY<mid)to=Math.min(to,k);if(k>dragC.from&&e.clientY>mid)to=Math.max(to,k)});
+cs.forEach((c,k)=>c.classList.toggle('dropat',k===to&&to!==dragC.from));dragC.to=to},{passive:false});
+const dragEnd=()=>{if(!dragC)return;const{from,to}=dragC;dragC=null;const M=cm();if(M&&M.cats&&to!==from){const[c]=M.cats.splice(from,1);M.cats.splice(to,0,c)}render()};
+document.addEventListener('pointerup',dragEnd);document.addEventListener('pointercancel',dragEnd);
 document.addEventListener('change',e=>{const b=e.target.closest('[data-c]');if(b&&CH[b.dataset.c])CH[b.dataset.c](b.value,b.dataset.id,b)});
 // typing in the ingredient search only refreshes the chips, so the field keeps focus
 document.addEventListener('input',e=>{if(e.target.id==='ingq'){V.ingq=e.target.value;V.ingOpen=true;paintIng()}
