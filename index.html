@@ -296,7 +296,8 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .issues ul{list-style:none;padding:0;gap:0}.issues li{padding:8px 0;border-top:1px solid color-mix(in srgb,var(--bad) 22%,transparent)}
 .rpok{align-items:flex-start;font-size:14px;line-height:1.45;border:1px solid var(--line);border-radius:12px;padding:10px 12px}.rpok input{margin-top:3px;flex:none}
 .restalg{display:flex;gap:6px;align-items:flex-start;margin-top:16px;font-size:13px}.restalg svg{flex:none;margin-top:2px}
-.myname{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;border-bottom:1px dashed var(--ac)}.myname svg{color:var(--ac)}
+.myname{display:inline-flex;align-items:center;gap:6px;min-width:0;flex:1}.myname svg{color:var(--ac);flex:none}.myname span{color:var(--mut);flex:none}
+.myname input{font:inherit;font-weight:700;color:inherit;background:none;border:0;border-bottom:1px dashed var(--ac);border-radius:0;padding:2px 0;width:9em;max-width:100%;min-width:0;box-shadow:none}.myname input:focus{outline:0;border-bottom-style:solid}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -1258,7 +1259,7 @@ const who=(pid,p,k)=>pid===M.live.pid?`${esc(p.n||t('me'))} (${t('me')})`:esc(p.
 const its=p=>Object.entries(p.it||{}).map(([id,q])=>({i:find(id),q})).filter(x=>x.i&&x.q>0),sum=p=>its(p).reduce((a,x)=>a+x.q*x.i.price,0);
 const cnt=P.reduce((a,[,p])=>a+its(p).reduce((b,x)=>b+x.q,0),0),tot=P.reduce((a,[,p])=>a+sum(p),0);
 tbl=`<p class=livebar>${ico('share',16)}<span>${t('liveMenuOn')}</span></p><section class="card sharedord"><button class=sotog data-a=sotog aria-expanded=${open}><span>${ico('menu',17)}${t('tblT')} <span class=n>(${cnt})</span></span><span class="chv${open?' open':''}">${ico('chev',16)}</span></button>
-${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln">${pid===M.live.pid?`<button class=myname data-a=mwname aria-label="${t('myName')}"><b>${who(pid,p,k)}</b>${ico('edit',15)}</button>`:`<b>${who(pid,p,k)}</b>`}${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
+${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln">${pid===M.live.pid?`<label class=myname>${ico('edit',15)}<input data-c=mwn value="${esc(M.live.name||'')}" placeholder="${t('whoPh')}" maxlength=20 dir=auto autocomplete=given-name aria-label="${t('myName')}"><span>(${t('me')})</span></label>`:`<b>${who(pid,p,k)}</b>`}${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
 +(priced?`<div class=ln><b>${t('tblTot')}</b><b class="n tot end">${mv(tot,M.cur)}</b></div>`:''):''}</section>`}
 return tbl+soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t(M.live?'myOrder':'yourOrder')}</h3>
 ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${qtyLbl(i)}</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
@@ -1627,6 +1628,8 @@ ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()
 tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
 eq:(v,id,e)=>{cr().equal=e.checked;render()},
 hday:v=>{V.hdate=v||'all';render()},
+// my name in the table's order is edited right where it is shown
+mwn:v=>{const M=cm();if(!M||!M.live)return;const nm=cleanName(v);M.live.name=nm||null;if(nm)S.myName=nm;render()},
 // ---- the business menu editor ----
 bcatn:(v,ci)=>{const M=cm(),old=M.cats[+ci],nv=v.trim();if(nv===old)return;if(M.cats.includes(nv)){toast(t('beCatDup'));return render()}M.items.forEach(i=>{if((i.cat||'')===old){i.cat=nv;i.catTr=''}});M.cats[+ci]=nv;if(M.hours&&M.hours[old]){M.hours[nv]=M.hours[old];delete M.hours[old]}render()},
 bcur:v=>{cm().cur=v;render()},bsvcp:v=>{const M=cm();bizPol(M).pct=Math.min(40,Math.max(0,+v||0))||'';bizPolApply(M);render()},bnotes:v=>{const M=cm();bizPol(M).notes=v.trim();bizPolApply(M);render()},
