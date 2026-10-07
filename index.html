@@ -687,7 +687,12 @@ openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns')
 // cat: the section it is about (then it also shows next to that section's heading)
 // dish: the dish it is about (then it shows on that dish). Only notes about the whole menu are listed at the top of the menu.
 // sub: the group of dishes inside a section it is about ("Khinkali" - then it shows on that group's small heading)
-function addNote(M,text,cat,pg,dish,sub){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{}),...(dish?{dish:String(dish)}:{}),...(sub?{sub:String(sub)}:{})})}
+function addNote(M,text,cat,pg,dish,sub){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];
+// the same notice may come twice from one photo, worded a little differently: once for the section and once for the group
+// of dishes it is printed with - the group's copy is the one that is kept
+const tw=s=>String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean),sim=(a,b)=>{const x=tw(a),y=tw(b);return x.length?x.filter(w=>y.includes(w)).length/x.length:0};
+if(sub)M.notes=M.notes.filter(n=>!(n.pg===pg&&!n.sub&&!n.dish&&sim(text,n.text)>=.6));else if(!dish&&M.notes.some(n=>n.pg===pg&&n.sub&&sim(n.text,text)>=.6))return;
+if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{}),...(dish?{dish:String(dish)}:{}),...(sub?{sub:String(sub)}:{})})}
 const noteSub=(M,n)=>!!n.sub&&M.items.some(i=>i.sub&&norm(i.sub)===norm(n.sub));
 // (a note about "Khinkali" shows on every khinkali dish)
 const noteOn=(n,i)=>!!n.dish&&[i.orig,i.vb,i.local].some(s=>s&&(norm(s)===norm(n.dish)||(norm(n.dish).length>4&&norm(s).includes(norm(n.dish)))));
