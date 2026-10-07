@@ -539,7 +539,8 @@ if(!cat&&ctx.inherit){cat=ctx.inherit.cat;catTr=ctx.inherit.catTr} // a photo th
 // a section that was already scanned from another photo keeps ONE heading: the same name joins it (so its dishes are
 // listed together), and so does a heading that is cut off in this photo (learnt below from a dish seen in both photos)
 const rm=cat&&(ctx.remap||{})[nc(cat)];
-if(rm){cat=rm.cat;catTr=rm.catTr}else if(cat){const ex=M.items.find(x=>x.pg!==pg&&x.cat&&nc(x.cat)===nc(cat));if(ex){cat=ex.cat;catTr=ex.catTr||catTr}}
+// (a heading written in another language in this photo - "Bere la halbă" / "Draft beer" - has the same translation)
+if(rm){cat=rm.cat;catTr=rm.catTr}else if(cat){const ex=M.items.find(x=>x.pg!==pg&&x.cat&&nc(x.cat)===nc(cat))||(catTr&&M.items.find(x=>x.pg!==pg&&x.cat&&x.catTr&&nc(x.catTr)===nc(catTr)));if(ex){cat=ex.cat;catTr=ex.catTr||catTr}}
 const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:String(m.l).slice(0,40)})),ing=(i.ing||[]).map(s=>String(s).toLowerCase().slice(0,30)),may=Array.isArray(i.may)?i.may.map(s=>String(s).toLowerCase().slice(0,30)).filter(k=>!ing.includes(k)):null;
 if(!addon)ctx.parent=key;
 // the same dish read twice is kept once: on one page the match is loose (a price or heading missing on one copy); across pages only
@@ -564,6 +565,16 @@ const ch=i.choices&&Array.isArray(i.choices.options)&&i.choices.options.length>1
 const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),...(i.desc?{desc:String(i.desc)}:{}),...(i.portion?{portion:String(i.portion)}:{}),...(i.per&&+i.per.q>0?{per:{q:+i.per.q,u:String(i.per.u),...(+i.per.min>0?{min:+i.per.min}:{})}}:{}),
 ...(i.base&&i.variant?{vb:String(i.base),vn:String(i.variant),vnTr:String(i.variant_tr||'')}:{}),...(ch?{ch}:{}),price,cat,catTr,sub,subTr,...(()=>{const uf=Array.isArray(i.unsure)?i.unsure.map(String):i.unsure===true?["name","price"]:[];return{unsure:uf.length>0,uf}})(),addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
 M.items.push(d);return d}
+// After a photo is read: a section of it that repeats dishes already scanned from another photo under a heading written
+// differently (another language, a longer or shorter title) is the same section - the repeated dishes are dropped and the
+// photo's other dishes join that section. One shared dish is not enough (an "Espresso" can be in two sections).
+function mergeOverlap(M,pg){const nc=s=>norm(s||''),mine=M.items.filter(i=>i.pg===pg),oth=M.items.filter(i=>i.pg!==pg),same=(a,b)=>norm(a.orig)===norm(b.orig)&&Math.abs((a.price||0)-(b.price||0))<.005&&!!a.addon===!!b.addon;
+for(const c of [...new Set(mine.map(i=>nc(i.cat)))]){const its=mine.filter(i=>nc(i.cat)===c),hit={};
+its.forEach(i=>{const o=oth.find(x=>nc(x.cat)!==c&&same(x,i));if(o)(hit[nc(o.cat)]=hit[nc(o.cat)]||[]).push([i,o])});
+const best=Object.values(hit).sort((a,b)=>b.length-a.length)[0];if(!best)continue;const to=best[0][1];
+if(!(best.length>=2&&best.length>=its.length*.4))continue;
+const drop=new Set(best.map(p=>p[0].id));best.forEach(([i,o])=>{if(i.qty&&!o.qty)o.qty=i.qty;if(!o.desc&&i.desc)o.desc=i.desc;if(!o.tr&&i.tr)o.tr=i.tr});
+M.items=M.items.filter(i=>!drop.has(i.id));its.forEach(i=>{if(!drop.has(i.id)){i.cat=to.cat;i.catTr=to.catTr}})}}
 // The same photo chosen again (same file contents, whatever its name): ask whether to show what it gave last time or scan it again.
 async function photoHash(file){try{const b=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());return [...new Uint8Array(b)].slice(0,12).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return ''}}
 async function dupCheck(file,go){const h=await photoHash(file);file.h=h;const M=h&&S.menus.find(m=>(m.hashes||[]).some(x=>x.h===h)),R=h&&!M&&S.receipts.find(r=>(r.hashes||[]).some(x=>x.h===h));
@@ -598,7 +609,7 @@ if(o.item.category)ctx.inherit=null;
 const d=addDish(M,o.item,pg,seq++,ctx);if(d){job.ids.add(d.id);job.n++;if(d.uf.some(x=>x==='name'||x==='price'))uns++}}
 soon()})}
 catch(e){err=e.message||t('fail');logScanErr('menu',err)}
-finally{V.jobs=V.jobs.filter(j=>j!==job);const b=(V.batch||{})[M.id];if(b){b.done++;if(!jobs(M.id).length)delete V.batch[M.id]}}
+finally{mergeOverlap(M,pg);V.jobs=V.jobs.filter(j=>j!==job);const b=(V.batch||{})[M.id];if(b){b.done++;if(!jobs(M.id).length)delete V.batch[M.id]}}
 if(!job.n&&!seq){const show=kind==='receipt'?()=>wrongKind('rec',file,M):()=>failSheet(err?t('fail'):t('emptyMenuT'),err||t('emptyMenuD'),()=>{const m=S.menus.find(x=>x.id===M.id);scanMenuPage(m||null,m?pg:null)});
 if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id&&V.screen==='menu')return goTo(M.biz?'biz':'home',show)}render();
 return show()}
