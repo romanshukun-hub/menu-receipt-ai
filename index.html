@@ -296,6 +296,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .issues ul{list-style:none;padding:0;gap:0}.issues li{padding:8px 0;border-top:1px solid color-mix(in srgb,var(--bad) 22%,transparent)}
 .rpok{align-items:flex-start;font-size:14px;line-height:1.45;border:1px solid var(--line);border-radius:12px;padding:10px 12px}.rpok input{margin-top:3px;flex:none}
 .restalg{display:flex;gap:6px;align-items:flex-start;margin-top:16px;font-size:13px}.restalg svg{flex:none;margin-top:2px}
+.myname{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;border-bottom:1px dashed var(--ac)}.myname svg{color:var(--ac)}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -1257,8 +1258,8 @@ const who=(pid,p,k)=>pid===M.live.pid?`${esc(p.n||t('me'))} (${t('me')})`:esc(p.
 const its=p=>Object.entries(p.it||{}).map(([id,q])=>({i:find(id),q})).filter(x=>x.i&&x.q>0),sum=p=>its(p).reduce((a,x)=>a+x.q*x.i.price,0);
 const cnt=P.reduce((a,[,p])=>a+its(p).reduce((b,x)=>b+x.q,0),0),tot=P.reduce((a,[,p])=>a+sum(p),0);
 tbl=`<p class=livebar>${ico('share',16)}<span>${t('liveMenuOn')}</span></p><section class="card sharedord"><button class=sotog data-a=sotog aria-expanded=${open}><span>${ico('menu',17)}${t('tblT')} <span class=n>(${cnt})</span></span><span class="chv${open?' open':''}">${ico('chev',16)}</span></button>
-${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln"><b>${who(pid,p,k)}</b>${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
-+(priced?`<div class=ln><b>${t('tblTot')}</b><b class="n tot end">${mv(tot,M.cur)}</b></div>`:'')+`<button class=link data-a=mwname>${t('myName')}</button>`:''}</section>`}
+${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln">${pid===M.live.pid?`<button class=myname data-a=mwname aria-label="${t('myName')}"><b>${who(pid,p,k)}</b>${ico('edit',15)}</button>`:`<b>${who(pid,p,k)}</b>`}${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
++(priced?`<div class=ln><b>${t('tblTot')}</b><b class="n tot end">${mv(tot,M.cur)}</b></div>`:''):''}</section>`}
 return tbl+soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t(M.live?'myOrder':'yourOrder')}</h3>
 ${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${qtyLbl(i)}</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
 ${i.ch?(pickTxt(i)&&(i.picks||[]).length>=i.qty?`<small class=picked dir=auto>${ico('check',13)}${esc((i.ch.l?i.ch.l+': ':'')+pickTxt(i))}</small>`:`<small class="picked need" dir=auto>${ico('warn',13)}${esc(f(t('optNeed'),i.ch.l||t('optChoice')))}</small>`):''}
