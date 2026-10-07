@@ -1635,9 +1635,9 @@ btheme:async(v,id,el)=>{const file=el.files&&el.files[0],M=cm();if(!file||!M)ret
 bimg:(v,id,el)=>{const file=el.files&&el.files[0];if(!file)return;const u=URL.createObjectURL(file),im=new Image();im.onload=async()=>{const k=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
 toast(t('beImgBusy'));try{const j=await bizApi({img:c.toDataURL('image/jpeg',.72).split(',')[1],sess:(S.bizSess||{}).sess||null,key:bizKey()});V.bdImg=j.url;const b=$('#bd_imgbox');if(b)b.firstElementChild.outerHTML=`<img src="${esc(j.url)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`}catch(e){toast(e.message)}};im.onerror=()=>toast(t('err_image'));im.src=u},
 shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.checked&&!s.includes(p))s.push(p);if(!e.checked)V.shs=s.filter(x=>x!==p)}};
-// the order bar at the bottom shows only right after a dish is added: any other button, link or field hides it
+// the order bar at the bottom shows only right after a dish is added: any other button, link or field hides it (opening or closing a section does not)
 document.addEventListener('click',e=>{const any=e.target.closest('button,a,input,select,textarea,label,[data-a],[role=button]');
-if(any&&V.obarOn&&!['mq','oq','oc','opt','sa'].includes((any.dataset||{}).a)){V.obarOn=null;const ob=document.querySelector('.obar');ob&&ob.remove()}
+if(any&&V.obarOn&&!['mq','oq','oc','opt','sa','cat','catall'].includes((any.dataset||{}).a)){V.obarOn=null;const ob=document.querySelector('.obar');ob&&ob.remove()}
 const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
 // dragging a section of the business menu by its handle (☰) to another place
 let dragC=null;
