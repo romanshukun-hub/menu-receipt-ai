@@ -66,8 +66,14 @@ Rules:
 - Follow the SAME ORDER as the menu: its reading direction (right-to-left for Hebrew/Arabic), section by section, top to bottom; finish one column before starting the next. Never sort, group or reorder.
 - If one dish or drink is offered in sizes or variants with separate prices (small / large, 0.3 l / 0.5 l, glass / bottle, "0.75/0.375 l ... 750/360"), list each variant as its own line, one right after the other, with "original" = the dish name + " - " + the words that tell the variant apart, as printed, and with "base", "variant" and "variant_translation" filled in. When one price is printed for a group of names (e.g. "Fanta, Sprite, Schweppes ... 35"), list each name as its own dish with that price.
 - A long drinks or wine list is read like any other section: every line is a dish, with its volume as "portion".
+- "price" is a plain number in the menu's currency: "12,50" is 12.5; "1.200 Ft", "9.900" or "25.000" on a menu whose prices are in the thousands (forint, rupiah, won, peso...) is 1200, 9900, 25000; "12.-" is 12. When two currencies are printed, use the local one (the one in "currency").
+- A dish without a fixed price ("market price", "MP", "ask your waiter", "from 12", a range "12-15") gets "price": 0 - or the lowest price of a range - and its "desc" says how it is priced, in ${l}.
+- A set menu or combo with one price (e.g. "Lunch menu: starter + main + drink - 14.90", "Tasting menu 5 courses") is ONE dish line with that price; what it includes goes into "desc", and when the diner picks one of several options it goes into "choices". Dishes listed under it without their own prices are not separate dishes.
+- A menu board, a handwritten or chalk menu, a table tent, a daily-specials sheet and a photo of a screen are all menus: read them the same way. A photo taken at an angle, upside down or sideways is read as it is meant to be read.
+- A price column per size printed as a table (a header row "S / M / L" or "0.1 / 0.75" above columns of prices) gives each row one line per column that has a price, as sizes.
+- Never use a price that belongs to the line above or below: when you cannot tell which price a dish has, give "price": 0 and "unsure": ["price"].
 - The image may be a phone screenshot of a menu web page or PDF: ignore the phone's status bar, the browser's address bar and buttons, and page numbers.
-- When several images are given, they are consecutive parts of ONE tall photo, top to bottom, overlapping a little: read them as one page and list a dish that shows in two parts only once. Read EVERY image to its last line - the later images are as important as the first; never stop after the first image or the first block of a long list. The number of dish lines you write must match "count".
+- When several images are given, they are consecutive parts of ONE photo - top to bottom for a tall photo, left to right for a wide one - overlapping a little: read them as one page and list a dish that shows in two parts only once. Read EVERY image to its last line - the later images are as important as the first; never stop after the first image or the first block of a long list. The number of dish lines you write must match "count".
 - If a price appears only next to another language's copy of the dish, still use that price.
 - Do not invent dishes or merge two dishes into one. Include every dish visible on the page.
 If prices show no currency symbol assume ${c}.`,
@@ -80,6 +86,10 @@ Then one line per purchased item, in the printed order: {"original": item name e
 Last line: {"totals": {"tax": VAT/sales tax amount (0 if none), "tax_included_in_prices": boolean, "service_charge": service fee charged (0 if none), "service_pct": its percentage if printed, else null, "tip": a tip or gratuity line explicitly added to the bill (0 if none), "other_fees": tourism/cover/other mandatory fees (0 if none), "subtotal": the subtotal as printed (even if it looks wrong) or null, "total": the final amount printed (even if it looks wrong) or null, "tax_lines": every VAT/tax amount line as printed, [{"label": its label copied exactly as printed (e.g. "AFA 27% (C)", "MwSt 19%", "IVA 10%"), "amount": its tax amount}] ([] if none; not the net/gross totals), "service_lines": every service charge line as printed, [{"label": copied exactly (e.g. "15% Service (27% VAT (C))", "SZERVÍZ DÍJ"), "amount": number}] ([] if none)}}
 Copy every printed amount exactly as printed; never correct the receipt's arithmetic.
 When several images are given, they are consecutive parts of ONE long bill, top to bottom, overlapping a little: read them as one bill and list a line that shows in two parts only once.
+A discount, coupon, voucher or returned deposit printed as its own line (e.g. "Discount 10% -4.50", "Happy hour -2.00", "Kedvezmény") is listed as an item with a NEGATIVE "unit_price" and quantity 1. A line that was cancelled (VOID, STORNO, "törölve", a negative copy of the line right above it) is left out together with the line it cancels. A rounding line ("Rounding", "Kerekítés", "Arrotondamento") goes into "other_fees" and may be negative.
+A modifier or extra printed under an item with its own price (e.g. "+ extra cheese 1.00") is its own item; a modifier without a price ("no onion", "medium") is not listed. A deposit that is charged ("Pfand", "deposit") is an item.
+"total" is the amount to pay for the food and drinks (with tax, service and fees) - not the cash handed over, the change, a pre-authorisation, a card slip's amount with tip, or a "suggested tip" table. A suggested-tip table is never a tip. When the bill prints amounts in two currencies, use the main (local) one.
+If the photo is only a card-payment slip (an amount and card details, no list of items), "receipt" is false.
 If a line shows only a line total for quantity > 1, divide to get unit_price. For an item sold by weight (e.g. "0.350 kg x 120.00"), "quantity" is 1 and "unit_price" is the line's total. Do not list tax, service, tip or total lines as items - a service charge printed like an item line (e.g. "SZERVÍZ DÍJ 782", "Service Charge A", "Coperto", "Servizio") goes into "service_charge" (the sum of all such lines), never into the items. VAT lines that only show how much VAT the total contains (e.g. "AFA 27%", "MwSt", "IVA incl.", a net/gross breakdown) mean the tax is included in the prices: "tax_included_in_prices": true. If prices show no currency symbol assume ${c}.`
 };
 
@@ -117,6 +127,7 @@ async function readStream(r, onLine, u) {
       if (d.type === 'error') { reader.cancel().catch(() => {}); return d.error?.message || 'AI service error.'; }
       if (d.type === 'message_start') { const x = d.message?.usage || {}; u.input_tokens += (x.input_tokens || 0) + (x.cache_read_input_tokens || 0) + (x.cache_creation_input_tokens || 0); }
       if (d.type === 'message_delta' && d.usage) u.output_tokens += d.usage.output_tokens || 0;
+      if (d.type === 'message_delta' && d.delta && d.delta.stop_reason === 'max_tokens') u.cut = true; // the answer hit the length limit: the page was not read to its end
       if (d.type !== 'content_block_delta' || d.delta?.type !== 'text_delta') continue;
       text += d.delta.text;
       let j;
@@ -214,6 +225,7 @@ async function streamMenu(key, content, res, strict = false) {
   const bad = st.err && !st.notMenu ? 'error' : !st.n ? (st.kind === 'receipt' ? 'wrong-kind' : st.notMenu ? 'not-a-menu' : 'empty') : st.missing ? 'section-missing' : st.short ? 'incomplete' : st.n >= 3 && st.uns / st.n > 1 / 3 ? 'unsure' : '';
   const info = { kind: bad, err: st.err, n: st.n, model };
   if (!res.headersSent) { res.status(502).json({ error: st.err || 'AI service error.', code: 'ai' }); return { ...info, kind: 'error' }; }
+  if (usage.cut) { send({ long: true }); if (!info.kind) info.kind = 'too-long'; } // the app tells the user to photograph the page in parts
   send({ usage, model, sectionsMissing: st.missing });
   send(st.err && !st.notMenu ? { error: st.err, code: 'ai' } : st.n ? { done: true } : { done: true, empty: true });
   res.end();
@@ -255,7 +267,7 @@ async function streamReceipt(key, content, res) {
       if (SVC_LINE.test(String(o.original))) { st.svc = (st.svc || 0) + amt; (st.svcLines = st.svcLines || []).push({ label: String(o.original).slice(0, 60), amount: amt }); return; }
       st.sum = (st.sum || 0) + amt;
       st.n++; if (o.unsure === true) st.uns++;
-      send({ item: { original: String(o.original), en: o.en && String(o.en) !== String(o.original) ? String(o.en).slice(0, 120) : null, translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, parseInt(o.quantity) || 1), unsure: o.unsure === true } });
+      send({ item: { original: String(o.original), en: o.en && String(o.en) !== String(o.original) ? String(o.en).slice(0, 120) : null, translation: String(o.translation || ''), unit_price: num(o.unit_price) || 0, quantity: Math.max(1, Math.abs(parseInt(o.quantity)) || 1), unsure: o.unsure === true } });
     };
     st.err = await readStream(r, line, usage);
     return st;
