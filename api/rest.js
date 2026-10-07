@@ -70,6 +70,13 @@ module.exports = async (req, res) => {
         res.setHeader('Cache-Control', 'private, max-age=300'); res.setHeader('X-Robots-Tag', 'noindex');
         return res.status(200).json({ packed: v });
       }
+      // a dish photo a business uploaded (kept small, so it lives next to the pages)
+      if (req.query.img) {
+        const id = String(req.query.img); if (!/^[a-z0-9]{8,20}$/.test(id) || !(RURL && RTOK)) return fail(res, 404, 'none', 'Not found.');
+        const b = await redis(['GET', `img:${id}`]); if (!b) return fail(res, 404, 'none', 'Not found.');
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); res.setHeader('Content-Type', 'image/jpeg');
+        return res.status(200).send(Buffer.from(b, 'base64'));
+      }
       // a guest opening a page
       const slug = String(req.query.slug || '');
       if (!SLUG.test(slug)) return fail(res, 400, 'slug', 'Invalid page name.');
@@ -114,6 +121,36 @@ module.exports = async (req, res) => {
       shares.set(ip, [...recent, now]);
       const code = newCode(); await store.set(`share:${code}`, packed, 90 * 86400);
       return res.status(200).json({ code });
+    }
+    // a problem the app itself noticed (a photo that could not be opened, no connection, a scan the user had to retake...):
+    // written to the same log as the server's failed scans, without a photo
+    if ((req.body || {}).log !== undefined) {
+      const l = req.body.log; if (!(RURL && RTOK) || !l || typeof l !== 'object') return res.status(200).json({ ok: false });
+      const n = await redis(['INCR', `rl:log:${ip}`]); if (n === 1) await redis(['EXPIRE', `rl:log:${ip}`, 3600]); if (n > 40) return res.status(200).json({ ok: false });
+      const id = Date.now().toString(36) + crypto.randomBytes(2).toString('hex'), s = (v, m) => String(v == null ? '' : v).slice(0, m);
+      await redis(['SET', `log:${id}`, JSON.stringify({ id, ts: now, kind: s(l.kind, 30) || 'app', mode: s(l.mode, 20), err: s(l.err, 400), n: +l.n || 0, lang: s(l.lang, 20), where: s(l.where, 60), ua: s(req.headers['user-agent'], 160), src: 'app', img: 0 }), 'EX', 30 * 86400]);
+      await redis(['LPUSH', 'logs', id]); await redis(['LTRIM', 'logs', 0, 299]);
+      return res.status(200).json({ ok: true });
+    }
+    // the manager's dashboard of failures: the list, one failure's photo, deleting one or all
+    if ((req.body || {}).logs !== undefined) {
+      const b = req.body; if (!isAdmin(b.key)) return fail(res, 403, 'key', 'Wrong manager code.');
+      if (!(RURL && RTOK)) return fail(res, 503, 'config', 'Storage is not connected.');
+      if (b.logs === 'img') { const v = /^[a-z0-9]{6,20}$/.test(String(b.id)) ? await redis(['GET', `logimg:${b.id}`]) : null; return res.status(200).json({ images: v ? JSON.parse(v) : [] }); }
+      if (b.logs === 'del' && /^[a-z0-9]{6,20}$/.test(String(b.id))) { await redis(['DEL', `log:${b.id}`, `logimg:${b.id}`]); await redis(['LREM', 'logs', 0, b.id]); await redis(['LREM', 'logimgs', 0, b.id]); return res.status(200).json({ ok: true }); }
+      const ids = await redis(['LRANGE', 'logs', 0, 299]) || [];
+      if (b.logs === 'clear') { for (let i = 0; i < ids.length; i += 50) await redis(['DEL', ...ids.slice(i, i + 50).flatMap(x => [`log:${x}`, `logimg:${x}`])]); await redis(['DEL', 'logs', 'logimgs']); return res.status(200).json({ ok: true }); }
+      const rows = ids.length ? await redis(['MGET', ...ids.map(x => `log:${x}`)]) : [];
+      return res.status(200).json({ logs: rows.filter(Boolean).map(x => JSON.parse(x)) });
+    }
+    // a dish photo for a restaurant page (signed-in business or the manager): a small JPEG, kept under a random id
+    if ((req.body || {}).img !== undefined) {
+      const b = req.body; if (!(RURL && RTOK)) return fail(res, 503, 'config', 'Photos are not available.');
+      if (!isAdmin(b.key) && !(await sessPhone(b.sess))) return fail(res, 401, 'sess', 'Please sign in again.');
+      if (typeof b.img !== 'string' || b.img.length < 100 || b.img.length > 200000 || !/^[A-Za-z0-9+/=]+$/.test(b.img)) return fail(res, 400, 'data', 'Invalid photo.');
+      const n = await redis(['INCR', `rl:img:${ip}`]); if (n === 1) await redis(['EXPIRE', `rl:img:${ip}`, 3600]); if (n > 200) return fail(res, 429, 'rate', 'Too many photos. Try again later.');
+      const id = crypto.randomBytes(8).toString('hex'); await redis(['SET', `img:${id}`, b.img]);
+      return res.status(200).json({ url: `/api/rest?img=${id}` });
     }
     const { key, slug, data, check, edit } = req.body || {};
     // the manager code (?admin= in the app) - checked, with a limit on wrong tries

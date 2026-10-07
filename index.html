@@ -258,6 +258,26 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .btn.ghost{background:var(--card);box-shadow:inset 0 0 0 1px var(--line),var(--sh)}
 .btn:active,.pill:active{box-shadow:none;transform:translateY(1px)}
 .btn:disabled{box-shadow:none}
+.ntr{display:block;font-size:15.5px;color:var(--ink);opacity:.82}
+.dtxt{display:block;width:100%;border:0;background:none;padding:0;margin:0;font:inherit;text-align:start;cursor:pointer;color:inherit}
+.dtxt .dclip{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.dtxt.open .dclip{display:block}
+.dmore{display:inline-flex;align-items:center;gap:2px;color:var(--ac);font-size:13.5px;font-weight:600;margin-top:2px;text-decoration:underline}.dmore svg{transform:rotate(90deg)}.dtxt.open .dmore svg{transform:rotate(-90deg)}
+.per{font-weight:500;color:var(--mut);font-size:13px}
+.vars{display:flex;flex-wrap:wrap;gap:6px;font-weight:500;margin-top:4px}.var{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13.5px;background:var(--card)}.var i{font-style:normal;color:var(--ac);font-weight:700}
+.opttag{display:inline-flex;align-items:center;gap:5px;border:1px dashed var(--ac);background:var(--ac2);color:var(--ac);border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;width:fit-content;max-width:100%}
+.picked{display:flex;align-items:center;gap:4px;color:var(--ok);font-size:13.5px;font-weight:600;margin-top:4px}.picked.need{color:var(--warn)}
+.optb{flex:none;min-width:78px}.wstep span{min-width:58px;font-size:14px}
+.optr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.optr .info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.catnote{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:600;color:var(--warn);text-transform:none;letter-spacing:0}
+.mnotes ul{margin:4px 0 0;padding-inline-start:18px}.mnotes li{margin:3px 0}
+.dnote{display:flex;gap:5px;align-items:center;font-size:13.5px;color:var(--ac);font-weight:600;margin-top:2px}
+.pnbtn{margin-top:10px}.wpick{display:block;font-weight:600}.hrow small svg{vertical-align:-2px}
+.dimg{width:64px;height:64px;object-fit:cover;border-radius:12px;float:inline-end;margin-inline-start:10px}
+.dbadges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:3px}.dbadge{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--ac2);color:var(--ac)}.dbadge.sold{background:var(--line);color:var(--mut)}
+.becat{padding:12px}.becath{display:flex;gap:6px;align-items:center;margin-bottom:6px}.becatn{flex:1;font-weight:700;font-size:16px;min-width:0}
+.berow{display:flex;align-items:center;gap:4px;border-top:1px solid var(--line)}.beitem{flex:1;display:flex;gap:10px;align-items:center;border:0;background:none;font:inherit;color:inherit;text-align:start;padding:10px 0;cursor:pointer;min-width:0}.beitem img{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none}.bein{display:flex;flex-direction:column;min-width:0}
+.bechks{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.behrs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.logerr{font-size:13px;word-break:break-word;color:var(--bad);margin:4px 0}.logrow{display:flex;flex-direction:column;gap:4px}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -278,7 +298,7 @@ policy:'Restaurant policy',
 ingT:'Ingredient & diet filter',ingD:"Tap ingredients you don't eat — dishes that contain them will be marked.",ingQ:'Search an ingredient…',more:'Show more',less:'Show less',noIng:'No such ingredient on this menu',contains:'Heads up, this dish contains: {0}',mayContain:'Heads up, this dish may contain: {0}',histQ:'Search by restaurant name',dAll:'Any time',dToday:'Today',dDays:'Last {0} days',dPick:'Pick a date',
 mfT:'Scan the menu first?',mfD:'If you scan the menu and choose dishes first, we can check the bill against your order and catch mistakes. You can also scan just the bill, to translate and split it.',
 mfMenu:'Scan the menu first',mfGo:'Continue to scan the bill',
-taxIncShort:'Prices include VAT',soT:'What the sender chose',tblT:"The table's order",tblTot:'Table total',myOrder:'My order',me:'me',mwT:"Join the table's order",mwD:'Write your name so everyone at the table sees what you order.',mwGo:'Join',myName:'My name',liveMenuOn:'Shared order - everyone at the table sees what each person adds',isT:'Check this dish',isTag:'Something is wrong here',isShow:'Show on the bill',bizT:'Restaurant page',bizD:"Scan the restaurant's menu and get its own page with a link and a QR code, where guests see the menu in their language and currency.",bizScan:'Scan a menu',bizScanD:'You can choose several photos (all the pages of the menu) at once.',bizMenus:'Scanned menus',bizNone:'No menus yet - scan a menu to start.',bizNoPage:'no page yet',bizMenuHdr:'Restaurant menu',bizLoginT:'The business account',bizLoginD:'First time? Enter the phone number and choose a password - the account is created. Next time, from any phone, use the same number and password.',bizPhone:'Phone number',bizPw:'Password (at least 6 characters)',bizGo:'Continue',bizCreated:'The account was created',bizOut:'Sign out',bizAs:'Signed in: {0}',whoT:'Who are you?',whoD:'Write your name and pick your place in the split, or join as a new person.',whoPh:'Your name',whoNew:'Join as a new person',liveOn:'Shared split - everyone with the link sees what each person chose',namesBtn:'Names',namesT:'Names of the people',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
+taxIncShort:'Prices include VAT',soT:'What the sender chose',tblT:"The table's order",tblTot:'Table total',myOrder:'My order',me:'me',mwT:"Join the table's order",mwD:'Write your name so everyone at the table sees what you order.',mwGo:'Join',myName:'My name',liveMenuOn:'Shared order - everyone at the table sees what each person adds',isT:'Check this dish',isTag:'Something is wrong here',isShow:'Show on the bill',bizT:'Restaurant page',bizD:"Scan the restaurant's menu and get its own page with a link and a QR code, where guests see the menu in their language and currency.",bizScan:'Scan a menu',bizScanD:'You can choose several photos (all the pages of the menu) at once.',bizMenus:'Scanned menus',bizNone:'No menus yet - scan a menu to start.',bizNoPage:'no page yet',bizMenuHdr:'Restaurant menu',bizLoginT:'The business account',bizLoginD:'First time? Enter the phone number and choose a password - the account is created. Next time, from any phone, use the same number and password.',bizPhone:'Phone number',bizPw:'Password (at least 6 characters)',bizGo:'Continue',bizCreated:'The account was created',bizOut:'Sign out',bizAs:'Signed in: {0}',whoT:'Who are you?',whoD:'Write your name and pick your place in the split, or join as a new person.',whoPh:'Your name',whoNew:'Join as a new person',liveOn:'Shared split - everyone with the link sees what each person chose',namesBtn:"Edit the participants' names",namesT:'Names of the people',shareT:'Share',shareWa:'Send on WhatsApp',shareMenuTxt:'The menu of {0} - open it to see the dishes and what I chose:',shareMenuTxt0:'A menu I scanned - open it to see the dishes and what I chose:',
 shareRecTxt:'The bill from {0} - open it to see the items and the split:',shareRecTxt0:'A bill I scanned - open it to see the items and the split:',
 shareGot:'Shared with you and saved in your history',shareBad:'This link could not be opened',sharedTag:'Shared with you',
 oRemove:'Remove',photoOf:'Photo {0} of {1}',photoDishes:'{0} dishes from this photo',photoDish1:'1 dish from this photo',oPhoto:'Photo',oRemoved:'Removed from the order',catSel:'{0} chosen',catSel1:'1 chosen',dish1:'1 dish',catTap:'Tap a section to see its dishes',catTapOpen:'Tap a section to open or close it',catAll:'Open all',catNone:'Close all',
@@ -306,7 +326,23 @@ aNotOrd:'"{0}" is on the bill but was not ordered',aMissing:'"{0}" was ordered b
 aS:'A service charge ({0}) is already on the bill — an extra tip is optional.',aT:'Tax on the receipt: {0} ({1}).',tIn:'included in prices',tOn:'added on top',aF:'Extra fees on the receipt: {0}.',ok:'The bill matches your order — no discrepancies found.',okNoMenu:'No discrepancies found on the bill.',
 review:'How was it?',reviewD:'Leave a review of {0} on Google',reviewBtn:'Write a review',
 menus:'Menus',receipts:'Receipts',delT:'Delete "{0}"?',delMenu:'The menu and its order will be deleted permanently.',delRec:'The receipt and its split will be deleted permanently.',delBtn:'Delete',del:'Delete',
-fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',nameMissing:"We couldn't read the restaurant name — you can type it here",issues1:'1 problem found on the bill',issuesN:'{0} problems found on the bill',cmpT:'Compare with your order',cmpD:'To check the bill against what you ordered: scan the menu, mark the dishes you ordered, and we will compare.',cmpBtn:'Scan the menu to compare',cmpMark:"You haven't marked what you ordered yet. Mark the dishes and we will compare them with the bill.",cmpMarkBtn:'Mark the dishes in the menu',cmpGo:'Compare with the scanned bill',cmpGoD:'Mark the dishes you ordered, then tap here to check the bill against them.',leftOf:'{0} of {1} left',itemsSoFar:'{0} items so far',dnohot:'No spicy',translating:'Translating the app…',err_net:'No internet connection. Check your connection and try again.',err_image:'This photo could not be read. Try another photo.',err_rate:'Too many scans in a short time. Wait a minute and try again.',err_ai:'The scanning service is busy right now. Please try again in a moment.',err_failed:'The scan failed. Please try again.',err_config:'The service is not set up yet.',err_mode:'Something went wrong. Please try again.',err_method:'Something went wrong. Please try again.',feesT:'Taxes and fees on the bill',sumT:'Summary',takenBy:'Taken by {0}',unshare:'Remove this split',filtHide:'Hide',filtOn:'{0} active',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',dishesAddons:'{0} dishes and add-ons',updated:'Last updated:',contact:'Contact'},
+fail:'The scan failed',remove:'Remove',yourTotal:'Your total',privacy:'Privacy policy',terms:'Terms of service',untitledMenu:'Menu without a name',nameMissing:"We couldn't read the restaurant name — you can type it here",issues1:'1 problem found on the bill',issuesN:'{0} problems found on the bill',cmpT:'Compare with your order',cmpD:'To check the bill against what you ordered: scan the menu, mark the dishes you ordered, and we will compare.',cmpBtn:'Scan the menu to compare',cmpMark:"You haven't marked what you ordered yet. Mark the dishes and we will compare them with the bill.",cmpMarkBtn:'Mark the dishes in the menu',cmpGo:'Compare with the scanned bill',cmpGoD:'Mark the dishes you ordered, then tap here to check the bill against them.',leftOf:'{0} of {1} left',itemsSoFar:'{0} items so far',dnohot:'No spicy',translating:'Translating the app…',err_net:'No internet connection. Check your connection and try again.',err_image:'This photo could not be read. Try another photo.',err_rate:'Too many scans in a short time. Wait a minute and try again.',err_ai:'The scanning service is busy right now. Please try again in a moment.',err_failed:'The scan failed. Please try again.',err_config:'The service is not set up yet.',err_mode:'Something went wrong. Please try again.',err_method:'Something went wrong. Please try again.',feesT:'Taxes and fees on the bill',sumT:'Summary',takenBy:'Taken by {0}',unshare:'Remove this split',filtHide:'Hide',filtOn:'{0} active',menuHdr:'Menu',recHdr:'Receipt',aSub:'The receipt subtotal ({0}) does not match its items ({1}) — a difference of {2}. The receipt probably has a mistake.',aSvcPct:'The service charge on the receipt ({0}) is not {1}% of the items ({2})',aTotalSub:'So the amount to pay on the receipt ({0}) is off by {1} from the items plus fees ({2})',printedTotal:'Amount to pay on the receipt',yourOrder:'Your order',orderTotal:'Total ({0} dishes)',orderEmpty:'No dishes chosen yet. Tap + next to a dish to add it to your order.',addPageD:'Does the menu have more pages? Photograph the next page and it will be added to the list.',saveScanD:'When the bill arrives, photograph the receipt and we will check it against your order.',avoidTerm:'Mark dishes with "{0}"',close:'Close',unclearMarks:'{0} allergen/diet markings next to dishes could not be identified — check them on the original menu',unclearD:'A close, sharp photo of the symbols and the menu legend will help identify them.',dishesN:'{0} dishes',dishesAddons:'{0} dishes and add-ons',updated:'Last updated:',contact:'Contact',
+optPick:'Choose',optSize:'Size',optChoice:'Options',optExtras:'Extras',optWeight:'Weight',optHas:'To choose: {0}',optNeed:'Not chosen yet: {0}',optChange:'Change choice',optAdd:'Add extras',pcU:'pcs',
+notesT:'Notes from the menu',photosN:'{0} photos',photo1:'1 photo',showPhoto:'Show photo',
+aWeight:'"{0}": the bill charges {1}, but {2} at the menu price comes to {3}',
+soldOut:'Sold out',recBadge:'Recommended',newBadge:'New',spicyL:'Spicy',beName:'Restaurant name',beMenuT:'The menu',beCatPh:'Section name',beUp:'Move up',beDown:'Move down',beNoName:'(no name)',
+beAddDish:'Add a dish',beAddCat:'Add a section',beNewCat:'New section',beCatDup:'A section with this name already exists',beCatDelD:'The section and all its dishes will be deleted.',
+bePolT:'Notices to guests',beVat:'VAT',beVatInc:'Included in the prices',beVatExc:'Not included',beNone:'Not stated',beSvcNone:'None',beSvcInc:'Included in the prices',beSvcAdd:'Added to the bill',beSvcPct:'Service charge (%)',
+beNotes:'More notices (shown at the top of the menu)',beNotesPh:'For example: Happy hour 17:00–19:00, 20% off cocktails',bePreview:'Guests will see',
+beShowT:'What guests see',beC_prices:'Prices',beC_photos:'Dish photos',beC_ing:'Ingredient and diet filter',beC_order:'Choosing dishes (an order to show the waiter)',beC_scanBill:'Scanning the bill at the end of the order',beC_google:'Link to dish photos on Google',beC_review:'Button for a Google review',
+beReview:'Link to your Google review page',beReviewD:'Guests see a "Write a review" button under their order.',
+beEditDish:'Edit dish',beDName:'Dish name',beDDesc:'Description (optional)',bePrice:'Price',beCat:'Section',beNoCat:'(no section)',beDiets:'Suitable for',beAlg:'Contains allergens',beNeedName:'Enter the dish name',beFirstCat:'Starters',
+beHours:'Shown only at certain hours',beFrom:'From',beTo:'Until',beHoursD:'Leave empty to show it all day.',beHoursBtn:'Hours',
+beImg:'Dish photo',beImgAdd:'Upload a photo',beImgDel:'Remove the photo',beImgBusy:'Uploading the photo…',
+pVatInc:'Prices include VAT.',pVatExc:'Prices do not include VAT.',pSvcInc:'Service is included in the prices.',pSvcAdd:'A service charge of {0}% will be added to the bill.',
+al_gluten:'Gluten',al_milk:'Milk',al_egg:'Eggs',al_nuts:'Tree nuts',al_peanut:'Peanuts',al_fish:'Fish',al_shellfish:'Shellfish',al_sesame:'Sesame',al_soy:'Soy',al_celery:'Celery',al_mustard:'Mustard',
+bizNewBtn:'Build a menu by hand',bizNewD:'Without scanning: add sections and dishes yourself.',
+logsT:'Scan problems',logsBtn:'Scan problems',logsD:'{0} problems recorded, latest first. Photos are kept for 14 days.',logsImg:'Show the photo',logsNone:'No problems recorded.',logsClear:'Delete all',logsClearD:'All recorded problems and their photos will be deleted.',logsRef:'Refresh'},
 he:{title:'מתרגם תפריט ובודק חשבונית חכם',sub:'סרקו תפריט, הזמינו, ואז סרקו את החשבון וחלקו אותו בהגינות.',lang:'שפה',cur:'מטבע',other:'שפה אחרת…',otherPh:'הקלידו שפה',start:'המשך',saveSet:'שמור',hello:'במה נעזור?',scanMenu:'סריקת תפריט',scanMenuD:'תרגום מנות ובניית ההזמנה',scanReceipt:'סריקת קבלה',scanReceiptD:'בדיקת החשבון וחלוקתו',hist:'היסטוריה',histD:'תפריטים וקבלות שמורים',set:'הגדרות',back:'חזרה',menuName:'שם המסעדה',
 addPage:'סרוק עמוד נוסף לתפריט',findPhoto:'חפש תמונה של המנה',unsureTag:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק מול התפריט',unsureTagR:'ייתכן שיש שגיאה בשם או במחיר — כדאי לבדוק מול הקבלה',uq_name:'ייתכן ששם המנה לא נקרא נכון — כדאי לבדוק מול התפריט',uq_price:'ייתכן שהמחיר לא נקרא נכון — כדאי לבדוק מול התפריט',uq_ingredients:'ייתכן שאחד המרכיבים לא נקרא נכון — כדאי לבדוק מול התפריט',uq_marks:'ייתכן שאחד הסימונים התזונתיים לא נקרא נכון — כדאי לבדוק מול התפריט',
 hintsT:'טיפים לסריקת תפריט טובה',hint1:'ודאו שהטקסט חד וקריא על המסך לפני הצילום',hint2:'תאורה טובה, בלי השתקפויות',hint3:'תפריט גדול? צלמו כל חלק בנפרד והוסיפו עם "{0}"',
@@ -320,7 +356,7 @@ policy:'מדיניות המסעדה',
 ingT:'סינון מרכיבים ומגבלות תזונה',ingD:'סמנו מרכיבים שאתם לא אוכלים — מנות שמכילות אותם יסומנו.',ingQ:'חיפוש מרכיב…',more:'הצג עוד',less:'הצג פחות',noIng:'אין מרכיב כזה בתפריט',contains:'שים לב, המנה מכילה: {0}',mayContain:'שים לב, המנה עלולה להכיל: {0}',histQ:'חיפוש לפי שם מסעדה',dAll:'כל הזמנים',dToday:'היום',dDays:'{0} ימים אחרונים',dPick:'בחירת תאריך',
 mfT:'לסרוק קודם את התפריט?',mfD:'אם תסרקו קודם את התפריט ותבחרו מנות, נוכל להשוות את החשבונית להזמנה ולמצוא טעויות. אפשר גם לסרוק רק את החשבונית כדי לתרגם ולחלק אותה.',
 mfMenu:'לסריקת התפריט קודם',mfGo:'המשך לסריקת החשבונית',
-taxIncShort:'המחירים כוללים מע״מ',soT:'מה בחר מי ששיתף',tblT:'ההזמנה של השולחן',tblTot:'סה״כ לשולחן',myOrder:'ההזמנה שלי',me:'אני',mwT:'הצטרפות להזמנה של השולחן',mwD:'כתבו את השם שלכם כדי שכולם בשולחן יראו מה הזמנתם.',mwGo:'הצטרפות',myName:'השם שלי',liveMenuOn:'הזמנה משותפת – כל מי שבשולחן רואה מה כל אחד מוסיף',isT:'שימו לב למנה הזאת',isTag:'יש כאן טעות',isShow:'הצג בחשבונית',bizT:'דף תפריט למסעדה',bizD:'סרקו את התפריט של המסעדה וקבלו דף משלה עם קישור וקוד QR, שבו האורחים רואים את התפריט בשפה ובמטבע שלהם.',bizScan:'סריקת תפריט',bizScanD:'אפשר לבחור כמה תמונות (כל עמודי התפריט) בבת אחת.',bizMenus:'תפריטים שנסרקו',bizNone:'עדיין אין תפריטים – סרקו תפריט כדי להתחיל.',bizNoPage:'עדיין אין דף',bizMenuHdr:'תפריט המסעדה',bizLoginT:'חשבון העסק',bizLoginD:'בפעם הראשונה – הזינו מספר טלפון ובחרו סיסמה, והחשבון ייווצר. בפעמים הבאות, מכל טלפון, הזינו את אותו מספר ואותה סיסמה.',bizPhone:'מספר טלפון',bizPw:'סיסמה (לפחות 6 תווים)',bizGo:'המשך',bizCreated:'החשבון נוצר',bizOut:'יציאה',bizAs:'מחובר: {0}',whoT:'מי אתם?',whoD:'כתבו את השם שלכם ובחרו את המקום שלכם בחלוקה, או הצטרפו כמשתתף חדש.',whoPh:'השם שלכם',whoNew:'הצטרפות כמשתתף חדש',liveOn:'חלוקה משותפת – כל מי שיש לו את הקישור רואה מה כל אחד בחר',namesBtn:'שמות',namesT:'שמות המשתתפים',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
+taxIncShort:'המחירים כוללים מע״מ',soT:'מה בחר מי ששיתף',tblT:'ההזמנה של השולחן',tblTot:'סה״כ לשולחן',myOrder:'ההזמנה שלי',me:'אני',mwT:'הצטרפות להזמנה של השולחן',mwD:'כתבו את השם שלכם כדי שכולם בשולחן יראו מה הזמנתם.',mwGo:'הצטרפות',myName:'השם שלי',liveMenuOn:'הזמנה משותפת – כל מי שבשולחן רואה מה כל אחד מוסיף',isT:'שימו לב למנה הזאת',isTag:'יש כאן טעות',isShow:'הצג בחשבונית',bizT:'דף תפריט למסעדה',bizD:'סרקו את התפריט של המסעדה וקבלו דף משלה עם קישור וקוד QR, שבו האורחים רואים את התפריט בשפה ובמטבע שלהם.',bizScan:'סריקת תפריט',bizScanD:'אפשר לבחור כמה תמונות (כל עמודי התפריט) בבת אחת.',bizMenus:'תפריטים שנסרקו',bizNone:'עדיין אין תפריטים – סרקו תפריט כדי להתחיל.',bizNoPage:'עדיין אין דף',bizMenuHdr:'תפריט המסעדה',bizLoginT:'חשבון העסק',bizLoginD:'בפעם הראשונה – הזינו מספר טלפון ובחרו סיסמה, והחשבון ייווצר. בפעמים הבאות, מכל טלפון, הזינו את אותו מספר ואותה סיסמה.',bizPhone:'מספר טלפון',bizPw:'סיסמה (לפחות 6 תווים)',bizGo:'המשך',bizCreated:'החשבון נוצר',bizOut:'יציאה',bizAs:'מחובר: {0}',whoT:'מי אתם?',whoD:'כתבו את השם שלכם ובחרו את המקום שלכם בחלוקה, או הצטרפו כמשתתף חדש.',whoPh:'השם שלכם',whoNew:'הצטרפות כמשתתף חדש',liveOn:'חלוקה משותפת – כל מי שיש לו את הקישור רואה מה כל אחד בחר',namesBtn:'עריכת שמות המשתתפים',namesT:'שמות המשתתפים',shareT:'שיתוף',shareWa:'שליחה בוואטסאפ',shareMenuTxt:'התפריט של {0} – פתחו כדי לראות את המנות ומה בחרתי:',shareMenuTxt0:'תפריט שסרקתי – פתחו כדי לראות את המנות ומה בחרתי:',
 shareRecTxt:'החשבון מ-{0} – פתחו כדי לראות את הפריטים והחלוקה:',shareRecTxt0:'חשבון שסרקתי – פתחו כדי לראות את הפריטים והחלוקה:',
 shareGot:'שותף איתך ונשמר בהיסטוריה שלך',shareBad:'לא הצלחנו לפתוח את הקישור',sharedTag:'שותף איתך',
 oRemove:'הסר',photoOf:'תמונה {0} מתוך {1}',photoDishes:'{0} מנות מהתמונה הזאת',photoDish1:'מנה אחת מהתמונה הזאת',oPhoto:'תמונה',oRemoved:'המנה הוסרה מההזמנה',catSel:'{0} נבחרו',catSel1:'אחת נבחרה',dish1:'מנה אחת',catTap:'הקישו על קטגוריה כדי לראות את המנות שלה',catTapOpen:'הקישו על קטגוריה כדי לפתוח או לסגור אותה',catAll:'פתח הכל',catNone:'סגור הכל',
@@ -348,12 +384,28 @@ aNotOrd:'“{0}” מופיע בחשבון אבל לא הוזמן',aMissing:'“
 aS:'דמי שירות ({0}) כבר כלולים בחשבון — טיפ נוסף אינו חובה.',aT:'מע״מ בקבלה: {0} ({1}).',tIn:'כלול במחירים',tOn:'נוסף על המחיר',aF:'עמלות נוספות בקבלה: {0}.',ok:'החשבון תואם להזמנה — לא נמצאו אי־התאמות.',okNoMenu:'לא נמצאו אי־התאמות בחשבון.',
 review:'איך היה?',reviewD:'השאירו ביקורת על {0} בגוגל',reviewBtn:'לכתיבת ביקורת',
 menus:'תפריטים',receipts:'קבלות',delT:'למחוק את “{0}”?',delMenu:'התפריט וההזמנה שבו יימחקו לצמיתות.',delRec:'הקבלה והחלוקה שלה יימחקו לצמיתות.',delBtn:'מחק',del:'מחק',
-fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',nameMissing:'לא זיהינו את שם המסעדה — אפשר לרשום אותו כאן',issues1:'נמצאה אי־התאמה אחת בחשבון',issuesN:'נמצאו {0} אי־התאמות בחשבון',cmpT:'השוואה להזמנה',cmpD:'כדי לבדוק את החשבון מול מה שהזמנתם: סרקו את התפריט, סמנו את המנות שהזמנתם, ונשווה.',cmpBtn:'סריקת התפריט להשוואה',cmpMark:'עדיין לא סימנתם בתפריט מה הזמנתם. סמנו את המנות, ונשווה אותן לחשבון.',cmpMarkBtn:'לסימון המנות בתפריט',cmpGo:'השוו לחשבון שנסרק',cmpGoD:'סמנו את המנות שהזמנתם, ואז לחצו כאן כדי לבדוק את החשבון מולן.',leftOf:'נותרו {0} מתוך {1}',itemsSoFar:'{0} פריטים עד עכשיו',dnohot:'ללא חריף',translating:'מתרגם את האפליקציה…',err_net:'אין חיבור לאינטרנט. בדקו את החיבור ונסו שוב.',err_image:'לא הצלחנו לקרוא את התמונה. נסו תמונה אחרת.',err_rate:'יותר מדי סריקות בזמן קצר. חכו דקה ונסו שוב.',err_ai:'שירות הסריקה עמוס כרגע. נסו שוב בעוד רגע.',err_failed:'הסריקה נכשלה. נסו שוב.',err_config:'השירות עדיין לא מוגדר.',err_mode:'משהו השתבש. נסו שוב.',err_method:'משהו השתבש. נסו שוב.',feesT:'מיסים ועמלות בחשבון',sumT:'סיכום',takenBy:'נלקח על ידי {0}',unshare:'הסר את החלוקה',filtHide:'הסתר',filtOn:'{0} פעילים',menuHdr:'תפריט',recHdr:'קבלה',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות “{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',dishesAddons:'{0} מנות ותוספות',updated:'עודכן לאחרונה:',contact:'יצירת קשר'}};
+fail:'הסריקה נכשלה',remove:'הסר',yourTotal:'הסכום שלך',privacy:'מדיניות פרטיות',terms:'תנאי שירות',untitledMenu:'תפריט ללא שם',nameMissing:'לא זיהינו את שם המסעדה — אפשר לרשום אותו כאן',issues1:'נמצאה אי־התאמה אחת בחשבון',issuesN:'נמצאו {0} אי־התאמות בחשבון',cmpT:'השוואה להזמנה',cmpD:'כדי לבדוק את החשבון מול מה שהזמנתם: סרקו את התפריט, סמנו את המנות שהזמנתם, ונשווה.',cmpBtn:'סריקת התפריט להשוואה',cmpMark:'עדיין לא סימנתם בתפריט מה הזמנתם. סמנו את המנות, ונשווה אותן לחשבון.',cmpMarkBtn:'לסימון המנות בתפריט',cmpGo:'השוו לחשבון שנסרק',cmpGoD:'סמנו את המנות שהזמנתם, ואז לחצו כאן כדי לבדוק את החשבון מולן.',leftOf:'נותרו {0} מתוך {1}',itemsSoFar:'{0} פריטים עד עכשיו',dnohot:'ללא חריף',translating:'מתרגם את האפליקציה…',err_net:'אין חיבור לאינטרנט. בדקו את החיבור ונסו שוב.',err_image:'לא הצלחנו לקרוא את התמונה. נסו תמונה אחרת.',err_rate:'יותר מדי סריקות בזמן קצר. חכו דקה ונסו שוב.',err_ai:'שירות הסריקה עמוס כרגע. נסו שוב בעוד רגע.',err_failed:'הסריקה נכשלה. נסו שוב.',err_config:'השירות עדיין לא מוגדר.',err_mode:'משהו השתבש. נסו שוב.',err_method:'משהו השתבש. נסו שוב.',feesT:'מיסים ועמלות בחשבון',sumT:'סיכום',takenBy:'נלקח על ידי {0}',unshare:'הסר את החלוקה',filtHide:'הסתר',filtOn:'{0} פעילים',menuHdr:'תפריט',recHdr:'קבלה',aSub:'סכום הביניים בקבלה ({0}) לא תואם לסכום הפריטים ({1}) — הפרש של {2}. כנראה יש טעות בקבלה.',aSvcPct:'דמי השירות בקבלה ({0}) אינם {1}% מסכום הפריטים ({2})',aTotalSub:'לכן הסכום לתשלום בקבלה ({0}) שונה ב-{1} מסכום הפריטים והעמלות ({2})',printedTotal:'לתשלום לפי הקבלה',yourOrder:'ההזמנה שלכם',orderTotal:'סה״כ ({0} מנות)',orderEmpty:'עדיין לא בחרתם מנות. לחצו על + ליד מנה כדי להוסיף אותה להזמנה.',addPageD:'יש לתפריט עוד עמודים? צלמו את העמוד הבא והוא יתווסף לרשימה.',saveScanD:'כשהחשבון מגיע, צלמו את הקבלה ונבדוק שהיא תואמת להזמנה.',avoidTerm:'סמן מנות שמכילות “{0}”',close:'סגור',unclearMarks:'{0} סימונים (אלרגנים / תזונה) ליד המנות לא זוהו — בדקו אותם בתפריט המקורי',unclearD:'צילום קרוב וחד של הסמלים ושל המקרא בתפריט יעזור לזהות אותם.',dishesN:'{0} מנות',dishesAddons:'{0} מנות ותוספות',updated:'עודכן לאחרונה:',contact:'יצירת קשר',
+optPick:'בחירה',optSize:'גודל',optChoice:'אפשרויות',optExtras:'תוספות',optWeight:'משקל',optHas:'יש לבחור: {0}',optNeed:'עדיין לא נבחר: {0}',optChange:'שינוי בחירה',optAdd:'הוספת תוספות',pcU:'יח׳',
+notesT:'הערות מהתפריט',photosN:'{0} תמונות',photo1:'תמונה אחת',showPhoto:'הצג תמונה',
+aWeight:'“{0}”: בחשבון חויב {1}, אבל {2} לפי מחיר התפריט הם {3}',
+soldOut:'אזל',recBadge:'מומלץ',newBadge:'חדש',spicyL:'חריף',beName:'שם המסעדה',beMenuT:'התפריט',beCatPh:'שם הקטגוריה',beUp:'הזז למעלה',beDown:'הזז למטה',beNoName:'(ללא שם)',
+beAddDish:'הוספת מנה',beAddCat:'הוספת קטגוריה',beNewCat:'קטגוריה חדשה',beCatDup:'כבר יש קטגוריה בשם הזה',beCatDelD:'הקטגוריה וכל המנות שבה יימחקו.',
+bePolT:'הודעות לאורחים',beVat:'מע״מ',beVatInc:'כלול במחירים',beVatExc:'לא כלול',beNone:'לא לציין',beSvcNone:'אין',beSvcInc:'כלולים במחירים',beSvcAdd:'מתווספים לחשבון',beSvcPct:'דמי שירות (%)',
+beNotes:'הערות נוספות (יוצגו בראש התפריט)',beNotesPh:'לדוגמה: Happy Hour בין 17:00 ל-19:00, 20% הנחה על קוקטיילים',bePreview:'כך יראו האורחים',
+beShowT:'מה האורחים רואים',beC_prices:'מחירים',beC_photos:'תמונות של המנות',beC_ing:'סינון מרכיבים ומגבלות תזונה',beC_order:'בחירת מנות (הזמנה להצגה למלצר)',beC_scanBill:'סריקת החשבון בסיום ההזמנה',beC_google:'קישור לתמונות המנה בגוגל',beC_review:'כפתור לביקורת בגוגל',
+beReview:'קישור לדף הביקורות שלכם בגוגל',beReviewD:'האורחים יראו כפתור “לכתיבת ביקורת” מתחת להזמנה.',
+beEditDish:'עריכת מנה',beDName:'שם המנה',beDDesc:'תיאור (לא חובה)',bePrice:'מחיר',beCat:'קטגוריה',beNoCat:'(ללא קטגוריה)',beDiets:'מתאים ל',beAlg:'מכיל אלרגנים',beNeedName:'הזינו את שם המנה',beFirstCat:'מנות פתיחה',
+beHours:'להציג רק בשעות מסוימות',beFrom:'משעה',beTo:'עד שעה',beHoursD:'השאירו ריק כדי להציג כל היום.',beHoursBtn:'שעות',
+beImg:'תמונת המנה',beImgAdd:'העלאת תמונה',beImgDel:'הסרת התמונה',beImgBusy:'מעלה את התמונה…',
+pVatInc:'המחירים כוללים מע״מ.',pVatExc:'המחירים אינם כוללים מע״מ.',pSvcInc:'השירות כלול במחירים.',pSvcAdd:'יתווספו דמי שירות של {0}% לסכום החשבון הסופי.',
+al_gluten:'גלוטן',al_milk:'חלב',al_egg:'ביצים',al_nuts:'אגוזים',al_peanut:'בוטנים',al_fish:'דגים',al_shellfish:'פירות ים',al_sesame:'שומשום',al_soy:'סויה',al_celery:'סלרי',al_mustard:'חרדל',
+bizNewBtn:'בניית תפריט ידנית',bizNewD:'בלי לסרוק: מוסיפים קטגוריות ומנות בעצמכם.',
+logsT:'תקלות בסריקה',logsBtn:'תקלות בסריקה',logsD:'נרשמו {0} תקלות, מהחדשה לישנה. התמונות נשמרות 14 יום.',logsImg:'הצג את התמונה',logsNone:'לא נרשמו תקלות.',logsClear:'מחק הכול',logsClearD:'כל התקלות שנרשמו והתמונות שלהן יימחקו.',logsRef:'רענון'}};
 // privacy policy and terms of service; CONTACT is shown in both when filled in
-const CONTACT='',LEGAL_DATE='29.09.2026';
+const CONTACT='',LEGAL_DATE='07.10.2026';
 const LEGAL={he:{privacy:['מדיניות פרטיות',[
-['מה אנחנו אוספים','האפליקציה לא דורשת הרשמה ולא אוספת שם, טלפון או כתובת דוא״ל. התפריטים, ההזמנות, הקבלות וההגדרות שלכם (שפה, מטבע, מגבלות תזונה ומרכיבים שסימנתם) נשמרים רק בדפדפן שלכם, במכשיר שלכם.'],
-['תמונות שאתם סורקים','כשאתם סורקים תפריט או קבלה, התמונה נשלחת דרך השרת שלנו לשירות הבינה המלאכותית Claude של חברת Anthropic, כדי לקרוא ולתרגם אותה. השרת שלנו לא שומר את התמונות. Anthropic מעבדת את המידע לפי מדיניות הפרטיות שלה. אל תצלמו פרטים אישיים, כמו פרטי כרטיס אשראי שמודפסים על הקבלה.'],
+['מה אנחנו אוספים','האפליקציה לא דורשת הרשמה ולא אוספת שם, טלפון או כתובת דוא״ל. התפריטים, ההזמנות, הקבלות וההגדרות שלכם (שפה, מטבע, מגבלות תזונה ומרכיבים שסימנתם) נשמרים בדפדפן שלכם, במכשיר שלכם. כשאתם משתפים תפריט או חשבון בקישור, או פותחים הזמנה או חלוקה משותפת, העותק המשותף נשמר בשרת שלנו עד 90 יום כדי שהקישור יעבוד. בעלי עסקים שיוצרים דף למסעדה נרשמים עם מספר טלפון וסיסמה, והדף שלהם נשמר בשרת.'],
+['תמונות שאתם סורקים','כשאתם סורקים תפריט או קבלה, התמונה נשלחת דרך השרת שלנו לשירות הבינה המלאכותית Claude של חברת Anthropic, כדי לקרוא ולתרגם אותה. השרת שלנו לא שומר את התמונות, מלבד מקרה אחד: כשסריקה נכשלת או שהתוצאה שלה חלקית, התמונה ופרטי התקלה (סוג הדפדפן והשפה) נשמרים עד 14 יום כדי שנוכל לתקן את הבעיה, ואז נמחקים. Anthropic מעבדת את המידע לפי מדיניות הפרטיות שלה. אל תצלמו פרטים אישיים, כמו פרטי כרטיס אשראי שמודפסים על הקבלה.'],
 ['שירותים חיצוניים','האפליקציה טוענת גופנים מ-Google Fonts ושערי מטבע מ-open.er-api.com. הקישורים “חפש תמונה של המנה” ו“לכתיבת ביקורת” פותחים את Google. כל שירות כזה עשוי לראות את כתובת ה-IP שלכם, לפי המדיניות שלו.'],
 ['עוגיות ומעקב','אנחנו לא משתמשים בעוגיות מעקב, בפרסומות או בכלי ניתוח התנהגות.'],
 ['מחיקת המידע','אפשר למחוק כל תפריט או קבלה במסך “היסטוריה”. ניקוי נתוני האתר בדפדפן מוחק את כל המידע השמור.']]],
@@ -364,8 +416,8 @@ terms:['תנאי שירות',[
 ['שימוש הוגן','סרקו רק תמונות שמותר לכם לצלם, ואל תשתמשו בשירות לפעולה בלתי חוקית או להעמסה עליו. אנחנו רשאים להגביל את מספר הסריקות.'],
 ['אחריות','ככל שהדין מתיר, לא נהיה אחראים לנזק שנגרם מהסתמכות על תוצאות האפליקציה. אנחנו רשאים לשנות את השירות ואת התנאים, והנוסח המעודכן יופיע תמיד כאן.']]]},
 en:{privacy:['Privacy policy',[
-['What we collect',"The app needs no sign-up and doesn't collect your name, phone or email. Your menus, orders, receipts and settings (language, currency, diet and ingredients you marked) are stored only in your browser, on your device."],
-['Photos you scan',"When you scan a menu or receipt, the photo is sent through our server to Anthropic's Claude AI service to read and translate it. Our server doesn't store the photos. Anthropic processes the data under its own privacy policy. Don't photograph personal details such as card numbers printed on a receipt."],
+['What we collect',"The app needs no sign-up and doesn't collect your name, phone or email. Your menus, orders, receipts and settings (language, currency, diet and ingredients you marked) are stored in your browser, on your device. When you share a menu or a bill by link, or open a shared order or split, the shared copy is kept on our server for up to 90 days so the link works. Business owners who create a restaurant page sign up with a phone number and a password, and their page is kept on the server."],
+['Photos you scan',"When you scan a menu or receipt, the photo is sent through our server to Anthropic's Claude AI service to read and translate it. Our server doesn't store the photos, with one exception: when a scan fails or its result is partial, the photo and the details of the problem (browser type and language) are kept for up to 14 days so we can fix it, and are then deleted. Anthropic processes the data under its own privacy policy. Don't photograph personal details such as card numbers printed on a receipt."],
 ['Third-party services','The app loads fonts from Google Fonts and exchange rates from open.er-api.com. The "See photos of this dish" and "Write a review" links open Google. Each of these services may see your IP address, under its own policy.'],
 ['Cookies and tracking',"We don't use tracking cookies, ads or behavioural analytics."],
 ['Deleting your data',"You can delete any menu or receipt in History. Clearing this site's data in your browser deletes everything stored."]]],
@@ -447,13 +499,26 @@ function menuFirst(go){if(S.menuFirstOff)return go();
 openSheet(`<h3>${t('mfT')}</h3><p class=mut>${t('mfD')}</p><label class=chk><input type=checkbox id=hintsoff>${t('hintsOff')}</label><button class=btn data-a=sa data-x=menu>${ico('menu',18)}${t('mfMenu')}</button><button class="btn ghost" data-a=sa data-x=go>${ico('receipt',18)}${t('mfGo')}</button>`,
 {menu:off=>{if(off){S.menuFirstOff=true;save()}ACT.nm()},go:off=>{if(off){S.menuFirstOff=true;save()}go()}})}
 // ---------- scanning ----------
-function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const m=shrink.last=Math.max(im.width,im.height),k=m<1600?1600/m:Math.min(1,2400/m),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.9).split(',')[1])};im.onerror=()=>no(new Error(t('err_image')));im.src=u})}
+// A tall photo (a long screenshot of a menu page, a long bill) is cut into up to 4 overlapping parts, each enlarged,
+// so its small text stays readable; the parts are read together as one page. Other photos are sent as one image.
+function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const W=im.width,H=im.height,m=shrink.last=Math.max(W,H);
+const cut=(y,h,k,q)=>{const c=document.createElement('canvas');c.width=Math.round(W*k);c.height=Math.round(h*k);c.getContext('2d').drawImage(im,0,y,W,h,0,0,c.width,c.height);return c.toDataURL('image/jpeg',q).split(',')[1]};
+const n=H/W>1.45?Math.min(4,Math.ceil(H/W/1.15)):1;let out;
+if(n>1){const h=Math.min(H,Math.ceil(H/n*1.12)),k=Math.min(2,1800/Math.max(W,h));out=[...Array(n).keys()].map(j=>cut(Math.round(j*(H-h)/(n-1)),h,k,n>2?.8:.86))}
+else out=cut(0,H,m<1600?1600/m:Math.min(1,2400/m),.9);
+URL.revokeObjectURL(u);ok(out)};im.onerror=()=>no(new Error(t('err_image')));im.src=u})}
+// a problem the app itself notices (no connection, a photo that can't be opened, a scan the user chose to retake, a
+// program error) is reported to the server's log of failures - a few per visit at most, never with personal data
+const logEvt=(kind,d)=>{try{if((logEvt.n=(logEvt.n||0)+1)>8)return;fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({log:{kind,lang:S.lang,where:V.screen,...d}})}).catch(()=>{})}catch(e){}};
+addEventListener('error',e=>logEvt('app-error',{err:(e.message||'')+' @'+(e.lineno||0)+':'+(e.colno||0)}));
+addEventListener('unhandledrejection',e=>logEvt('app-error',{err:String((e.reason&&e.reason.message)||e.reason||'')}));
+const logScanErr=(mode,err)=>{if(err===t('err_net')||err===t('err_image')||err===t('fail'))logEvt(err===t('err_net')?'no-connection':err===t('err_image')?'photo-unreadable':'scan-cut-off',{mode,err})};
 // server errors come with a code, shown in the user's language (the English text is only a fallback)
 const errMsg=j=>j&&j.code&&I.en['err_'+j.code]?t('err_'+j.code):(j&&j.error)||t('fail');
 async function post(body){try{return await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}catch(e){throw new Error(t('err_net'))}}
 async function api(body){const r=await post(body);const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(errMsg(j));return j}
 // menu scans stream back one JSON line per event ({meta}, {item}, {ingr}, {done}) so dishes appear while the page is still being read
-async function scanStream(image,onEvt,mode='menu'){const r=await post({image,mode,language:langName(),currency:S.cur,strict:!!(S.diet.length||S.avoid.length||(S.avoidTxt||[]).length)}); // strict: markings matter to this user
+async function scanStream(image,onEvt,mode='menu'){const r=await post({...(Array.isArray(image)?{images:image}:{image}),mode,language:langName(),currency:S.cur,strict:!!(S.diet.length||S.avoid.length||(S.avoidTxt||[]).length)}); // strict: markings matter to this user
 if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(errMsg(j))}
 const rd=r.body.getReader(),dec=new TextDecoder();let buf='',done=false;
 for(;;){const x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});let k;
@@ -468,20 +533,36 @@ const jobs=id=>V.jobs.filter(j=>j.id===id);
 const cleanIngr=o=>{const r={};for(const k in o){const v=o[k];if(Array.isArray(v))r[String(k).toLowerCase().slice(0,30)]=[String(v[0]||k).slice(0,40),String(v[1]||'').slice(0,8)]}return r};
 // A dish already on the menu (same name, same section, same or missing price) is merged instead of listed twice,
 // so overlapping photos don't duplicate dishes. An add-on belongs to the dish above it and is only merged with the same add-on of the same dish.
-function addDish(M,i,pg,seq,ctx){const key=norm(i.original),price=+i.price||0,addon=i.addon===true,parent=addon?ctx.parent:'';
+function addDish(M,i,pg,seq,ctx){const key=norm(i.original),price=+i.price||0,addon=i.addon===true,parent=addon?ctx.parent:'',nc=s=>norm(s||'');
 let cat=String(i.category||''),catTr=String(i.category_tr||'');const sub=String(i.sub||''),subTr=String(i.sub_tr||'');
 if(!cat&&ctx.inherit){cat=ctx.inherit.cat;catTr=ctx.inherit.catTr} // a photo that starts mid-section continues the previous page's section
+// a section that was already scanned from another photo keeps ONE heading: the same name joins it (so its dishes are
+// listed together), and so does a heading that is cut off in this photo (learnt below from a dish seen in both photos)
+const rm=cat&&(ctx.remap||{})[nc(cat)];
+if(rm){cat=rm.cat;catTr=rm.catTr}else if(cat){const ex=M.items.find(x=>x.pg!==pg&&x.cat&&nc(x.cat)===nc(cat));if(ex){cat=ex.cat;catTr=ex.catTr||catTr}}
 const marks=(i.marks||[]).filter(m=>m&&m.l).map(m=>({c:String(m.c||'other'),l:String(m.l).slice(0,40)})),ing=(i.ing||[]).map(s=>String(s).toLowerCase().slice(0,30)),may=Array.isArray(i.may)?i.may.map(s=>String(s).toLowerCase().slice(0,30)).filter(k=>!ing.includes(k)):null;
 if(!addon)ctx.parent=key;
 // the same dish read twice is kept once: on one page the match is loose (a price or heading missing on one copy); across pages only
 // the same name, price and section count, so a dish on another page that only shares its name (e.g. "Espresso" with the
 // desserts and again with the drinks) is never merged into one already scanned
+// (photos that overlap show the same dish twice: there the heading may be missing or cut in one of them, so a heading
+// that is empty or part of the other one still counts as the same section)
+const catFit=(a,b)=>!a||!b||a===b||(Math.min(a.length,b.length)>=5&&(a.includes(b)||b.includes(a)));
 const sameDish=x=>norm(x.orig)===key&&!!x.addon===addon&&(!addon||x.parent===parent)&&(x.pg===pg
 ?(!x.price||!price||Math.abs(x.price-price)<.005)&&(!x.cat||!cat||norm(x.cat)===norm(cat))
-:Math.abs((x.price||0)-price)<.005&&norm(x.cat||"")===norm(cat)&&norm(x.sub||"")===norm(sub));
+:Math.abs((x.price||0)-price)<.005&&catFit(nc(x.cat),nc(cat))&&(!x.sub||!sub||nc(x.sub)===nc(sub)));
 const same=M.items.find(sameDish);
-if(same){if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);same.ing=[...new Set([...(same.ing||[]),...ing])];if(may)same.may=[...new Set([...(same.may||[]),...may])].filter(k=>!same.ing.includes(k));if(!(same.marks||[]).length)same.marks=marks;return null}
-const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),price,cat,catTr,sub,subTr,...(()=>{const uf=Array.isArray(i.unsure)?i.unsure.map(String):i.unsure===true?["name","price"]:[];return{unsure:uf.length>0,uf}})(),addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
+if(same){if(same.pg!==pg){const a=nc(cat),b=nc(same.cat);
+// the dish is in both photos, so this photo's dishes belong to the section it is in there
+if(!a&&b){ctx.inherit={cat:same.cat,catTr:same.catTr};M.items.forEach(x=>{if(x.pg===pg&&!x.cat){x.cat=same.cat;x.catTr=same.catTr}})}
+else if(a&&b&&a!==b){if(b.length>=a.length){(ctx.remap=ctx.remap||{})[a]={cat:same.cat,catTr:same.catTr};M.items.forEach(x=>{if(x.pg===pg&&nc(x.cat)===a){x.cat=same.cat;x.catTr=same.catTr}})}
+else M.items.forEach(x=>{if(nc(x.cat)===b){x.cat=cat;x.catTr=catTr||x.catTr}})}}
+if(!same.price&&price)same.price=price;if(!same.tr&&i.translation)same.tr=String(i.translation);if(!same.desc&&i.desc)same.desc=String(i.desc);same.ing=[...new Set([...(same.ing||[]),...ing])];if(may)same.may=[...new Set([...(same.may||[]),...may])].filter(k=>!same.ing.includes(k));if(!(same.marks||[]).length)same.marks=marks;return null}
+// tr: the name in the user's language; desc: the printed description, translated; portion: the printed size ("300 g");
+// per: a price by weight ({q:100,u:'g'}); vb/vn: one size of a dish sold in several sizes; ch: a choice to make when ordering
+const ch=i.choices&&Array.isArray(i.choices.options)&&i.choices.options.length>1?{l:String(i.choices.label||''),o:i.choices.options.map(x=>({o:String(x.o),t:String(x.t||'')}))}:null;
+const d={id:uid(),orig:String(i.original),...(i.local?{local:String(i.local)}:{}),tr:String(i.translation||''),...(i.desc?{desc:String(i.desc)}:{}),...(i.portion?{portion:String(i.portion)}:{}),...(i.per&&+i.per.q>0?{per:{q:+i.per.q,u:String(i.per.u),...(+i.per.min>0?{min:+i.per.min}:{})}}:{}),
+...(i.base&&i.variant?{vb:String(i.base),vn:String(i.variant),vnTr:String(i.variant_tr||'')}:{}),...(ch?{ch}:{}),price,cat,catTr,sub,subTr,...(()=>{const uf=Array.isArray(i.unsure)?i.unsure.map(String):i.unsure===true?["name","price"]:[];return{unsure:uf.length>0,uf}})(),addon,parent,marks,ing,...(may?{may}:{}),ok:(i.ok||[]).map(String),no:(i.no||[]).map(String),pg,seq,qty:0};
 M.items.push(d);return d}
 // The same photo chosen again (same file contents, whatever its name): ask whether to show what it gave last time or scan it again.
 async function photoHash(file){try{const b=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());return [...new Uint8Array(b)].slice(0,12).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return ''}}
@@ -506,8 +587,9 @@ const ctx={parent:'',inherit:null,started:false};
 try{const image=await shrink(file);low=shrink.last<1200;
 await scanStream(image,o=>{
 // the server is reading the photo again with a stronger model: drop what this page got so far
-if(o.restart){M.items=M.items.filter(i=>!job.ids.has(i.id));job.ids.clear();job.n=0;job.hq=true;uns=0;seq=0;Object.assign(ctx,{parent:'',inherit:null,started:false});soon();return}
-if(o.meta){kind=o.meta.kind||kind;if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
+if(o.restart){M.items=M.items.filter(i=>!job.ids.has(i.id));M.notes=(M.notes||[]).filter(n=>n.pg!==pg);job.ids.clear();job.n=0;job.hq=true;uns=0;seq=0;Object.assign(ctx,{parent:'',inherit:null,started:false,remap:null});soon();return}
+if(o.catnote)addNote(M,o.catnote.text,o.catnote.category,pg);else
+if(o.meta){(o.meta.notes||[]).forEach(n=>addNote(M,n.text,n.section,pg));kind=o.meta.kind||kind;if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
 else if(o.ingr)M.ingr=Object.assign(M.ingr||{},cleanIngr(o.ingr));
 else if('unclear' in o){unc=+o.unclear||0;M.unclear={...(M.unclear||{}),[pg]:unc}}
 else if(o.item&&o.item.original){
@@ -515,18 +597,22 @@ if(!ctx.started){ctx.started=true;if(!o.item.category){const prev=M.items.filter
 if(o.item.category)ctx.inherit=null;
 const d=addDish(M,o.item,pg,seq++,ctx);if(d){job.ids.add(d.id);job.n++;if(d.uf.some(x=>x==='name'||x==='price'))uns++}}
 soon()})}
-catch(e){err=e.message||t('fail')}
+catch(e){err=e.message||t('fail');logScanErr('menu',err)}
 finally{V.jobs=V.jobs.filter(j=>j!==job);const b=(V.batch||{})[M.id];if(b){b.done++;if(!jobs(M.id).length)delete V.batch[M.id]}}
 if(!job.n&&!seq){const show=kind==='receipt'?()=>wrongKind('rec',file,M):()=>failSheet(err?t('fail'):t('emptyMenuT'),err||t('emptyMenuD'),()=>{const m=S.menus.find(x=>x.id===M.id);scanMenuPage(m||null,m?pg:null)});
 if(isNew&&!M.items.length){S.menus=S.menus.filter(m=>m.id!==M.id);if(V.id===M.id&&V.screen==='menu')return goTo(M.biz?'biz':'home',show)}render();
 return show()}
 if(file.h){M.hashes=(M.hashes||[]).filter(x=>x.pg!==pg);M.hashes.push({pg,h:file.h})} // remembered, so the same photo is recognised next time
+M.photos=(M.photos||0)+1; // how many photos this menu was scanned from (shown in the history)
 render();if(err)toast(err);
 // a message after the scan only when most dishes are doubtful; otherwise each doubtful dish says so in the menu
 if(uns&&uns>job.n/2){
 openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns'),uns,job.n))}</b><br><small>${esc(t('unsD')+(low?' '+t('lowRes'):''))}</small></div></div><button class=btn data-a=sa data-x=retake>${ico('cam',18)}${t('retake')}</button><button class="btn ghost" data-a=sa data-x=no>${t('keepIt')}</button>`,
-{retake:()=>{const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);if(m.unclear)delete m.unclear[pg];render();scanMenuPage(m,pg)}})}
+{retake:()=>{logEvt('user-retake',{mode:'menu',n:job.n,err:uns+' of '+job.n+' dishes unsure'});const m=S.menus.find(x=>x.id===M.id);if(!m)return;m.photos=Math.max(0,(m.photos||1)-1);m.notes=(m.notes||[]).filter(n=>n.pg!==pg);m.items=m.items.filter(i=>i.pg!==pg);m.hashes=(m.hashes||[]).filter(x=>x.pg!==pg);if(m.unclear)delete m.unclear[pg];render();scanMenuPage(m,pg)}})}
 }
+// a notice printed on the menu that matters when ordering (happy hour, serving hours, minimum order...), kept once;
+// cat: the section it is about (then it also shows next to that section's heading)
+function addNote(M,text,cat,pg){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{})})}
 // ---------- receipts ----------
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
 // ---------- sample (try the app without scanning) ----------
@@ -551,12 +637,13 @@ const real=a=>a.filter(x=>!x.demo&&!x.biz); // the sample and the business porta
 // dishes and show the waiter; scanning the bill copies the menu and the order into their own app to check it.
 const REST=(location.search.match(/[?&]r=([a-z0-9-]+)/)||[])[1]||null;
 function restApply(M){const L=M.src.tr[S.lang]||M.src.tr[String(S.lang).split('-')[0]]||M.src.tr.en||{};const g=(o,k)=>(o||{})[k]||'';
-M.items.forEach(i=>{i.tr=g(L.items,i.id);i.catTr=g(L.cats,i.cat);i.subTr=g(L.subs,i.sub)});
+M.items.forEach(i=>{i.tr=g(L.items,i.id);i.catTr=g(L.cats,i.cat);i.subTr=g(L.subs,i.sub);i.desc=g(L.descs,i.id)});
+M.notes=(M.src.notes||[]).map((n,k)=>({...n,text:g(L.notes,k)||n.text}));
 M.ingr=Object.fromEntries(Object.entries(M.src.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]]));
 if(M.src.policy)M.policy={...M.src.policy,text:L.policy||M.src.policy.text};M.lang=S.lang}
 async function restLoad(){try{let r=await fetch('rdata/'+REST+'.json',{cache:'no-cache'}); // a prepared sample, else a page created in the app
 if(!r.ok)r=await fetch('/api/rest?slug='+REST);if(!r.ok)throw 0;const d=await r.json();
-const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
+const M={id:'r:'+REST,rest:true,src:d,title:d.title,cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,date:Date.now(),items:d.items.map(i=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',...i,qty:0}))};
 restApply(M);V.rmenu=M;V.screen='menu';V.id=M.id}catch(e){V.screen='home';V.id=null;toast(t('fail'))}render()}
 // the guest's bill: the menu and the order become a normal menu in their app, and the bill scan compares with it
 function restToApp(){const M=V.rmenu,C={...M,id:uid(),rest:false,src:undefined,date:Date.now(),items:M.items.map(i=>({...i}))};delete C.src;delete C.lang;
@@ -572,21 +659,23 @@ function restSheet(M){openSheet(`<h3>${t('rpT')}</h3><p class=mut>${t('rpD')}</p
 <button class=btn data-a=rpgo>${ico('check',18)}${t(M.restSlug?'rpUpd':'rpGo')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})}
 async function restPublish(M){const base=String(S.lang==='x'?'en':S.lang).split('-')[0],G=()=>({items:{},cats:{},subs:{},ingr:{}});
 const items=M.items.map(i=>{const o={id:i.id,orig:i.orig,price:i.price,cat:i.cat||'',pg:i.pg,seq:i.seq,ing:i.ing||[],may:i.may||[]};if(i.local)o.local=i.local;if(i.sub)o.sub=i.sub;if(i.addon){o.addon=true;o.parent=i.parent}
-for(const k of['marks','ok','no'])if((i[k]||[]).length)o[k]=i[k];if(i.hot)o.hot=true;return o});
+for(const k of['marks','ok','no'])if((i[k]||[]).length)o[k]=i[k];for(const k of['hot','soldOut','rec','isNew','img','portion','per','vb','vn','vnTr','ch','from','to'])if(i[k])o[k]=i[k];return o});
 const cats=[...new Set(M.items.map(i=>i.cat).filter(Boolean))],subs=[...new Set(M.items.map(i=>i.sub).filter(Boolean))],ings=Object.keys(M.ingr||{});
 const strings={},back=[],add=(k,g,id,v,tr)=>{strings[k]=v+(tr&&norm(tr)!==norm(v)?' || '+tr:'');back.push([k,g,id])};
 M.items.forEach((i,n)=>add('i'+n,'items',i.id,i.orig,i.tr));cats.forEach((c,n)=>add('c'+n,'cats',c,c,(M.items.find(i=>i.cat===c)||{}).catTr));
 subs.forEach((c,n)=>add('s'+n,'subs',c,c,(M.items.find(i=>i.sub===c)||{}).subTr));ings.forEach((k,n)=>add('g'+n,'ingr',k,k,M.ingr[k][0]));
 if(M.policy&&M.policy.text)add('p0','policy','',M.policy.text);
-const own=G();M.items.forEach(i=>{if(i.tr)own.items[i.id]=i.tr;if(i.catTr)own.cats[i.cat]=i.catTr;if(i.subTr)own.subs[i.sub]=i.subTr});ings.forEach(k=>own.ingr[k]=M.ingr[k][0]);if(M.policy&&M.policy.text)own.policy=M.policy.text;
+// descriptions and the menu's notes are translated too (each is its own text, not a name)
+M.items.forEach((i,n)=>{if(i.desc){strings['d'+n]=i.desc;back.push(['d'+n,'descs',i.id])}});(M.notes||[]).forEach((x,n)=>{strings['n'+n]=x.text;back.push(['n'+n,'notes',n])});
+const own=G();M.items.forEach(i=>{if(i.desc)(own.descs=own.descs||{})[i.id]=i.desc});(M.notes||[]).forEach((x,n)=>(own.notes=own.notes||{})[n]=x.text);M.items.forEach(i=>{if(i.tr)own.items[i.id]=i.tr;if(i.catTr)own.cats[i.cat]=i.catTr;if(i.subTr)own.subs[i.sub]=i.subTr});ings.forEach(k=>own.ingr[k]=M.ingr[k][0]);if(M.policy&&M.policy.text)own.policy=M.policy.text;
 const tr={[base]:own},todo=[...new Set(LANGS.map(l=>l[0].split('-')[0]))].filter(c=>c!==base);let done=0;
 const prog=()=>{const e=$('#rpprog');if(e)e.textContent=f(t('rpProg'),done,todo.length)};
 closeSheet();openSheet(`<div class="scan-st" role=status><span class=spin></span><div><b id=rpprog></b></div></div>`,{});prog();
 const one=async c=>{const nm=new Intl.DisplayNames(['en'],{type:'language'}).of(c);let err;
-for(let a=0;a<4;a++){try{const j=await api({mode:'dishes',admin:bizKey(),language:nm,strings});const o=G();back.forEach(([k,g,id])=>{const v=j.strings[k];if(v){if(g==='policy')o.policy=v;else o[g][id]=v}});tr[c]=o;done++;prog();return}
+for(let a=0;a<4;a++){try{const j=await api({mode:'dishes',admin:bizKey(),language:nm,strings});const o=G();back.forEach(([k,g,id])=>{const v=j.strings[k];if(v){if(g==='policy')o.policy=v;else(o[g]=o[g]||{})[id]=v}});tr[c]=o;done++;prog();return}
 catch(e){err=e;await new Promise(z=>setTimeout(z,3000*(a+1)))}}throw err};
 for(let k=0;k<todo.length;k+=4)await Promise.all(todo.slice(k,k+4).map(one));
-const data={title:M.title,cur:M.cur,policy:M.policy||null,items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
+const data={title:M.title,cur:M.cur,policy:M.policy||null,cfg:M.cfg||null,reviewUrl:M.reviewUrl||null,hours:M.hours||null,cats:M.cats||null,pol:M.pol||null,notes:(M.notes||[]).map(n=>({text:n.text,...(n.cat?{cat:n.cat}:{})})),items,emoji:Object.fromEntries(ings.map(k=>[k,M.ingr[k][1]])),tr};
 const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:bizKey(),sess:(S.bizSess||{}).sess||null,slug:M.restSlug||null,edit:M.restEdit||null,data})}),j=await r.json().catch(()=>({}));
 if(!r.ok)throw new Error(j.error||t('fail'));M.restSlug=j.slug;if(j.edit)M.restEdit=j.edit;V.bizLoaded=false;save();closeSheet();restDone(M.title,j.slug)}
 // ---------- sharing a menu or a bill ----------
@@ -714,14 +803,73 @@ const link=s=>`<bdi dir=ltr>${esc(pageUrl(s).replace(/^https?:\/\//,''))}</bdi>`
 const rows=[...pages.map(p=>row('bizopen',p.slug,p.title,link(p.slug))),...mine.map(m=>row('go','menu:'+m.id,m.title,link(m.restSlug))),...drafts.map(m=>row('go','menu:'+m.id,m.title,`${f(t('dishesN'),m.items.length)} · ${t('bizNoPage')}`))];
 return head+`<div class=pad>${langSel()}${S.bizSess?`<div class=row><small class=mut>${esc(f(t('bizAs'),S.bizSess.phone))}</small><button class=link data-a=bizout>${t('bizOut')}</button></div>`:''}
 <button class="btn acc wide" data-a=bizscan>${ico('cam',18)}${t('bizScan')}</button><small class=mut>${t('bizScanD')}</small>
+<button class="btn ghost wide" data-a=biznew>${ico('edit',18)}${t('bizNewBtn')}</button><small class=mut>${t('bizNewD')}</small>
 <div class=cat>${t('bizMenus')}</div>${rows.join('')||`<p class=empty>${t('bizNone')}</p>`}
-${S.adminKey?`<small class=mut>${t('adminOn')}</small>`:''}</div>`}
+${S.adminKey?`<button class="btn ghost wide" data-a=logs>${ico('warn',18)}${t('logsBtn')}</button><small class=mut>${t('adminOn')}</small>`:''}</div>`}
+// the manager's dashboard: every scan that failed or came back weak (from the server) and every problem the app noticed
+// on a phone, latest first, with the photo that was scanned when there is one
+function logsV(){if(!V.logs&&!V.logsBusy){V.logsBusy=true;bizApi({logs:'list',key:bizKey()}).then(j=>{V.logs=j.logs||[]}).catch(e=>{V.logs=[];toast(e.message)}).finally(()=>{V.logsBusy=false;render()})}
+const L=V.logs||[],cnt={};L.forEach(l=>cnt[l.kind]=(cnt[l.kind]||0)+1);const fk=V.logK||'',rows=L.filter(l=>!fk||l.kind===fk);
+return bar(t('logsT'),'biz')+`<div class=pad>${!V.logs?`<p class=empty><span class=spin></span></p>`:`<p class=mut>${f(t('logsD'),L.length)}</p>
+<div class=chips>${[['',t('allT')+' ('+L.length+')'],...Object.entries(cnt).map(([k,n])=>[k,k+' ('+n+')'])].map(([k,l])=>`<button class="pill${fk===k?' on':''}" data-a=logk data-x="${esc(k)}">${esc(l)}</button>`).join('')}</div>
+${rows.map(l=>`<div class="card logrow"><div class=row><b dir=ltr>${esc(l.kind)}</b><small class=mut><bdi>${dayTime(l.ts)}</bdi></small></div>
+<small class=mut dir=ltr>${esc([l.mode,l.model,l.lang,l.n?l.n+' items':'',l.kb?l.kb+' KB':'',l.parts>1?l.parts+' parts':'',l.src,l.where].filter(Boolean).join(' · '))}</small>${l.err?`<p dir=ltr class=logerr>${esc(l.err)}</p>`:''}<small class=mut dir=ltr>${esc(l.ua||'')}</small>
+<div class=row>${l.img?`<button class="btn ghost sm" data-a=logimg data-id=${l.id}>${ico('img',16)}${t('logsImg')}</button>`:'<span></span>'}<button class="ic del" data-a=logdel data-id=${l.id} aria-label="${t('del')}">${ico('trash',17)}</button></div></div>`).join('')||`<p class=empty>${t('logsNone')}</p>`}
+<button class="btn ghost wide" data-a=logref>${t('logsRef')}</button>${L.length?`<button class="btn ghost wide" data-a=logclear>${ico('trash',18)}${t('logsClear')}</button>`:''}`}</div>`}
 // opening a page of the account on a phone that does not have its menu: the menu is rebuilt from the page (in this language)
 async function bizOpen(slug){let M=S.menus.find(m=>m.biz&&m.restSlug===slug);if(M)return goTo('menu:'+M.id);
 try{const r=await fetch('/api/rest?slug='+slug+'&x='+Date.now());if(!r.ok)throw 0;const d=await r.json(),base=String(S.lang==='x'?'en':S.lang).split('-')[0],L=d.tr[base]||d.tr.en||{},g=(o,k)=>(o||{})[k]||'';
-M={id:uid(),biz:true,restSlug:slug,title:d.title||'',cur:d.cur,policy:d.policy||null,date:Date.now(),ingr:Object.fromEntries(Object.entries(d.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]])),
-items:d.items.map((i,n)=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',pg:1,seq:n,...i,tr:g(L.items,i.id),catTr:g(L.cats,i.cat),subTr:g(L.subs,i.sub),qty:0}))};
+M={id:uid(),biz:true,restSlug:slug,title:d.title||'',cur:d.cur,policy:d.policy||null,cfg:d.cfg||null,reviewUrl:d.reviewUrl||null,hours:d.hours||null,...(d.cats?{cats:d.cats}:{}),...(d.pol?{pol:d.pol}:{}),notes:(d.notes||[]).map((n,k)=>({...n,text:g(L.notes,k)||n.text})),date:Date.now(),ingr:Object.fromEntries(Object.entries(d.emoji||{}).map(([k,e])=>[k,[g(L.ingr,k)||k,e]])),
+items:d.items.map((i,n)=>({unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',pg:1,seq:n,...i,tr:g(L.items,i.id),desc:g(L.descs,i.id),catTr:g(L.cats,i.cat),subTr:g(L.subs,i.sub),qty:0}))};
 S.menus.unshift(M);save();goTo('menu:'+M.id)}catch(e){toast(t('fail'))}}
+// ---------- the business menu editor (a scanned menu, or one built by hand) ----------
+// Sections keep their order in M.cats (an empty one too); dishes are kept in that order (page 1, seq = position).
+const ALG=[['gluten','🌾'],['milk','🥛'],['egg','🥚'],['nuts','🌰'],['peanut','🥜'],['fish','🐟'],['shellfish','🦐'],['sesame','⚪'],['soy','🫘'],['celery','🌿'],['mustard','🟡']],ALGK=ALG.map(a=>a[0]);
+function bizNorm(M){const sorted=[...M.items].sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));M.cats=M.cats||[];
+sorted.forEach(i=>{if(!M.cats.includes(i.cat||''))M.cats.push(i.cat||'')});if(!M.cats.length)M.cats.push('');
+M.items=M.cats.flatMap(c=>sorted.filter(i=>(i.cat||'')===c));M.items.forEach((i,n)=>{i.pg=1;i.seq=n})}
+// the price rules: VAT (included / not included / not said), service (none / included / added %), and free notes,
+// written as one notice in the business's language (translated for guests when the page is published)
+function bizPol(M){if(!M.pol){const p=M.policy||{};M.pol={vat:'none',svc:'none',pct:+p.service_pct||'',notes:p.text||''}}return M.pol}
+function bizPolApply(M){const P=bizPol(M),parts=[P.vat==='inc'?t('pVatInc'):P.vat==='exc'?t('pVatExc'):'',P.svc==='inc'?t('pSvcInc'):P.svc==='add'&&+P.pct?f(t('pSvcAdd'),+P.pct):'',String(P.notes||'').trim()].filter(Boolean);
+M.policy=parts.length?{tax_included:P.vat==='inc'?true:P.vat==='exc'?false:null,service_pct:P.svc==='add'?(+P.pct||null):null,text:parts.join(' ')}:null}
+function bizEditV(M){bizNorm(M);const C=cfgOf(M),P=bizPol(M);
+const pill=(a,x,on,l)=>`<button class="pill${on?' on':''}" data-a=${a} data-x=${x} aria-pressed=${on}>${l}</button>`;
+const cat=(c,ci)=>{const its=M.items.filter(i=>(i.cat||'')===c);return `<section class="card becat"><div class=becath><input class=becatn data-c=bcatn data-id=${ci} value="${esc(c)}" placeholder="${t('beCatPh')}" dir=auto aria-label="${t('beCatPh')}">
+<button class="ic${hoursTxt((M.hours||{})[c])?' on':''}" data-a=bchours data-id=${ci} aria-label="${t('beHoursBtn')}">${ico('clock',17)}</button><button class=ic data-a=bcmove data-id=${ci} data-x=-1 ${ci?'':'disabled'} aria-label="${t('beUp')}">↑</button><button class=ic data-a=bcmove data-id=${ci} data-x=1 ${ci<M.cats.length-1?'':'disabled'} aria-label="${t('beDown')}">↓</button><button class="ic del" data-a=bcdel data-id=${ci} aria-label="${t('del')}">${ico('trash',17)}</button></div>
+${hoursTxt((M.hours||{})[c])?`<small class=catnote>${ico('clock',13)}<bdi>${hoursTxt(M.hours[c])}</bdi></small>`:''}${its.map((i,k)=>`<div class=berow><button class=beitem data-a=bedit data-id=${i.id}>${i.img?`<img src="${esc(i.img)}" alt="">`:''}<span class=bein><b dir=auto>${esc(i.orig||t('beNoName'))}</b><small class=mut dir=auto>${[C.prices&&i.price?fmt(i.price,M.cur):'',i.soldOut?t('soldOut'):'',i.rec?t('recBadge'):'',i.isNew?t('newBadge'):'',hoursTxt(i)].filter(Boolean).join(' · ')}</small></span></button>
+<button class=ic data-a=bimove data-id=${i.id} data-x=-1 ${k?'':'disabled'} aria-label="${t('beUp')}">↑</button><button class=ic data-a=bimove data-id=${i.id} data-x=1 ${k<its.length-1?'':'disabled'} aria-label="${t('beDown')}">↓</button></div>`).join('')}
+<button class="btn ghost sm wide" data-a=badd data-id=${ci}>${ico('plus',16)}${t('beAddDish')}</button></section>`};
+return bar(t('bizMenuHdr'),'biz')+`<div class=pad><label>${t('beName')}<input data-c=mtitle value="${esc(M.title||'')}" dir=auto></label><label>${t('cur')}<select data-c=bcur>${curOpts(M.cur)}</select></label>
+<div class=cat>${t('beMenuT')}</div>${M.cats.map(cat).join('')}<button class="btn ghost wide" data-a=bcadd>${ico('plus',18)}${t('beAddCat')}</button>
+<div class=cat>${t('bePolT')}</div><div class=card><span class=lbl>${t('beVat')}</span><div class=chips>${pill('bvat','inc',P.vat==='inc',t('beVatInc'))}${pill('bvat','exc',P.vat==='exc',t('beVatExc'))}${pill('bvat','none',P.vat==='none',t('beNone'))}</div>
+<span class=lbl>${t('svc')}</span><div class=chips>${pill('bsvc','none',P.svc==='none',t('beSvcNone'))}${pill('bsvc','inc',P.svc==='inc',t('beSvcInc'))}${pill('bsvc','add',P.svc==='add',t('beSvcAdd'))}</div>
+${P.svc==='add'?`<label>${t('beSvcPct')}<input type=number inputmode=decimal min=0 max=40 step=any data-c=bsvcp value="${esc(P.pct)}"></label>`:''}
+<label>${t('beNotes')}<textarea data-c=bnotes rows=3 dir=auto placeholder="${t('beNotesPh')}">${esc(P.notes||'')}</textarea></label>${M.policy&&M.policy.text?`<small class=mut>${t('bePreview')}: ${esc(M.policy.text)}</small>`:''}</div>
+<div class=cat>${t('beShowT')}</div><div class=card>${['prices','photos','ing','order','scanBill','google','review'].map(k=>`<label class=chk><input type=checkbox data-c=bcfg data-id=${k} ${C[k]?'checked':''}>${t('beC_'+k)}</label>`).join('')}
+${C.review?`<label>${t('beReview')}<input type=url data-c=breview value="${esc(M.reviewUrl||'')}" dir=ltr placeholder="https://g.page/r/…"></label><small class=mut>${t('beReviewD')}</small>`:''}</div>
+${orderV(M,0,0,M.items.some(i=>i.price>0))}</div>`}
+// a dish: name, description, price, section, sold out / recommended / new / spicy, diets it suits, allergens it contains
+function bdishSheet(M,id,ci){const i=id?M.items.find(x=>x.id===id):{orig:'',tr:'',price:0,cat:M.cats[+ci]||'',ok:[],ing:[]};if(!i)return;
+const ck=(k,on,l)=>`<label class=chk><input type=checkbox id=bd_${k} ${on?'checked':''}>${l}</label>`;
+openSheet(`<h3>${t(id?'beEditDish':'beAddDish')}</h3><label>${t('beDName')}<input id=bd_n value="${esc(i.orig)}" dir=auto></label><label>${t('beDDesc')}<textarea id=bd_d rows=2 dir=auto>${esc(i.tr||'')}</textarea></label>
+<label>${t('bePrice')} (${M.cur})<input id=bd_p type=number inputmode=decimal min=0 step=any value="${i.price||''}"></label><label>${t('beCat')}<select id=bd_c>${M.cats.map((c,k)=>`<option value=${k} ${c===(i.cat||'')?'selected':''}>${esc(c||t('beNoCat'))}</option>`).join('')}</select></label>
+<div class=bechks>${ck('so',i.soldOut,t('soldOut'))}${ck('rec',i.rec,t('recBadge'))}${ck('new',i.isNew,t('newBadge'))}${ck('hot',i.hot,t('spicyL'))}</div>
+<span class=lbl>${t('beImg')}</span><div class=row id=bd_imgbox>${i.img?`<img src="${esc(i.img)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`:'<span></span>'}<span><label class="btn ghost sm" style="cursor:pointer">${ico('img',16)}${t('beImgAdd')}<input type=file accept="image/*" data-c=bimg hidden></label>${i.img?` <button class=link data-a=bimgdel>${t('beImgDel')}</button>`:''}</span></div>
+<span class=lbl>${t('beHours')}</span><div class=behrs><label>${t('beFrom')}<input id=bd_from type=time value="${esc(i.from||'')}"></label><label>${t('beTo')}<input id=bd_to type=time value="${esc(i.to||'')}"></label></div><small class=mut>${t('beHoursD')}</small>
+<span class=lbl>${t('beDiets')}</span><div class=bechks>${DIETS.filter(([c])=>c!=='nohot').map(([c,e])=>ck('ok_'+c,(i.ok||[]).includes(c),`${e} ${t('d'+c)}`)).join('')}</div>
+<span class=lbl>${t('beAlg')}</span><div class=bechks>${ALG.map(([k,e])=>ck('al_'+k,(i.ing||[]).includes(k),`${e} ${t('al_'+k)}`)).join('')}</div>
+<button class=btn data-a=bdsave data-id=${id||''}>${ico('check',18)}${t('saveSet')}</button>${id?`<button class="btn ghost" data-a=bddel data-id=${id}>${ico('trash',18)}${t('del')}</button>`:''}<button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{});V.bdImg=undefined}
+function bdishSave(id){const M=cm(),g=k=>$('#bd_'+k),name=(g('n').value||'').trim();if(!name)return toast(t('beNeedName'));
+let i=id&&M.items.find(x=>x.id===id);if(!i){i={id:uid(),unsure:false,uf:[],addon:false,parent:'',marks:[],ing:[],may:[],ok:[],no:[],sub:'',subTr:'',catTr:'',qty:0,pg:1,seq:1e6};M.items.push(i)}
+const ci=+g('c').value,nc=M.cats[ci]||'';if((i.cat||'')!==nc){i.cat=nc;i.catTr='';i.seq=1e6}
+Object.assign(i,{orig:name,tr:(g('d').value||'').trim(),price:Math.max(0,+g('p').value||0),soldOut:g('so').checked,rec:g('rec').checked,isNew:g('new').checked,hot:g('hot').checked,
+ok:DIETS.map(d=>d[0]).filter(c=>c!=='nohot'&&g('ok_'+c)&&g('ok_'+c).checked),from:g('from').value&&g('to').value?g('from').value:'',to:g('from').value&&g('to').value?g('to').value:''});
+if(V.bdImg!==undefined)i.img=V.bdImg;
+const al=ALGK.filter(k=>g('al_'+k).checked);i.ing=[...(i.ing||[]).filter(k=>!ALGK.includes(k)),...al];M.ingr=M.ingr||{};al.forEach(k=>{if(!M.ingr[k])M.ingr[k]=[t('al_'+k),ALG.find(a=>a[0]===k)[1]]});
+closeSheet();bizNorm(M);save();render()}
+// a menu built by hand: an empty menu with one section, straight into the editor
+function bizNew(){const M={id:uid(),biz:true,title:'',cur:S.cur,items:[],cats:[t('beFirstCat')],date:Date.now()};S.menus.unshift(M);save();goTo('menu:'+M.id)}
 async function restDone(title,slug){const url=pageUrl(slug);let card='';try{card=await qrCard(title,url)}catch(e){}
 openSheet(`<h3>${t('rpDone')}</h3><p class=mut>${t('rpDoneD')}</p>${card?`<img src="${card}" alt="QR" style="width:100%;border-radius:14px;border:1px solid var(--line)">`:''}<p dir=ltr style="margin:0;word-break:break-all"><b>${esc(url)}</b></p>
 <a class=btn href="${esc(url)}" target=_blank rel=noopener>${ico('ext',18)}${t('rpOpen')}</a><button class="btn ghost" data-a=rpcopy data-x="${esc(url)}">${t('rpCopy')}</button>${card?`<a class="btn ghost" href="${card}" download="qr-${slug}.png">${ico('img',18)}${t('rpCard')}</a>`:''}<button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}
@@ -750,7 +898,7 @@ V.rjobs=[...(V.rjobs||[]),job];V.screen='receipt';V.id=R.id;render();if(isNew)sc
 let low=false,err='',tot=null,uns=0,kind=null;
 try{const image=await shrink(file);low=shrink.last<1200;
 await scanStream(image,o=>{if(o.restart){R.items=R.items.filter(i=>i.rp!==rp);job.n=0;job.hq=true;uns=0;tot=null;soon();return}if(o.meta){kind=o.meta.kind||kind;if(o.meta.receipt!==false)receiptMeta(R,o.meta)}else if(o.item){receiptItem(R,o.item,rp);job.n++;if(o.item.unsure)uns++}else if(o.totals)tot=o.totals;soon()},'receipt')}
-catch(e){err=e.message||t('fail')}
+catch(e){err=e.message||t('fail');logScanErr('receipt',err)}
 finally{V.rjobs=V.rjobs.filter(j=>j!==job)}
 receiptTotals(R,tot||{},rp);
 if(!job.n){removePart(R,rp);const show=kind==='menu'?()=>wrongKind('menu',file):()=>failSheet(err?t('fail'):t('emptyRecT'),err||t('emptyRecD'),()=>scanReceipt(menuId,S.receipts.includes(R)?R:null));
@@ -787,6 +935,8 @@ warn:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 
 info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
 trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 img:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4L5 21"/>',
+edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+wa:'<path d="M3.5 20.5l1.3-4.6A8.5 8.5 0 1 1 8.2 19.3z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"/>',
 star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/>',
 ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
 plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',chev:'<path d="m9 18 6-6-6-6"/>'};
@@ -878,18 +1028,55 @@ if((i.ok||[]).includes(d)||(i.marks||[]).some(m=>m.c===d))return null;
 const kosherMix=d==='k'&&[...(i.ing||[]),...(i.may||[])].some(k=>clashKey('p',k))&&[...(i.ing||[]),...(i.may||[])].some(k=>clashKey('lf',k));
 if(i.may&&((i.ing||[]).some(k=>clashKey(d,k))||(kosherMix&&(i.ing||[]).some(k=>clashKey('p',k))&&(i.ing||[]).some(k=>clashKey('lf',k)))))return 'sure';
 return [...(i.ing||[]),...(i.may||[])].some(k=>clashKey(d,k))||kosherMix||(i.no||[]).includes(d)?'may':null}
-function itemV(i,M){const av=avoidHits(M,i),dc=S.diet.map(d=>[d,dietClash(i,d)]),dSure=dc.filter(x=>x[1]==='sure').map(x=>t('c'+x[0])),dMay=dc.filter(x=>x[1]==='may').map(x=>t('c'+x[0])),dim=av.sure.length||dSure.length;
+// a restaurant's own page can turn parts off (cfg, set in the business editor): prices, its photos, ingredient warnings,
+// ordering, the bill scan and the Google photo link; a dish can be sold out, recommended or new
+const cfgOf=M=>({prices:true,photos:true,ing:true,order:true,scanBill:true,google:!M.rest&&!M.biz,review:true,...(M.cfg||{})});
+// a section or a dish can be set to show only at certain hours ("12:00"-"16:00"; past midnight works too) - on the guests' page
+const inHours=h=>{if(!h||!h.from||!h.to)return true;const d=new Date(),n=d.getHours()*60+d.getMinutes(),m=s=>+s.slice(0,2)*60+ +s.slice(3,5),a=m(h.from),b=m(h.to);return a<=b?n>=a&&n<b:n>=a||n<b};
+const showNow=(M,i)=>!M.rest||(inHours((M.hours||{})[i.cat||''])&&inHours(i));
+const hoursTxt=h=>h&&h.from&&h.to?`${h.from}–${h.to}`:'';
+function itemV(i,M){const C=cfgOf(M);if(!C.ing)return itemPlain(i,M,C);const av=avoidHits(M,i),dc=S.diet.map(d=>[d,dietClash(i,d)]),dSure=dc.filter(x=>x[1]==='sure').map(x=>t('c'+x[0])),dMay=dc.filter(x=>x[1]==='may').map(x=>t('c'+x[0])),dim=av.sure.length||dSure.length;
 // dishes that fit get no tag; a clash says "contains" when it is written on the menu, "may contain" when it is only likely
 const sure=[...new Set([...av.sure,...dSure])],warn=sure.length?[f(t('contains'),sure.join(', '))]:[];
 const may=[...new Set([...av.may,...dMay])].filter(x=>!sure.includes(x)),mayW=may.length?f(t('mayContain'),may.join(', ')):'';
 // doubts shown on the dish; a doubtful diet marking matters only to someone with diet restrictions or ingredients to avoid
 const careMarks=S.diet.length||S.avoid.length||(S.avoidTxt||[]).length,uq=!i.unsure?[]:i.uf&&i.uf.length?i.uf.filter(x=>x!=='marks'||careMarks).map(x=>t('uq_'+x)):[t('unsureTag')];
-return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${uq.length?' unsure':''}${dim?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
-${warn.map(w=>`<span class=avoid-b>${ico('warn',14)}${esc(w)}</span>`).join('')}${mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
-<div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b></div>
-${i.tr&&norm(i.tr)!==norm(i.orig)?`<span class="mut desc" dir=auto>${esc(i.tr)}</span>`:''}
-${i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}</span>`:''}
-${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${M.biz?'':step(i.qty,'mq',i.id)}</div>`}
+return itemPlain(i,M,C,{warn,mayW,uq,dim})}
+// a long description shows two lines and opens in full on a tap ("more"), so it is clear there is more to read
+const longV=(i,txt)=>!txt?'':txt.length>80?`<button class="dtxt${(V.dopen||{})[i.id]?' open':''}" data-a=dexp data-id=${i.id} aria-expanded=${!!(V.dopen||{})[i.id]}><span class="dclip mut desc" dir=auto>${esc(txt)}</span><span class=dmore>${t((V.dopen||{})[i.id]?'less':'more')}${ico('chev',14)}</span></button>`:`<span class="mut desc" dir=auto>${esc(txt)}</span>`;
+// amounts of a dish sold by weight ("300 g"), and how an order line counts it ("2×" or "300 g")
+const perLbl=(i,n)=>`${+(i.per.q*n).toFixed(2)} ${i.per.u==='pc'?t('pcU'):i.per.u}`,qtyLbl=i=>i.per?perLbl(i,i.qty):i.qty+'×';
+// what was chosen for a dish with a choice ("rice ×2, fries"): in the user's language, or as printed (for the waiter)
+const pickTxt=(i,orig)=>{if(!i.ch||!(i.picks||[]).length)return'';const c={};i.picks.slice(0,i.qty).forEach(k=>c[k]=(c[k]||0)+1);
+return Object.entries(c).map(([k,n])=>{const o=i.ch.o[k];return o?(orig?o.o:(o.t||o.o))+(n>1?' ×'+n:''):''}).filter(Boolean).join(', ')};
+const addonsOf=(M,i)=>i.addon?[]:M.items.filter(a=>a.addon&&a.parent===norm(i.orig)&&a.pg===i.pg&&norm(a.cat||'')===norm(i.cat||''));
+const sizesOf=(M,i)=>i.vb?M.items.filter(x=>x.vb&&norm(x.vb)===norm(i.vb)&&norm(x.cat||'')===norm(i.cat||'')):[];
+// what there is to choose for this dish, as a short label on its card: size, the menu's own word for the choice, extras, weight
+const optTags=(M,i)=>[i._grp?t('optSize'):'',i.ch?(i.ch.l||t('optChoice')):'',!i._grp&&addonsOf(M,i).length?t('optExtras'):'',i.per?t('optWeight'):''].filter(Boolean);
+// the sheet for choosing: every size, option and extra has its own − / +, so the order says exactly what was chosen
+function optHtml(M,id){const i=M.items.find(x=>x.id===id);if(!i)return'';const C=cfgOf(M),grp=sizesOf(M,i),adds=addonsOf(M,i),pr=x=>C.prices&&x.price>0?`<small class=n>${mv(x.price,M.cur)}</small>`:'';
+const row=(name,tr,price,ctl)=>`<div class=optr><span class=info><b dir=auto>${esc(name)}</b>${tr&&norm(tr)!==norm(name)?`<small class=mut dir=auto>${esc(tr)}</small>`:''}${price}</span>${ctl}</div>`,pk=k=>(i.picks||[]).filter(x=>x===k).length;
+return `<h3 dir=auto>${esc(grp.length>1?i.vb:i.orig)}</h3>${i.tr&&norm(i.tr)!==norm(i.orig)?`<p class=mut dir=auto style="margin-top:-8px">${esc(i.tr)}</p>`:''}
+${grp.length>1?`<span class=lbl>${t('optSize')}</span>${grp.map(v=>row(v.vn||v.orig,v.vnTr,pr(v),step(v.qty,'oq',v.id))).join('')}`:''}
+${i.ch&&grp.length<2?`<span class=lbl dir=auto>${esc(i.ch.l||t('optChoice'))}${C.prices&&i.price>0?` · ${fmt(i.price,M.cur)}`:''}</span>${i.ch.o.map((c,k)=>row(c.o,c.t,'',`<div class="step${pk(k)?' on':''}"><button data-a=oc data-id=${i.id} data-x=-1 data-k=${k} ${pk(k)?'':'disabled'} aria-label="-1">−</button><span>${pk(k)}</span><button data-a=oc data-id=${i.id} data-x=1 data-k=${k} aria-label="+1">+</button></div>`)).join('')}`:''}
+${adds.length&&grp.length<2?`<span class=lbl>${t('optExtras')}</span>${adds.map(a=>row(a.orig.replace(/^\s*\+\s*/,''),a.tr,pr(a),step(a.qty,'oq',a.id))).join('')}`:''}
+<button class=btn data-a=sa data-x=no>${ico('check',18)}${t('done')}</button>`}
+const optPaint=()=>{const e=$('#sheet .sh'),M=cm();if(e&&M&&V.opt)e.innerHTML=optHtml(M,V.opt);render()};
+// the dish itself: (its photo), badges, name, translation, price, the Google photo link and the +/- for ordering
+function itemPlain(i,M,C,w={}){const warn=w.warn||[],uq=w.uq||[],sold=!!i.soldOut,grp=i._grp,tags=sold||M.biz||!C.order?[]:optTags(M,i),hasOpt=grp||i.ch;
+return `<div ${ltrText(i.orig)?"dir=ltr ":""}class="item${uq.length?' unsure':''}${w.dim||sold?' dim':''}${i.sub?' insub':''}${i.addon?' addon':''}"><div class=info>
+${C.photos&&i.img?`<img class=dimg src="${esc(i.img)}" alt="" loading=lazy>`:''}
+${sold||i.rec||i.isNew?`<span class=dbadges>${sold?`<span class="dbadge sold">${t('soldOut')}</span>`:''}${i.rec?`<span class="dbadge rec">${ico('star',13)}${t('recBadge')}</span>`:''}${i.isNew?`<span class="dbadge new">${t('newBadge')}</span>`:''}</span>`:''}
+${warn.map(x=>`<span class=avoid-b>${ico('warn',14)}${esc(x)}</span>`).join('')}${w.mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(w.mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
+<div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${i.hot?` <span aria-label="${t('spicyL')}">🌶️</span>`:''}</div>
+${i.tr&&norm(i.tr)!==norm(i.orig)?(i.desc?`<span class=ntr dir=auto>${esc(i.tr)}</span>`:longV(i,i.tr)):''}${i.desc&&norm(i.desc)!==norm(i.tr)?longV(i,i.desc):''}
+${i.note?`<span class=dnote dir=auto>${ico('info',14)}${esc(i.note)}</span>`:''}
+${grp?`<span class="pr vars">${grp.map(v=>`<span class=var><bdi>${esc(v.vn)}</bdi>${C.prices&&v.price>0?` <b dir=${rtl()?"rtl":"ltr"}>${fmt(v.price,M.cur)}</b>`:''}${v.qty?` <i>×${v.qty}</i>`:''}</span>`).join('')}</span>`
+:C.prices&&i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${mv(i.price,M.cur)}${i.per?`<small class=per> / <bdi>${perLbl(i,1)}</bdi></small>`:''}${i.portion?`<small class=per> · <bdi>${esc(i.portion)}</bdi></small>`:''}</span>`:i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}
+${tags.length?`<button class=opttag data-a=opt data-id=${grp?grp[0].id:i.id}>${ico('info',14)}<span>${esc(f(t('optHas'),tags.join(', ')))}</span></button>`:''}${i.ch&&i.qty&&pickTxt(i)?`<span class=picked dir=auto>${ico('check',14)}${esc(pickTxt(i))}</span>`:''}
+${C.photos&&i.img&&M.rest?`<button class=photo data-a=dimg data-id=${i.id}>${ico('img',16)}<span>${t('showPhoto')}</span></button>`:''}
+${i.addon||!C.google?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${M.biz||!C.order||sold?'':hasOpt?`<button class="btn sm optb ${i.qty?'acc':'ghost'}" data-a=opt data-id=${grp?grp[0].id:i.id}>${i.qty?`${i.qty} ✓`:t('optPick')}</button>`
+:i.per?`<div class="step wstep${i.qty>0?' on':''}"><button data-a=mq data-id=${i.id} data-x=-1 ${i.qty<=0?'disabled':''} aria-label="−">−</button><span><bdi>${i.qty?perLbl(i,i.qty):'0'}</bdi></span><button data-a=mq data-id=${i.id} data-x=1 aria-label="+">+</button></div>`:step(i.qty,'mq',i.id)}</div>`}
 // sections follow the menu itself: a heading that repeats on another page (e.g. "Table service") stays under its own parent
 // the dish search matches the English name (or the name as printed), the local name and the translation; accents and case are ignored
 // a Hebrew singular or plural ending is dropped from the search, so "עגבניה" also finds "עגבניות"
@@ -898,26 +1085,35 @@ const dishHit=(i,q)=>!q||[i.orig,i.local,i.tr].some(s=>sn(s).includes(q));
 // the menu shows its sections closed: tapping a section's heading opens its dishes (the heading says how many dishes it has
 // and how many of them are chosen). A dish search shows every matching dish; a menu without sections shows all its dishes.
 const catOpen=(M,cat)=>!cat||!!dq(M)||!!(V.copen||{})[M.id+'|'+norm(cat)];
-function sectionsV(M){const q=dq(M),items=M.items.filter(i=>dishHit(i,q)).sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0));let out='',g=null,sub='',rows='';
+function sectionsV(M){const q=dq(M),base=M.items.filter(i=>dishHit(i,q)&&showNow(M,i)).sort((a,b)=>(a.pg||0)-(b.pg||0)||(a.seq||0)-(b.seq||0)),first={};let out='',g=null,sub='',rows='';
+// a section scanned in parts (from several photos) is shown once, where it first appears, with all its dishes
+base.forEach((i,n)=>{const c=norm(i.cat||'');if(!(c in first))first[c]=n});
+const items=base.map((i,n)=>[i,n]).sort((a,b)=>first[norm(a[0].cat||'')]-first[norm(b[0].cat||'')]||a[1]-b[1]).map(x=>x[0]);
+const cnote=c=>(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)).map(n=>n.text).join(' · ');
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
-out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
+out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${cnote(g.cat)?`<span class=catnote dir=auto>${ico('clock',13)}${esc(cnote(g.cat))}</span>`:''}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
 if(cats.length&&!q)out+=`<div class=catbar><small class=mut>${t(anyOpen?'catTapOpen':'catTap')}</small><button class=link data-a=catall data-x=${anyOpen?0:1}>${t(anyOpen?'catNone':'catAll')}</button></div>`;
-for(const i of items){if(!g||g.cat!==(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
-if(!i.addon)g.n++;if(i.qty>0)g.sel+=i.qty;
+for(let k=0;k<items.length;k++){const i=items[k];if(!g||norm(g.cat)!==norm(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
+// a dish sold in several sizes is one card: its sizes and prices, and one button to choose
+const run=[i];if(i.vb)while(items[k+run.length]&&items[k+run.length].vb&&norm(items[k+run.length].vb)===norm(i.vb)&&norm(items[k+run.length].cat||'')===norm(i.cat||''))run.push(items[k+run.length]);
+if(run.length>1){const tq=run.reduce((s,x)=>s+x.qty,0);g.n++;g.sel+=tq;if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
+rows+=itemV({...i,orig:i.vb,price:0,qty:tq,portion:'',_grp:run},M);k+=run.length-1;continue}
+if(!i.addon)g.n++;if(i.qty>0)g.sel+=i.per?1:i.qty;
 if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
 rows+=itemV(i,M)}
 flush();return out}
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
 const restHead=M=>`<header class="hero rhead"><h1 dir=auto>${esc(M.title)}</h1><div class=rsel><label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label><label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
-function menuV(){const M=cm();if(!M)return home();if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
+function menuV(){const M=cm();if(!M)return home();if(M.biz&&!jobs(M.id).length)return bizEditV(M);if(M.rest&&M.lang!==S.lang)restApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
 const n=M.items.reduce((s,i)=>s+i.qty,0),tot=M.items.reduce((s,i)=>s+i.qty*i.price,0),priced=M.items.some(i=>i.price>0);
 return (M.rest?restHead(M)+'<div class=pad>':bar(t(M.biz?'bizMenuHdr':'menuHdr'),M.biz?'biz':'home',M.items.length&&!js.length&&!M.demo&&!M.biz?shareBtn():'')+`<div class=pad><input class=ttl data-c=mtitle placeholder="${js.length||!M.items.length?t('menuName'):t('nameMissing')}" value="${esc(M.title)}" dir=auto aria-label="${t('menuName')}">`)+`
 ${M.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
+${(M.notes||[]).length?`<div class="al warn strong mnotes" role=note>${ico('info',18)}<div><b>${t('notesT')}</b><ul>${M.notes.map(n=>`<li dir=auto>${n.cat?`<b>${esc(n.cat)}:</b> `:''}${esc(n.text)}</li>`).join('')}</ul></div></div>`:''}
 ${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo&&!M.rest?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
-${hasIng||S.diet.length||js.length?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
+${(hasIng||S.diet.length||js.length)&&cfgOf(M).ing?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
 ${js.length?`<p class=ingwait role=status><span class=spin></span><span>${t('ingWait')}</span></p>` // the ingredient list is complete (and translated) only once the whole menu is read
 :hasIng?`<div class=ingbox><label class=search>${ico('search',18)}<input id=ingq type=search placeholder="${t('ingQ')}" value="${esc(V.ingq||'')}" dir=auto autocomplete=off role=combobox aria-controls=inglist aria-expanded=${!!V.ingOpen}><button type=button class=sdone data-a=ingclose>${t("done")}</button></label>${V.ingOpen?`<div class=inglist id=inglist role=listbox>${ingList(M)}</div>`:''}</div><small class="mut ingd">${t("ingD")}</small>${allergyNote()}<div class=chips id=ingchips>${ingChips(M)}</div>`:''}
 <div class=field><span class=lbl>${t('dietsT')}</span>${dietPills()}</div></div>`
@@ -933,7 +1129,11 @@ ${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=s
 :n&&V.obarHid!==M.id?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&conv(sum,M.cur,S.cur);
 return `<div class="sticky obar"><div><div><b>${f(t('orderTotal'),n)}</b>${priced?`<br><small class=n>${fmt(sum,M.cur)}${cv!=null&&cv!==false?` · ≈ ${fmt(cv,S.cur)}`:''}</small>`:''}</div><button class="btn acc sm" data-a=toorder>${t('seeOrder')}</button></div></div>`})():''}`}
 // end of the menu: what was ordered and its total, then the two next steps, each with a line saying what it does
-function orderV(M,n,tot,priced){
+function orderV(M,n,tot,priced){const C=cfgOf(M);
+// under the order: a Google review - the restaurant's own review link on its page, a search for its reviews otherwise
+const rvUrl=M.rest?(C.review&&M.reviewUrl)||'':M.demo||M.biz||!M.title?'':'https://www.google.com/search?q='+encodeURIComponent(M.title+' reviews');
+const rv=rvUrl?`<a class="card review" target=_blank rel=noopener href="${esc(rvUrl)}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),M.title||''))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:'';
+if(M.rest&&!C.order)return rv;
 // the business portal: no order - another page of the menu, and the restaurant's page (create, or update after a change)
 if(M.biz)return `<div class=actions><button class="btn acc wide" data-a=rpage>${ico('ext',18)}${t(M.restSlug?'rpUpd':'rpBtn')}</button><small class=mut>${M.restSlug?`<bdi dir=ltr>${esc(pageUrl(M.restSlug))}</bdi>`:t('rpBtnD')}</small>
 ${M.restSlug?`<button class="btn ghost wide" data-a=bizcard>${ico('img',18)}${t('rpCard')}</button>`:''}<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small></div>`;
@@ -953,24 +1153,32 @@ tbl=`<p class=livebar>${ico('share',16)}<span>${t('liveMenuOn')}</span></p><sect
 ${open?P.map(([pid,p],k)=>`<div class=tblp><div class="ln"><b>${who(pid,p,k)}</b>${priced?`<b class="n end">${mv(sum(p),M.cur)}</b>`:''}</div>${its(p).map(({i,q})=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${q}×</b><span class=onm><span dir=auto>${esc(i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}</span></span>${priced?`<span class="n end">${mv(q*i.price,M.cur)}</span>`:''}</div>`).join('')||`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</div>`).join('')
 +(priced?`<div class=ln><b>${t('tblTot')}</b><b class="n tot end">${mv(tot,M.cur)}</b></div>`:'')+`<button class=link data-a=mwname>${t('myName')}</button>`:''}</section>`}
 return tbl+soV+`<section class="card ordersum" aria-labelledby=ordh><h3 id=ordh>${t(M.live?'myOrder':'yourOrder')}</h3>
-${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${i.qty}×</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
-<span class=oacts>${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
+${n?ord.map(i=>`<div class="ln oln"><span class=oname><b class=oq dir=ltr>${qtyLbl(i)}</b><span class=onm><span dir=auto>${esc(i.addon?'+ '+i.orig.replace(/^\s*\+\s*/,''):i.orig)}</span>${trOf(i)?`<small class=dtr dir=auto>${esc(trOf(i))}</small>`:''}
+${i.ch?(pickTxt(i)&&(i.picks||[]).length>=i.qty?`<small class=picked dir=auto>${ico('check',13)}${esc((i.ch.l?i.ch.l+': ':'')+pickTxt(i))}</small>`:`<small class="picked need" dir=auto>${ico('warn',13)}${esc(f(t('optNeed'),i.ch.l||t('optChoice')))}</small>`):''}
+<span class=oacts>${i.ch||sizesOf(M,i).length>1||addonsOf(M,i).length?`<button class="photo ochg" data-a=opt data-id=${i.id}>${ico('info',15)}<span>${t(i.ch||sizesOf(M,i).length>1?'optChange':'optAdd')}</span></button>`:''}${i.addon||M.rest?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',15)}<span>${t('oPhoto')}</span></a>`}<button class="photo odel" data-a=odel data-id=${i.id}>${ico('trash',15)}<span>${t('oRemove')}</span></button></span></span></span>${priced?`<span class="n end">${mv(i.qty*i.price,M.cur)}</span>`:''}</div>`).join('')
 +(svc?`<div class=ln><span>${t('subtotal')}</span><span class="n end">${mv(tot,M.cur)}</span></div><div class="ln osvc"><span>${t('svc')} (${pct}%)</span><span class="n end">${mv(svc,M.cur)}</span></div>`:'')
 +`<div class=ln><b>${f(t('orderTotal'),n)}</b>${priced?`<b class="n tot end">${mv(r2(tot+svc),M.cur)}</b>`:''}</div>`
 +`<button class="btn ghost wide wbtn" data-a=waiter>${ico('menu',18)}${t('showWaiter')}</button>`:`<p class=mut style="margin:0">${t('orderEmpty')}</p>`}</section>
 <div class=actions>${M.demo||M.rest?'':`<button class="btn ghost wide" data-a=mpage>${ico('cam',18)}${t('addPage')}</button><small class=mut>${t('addPageD')}</small>`}
 ${M.biz?`<button class="btn acc wide" data-a=rpage>${ico('ext',18)}${t(M.restSlug?'rpUpd':'rpBtn')}</button><small class=mut>${M.restSlug?`<bdi dir=ltr>${esc(pageUrl(M.restSlug))}</bdi>`:t('rpBtnD')}</small>`:''}
-${M.rest?`<button class="btn acc wide" data-a=rtoapp>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`
+${M.rest?(C.scanBill?`<button class="btn acc wide" data-a=rtoapp>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`:'')
 :S.receipts.some(r=>r.id===M.receiptId)
 // this menu was scanned to check a bill that is already scanned: compare with it instead of scanning a new one
 ?`<button class="btn acc wide" data-a=cmpgo ${n?'':'disabled'}>${ico('receipt',18)}${t('cmpGo')}</button><small class=mut>${t('cmpGoD')}</small>`
-:`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>`}
+:`<button class="btn acc wide" data-a=tor>${ico('receipt',18)}${t('saveScan')}</button><small class=mut>${t('saveScanD')}</small>`}</div>${rv}`}
 // the diet choices, the same everywhere they appear (settings and the menu filter)
 // the allergy warning appears only once the user has chosen a diet or marked ingredients to avoid
 const allergyNote=()=>S.diet.length||S.avoid.length||(S.avoidTxt||[]).length?`<p class=allergy role=note>${ico("warn",16)}<span>${t("allergyNote")}</span></p>`:"";
 const dietPills=()=>`<div class=chips>${DIETS.map(([c,e])=>`<button class="pill ${S.diet.includes(c)?'on':''}" data-a=diet data-x=${c} aria-pressed=${S.diet.includes(c)}>${e} ${t('d'+c)}</button>`).join('')}</div>`;
 // ---------- receipt checks ----------
-const words=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2);
+// small joining words don't count, so "Truffle & Goose Bagel" and "TRUFFLE AND GOOSE BAGEL" are the same name
+const STOPW=new Set('and und the with con mit avec von del der die das les und och med'.split(' '));
+const words=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2&&!STOPW.has(w));
+// two words are the same when one is the other cut short (a bill's "BAG." or "TRUFF") or they differ by one letter (a misprint or misread)
+const lev1=(a,b)=>{if(a.length<b.length)[a,b]=[b,a];let i=0;while(i<b.length&&a[i]===b[i])i++;return a.length===b.length?a.slice(i+1)===b.slice(i+1):a.slice(i+1)===b.slice(i)};
+const wEq=(a,b)=>a===b||(Math.min(a.length,b.length)>=4&&(a.startsWith(b)||b.startsWith(a)))||(a.length>=5&&b.length>=5&&Math.abs(a.length-b.length)<=1&&lev1(a,b));
+// a service charge printed like an item ("SZERVÍZ DÍJ", "Service charge", "Coperto") is never a dish someone ordered
+const SVC_RE=/^\s*(?:[A-Z]\d{2}\s+)?(?:szerv[ií]z\s*d[ií]j|service\s*(?:charge|fee)?\s*(?:\d+\s*%)?\s*$|service\s*(?:charge|fee)|servizio|coperto|bedienung|servicio|taxa\s+de\s+servi[cç]o|servis\s*[uü]creti|op[łl]ata\s+serwisowa|דמי\s+שירות|שירות\s*\d+\s*%)/i;
 // a dish shown by its English name also keeps the name printed in the local language, and the bill may use either
 const names=x=>[x.orig,x.local].filter(Boolean);
 function matchMenu(M,name){const a=norm(name);let m=M.items.find(x=>names(x).some(n=>norm(n)===a));if(m)return m;
@@ -980,17 +1188,22 @@ const wa=words(name);let best=null,bs=0;for(const x of M.items)for(const n of na
 // or the only dish that fits. When two dishes could fit ("GALUSKA"), the line keeps its printed name.
 // When several dishes fit but only one of them was ordered, the order settles it.
 // Returns the dish, or {amb:true} when it stays unclear, or null when nothing on the menu fits.
-function matchInfo(M,name){const a=norm(name),wa=words(name);
-const pick=c=>{const u=[...new Map(c.map(x=>[norm(x.orig),x])).values()];if(u.length===1)return u[0];const o=u.filter(x=>x.qty>0);return o.length===1?o[0]:{amb:true,cands:u}};
-const ex=M.items.filter(x=>names(x).some(n=>norm(n)===a));if(ex.length)return pick(ex);
-const inc=M.items.filter(x=>names(x).some(n=>{const b=norm(n);return a.length>3&&b.length>3&&(b.includes(a)||a.includes(b))}));if(inc.length)return pick(inc);
-const sc=M.items.map(x=>[x,Math.max(0,...names(x).map(n=>{const wb=words(n);return wb.length&&wa.length?wa.filter(w=>wb.includes(w)).length/Math.max(wa.length,wb.length):0}))]),bs=Math.max(0,...sc.map(s=>s[1]));
+// alt: the English name the bill prints for the line (either may match); price: the line's price, which settles between
+// dishes that fit equally (two sizes of one drink, the same dish in two sections)
+function matchInfo(M,name,alt,price){const qs=[name,alt].filter(Boolean),A=qs.map(norm),J=qs.map(s=>words(s).join('')).filter(Boolean),W=qs.map(words);
+const pick=c=>{const u=[...new Map(c.map(x=>[norm(x.orig)+'|'+(x.price||0),x])).values()];if(u.length===1)return u[0];const o=u.filter(x=>x.qty>0);if(o.length===1)return o[0];
+const pool=o.length?o:u,p=price>0?pool.filter(x=>x.price>0&&Math.abs(x.price-price)<=Math.max(.01,x.price*.005)):[];return p.length===1?p[0]:{amb:true,cands:u}};
+const ex=M.items.filter(x=>names(x).some(n=>A.includes(norm(n))||J.includes(words(n).join(''))));if(ex.length)return pick(ex);
+const inc=M.items.filter(x=>names(x).some(n=>{const b=norm(n);return A.some(a=>a.length>3&&b.length>3&&(b.includes(a)||a.includes(b)))}));if(inc.length)return pick(inc);
+const sc=M.items.map(x=>[x,Math.max(0,...names(x).flatMap(n=>{const wb=words(n);return W.map(wa=>wb.length&&wa.length?wa.filter(w=>wb.some(v=>wEq(w,v))).length/Math.max(wa.length,wb.length):0)}))]),bs=Math.max(0,...sc.map(s=>s[1]));
 return bs>=.6?pick(sc.filter(s=>s[1]===bs).map(s=>s[0])):null}
 const sureMatch=(M,name)=>{const m=matchInfo(M,name);return m&&!m.amb?m:null};
 // bill lines are always named as printed on the bill (the menu is only used to check them)
 // every dish name in the app comes with its translation into the chosen language (when it differs from the name)
-const trOf=x=>x.tr&&norm(x.tr)!==norm(x.orig)?x.tr:'';
-const nameTr=x=>trOf(x)?`${x.orig} (${trOf(x)})`:x.orig;
+const trOf=x=>{const s=x.tr&&norm(x.tr)!==norm(x.orig)?x.tr:'';return s&&x.vnTr&&!norm(s).includes(norm(x.vnTr))?s+' – '+x.vnTr:s};
+// in a message about a dish, its translation is added only when it is a name - not a description or a list of ingredients
+// (menus scanned before names and descriptions were kept apart hold the description there)
+const nameTr=x=>{const s=trOf(x);return s&&s.length<=60&&(s.match(/[,،、]/g)||[]).length<2?`${x.orig} (${s})`:x.orig};
 // a bill line is named in English when the bill itself prints an English name for it, otherwise as printed
 const billMain=i=>i.en||i.orig;
 // the name lines of a bill line: main name, then (only without an English name on the bill) the menu's English name,
@@ -1016,11 +1229,13 @@ function issues(R){const o=[],M=tableMenu(S.menus.find(m=>m.id===R.menuId)),c=v=
 if(M){const ordered=M.items.filter(x=>x.qty>0),hasOrder=ordered.length>0,got=new Map(),line=new Map();
 const amb=[],check=(i,m)=>{if(m){got.set(m.id,(got.get(m.id)||0)+i.qty);if(!line.has(m.id))line.set(m.id,i.id)}
 if(hasOrder&&(!m||!m.qty))at(f(t('aNotOrd'),billName(R,i)),billName(R,i),i.id);
-if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))at(f(t('aPrice'),billName(R,i),c(i.unit),c(m.price)),billName(R,i),i.id)};
-R.items.forEach(i=>{const mi=matchInfo(M,i.orig);if(mi&&mi.amb)amb.push([i,mi.cands]);else check(i,mi)});
+// a dish sold by weight: the line's amount is compared with the weight that was ordered at the menu's price
+if(m&&m.per){if(m.qty>0&&M.cur===R.cur&&m.price>0){const exp=r2(m.qty*m.price),was=r2(i.unit*i.qty);if(Math.abs(was-exp)>Math.max(.01,exp*.01))at(f(t('aWeight'),billName(R,i),c(was),perLbl(m,m.qty),c(exp)),billName(R,i),i.id)}}
+else if(m&&M.cur===R.cur&&m.price>0&&Math.abs(i.unit-m.price)>Math.max(.01,m.price*.005))at(f(t('aPrice'),billName(R,i),c(i.unit),c(m.price)),billName(R,i),i.id)};
+R.items.forEach(i=>{if(SVC_RE.test(i.orig)||SVC_RE.test(i.en||''))return;const mi=matchInfo(M,i.orig,i.en,i.unit);if(mi&&mi.amb)amb.push([i,mi.cands]);else check(i,mi)});
 // an unclear line goes to the one ordered dish among its candidates still missing from the bill; otherwise it is flagged, not guessed
 amb.forEach(([i,cands])=>{const miss=cands.filter(x=>x.qty>0&&(got.get(x.id)||0)<x.qty);if(miss.length===1)check(i,miss[0]);else at(f(t('aAmbig'),i.orig),i.orig,i.id)});
-if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)o.push(f(t('aMissing'),nameTr(m)));else if(q!==m.qty)at(f(t('aQty'),nameTr(m),q,m.qty),nameTr(m),line.get(m.id))});
+if(hasOrder)ordered.forEach(m=>{const q=got.get(m.id)||0;if(!q)o.push(f(t('aMissing'),nameTr(m)));else if(q!==m.qty&&!m.per)at(f(t('aQty'),nameTr(m),q,m.qty),nameTr(m),line.get(m.id))});
 const pol=M.policy;if(pol&&pol.service_pct&&R.fees.service>0){const exp=sub(R)*pol.service_pct/100;if(Math.abs(exp-R.fees.service)>Math.max(1,exp*.03))o.push(f(t('aSvcPol'),c(R.fees.service),pol.service_pct))}}
 // the receipt's own arithmetic; only rounding (about 1 unit) is tolerated, so a 50 HUF overcharge on 34,000 is still reported
 const s=sub(R),T=+R.printedTotal||0,PS=+R.printedSub||0,pct=+R.svcPct||0,tipB=+R.fees.tip||0,E=r2(s+billFees(R)),tol=v=>Math.max(1,Math.abs(v)*.0002);
@@ -1035,7 +1250,7 @@ return `<div class=panel>${rem>1?`<label>${t('units')}<select data-c=shq>${[...A
 // Split: tabs for each person with their amount; for the selected person, one compact row per dish.
 // Dishes keep the bill's order; a dish that is fully assigned stays where it is, colored and marked with ✓.
 function splitV(R){const n=R.payers,P=R.cp,g=grand(R);
-const head=`${R.live?`<p class=livebar>${ico('share',16)}<span>${t('liveOn')}</span></p>`:''}<div class=row><span>${t('payers')}</span><button class=link data-a=pnames>${t('namesBtn')}</button><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''} aria-label="-1">−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''} aria-label="+1">+</button></div></div><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
+const head=`${R.live?`<p class=livebar>${ico('share',16)}<span>${t('liveOn')}</span></p>`:''}<div class=row><span>${t('payers')}</span><div class=step><button data-a=pc data-x=-1 ${n<=2?'disabled':''} aria-label="-1">−</button><span>${n}</span><button data-a=pc data-x=1 ${n>=12?'disabled':''} aria-label="+1">+</button></div></div><button class="btn ghost sm wide pnbtn" data-a=pnames>${ico('edit',16)}${t('namesBtn')}</button><label class=chk style="margin-top:12px"><input type=checkbox data-c=eq ${R.equal?'checked':''}>${t('equal')}</label>`;
 if(R.equal){const e=equalShares(g,n),same=e.every(x=>x===e[0]);return head+(same?`<div class=ln style="margin-top:10px"><span>${t('each')}</span><b class="tot n">${money(e[0],R.cur)}</b></div>`:`<div style="margin-top:10px">${e.map((x,p)=>`<div class=ln><span>${esc(pn(R,p))}</span><b class=n>${money(x,R.cur)}</b></div>`).join('')}</div>`)+`<button class="btn acc wide sharebtn" data-a=sharesplit>${ico('ext',18)}${t('shareSplit')}</button>`}
 const sh=shares(R),asg=r2(sh.reduce((a,b)=>a+b,0)),left=r2(g-asg),pct=g>0?Math.min(100,asg/g*100):0;
 // what a person pays on top of their dishes (their share of tax, service, fees and tip) is spelled out, so 7,500 → 8,625 is explained
@@ -1067,6 +1282,9 @@ ${R.items.length?`<div class=card><h3>${t('split')}</h3><label class="chk big"><
 ${name?`<a class="card review" target=_blank rel=noopener href="https://www.google.com/search?q=${encodeURIComponent(name+' reviews')}"><span class=e>${ico('star',22)}</span><span><b>${t('review')}</b><small class=mut>${esc(f(t('reviewD'),name))}</small></span><span class="btn sm acc">${t('reviewBtn')}</span></a>`:''}`}
 </div>`}
 const day=d=>{try{return new Date(d).toLocaleDateString(S.lang==='x'?undefined:S.lang)}catch(e){return new Date(d).toLocaleDateString()}};
+// when it was scanned (date and hour) and from how many photos
+const dayTime=d=>{try{return day(d)+' '+new Date(d).toLocaleTimeString(S.lang==='x'?undefined:S.lang,{hour:'2-digit',minute:'2-digit'})}catch(e){return day(d)}};
+const photosOf=x=>{const n=x.items&&x.parts?(x.parts.length||1):(x.photos||(x.hashes||[]).length||new Set((x.items||[]).map(i=>i.pg||1)).size||1);return n===1?t('photo1'):f(t('photosN'),n)};
 function histV(){const row=(a,d,id,ti,sm)=>`<div class="card hrow" role=button tabindex=0 data-a=${a} data-id=${id}><div class=info><b dir=auto>${esc(ti)}</b><small>${sm}</small></div><button class="ic del" data-a=${d} data-id=${id} aria-label="${t('del')}">${ico('trash',18)}</button><span class=chev>${ico('chev',18)}</span></div>`;
 // search by restaurant name: menus and receipts whose name contains the typed text (accents and case ignored)
 // and by date: today, the last 7 or 30 days, or one chosen day (by when it was scanned)
@@ -1082,8 +1300,8 @@ const dm=ms.length,dr=rs.length;
 const tab=V.htab||'all',tb=(k,l)=>`<button class="htab${tab===k?' on':''}" data-a=htab data-x=${k} role=tab aria-selected=${tab===k}>${l}</button>`;
 return bar(t('hist'),'home')+`<div class=pad><div class=htabs role=tablist>${tb('all',`${t('allT')} (${dm+dr})`)}${tb('m',`${t('menus')} (${dm})`)}${tb('r',`${t('receipts')} (${dr})`)}</div>
 ${real(S.menus).length+real(S.receipts).length>1?`<label class=search>${ico('search',18)}<input id=histq type=search placeholder="${t('histQ')}" value="${esc(V.hq||'')}" dir=auto autocomplete=off></label>`:''}${dates}
-<div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${day(m.date)}`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${r.rdate||day(r.date)}`)).join('')||none}`:''}</div></div>`}
-function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,biz:bizV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer();
+<div id=hlist>${tab!=='r'?`<div class=cat>${t('menus')}</div>${ms.map(m=>row('om','dm',m.id,m.title||t('untitledMenu'),`${f(t('dishesN'),m.items.length)} · ${photosOf(m)}<br>${ico('clock',13)} <bdi>${dayTime(m.date)}</bdi>`)).join('')||none}`:''}${tab!=='m'?`<div class=cat>${t('receipts')}</div>${rs.map(r=>row('or','dr',r.id,r.restaurant||r.title||t('rTitle'),`${fmt(grand(r),r.cur)} · ${photosOf(r)}<br>${ico('clock',13)} <bdi>${dayTime(r.date)}</bdi>`)).join('')||none}`:''}</div></div>`}
+function render(){save();document.documentElement.dir=rtl()?'rtl':'ltr';document.documentElement.lang=S.lang==='x'?'en':S.lang;app.innerHTML=(V.i18nBusy?`<div class=i18nbar role=status><span class=spin></span><span>${esc(langName())} · ${t('translating')}</span></div>`:'')+({setup,home,menu:menuV,receipt:recV,history:histV,legal:legalV,biz:bizV,logs:logsV,rload:()=>'<p class=empty style="padding-top:40vh"><span class=spin></span></p>'}[V.screen]||home)();syncHistory();syncLayer();
 // a change to a live split is sent to everyone who has the link
 if(V.screen==='receipt'){const R=cr();if(R&&R.live&&JSON.stringify(liveSt(R))!==R.live.base)liveSoon()}
 if(V.screen==='menu'){const M=cm();if(M&&M.live&&mlDirty(M))mlSoon()}}
@@ -1128,7 +1346,7 @@ if(prev&&sameNav(prev,tgt)){V.afterNav=then;stepBack();return}V.screen=s;V.id=i|
 // "Show the waiter": the order big, in the menu's own language (the English name small underneath), to point at
 function waiterView(){const M=cm();if(!M)return;const ord=M.items.filter(i=>i.qty>0).sort((a,b)=>((a.pg||0)-(b.pg||0))||((a.seq||0)-(b.seq||0)));
 const lt=ord.some(i=>ltrText(i.local||i.orig))?'dir=ltr':'';
-openSheet(`<p class="waiter wt" dir=auto>${esc(M.title||'')}</p><div class=wlist ${lt}>${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${i.qty}×</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}</span></div>`).join('')}</div><p class=wmore hidden>${t('moreDishes')} ↓</p><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`);
+openSheet(`<p class="waiter wt" dir=auto>${esc(M.title||'')}</p><div class=wlist ${lt}>${ord.map(i=>`<div class=wr><b class=wq dir=ltr>${qtyLbl(i)}</b><span><b class=wn dir=auto>${esc(i.local||i.orig)}</b>${i.local?`<small dir=auto>${esc(i.orig)}</small>`:''}${pickTxt(i,true)?`<small class=wpick dir=auto>→ ${esc(pickTxt(i,true))}</small>`:''}${i.cnote?`<small class=wpick dir=auto>✎ ${esc(i.cnote)}</small>`:''}</span></div>`).join('')}</div><p class=wmore hidden>${t('moreDishes')} ↓</p><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`);
 // "more dishes" shows while part of the list is still below
 const l=$('#sheet .wlist'),m=$('#sheet .wmore');if(l&&m){const upd=()=>{m.hidden=l.scrollTop+l.clientHeight>=l.scrollHeight-4};l.addEventListener('scroll',upd,{passive:true});requestAnimationFrame(upd)}}
 // a short message with an "Undo" button, used instead of asking first
@@ -1202,9 +1420,18 @@ diet:(id,x)=>{S.diet=S.diet.includes(x)?S.diet.filter(d=>d!==x):[...S.diet,x];re
 nm:()=>withHints(false,()=>scanMenuPage(null)),
 demo:()=>{const M=makeDemo();goTo('menu:'+M.id)},
 mpage:()=>{const M=cm();withHints(false,()=>scanMenuPage(M))},
-mq:(id,x)=>{const i=cm().items.find(i=>i.id===id);i.qty=Math.max(0,i.qty+ +x);V.obarHid=null;render()},
+// + / − on a dish; a dish by weight starts at the smallest amount that can be ordered; a dish with a choice opens the
+// sheet for choosing, and so does the first portion of a dish that has extras
+mq:(id,x)=>{const M=cm(),i=M.items.find(i=>i.id===id);if(!i)return;if(i.ch){if(+x>0)return ACT.opt(id);(i.picks||[]).pop()}
+const u=i.per&&i.per.min?Math.max(1,Math.ceil(i.per.min/i.per.q)):1;i.qty=+x>0&&i.qty<u?u:Math.max(0,i.qty+ +x);if(i.qty<u)i.qty=0;V.obarHid=null;render();
+if(+x>0&&i.qty===u&&!i.per&&addonsOf(M,i).length)ACT.opt(id)},
+opt:id=>{const M=cm();if(!M)return;V.opt=id;openSheet(optHtml(M,id),{})},
+oq:(id,x)=>{const i=cm().items.find(i=>i.id===id);if(!i)return;i.qty=Math.max(0,i.qty+ +x);V.obarHid=null;optPaint()},
+oc:(id,x,el)=>{const i=cm().items.find(i=>i.id===id),k=+el.dataset.k;if(!i)return;i.picks=i.picks||[];if(+x>0){i.picks.push(k);i.qty++}else{const p=i.picks.lastIndexOf(k);if(p<0)return;i.picks.splice(p,1);i.qty=Math.max(0,i.qty-1)}V.obarHid=null;optPaint()},
+dexp:id=>{V.dopen=V.dopen||{};V.dopen[id]=!V.dopen[id];render()},
+dimg:id=>{const i=cm().items.find(i=>i.id===id);if(i&&i.img)openSheet(`<img src="${esc(i.img)}" alt="" style="width:100%;border-radius:14px"><p dir=auto style="margin:0"><b>${esc(i.orig)}</b></p><button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})},
 // a dish taken out of the order (all of its portions), with an undo
-odel:id=>{const i=cm().items.find(i=>i.id===id);if(!i)return;const q=i.qty;i.qty=0;V.obarHid=null;render();undoToast(t('oRemoved'),()=>{i.qty=q;render()})},
+odel:id=>{const i=cm().items.find(i=>i.id===id);if(!i)return;const q=i.qty,pk=i.picks;i.qty=0;i.picks=[];V.obarHid=null;render();undoToast(t('oRemoved'),()=>{i.qty=q;i.picks=pk;render()})},
 // a menu section opens or closes when its heading is tapped; "open all" / "close all" for the whole menu
 cat:(id,x)=>{const k=cm().id+'|'+x;V.copen=V.copen||{};V.copen[k]=!V.copen[k];render()},
 catall:(id,x)=>{const M=cm();V.copen=V.copen||{};M.items.forEach(i=>{V.copen[M.id+'|'+norm(i.cat||'')]=x==='1'});render()},
@@ -1227,6 +1454,24 @@ bizlogin:async()=>{const phone=(($('#bphone')||{}).value||'').trim(),password=($
 try{const j=await bizApi({acct:'login',phone,password});S.bizSess={sess:j.sess,phone};V.bizPages=j.pages;V.bizLoaded=true;save();render();if(j.created)toast(t('bizCreated'))}catch(e){toast(e.message)}},
 bizout:()=>{delete S.bizSess;V.bizPages=null;V.bizLoaded=false;S.menus=S.menus.filter(m=>!m.biz);save();render()},
 bizopen:(id,x)=>bizOpen(x),
+// ---- the business menu editor ----
+biznew:()=>bizNew(),bedit:id=>bdishSheet(cm(),id),badd:id=>bdishSheet(cm(),null,id),bdsave:id=>bdishSave(id),
+bddel:id=>{const M=cm();M.items=M.items.filter(i=>i.id!==id);closeSheet();render()},
+bcadd:()=>{const M=cm();bizNorm(M);let n=1,nm=t('beNewCat');while(M.cats.includes(nm))nm=t('beNewCat')+' '+(++n);M.cats.push(nm);render();const e=[...document.querySelectorAll('.becatn')].pop();if(e){e.focus();e.select()}},
+bcdel:id=>{const M=cm(),c=M.cats[+id],go=()=>{M.items=M.items.filter(i=>(i.cat||'')!==c);M.cats.splice(+id,1);if(M.hours)delete M.hours[c];render()};M.items.some(i=>(i.cat||'')===c)?confirmDel(c||t('beNoCat'),t('beCatDelD'),go):go()},
+bcmove:(id,x)=>{const M=cm(),a=+id,b=a+ +x;if(b<0||b>=M.cats.length)return;[M.cats[a],M.cats[b]]=[M.cats[b],M.cats[a]];render()},
+bimove:(id,x)=>{const M=cm(),i=M.items.find(i=>i.id===id),its=M.items.filter(z=>(z.cat||'')===(i.cat||'')),k=its.indexOf(i),o=its[k+ +x];if(!o)return;[i.seq,o.seq]=[o.seq,i.seq];render()},
+bvat:(id,x)=>{const M=cm();bizPol(M).vat=x;bizPolApply(M);render()},bsvc:(id,x)=>{const M=cm();bizPol(M).svc=x;bizPolApply(M);render()},
+// a section shown only at certain hours
+bchours:id=>{const M=cm(),c=M.cats[+id],h=(M.hours||{})[c]||{};openSheet(`<h3 dir=auto>${esc(c||t('beNoCat'))}</h3><span class=lbl>${t('beHours')}</span><div class=behrs><label>${t('beFrom')}<input id=bh_from type=time value="${esc(h.from||'')}"></label><label>${t('beTo')}<input id=bh_to type=time value="${esc(h.to||'')}"></label></div><small class=mut>${t('beHoursD')}</small>
+<button class=btn data-a=bchsave data-id=${id}>${ico('check',18)}${t('saveSet')}</button><button class="btn ghost" data-a=sa data-x=no>${t('cancel')}</button>`,{})},
+bchsave:id=>{const M=cm(),c=M.cats[+id],a=$('#bh_from').value,b=$('#bh_to').value;M.hours=M.hours||{};if(a&&b)M.hours[c]={from:a,to:b};else delete M.hours[c];closeSheet();render()},
+bimgdel:()=>{V.bdImg='';const b=$('#bd_imgbox');if(b)b.firstElementChild.outerHTML='<span></span>'},
+// ---- the manager's dashboard of scan problems ----
+logs:()=>{V.logs=null;V.logK='';goTo('logs')},logref:()=>{V.logs=null;render()},logk:(id,x)=>{V.logK=x;render()},
+logimg:async id=>{try{const j=await bizApi({logs:'img',id,key:bizKey()});openSheet((j.images||[]).map(b=>`<img src="data:image/jpeg;base64,${b}" alt="" style="width:100%;border-radius:10px">`).join('')+`<button class="btn ghost" data-a=sa data-x=no>${t('close')}</button>`,{})}catch(e){toast(e.message)}},
+logdel:async id=>{try{await bizApi({logs:'del',id,key:bizKey()});V.logs=(V.logs||[]).filter(l=>l.id!==id);render()}catch(e){toast(e.message)}},
+logclear:()=>confirmDel(t('logsT'),t('logsClearD'),async()=>{try{await bizApi({logs:'clear',key:bizKey()});V.logs=[];render()}catch(e){toast(e.message)}}),
 isgo:id=>issSheet(id),
 mwjoin:()=>{const M=cm(),nm=cleanName(($('#whoname')||{}).value);M.live.name=nm||null;if(nm)S.myName=nm;closeSheet();render()},
 mwname:()=>menuWhoSheet(cm()),
@@ -1258,6 +1503,13 @@ ftax:v=>{cr().fees.tax=r2(v);render()},fsvc:v=>{cr().fees.service=r2(v);render()
 tipc:v=>{cr().tipCustom=r2(v);render()},splitq:(v,id,e)=>{cr().split=e.checked;render()},
 eq:(v,id,e)=>{cr().equal=e.checked;render()},
 hday:v=>{V.hdate=v||'all';render()},
+// ---- the business menu editor ----
+bcatn:(v,ci)=>{const M=cm(),old=M.cats[+ci],nv=v.trim();if(nv===old)return;if(M.cats.includes(nv)){toast(t('beCatDup'));return render()}M.items.forEach(i=>{if((i.cat||'')===old){i.cat=nv;i.catTr=''}});M.cats[+ci]=nv;if(M.hours&&M.hours[old]){M.hours[nv]=M.hours[old];delete M.hours[old]}render()},
+bcur:v=>{cm().cur=v;render()},bsvcp:v=>{const M=cm();bizPol(M).pct=Math.min(40,Math.max(0,+v||0))||'';bizPolApply(M);render()},bnotes:v=>{const M=cm();bizPol(M).notes=v.trim();bizPolApply(M);render()},
+bcfg:(v,id,e)=>{const M=cm();M.cfg={...(M.cfg||{}),[id]:e.checked};render()},breview:v=>{const M=cm(),u=v.trim();M.reviewUrl=/^https?:\/\/\S+$/.test(u)?u:'';render()},
+// a dish photo: made small on the phone (640px), uploaded, and kept with the dish when it is saved
+bimg:(v,id,el)=>{const file=el.files&&el.files[0];if(!file)return;const u=URL.createObjectURL(file),im=new Image();im.onload=async()=>{const k=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
+toast(t('beImgBusy'));try{const j=await bizApi({img:c.toDataURL('image/jpeg',.72).split(',')[1],sess:(S.bizSess||{}).sess||null,key:bizKey()});V.bdImg=j.url;const b=$('#bd_imgbox');if(b)b.firstElementChild.outerHTML=`<img src="${esc(j.url)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`}catch(e){toast(e.message)}};im.onerror=()=>toast(t('err_image'));im.src=u},
 shq:v=>{V.shq=+v},shp2:(v,id,e)=>{const p=+e.dataset.x,s=V.shs||(V.shs=[]);if(e.checked&&!s.includes(p))s.push(p);if(!e.checked)V.shs=s.filter(x=>x!==p)}};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=ACT[b.dataset.a];a&&a(b.dataset.id,b.dataset.x,b)});
 document.addEventListener('change',e=>{const b=e.target.closest('[data-c]');if(b&&CH[b.dataset.c])CH[b.dataset.c](b.value,b.dataset.id,b)});
