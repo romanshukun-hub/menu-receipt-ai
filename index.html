@@ -268,6 +268,7 @@ small,.mut{font-size:14.5px}label,.lbl{font-size:14.5px}h2{font-size:18px}h3{fon
 .picked{display:flex;align-items:center;gap:4px;color:var(--ok);font-size:13.5px;font-weight:600;margin-top:4px}.picked.need{color:var(--warn)}
 .optb{flex:none;min-width:78px}.wstep span{min-width:58px;font-size:14px}
 .optr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.optr .info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.catnm .catnote{display:flex;align-items:flex-start;gap:5px;margin-top:3px;line-height:1.35}.catnote svg,.dnote svg{flex:none;margin-top:2px}.dnote{align-items:flex-start}
 .catnote{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:600;color:var(--warn);text-transform:none;letter-spacing:0}
 .mnotes ul{margin:4px 0 0;padding-inline-start:18px}.mnotes li{margin:3px 0}
 .dnote{display:flex;gap:5px;align-items:center;font-size:13.5px;color:var(--ac);font-weight:600;margin-top:2px}
@@ -660,7 +661,7 @@ await scanStream(image,o=>{
 if(o.restart){M.items=M.items.filter(i=>!job.ids.has(i.id));M.notes=(M.notes||[]).filter(n=>n.pg!==pg);job.ids.clear();job.n=0;job.hq=true;uns=0;seq=0;Object.assign(ctx,{parent:'',inherit:null,started:false,remap:null});soon();return}
 if(o.long){toast(t('tooLong'));return}
 if(o.catnote)addNote(M,o.catnote.text,o.catnote.category,pg);else
-if(o.meta){(o.meta.notes||[]).forEach(n=>addNote(M,n.text,n.section,pg));kind=o.meta.kind||kind;if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
+if(o.meta){(o.meta.notes||[]).forEach(n=>addNote(M,n.text,n.section,pg,n.dish));kind=o.meta.kind||kind;if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
 else if(o.ingr)M.ingr=Object.assign(M.ingr||{},cleanIngr(o.ingr));
 else if('unclear' in o){unc=+o.unclear||0;M.unclear={...(M.unclear||{}),[pg]:unc}}
 else if(o.item&&o.item.original){
@@ -683,7 +684,13 @@ openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns')
 }
 // a notice printed on the menu that matters when ordering (happy hour, serving hours, minimum order...), kept once;
 // cat: the section it is about (then it also shows next to that section's heading)
-function addNote(M,text,cat,pg){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{})})}
+// dish: the dish it is about (then it shows on that dish). Only notes about the whole menu are listed at the top of the menu.
+function addNote(M,text,cat,pg,dish){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{}),...(dish?{dish:String(dish)}:{})})}
+// (a note about "Khinkali" shows on every khinkali dish)
+const noteOn=(n,i)=>!!n.dish&&[i.orig,i.vb,i.local].some(s=>s&&(norm(s)===norm(n.dish)||(norm(n.dish).length>4&&norm(s).includes(norm(n.dish)))));
+const noteDish=(M,n)=>n.dish?M.items.find(i=>noteOn(n,i)):null;
+// a note whose dish or section is not on the menu (yet) still shows at the top, so it is never lost
+const topNotes=M=>(M.notes||[]).filter(n=>!noteDish(M,n)&&!(n.cat&&M.items.some(i=>norm(i.cat||'')===norm(n.cat))));
 // ---------- receipts ----------
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
 // ---------- sample (try the app without scanning) ----------
@@ -1182,7 +1189,7 @@ ${sold||i.rec||i.isNew?`<span class=dbadges>${sold?`<span class="dbadge sold">${
 ${warn.map(x=>`<span class=avoid-b>${ico('warn',14)}${esc(x)}</span>`).join('')}${w.mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(w.mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${i.hot?` <span aria-label="${t('spicyL')}">🌶️</span>`:''}</div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?(i.desc?`<span class=ntr dir=auto>${esc(i.tr)}</span>`:longV(i,i.tr)):''}${i.desc&&norm(i.desc)!==norm(i.tr)?longV(i,i.desc):''}
-${i.note?`<span class=dnote dir=auto>${ico('info',14)}${esc(i.note)}</span>`:''}
+${[i.note,...(M.notes||[]).filter(n=>noteOn(n,i)).map(n=>n.text)].filter(Boolean).map(x=>`<span class=dnote dir=auto>${ico('info',14)}<span>${esc(x)}</span></span>`).join('')}
 ${grp?`<span class="pr vars">${grp.map(v=>`<span class=var><bdi>${esc(v.vn)}</bdi>${C.prices&&v.price>0?` <b dir=${rtl()?"rtl":"ltr"}>${fmt(v.price,M.cur)}</b>`:''}${v.qty?` <i>×${v.qty}</i>`:''}</span>`).join('')}</span>`
 :C.prices&&i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${i.was?`<s class=was>${fmt(i.was,M.cur)}</s> `:''}${mv(i.price,M.cur)}${i.was&&i.off?`<span class=promo>${esc(f(t('promoTag'),i.off))}</span>`:''}${i.per?`<small class=per>${esc(f(t('perFor'),perLbl(i,1)))}</small>`:''}${i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}</span>`:i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}
 ${tags.length?`<button class=opttag data-a=opt data-id=${grp?grp[0].id:i.id}>${ico('info',14)}<span>${esc(f(t('optHas'),tags.join(', ')))}</span></button>`:''}${i.ch&&i.qty&&pickTxt(i)?`<span class=picked dir=auto>${ico('check',14)}${esc(pickTxt(i))}</span>`:''}
@@ -1201,9 +1208,9 @@ function sectionsV(M){const q=dq(M),base=M.items.filter(i=>dishHit(i,q)&&showNow
 // a section scanned in parts (from several photos) is shown once, where it first appears, with all its dishes
 base.forEach((i,n)=>{const c=norm(i.cat||'');if(!(c in first))first[c]=n});
 const items=base.map((i,n)=>[i,n]).sort((a,b)=>first[norm(a[0].cat||'')]-first[norm(b[0].cat||'')]||a[1]-b[1]).map(x=>x[0]);
-const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])].join(' · ');
+const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)&&!noteDish(M,n)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])];
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
-out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${cnote(g.cat)?`<span class=catnote dir=auto>${ico('clock',13)}${esc(cnote(g.cat))}</span>`:''}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
+out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${cnote(g.cat).map(x=>`<span class=catnote dir=auto>${ico('info',13)}<span>${esc(x)}</span></span>`).join('')}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
 if(cats.length&&!q)out+=`<div class=catbar><small class=mut>${t(anyOpen?'catTapOpen':'catTap')}</small><button class="btn ghost sm catall" data-a=catall data-x=${anyOpen?0:1} aria-pressed=${!!anyOpen}>${t(anyOpen?'catNone':'catAll')}</button></div>`;
 for(let k=0;k<items.length;k++){const i=items[k];if(!g||norm(g.cat)!==norm(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
@@ -1223,7 +1230,7 @@ return (M.rest?restHead(M)+'<div class=pad>':bar(t(M.biz?'bizMenuHdr':'menuHdr')
 ${M.shared?`<span class=shtag>${ico('share',14)}${t('sharedTag')}</span>`:''}
 ${M.demo?demoNote('demoMenu',`<button class="btn sm" data-a=go data-x=receipt:demo-r>${ico('receipt',16)}${t('demoRecGo')}</button>`):''}
 ${M.policy&&M.policy.text?`<div class="al pol strong">${ico('info',18)}<div><b>${t('policy')}</b><br>${esc(M.policy.text)}</div></div>`:''}
-${(M.notes||[]).length?`<div class="al warn strong mnotes" role=note>${ico('info',18)}<div><b>${t('notesT')}</b><ul>${M.notes.map(n=>{const ci=n.cat&&M.items.find(i=>norm(i.cat||'')===norm(n.cat)),cn=ci?(ci.catTr||ci.cat):n.cat;return `<li dir=auto>${cn?`<b>${esc(cn)}:</b> `:''}${esc(n.text)}</li>`}).join('')}</ul></div></div>`:''}
+${(gn=>gn.length?`<div class="al warn strong mnotes" role=note>${ico('info',18)}<div><b>${t('notesT')}</b><ul>${gn.map(n=>`<li dir=auto>${esc(n.text)}</li>`).join('')}</ul></div></div>`:'')(topNotes(M))}
 ${M.items.length?`<div class=row><span class=chips><span class="chip cnt1">${f(t(M.items.some(i=>i.addon)?'dishesAddons':'dishesN'),M.items.length)}</span></span>${M.items.length&&!M.demo&&!M.rest?`<button class="btn ghost sm toppg" data-a=mpage>${ico('cam',16)}${t('addPage')}</button>`:''}</div>`:''}
 ${(hasIng||S.diet.length||js.length)&&cfgOf(M).ing?(S.filtOpen?`<div class="card filt" id=filt><div class=row><h3 style="margin:0">${t('ingT')}</h3><button class=link data-a=filt aria-expanded=true aria-controls=filt>${t('filtHide')}</button></div>
 ${js.length?`<p class=ingwait role=status><span class=spin></span><span>${t('ingWait')}</span></p>` // the ingredient list is complete (and translated) only once the whole menu is read
