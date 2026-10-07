@@ -107,6 +107,7 @@ section:first-of-type>.cat{margin-top:18px}
 .irow{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;font-size:15px;color:inherit;text-align:start;cursor:pointer}.irow:hover{background:var(--bg)}
 .irow>span:nth-child(2){flex:1}.irow .ie{width:22px;text-align:center}.irow .ck{width:18px;color:var(--bad)}.irow.on{background:color-mix(in srgb,var(--bad) 9%,transparent);font-weight:600}.irow.free{background:var(--ac2);color:var(--ac);font-weight:600}
 .ingclose{display:block;margin:2px auto}
+.subhd .catnote{flex-basis:100%;display:flex;align-items:flex-start;gap:5px;color:var(--warn);font-weight:600;font-size:12.5px}
 .subhd{margin:0 -16px;padding:12px 16px 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--mut);border-top:1px solid var(--line);background:color-mix(in srgb,var(--line) 35%,transparent);display:flex;gap:8px;flex-wrap:wrap;border-inline-start:3px solid var(--line)}
 .subhd span{text-transform:none;letter-spacing:0;color:var(--mut);font-weight:500}
 .item.insub{margin:0 -16px;padding-inline:16px;background:color-mix(in srgb,var(--line) 35%,transparent);border-inline-start:3px solid var(--line)}
@@ -660,7 +661,7 @@ await scanStream(image,o=>{
 // the server is reading the photo again with a stronger model: drop what this page got so far
 if(o.restart){M.items=M.items.filter(i=>!job.ids.has(i.id));M.notes=(M.notes||[]).filter(n=>n.pg!==pg);job.ids.clear();job.n=0;job.hq=true;uns=0;seq=0;Object.assign(ctx,{parent:'',inherit:null,started:false,remap:null});soon();return}
 if(o.long){toast(t('tooLong'));return}
-if(o.catnote)addNote(M,o.catnote.text,o.catnote.category,pg);else
+if(o.catnote)addNote(M,o.catnote.text,o.catnote.category,pg,null,o.catnote.sub);else
 if(o.meta){(o.meta.notes||[]).forEach(n=>addNote(M,n.text,n.section,pg,n.dish));kind=o.meta.kind||kind;if(!M.items.length&&isCur(o.meta.currency))M.cur=o.meta.currency;if(!M.title&&o.meta.restaurant)M.title=o.meta.restaurant;if(o.meta.policy&&o.meta.policy.text&&!M.policy)M.policy=o.meta.policy}
 else if(o.ingr)M.ingr=Object.assign(M.ingr||{},cleanIngr(o.ingr));
 else if('unclear' in o){unc=+o.unclear||0;M.unclear={...(M.unclear||{}),[pg]:unc}}
@@ -685,12 +686,14 @@ openSheet(`<div class="al warn strong">${ico('warn',18)}<div><b>${esc(f(t('uns')
 // a notice printed on the menu that matters when ordering (happy hour, serving hours, minimum order...), kept once;
 // cat: the section it is about (then it also shows next to that section's heading)
 // dish: the dish it is about (then it shows on that dish). Only notes about the whole menu are listed at the top of the menu.
-function addNote(M,text,cat,pg,dish){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{}),...(dish?{dish:String(dish)}:{})})}
+// sub: the group of dishes inside a section it is about ("Khinkali" - then it shows on that group's small heading)
+function addNote(M,text,cat,pg,dish,sub){text=String(text||'').trim();if(!text)return;M.notes=M.notes||[];if(!M.notes.some(n=>norm(n.text)===norm(text)))M.notes.push({text,pg,...(cat?{cat:String(cat)}:{}),...(dish?{dish:String(dish)}:{}),...(sub?{sub:String(sub)}:{})})}
+const noteSub=(M,n)=>!!n.sub&&M.items.some(i=>i.sub&&norm(i.sub)===norm(n.sub));
 // (a note about "Khinkali" shows on every khinkali dish)
 const noteOn=(n,i)=>!!n.dish&&[i.orig,i.vb,i.local].some(s=>s&&(norm(s)===norm(n.dish)||(norm(n.dish).length>4&&norm(s).includes(norm(n.dish)))));
 const noteDish=(M,n)=>n.dish?M.items.find(i=>noteOn(n,i)):null;
 // a note whose dish or section is not on the menu (yet) still shows at the top, so it is never lost
-const topNotes=M=>(M.notes||[]).filter(n=>!noteDish(M,n)&&!(n.cat&&M.items.some(i=>norm(i.cat||'')===norm(n.cat))));
+const topNotes=M=>(M.notes||[]).filter(n=>!noteDish(M,n)&&!noteSub(M,n)&&!(n.cat&&M.items.some(i=>norm(i.cat||'')===norm(n.cat))));
 // ---------- receipts ----------
 const newReceipt=M=>{const R={id:uid(),title:'',restaurant:M?M.title:'',menuId:M?M.id:null,cur:M?M.cur:S.cur,items:[],parts:[],fees:{tax:0,taxIncl:true,service:0,other:0,tip:0},printedTotal:0,tipMode:'pct',tipPct:M&&M.policy&&M.policy.service_pct?0:12,tipCustom:0,split:false,payers:2,cp:0,equal:false,assign:{},date:Date.now()};S.receipts.unshift(R);return R};
 // ---------- sample (try the app without scanning) ----------
@@ -1208,7 +1211,8 @@ function sectionsV(M){const q=dq(M),base=M.items.filter(i=>dishHit(i,q)&&showNow
 // a section scanned in parts (from several photos) is shown once, where it first appears, with all its dishes
 base.forEach((i,n)=>{const c=norm(i.cat||'');if(!(c in first))first[c]=n});
 const items=base.map((i,n)=>[i,n]).sort((a,b)=>first[norm(a[0].cat||'')]-first[norm(b[0].cat||'')]||a[1]-b[1]).map(x=>x[0]);
-const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)&&!noteDish(M,n)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])];
+const snote=s=>(M.notes||[]).filter(n=>n.sub&&norm(n.sub)===norm(s)).map(n=>`<span class=catnote dir=auto>${ico('info',13)}<span>${esc(n.text)}</span></span>`).join('');
+const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)&&!noteDish(M,n)&&!noteSub(M,n)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])];
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
 out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${cnote(g.cat).map(x=>`<span class=catnote dir=auto>${ico('info',13)}<span>${esc(x)}</span></span>`).join('')}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
@@ -1216,10 +1220,10 @@ if(cats.length&&!q)out+=`<div class=catbar><small class=mut>${t(anyOpen?'catTapO
 for(let k=0;k<items.length;k++){const i=items[k];if(!g||norm(g.cat)!==norm(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
 // a dish sold in several sizes is one card: its sizes and prices, and one button to choose
 const run=[i];if(i.vb)while(items[k+run.length]&&items[k+run.length].vb&&norm(items[k+run.length].vb)===norm(i.vb)&&norm(items[k+run.length].cat||'')===norm(i.cat||''))run.push(items[k+run.length]);
-if(run.length>1){const tq=run.reduce((s,x)=>s+x.qty,0);g.n++;g.sel+=tq;if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
+if(run.length>1){const tq=run.reduce((s,x)=>s+x.qty,0);g.n++;g.sel+=tq;if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}${snote(sub)}</div>`}
 rows+=itemV({...i,orig:i.vb,price:0,qty:tq,portion:'',_grp:run},M);k+=run.length-1;continue}
 if(!i.addon)g.n++;if(i.qty>0)g.sel+=i.per?1:i.qty;
-if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}</div>`}
+if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub)?"dir=ltr":"dir=auto"}>${esc(sub)}${i.subTr&&norm(i.subTr)!==norm(sub)?`<span dir=auto>${esc(i.subTr)}</span>`:''}${snote(sub)}</div>`}
 rows+=itemV(i,M)}
 flush();return out}
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
