@@ -392,7 +392,7 @@ pVatInc:'Prices include VAT.',pVatExc:'Prices do not include VAT.',pSvcInc:'Serv
 al_gluten:'Gluten',al_milk:'Milk',al_egg:'Eggs',al_nuts:'Tree nuts',al_peanut:'Peanuts',al_fish:'Fish',al_shellfish:'Shellfish',al_sesame:'Sesame',al_soy:'Soy',al_celery:'Celery',al_mustard:'Mustard',
 bizNewBtn:'Build a menu by hand',bizNewD:'Without scanning: add sections and dishes yourself.',
 logsT:'Scan problems',logsBtn:'Scan problems',logsD:'{0} problems recorded, latest first. Photos are kept for 14 days.',logsImg:'Show the photo',logsNone:'No problems recorded.',logsClear:'Delete all',logsClearD:'All recorded problems and their photos will be deleted.',logsRef:'Refresh',
-beC_lang:'Guests can choose the language (the menu is translated)',beC_cnotes:'Guests can add changes and notes to a dish',
+beC_lang:'Guests choose a language and a currency (dish names are translated, prices converted)',beC_cnotes:'Guests can add changes and notes to a dish',
 bePer:'Priced by weight / amount',bePerQ:'The price is for',bePerU:'Unit',beNote:'Note next to the dish (optional)',beNotePh:'For example: takes 25 minutes',
 beIngs:'Ingredients (separated by commas)',beIngsPh:'For example: tomato, basil, mozzarella',beMods:'Changes guests can ask for (separated by commas)',beModsPh:'For example: no onion, well done, sauce on the side',
 beChoices:'A choice guests must make (separated by commas)',beChoicesPh:'For example: fries, rice, salad',beHappy:'Special price at certain hours',beHappyP:'Price',
@@ -463,7 +463,7 @@ pVatInc:'המחירים כוללים מע״מ.',pVatExc:'המחירים אינם
 al_gluten:'גלוטן',al_milk:'חלב',al_egg:'ביצים',al_nuts:'אגוזים',al_peanut:'בוטנים',al_fish:'דגים',al_shellfish:'פירות ים',al_sesame:'שומשום',al_soy:'סויה',al_celery:'סלרי',al_mustard:'חרדל',
 bizNewBtn:'בניית תפריט ידנית',bizNewD:'בלי לסרוק: מוסיפים קטגוריות ומנות בעצמכם.',
 logsT:'תקלות בסריקה',logsBtn:'תקלות בסריקה',logsD:'נרשמו {0} תקלות, מהחדשה לישנה. התמונות נשמרות 14 יום.',logsImg:'הצג את התמונה',logsNone:'לא נרשמו תקלות.',logsClear:'מחק הכול',logsClearD:'כל התקלות שנרשמו והתמונות שלהן יימחקו.',logsRef:'רענון',
-beC_lang:'האורחים יכולים לבחור שפה (התפריט מתורגם)',beC_cnotes:'האורחים יכולים להוסיף שינויים והערות למנה',
+beC_lang:'האורחים בוחרים שפה ומטבע (שמות המנות מתורגמים והמחירים מומרים)',beC_cnotes:'האורחים יכולים להוסיף שינויים והערות למנה',
 bePer:'מחיר לפי משקל / כמות',bePerQ:'המחיר הוא עבור',bePerU:'יחידה',beNote:'הערה ליד המנה (לא חובה)',beNotePh:'לדוגמה: זמן הכנה 25 דקות',
 beIngs:'מרכיבים (מופרדים בפסיק)',beIngsPh:'לדוגמה: עגבנייה, בזיליקום, מוצרלה',beMods:'שינויים שהאורח יכול לבקש (מופרדים בפסיק)',beModsPh:'לדוגמה: בלי בצל, עשוי היטב, רוטב בצד',
 beChoices:'בחירה שהאורח חייב לבצע (מופרדת בפסיק)',beChoicesPh:'לדוגמה: צ׳יפס, אורז, סלט',beHappy:'מחיר מיוחד בשעות מסוימות',beHappyP:'מחיר',
@@ -547,7 +547,9 @@ const rtl=()=>S.lang==='x'?!!(TRX[langKey()]||{}).rtl:RTL.includes(S.lang);
 const langName=()=>S.lang==='x'?(S.langName||'English'):(LANGS.find(l=>l[0]===S.lang)||[0,'English'])[1];
 const fmt=(n,c)=>{try{return new Intl.NumberFormat(S.lang==='x'?undefined:S.lang,{style:'currency',currency:c}).format(n||0)}catch(e){return(n||0).toFixed(2)+' '+c}};
 const conv=(n,a,b)=>S.rates&&S.rates[a]&&S.rates[b]?n/S.rates[a]*S.rates[b]:null;
-const mv=(n,c)=>{let h=fmt(n,c);if(c!==S.cur){const v=conv(n,c,S.cur);if(v!=null)h+=`<small class=cv><bdi dir=ltr>≈ ${fmt(v,S.cur)}</bdi></small>`}return h};
+// (a restaurant's page whose owner turned off language and currency choice shows its own prices only)
+const noConv=()=>!!(V.rmenu&&V.rmenu.id===V.id&&V.rmenu.cfg&&V.rmenu.cfg.lang===false);
+const mv=(n,c)=>{let h=fmt(n,c);if(c!==S.cur&&!noConv()){const v=conv(n,c,S.cur);if(v!=null)h+=`<small class=cv><bdi dir=ltr>≈ ${fmt(v,S.cur)}</bdi></small>`}return h};
 const money=(n,c)=>fmt(n,c)+(c!==S.cur&&conv(n,c,S.cur)!=null?` (⁦≈ ${fmt(conv(n,c,S.cur),S.cur)}⁩)`:'');
 const toast=m=>{const e=$('#toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',3800)};
 const busy=(on,label)=>{$('#bt').textContent=label||'';$('#busy').classList.toggle('on',on)};
@@ -1255,7 +1257,7 @@ if((i.sub||'')!==sub){sub=i.sub||'';if(sub)rows+=`<div class=subhd ${ltrText(sub
 rows+=itemV(i,M)}
 flush();return out}
 // the restaurant page's header: its name, and the guest's language and currency (the dishes follow the language)
-const restHead=M=>`<header class="hero rhead"><div class=rtop><div class=rttl>${M.title?`<h1 dir=auto>${esc(M.title)}</h1>`:''}<small class=mut>${M.items.length===1?t('dish1'):f(t('dishesN'),M.items.filter(i=>!i.addon).length)}</small></div><button class="btn sm topshare" data-a=rshare>${ico('share',17)}<span>${t('shareT')}</span></button></div><div class=rsel>${cfgOf(M).lang===false?'':`<label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label>`}<label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label></div></header>`;
+const restHead=M=>`<header class="hero rhead"><div class=rtop><div class=rttl>${M.title?`<h1 dir=auto>${esc(M.title)}</h1>`:''}<small class=mut>${M.items.length===1?t('dish1'):f(t('dishesN'),M.items.filter(i=>!i.addon).length)}</small></div><button class="btn sm topshare" data-a=rshare>${ico('share',17)}<span>${t('shareT')}</span></button></div><div class=rsel>${cfgOf(M).lang===false?'':`<label>${ico('menu',16)}<select data-c=slang aria-label="${t('lang')}">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label>`}${cfgOf(M).lang===false?'':`<label>${ico('coin',16)}<select data-c=scur aria-label="${t('cur')}">${curOpts(S.cur)}</select></label>`}</div></header>`;
 function menuV(){const M=cm();if(!M)return home();// a business's menu opens the way guests will see it (as it was scanned); "Edit the menu" switches to the editor.
 // A menu with no dishes yet (built by hand) opens straight in the editor.
 if(M.biz&&!jobs(M.id).length&&(V.bizEdit===M.id||!M.items.length))return bizEditV(M);if(M.rest&&M.lang!==S.lang)restApply(M);if(M.rest)promoApply(M);const js=jobs(M.id),found=js.length?js[0].n:0,hasIng=M.items.some(i=>(i.ing||[]).length);
@@ -1280,7 +1282,7 @@ ${js.length?`<div class="card list"><div class=skel></div><div class=skel style=
 </div>
 ${js.length?`<div class=sticky><div><div class=scan-st role=status><span class=spin></span><div><b style="font-size:15px">${t(js.some(j=>j.hq)?'recheck':'scanMenuNow')}</b><br><small>${(()=>{const b=(V.batch||{})[M.id];return b&&b.total>1?f(t('photoOf'),js[0].idx||1,b.total)+' · '+(found===1?t('photoDish1'):f(t('photoDishes'),found)):f(t('soFar'),found)})()}</small></div></div><button class="btn acc sm" data-a=mpage>${ico('cam',18)}${t('nextPage')}</button></div></div>`
 // while browsing: a small bar with how many dishes are chosen and their total, jumping to the order
-:n&&V.obarOn===M.id?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&conv(sum,M.cur,S.cur);
+:n&&V.obarOn===M.id?(()=>{const pct=+(M.policy&&M.policy.service_pct)||0,sum=r2(tot+(priced&&pct?tot*pct/100:0)),cv=M.cur!==S.cur&&!noConv()&&conv(sum,M.cur,S.cur);
 return `<div class="sticky obar"><div><div><b>${f(t('orderTotal'),n)}</b>${priced?`<br><small class=n>${fmt(sum,M.cur)}${cv!=null&&cv!==false?` · ≈ ${fmt(cv,S.cur)}`:''}</small>`:''}</div><button class="btn acc sm" data-a=toorder>${t('seeOrder')}</button></div></div>`})():''}`}
 // end of the menu: what was ordered and its total, then the two next steps, each with a line saying what it does
 function orderV(M,n,tot,priced){const C=cfgOf(M);
