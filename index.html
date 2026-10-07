@@ -324,6 +324,7 @@ textarea{width:100%;font:inherit;line-height:1.45;color:var(--ink);background:va
 .catnm .catdesc{display:block;font-size:13.5px;font-weight:400;color:var(--mut);text-transform:none;letter-spacing:0;line-height:1.4;margin-top:2px}.cat[dir=ltr] .catdesc{text-align:left}
 .rtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}.rttl{min-width:0;display:grid;gap:2px}.rhead .rttl h1{margin:0}.rtop .topshare{margin:0;flex:none}
 .ttl.need{border:1.5px dashed var(--ac);background:var(--card);padding:10px 12px;font-size:20px}.ttl.need::placeholder{color:var(--ac);opacity:.9}
+.catnote>span>svg,.dnote>span>svg,.picked>span>svg{display:inline-block;vertical-align:-2px;margin-inline-end:5px;margin-top:0}
 </style></head><body>
 <div id="app"></div><input type="file" accept="image/*" id="fi" multiple hidden>
 <div id="busy"><div><div class="spin"></div><span id="bt"></span></div></div><div id="toast"></div><div id="sheet"></div>
@@ -907,7 +908,8 @@ x.fillStyle='#6b645c';x.font='400 36px Rubik';x.fillText('Prices in your currenc
 const langSel=()=>`<label>${t('lang')}<select data-c=slang>${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===S.lang?'selected':''}>${l[1]}</option>`).join('')}</select></label>`;
 const bizApi=async body=>{const r=await fetch('/api/rest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}),j=await r.json().catch(()=>({}));
 if(r.status===401){delete S.bizSess;V.bizPages=null;save();render()}if(!r.ok)throw new Error(j.error||t('fail'));return j};
-function bizV(){const head=`<header class=hero><span class=eyebrow>${t('title')}</span><h1>${t('bizT')}</h1><p class=mut>${t('bizD')}</p></header>`;
+function bizV(){V.bizEdit=null; // a menu opened from this list always shows first the way guests see it
+const head=`<header class=hero><span class=eyebrow>${t('title')}</span><h1>${t('bizT')}</h1><p class=mut>${t('bizD')}</p></header>`;
 if(!S.bizSess&&!S.adminKey)return head+`<div class=pad>${langSel()}<div class=card><h3>${t('bizLoginT')}</h3><p class=mut>${t('bizLoginD')}</p>
 <label>${t('bizPhone')}<input id=bphone type=tel inputmode=tel autocomplete=tel dir=ltr placeholder="050-123-4567"></label><label>${t('bizPw')}<input id=bpw type=password autocomplete=current-password dir=ltr></label>
 <button class="btn acc wide" data-a=bizlogin>${t('bizGo')}</button></div></div>`;
@@ -1222,10 +1224,10 @@ ${sold||i.rec||i.isNew?`<span class=dbadges>${sold?`<span class="dbadge sold">${
 ${warn.map(x=>`<span class=avoid-b>${ico('warn',14)}${esc(x)}</span>`).join('')}${w.mayW?`<span class="avoid-b may">${ico('warn',14)}${esc(w.mayW)}</span>`:''}${uq.map(s=>`<span class=unsure-b>${ico('warn',14)}${esc(s)}</span>`).join('')}
 <div class=nm><b dir=auto>${i.addon?'+ '+esc(i.orig.replace(/^\s*\+\s*/,'')):esc(i.orig)}</b>${i.hot?` <span aria-label="${t('spicyL')}">🌶️</span>`:''}</div>
 ${i.tr&&norm(i.tr)!==norm(i.orig)?(i.desc?`<span class=ntr dir=auto>${esc(i.tr)}</span>`:longV(i,i.tr)):''}${i.desc&&norm(i.desc)!==norm(i.tr)?longV(i,i.desc):''}
-${[i.note,...(M.notes||[]).filter(n=>noteOn(n,i)).map(n=>n.text)].filter(Boolean).map(x=>`<span class=dnote>${ico('info',14)}<span dir=auto>${esc(x)}</span></span>`).join('')}
+${[i.note,...(M.notes||[]).filter(n=>noteOn(n,i)).map(n=>n.text)].filter(Boolean).map(x=>`<span class=dnote><span dir=auto>${ico('info',14)}${esc(x)}</span></span>`).join('')}
 ${grp?`<span class="pr vars">${grp.map(v=>`<span class=var><bdi>${esc(v.vn)}</bdi>${C.prices&&v.price>0?` <b dir=${rtl()?"rtl":"ltr"}>${fmt(v.price,M.cur)}</b>`:''}${v.qty?` <i>×${v.qty}</i>`:''}</span>`).join('')}</span>`
 :C.prices&&i.price>0?`<span class=pr dir=${rtl()?"rtl":"ltr"}>${i.was?`<s class=was>${fmt(i.was,M.cur)}</s> `:''}${mv(i.price,M.cur)}${i.was&&i.off?`<span class=promo>${esc(f(t('promoTag'),i.off))}</span>`:''}${i.per?`<small class=per>${esc(f(t('perFor'),perLbl(i,1)))}</small>`:''}${i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}</span>`:i.portion?`<small class=per><bdi>${esc(i.portion)}</bdi></small>`:''}
-${tags.length?`<button class=opttag data-a=opt data-id=${grp?grp[0].id:i.id}>${ico('info',14)}<span>${esc(f(t('optHas'),tags.join(', ')))}</span></button>`:''}${i.ch&&i.qty&&pickTxt(i)?`<span class=picked>${ico('check',14)}<span dir=auto>${esc(pickTxt(i))}</span></span>`:''}
+${tags.length?`<button class=opttag data-a=opt data-id=${grp?grp[0].id:i.id}>${ico('info',14)}<span>${esc(f(t('optHas'),tags.join(', ')))}</span></button>`:''}${i.ch&&i.qty&&pickTxt(i)?`<span class=picked><span dir=auto>${ico('check',14)}${esc(pickTxt(i))}</span></span>`:''}
 ${C.photos&&i.img?`<button class=photo data-a=dimg data-id=${i.id}>${ico('img',16)}<span>${t('showPhoto')}</span></button>`:''}
 ${i.addon||!C.google?'':`<a class=photo target=_blank rel=noopener href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(photoQ(i))}">${ico('img',16)}<span>${t('findPhoto')}</span>${ico('ext',13)}</a>`}</div>${M.biz||!C.order||sold?'':grp?`<div class="step${i.qty>0?' on':''}"><button data-a=opt data-id=${grp?grp[0].id:i.id} ${i.qty<=0?'disabled':''} aria-label="-1">−</button><span>${i.qty}</span><button data-a=opt data-id=${grp?grp[0].id:i.id} aria-label="+1">+</button></div>`
 :i.per?`<div class="step wstep${i.qty>0?' on':''}"><button data-a=mq data-id=${i.id} data-x=-1 ${i.qty<=0?'disabled':''} aria-label="−">−</button><span><bdi>${i.qty?perLbl(i,i.qty):'0'}</bdi></span><button data-a=mq data-id=${i.id} data-x=1 aria-label="+">+</button></div>`:step(i.qty,'mq',i.id)}</div>`}
@@ -1241,10 +1243,10 @@ function sectionsV(M){const q=dq(M),base=M.items.filter(i=>dishHit(i,q)&&showNow
 // a section scanned in parts (from several photos) is shown once, where it first appears, with all its dishes
 base.forEach((i,n)=>{const c=norm(i.cat||'');if(!(c in first))first[c]=n});
 const items=base.map((i,n)=>[i,n]).sort((a,b)=>first[norm(a[0].cat||'')]-first[norm(b[0].cat||'')]||a[1]-b[1]).map(x=>x[0]);
-const snote=s=>(M.notes||[]).filter(n=>n.sub&&norm(n.sub)===norm(s)).map(n=>`<span class=catnote>${ico('info',13)}<span dir=auto>${esc(n.text)}</span></span>`).join('');
+const snote=s=>(M.notes||[]).filter(n=>n.sub&&norm(n.sub)===norm(s)).map(n=>`<span class=catnote><span dir=auto>${ico('info',13)}${esc(n.text)}</span></span>`).join('');
 const cnote=c=>[...(M.notes||[]).filter(n=>n.cat&&norm(n.cat)===norm(c)&&!noteDish(M,n)&&!noteSub(M,n)).map(n=>n.text),...(M.rest&&(M.promo||{})[c]&&+M.promo[c].pct&&hoursTxt(M.promo[c])?[`−${M.promo[c].pct}% ${hoursTxt(M.promo[c])}`]:[])];
 const flush=()=>{if(!g)return;const open=catOpen(M,g.cat);
-out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${(M.catDesc||{})[g.cat]?`<span class=catdesc dir=auto>${esc(M.catDesc[g.cat])}</span>`:''}${cnote(g.cat).map(x=>`<span class=catnote>${ico('info',13)}<span dir=auto>${esc(x)}</span></span>`).join('')}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
+out+=`<section>${g.cat?`<button ${ltrText(g.cat)?"dir=ltr ":""}class="cat cathd${open?' open':''}" data-a=cat data-x="${esc(norm(g.cat))}" aria-expanded=${open}><span class=chv>${ico('chev',18)}</span><span class=catnm><span dir=auto>${esc(g.cat)}</span>${g.catTr&&norm(g.catTr)!==norm(g.cat)?`<span class=cat-tr dir=auto>${esc(g.catTr)}</span>`:''}${(M.catDesc||{})[g.cat]?`<span class=catdesc dir=auto>${esc(M.catDesc[g.cat])}</span>`:''}${cnote(g.cat).map(x=>`<span class=catnote><span dir=auto>${ico('info',13)}${esc(x)}</span></span>`).join('')}</span><span class=catn dir=auto>${g.n===1?t('dish1'):f(t('dishesN'),g.n)}${g.sel?` · <b>${g.sel===1?t('catSel1'):f(t('catSel'),g.sel)}</b>`:''}</span></button>`:''}${open?`<div class="card list">${rows}</div>`:''}</section>`;rows=''};
 const cats=[...new Set(items.map(i=>norm(i.cat||'')).filter(Boolean))],anyOpen=cats.some(c=>(V.copen||{})[M.id+'|'+c]);
 if(cats.length&&!q)out+=`<div class=catbar><small class=mut>${t(anyOpen?'catTapOpen':'catTap')}</small><button class="btn ghost sm catall" data-a=catall data-x=${anyOpen?0:1} aria-pressed=${!!anyOpen}>${t(anyOpen?'catNone':'catAll')}</button></div>`;
 for(let k=0;k<items.length;k++){const i=items[k];if(!g||norm(g.cat)!==norm(i.cat||'')){flush();g={cat:i.cat||'',catTr:i.catTr,n:0,sel:0};sub=''}
