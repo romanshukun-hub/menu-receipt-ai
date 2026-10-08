@@ -721,7 +721,9 @@ const noteSub=(M,n)=>!!n.sub&&M.items.some(i=>i.sub&&norm(i.sub)===norm(n.sub));
 const noteOn=(n,i)=>!!n.dish&&[i.orig,i.vb,i.local].some(s=>s&&(norm(s)===norm(n.dish)||(norm(n.dish).length>4&&norm(s).includes(norm(n.dish)))));
 const noteDish=(M,n)=>n.dish?M.items.find(i=>noteOn(n,i)):null;
 // a note whose dish or section is not on the menu (yet) still shows at the top, so it is never lost
-const topNotes=M=>(M.notes||[]).filter(n=>!noteDish(M,n)&&!noteSub(M,n)&&!(n.cat&&M.items.some(i=>norm(i.cat||'')===norm(n.cat))));
+// (while the menu is still being read, a note about a dish or a section waits for it - it does not show at the top first
+// and then jump to its place; only once the scan is over does a note with nowhere to go fall back to the top)
+const topNotes=M=>{const busy=jobs(M.id).length>0;return (M.notes||[]).filter(n=>!n.dish&&!n.cat&&!n.sub?true:!busy&&!noteDish(M,n)&&!noteSub(M,n)&&!(n.cat&&M.items.some(i=>norm(i.cat||'')===norm(n.cat))))};
 function emptyOrder(M,go){if(tableMenu(M).items.some(i=>i.qty>0))return go();
 openSheet(alertBox('warn',t('emOrdT'),t('emOrdD'))+`<button class=btn data-a=sa data-x=no>${ico('plus',18)}${t('emOrdAdd')}</button><button class="btn ghost" data-a=sa data-x=go>${ico('receipt',18)}${t('emOrdGo')}</button>`,{go})}
 // ---------- receipts ----------
